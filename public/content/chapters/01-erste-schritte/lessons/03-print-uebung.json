@@ -18,7 +18,7 @@
     },
     {
       "type": "code",
-      "task": "Gib deinen Namen aus – schreibe ein Programm, das **`Ich lerne Python`** ausgibt.",
+      "task": "Schreibe ein Programm, das genau diesen Satz ausgibt: **`Ich lerne Python`**.",
       "starterCode": "",
       "hints": [
         "Nutze print() mit dem Text in Anführungszeichen",
