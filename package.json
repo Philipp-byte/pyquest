@@ -1,0 +1,22 @@
+{
+  "name": "pyquest",
+  "version": "0.1.0",
+  "description": "Interaktive Python-Lernplattform mit Gamification fuer den Schulunterricht",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^5.4.0"
+  },
+  "dependencies": {
+    "@codemirror/lang-python": "^6.1.6",
+    "@codemirror/state": "^6.4.1",
+    "@codemirror/view": "^6.34.0",
+    "canvas-confetti": "^1.9.3",
+    "codemirror": "^6.0.1"
+  }
+}

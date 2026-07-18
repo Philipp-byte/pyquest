@@ -1,0 +1,40 @@
+{
+  "id": "01-was-ist-python",
+  "title": "Was ist Python?",
+  "icon": "🐍",
+  "xp": 15,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "**Python** ist eine Programmiersprache. Damit sagst du dem Computer ganz genau, was er tun soll.\n\nDas Tolle: Python liest sich fast wie Englisch und ist perfekt zum Einsteigen. Du wirst gleich dein erstes Programm schreiben!"
+    },
+    {
+      "type": "explain",
+      "text": "Ein **Programm** ist eine Liste von Anweisungen. Der Computer arbeitet sie von oben nach unten ab – Zeile für Zeile.\n\nGenau wie ein Kochrezept: erst Schritt 1, dann Schritt 2, dann Schritt 3."
+    },
+    {
+      "type": "quiz",
+      "question": "Was ist Python?",
+      "choices": [
+        "Eine Schlangenart, die man füttern muss",
+        "Eine Programmiersprache",
+        "Ein Computerspiel"
+      ],
+      "answer": 1,
+      "explainCorrect": "Genau! Python ist eine Programmiersprache – benannt ist sie übrigens nach einer Comedy-Gruppe, nicht nach der Schlange. 🐍",
+      "explainWrong": "Nicht ganz. Python ist eine **Programmiersprache**, mit der du dem Computer Anweisungen gibst."
+    },
+    {
+      "type": "quiz",
+      "question": "In welcher Reihenfolge arbeitet der Computer ein Programm ab?",
+      "choices": [
+        "Von oben nach unten, Zeile für Zeile",
+        "Kreuz und quer, wie er Lust hat",
+        "Von unten nach oben"
+      ],
+      "answer": 0,
+      "explainCorrect": "Richtig! Ein Programm läuft von oben nach unten – wie ein Rezept.",
+      "explainWrong": "Der Computer arbeitet ein Programm **von oben nach unten** ab, eine Zeile nach der anderen."
+    }
+  ]
+}

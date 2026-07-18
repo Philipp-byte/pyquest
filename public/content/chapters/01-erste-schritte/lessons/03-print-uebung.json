@@ -1,0 +1,44 @@
+{
+  "id": "03-print-uebung",
+  "title": "Mehr mit print()",
+  "icon": "✨",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Du kannst **`print()`** mehrfach benutzen. Jedes `print()` schreibt in eine **neue Zeile**.\n\n```\nprint(\"Zeile 1\")\nprint(\"Zeile 2\")\n```\ngibt aus:\n```\nZeile 1\nZeile 2\n```"
+    },
+    {
+      "type": "quiz",
+      "question": "Wie viele Zeilen gibt dieses Programm aus?\n\n```\nprint(\"A\")\nprint(\"B\")\nprint(\"C\")\n```",
+      "choices": ["1 Zeile", "3 Zeilen", "Gar keine"],
+      "answer": 1,
+      "explainCorrect": "Genau! Jedes print() erzeugt eine eigene Zeile – also 3 Zeilen.",
+      "explainWrong": "Jedes `print()` schreibt in eine eigene Zeile. Bei drei `print()`-Befehlen sind das **3 Zeilen**."
+    },
+    {
+      "type": "code",
+      "task": "Gib deinen Namen aus – schreibe ein Programm, das **`Ich lerne Python`** ausgibt.",
+      "starterCode": "",
+      "hints": [
+        "Nutze print() mit dem Text in Anführungszeichen",
+        "print(\"Ich lerne Python\")"
+      ],
+      "tests": [
+        { "type": "output", "expected": "Ich lerne Python" }
+      ]
+    },
+    {
+      "type": "code",
+      "task": "Schreibe ein Programm, das **zwei Zeilen** ausgibt:\n\n```\nPython\nist toll\n```",
+      "starterCode": "",
+      "hints": [
+        "Du brauchst zwei print()-Befehle",
+        "print(\"Python\")\nprint(\"ist toll\")"
+      ],
+      "tests": [
+        { "type": "output", "expected": "Python\nist toll" }
+      ]
+    }
+  ]
+}

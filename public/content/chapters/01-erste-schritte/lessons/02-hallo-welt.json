@@ -1,0 +1,38 @@
+{
+  "id": "02-hallo-welt",
+  "title": "Hallo Welt!",
+  "icon": "👋",
+  "xp": 20,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Mit dem Befehl **`print()`** gibt Python Text auf dem Bildschirm aus.\n\nDer Text muss dabei in **Anführungszeichen** stehen, zum Beispiel: `\"Hallo\"`."
+    },
+    {
+      "type": "example",
+      "text": "Hier siehst du dein erstes Programm. Klick auf **Ausführen** und schau, was passiert!",
+      "code": "print(\"Hallo Welt!\")"
+    },
+    {
+      "type": "fill",
+      "text": "Vervollständige den Code, damit **`Hallo`** ausgegeben wird.",
+      "template": "print(___)",
+      "solution": "\"Hallo\"",
+      "accept": ["\"Hallo\"", "'Hallo'"],
+      "hint": "Der Text muss in Anführungszeichen stehen: \"Hallo\""
+    },
+    {
+      "type": "code",
+      "task": "Schreibe ein Programm, das **`Hallo Welt!`** ausgibt.",
+      "starterCode": "# Schreibe deinen Code hier\n",
+      "hints": [
+        "Nutze den Befehl print()",
+        "Der Text gehört in Anführungszeichen",
+        "So sieht die Lösung aus: print(\"Hallo Welt!\")"
+      ],
+      "tests": [
+        { "type": "output", "expected": "Hallo Welt!" }
+      ]
+    }
+  ]
+}

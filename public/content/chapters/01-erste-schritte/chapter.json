@@ -1,0 +1,12 @@
+{
+  "id": "01-erste-schritte",
+  "title": "Erste Schritte",
+  "icon": "🚀",
+  "color": "#22c55e",
+  "description": "Lerne, was Python ist und gib deine erste Ausgabe aus.",
+  "lessons": [
+    "01-was-ist-python",
+    "02-hallo-welt",
+    "03-print-uebung"
+  ]
+}
