@@ -2,7 +2,7 @@
 // (Duolingo-artige Landkarte). Zeigt Fortschritt, Sterne und Sperren.
 
 import { renderHeader, starRow, wireHeader } from "../ui.js";
-import { getLesson, isDone, isUnlocked } from "../progress.js";
+import { getLesson, isDone, isUnlocked } from "../store.js";
 
 export function renderPath(app, curriculum) {
   const chaptersHtml = curriculum.chapters

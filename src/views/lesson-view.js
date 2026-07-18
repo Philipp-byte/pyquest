@@ -6,7 +6,7 @@ import { renderMarkdown } from "../markdown.js";
 import { createEditor } from "../editor.js";
 import { runPython } from "../pyodide-runner.js";
 import { evaluateCode, evaluateFill } from "../evaluator.js";
-import { completeLesson, isUnlocked, getXp, levelProgress } from "../progress.js";
+import { completeLesson, isUnlocked, getXp, levelProgress } from "../store.js";
 import { burstSmall, burstBig } from "../celebrate.js";
 import { playCorrect, playWrong, playFinish, playLevelUp, playBadge } from "../sound.js";
 import { findLesson, flattenLessons } from "../content.js";
@@ -62,13 +62,13 @@ class LessonPlayer {
     this.progressFill.style.width = `${pct}%`;
   }
 
-  next() {
+  async next() {
     if (this.editor) {
       this.editor.destroy();
       this.editor = null;
     }
     this.stepIndex++;
-    if (this.stepIndex >= this.lesson.steps.length) this.finish();
+    if (this.stepIndex >= this.lesson.steps.length) await this.finish();
     else this.renderStep();
   }
 
@@ -327,7 +327,7 @@ class LessonPlayer {
   }
 
   // ---- Abschluss ----
-  finish() {
+  async finish() {
     this.updateProgress();
     this.progressFill.style.width = "100%";
 
@@ -335,7 +335,7 @@ class LessonPlayer {
     const penalty = this.mistakes + (this.hintsUsed > 0 ? 1 : 0);
     const stars = Math.max(1, 3 - penalty);
 
-    const result = completeLesson(
+    const result = await completeLesson(
       this.lesson.id,
       { xp: this.lesson.xp ?? 10, stars },
       this.curriculum

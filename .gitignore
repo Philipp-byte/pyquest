@@ -4,3 +4,9 @@ dist/
 Thumbs.db
 *.log
 .vscode/
+
+# Server (Schulmodus)
+server/instance/
+server/__pycache__/
+server/venv/
+*.pyc

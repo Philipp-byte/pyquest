@@ -1,7 +1,8 @@
 // Kleine UI-Helfer, die von mehreren Views genutzt werden.
 
-import { levelProgress, getXp } from "./progress.js";
+import { levelProgress, getXp, getBackendMode } from "./store.js";
 import { isMuted, toggleMuted } from "./sound.js";
+import { logout } from "./progress-remote.js";
 
 // Erzeugt ein Element aus HTML-String.
 export function html(str) {
@@ -16,6 +17,7 @@ export function renderHeader(active = "path") {
   const { level, ratio, next, cur } = levelProgress(xp);
   const pct = Math.round(ratio * 100);
   const muted = isMuted();
+  const remoteMode = getBackendMode() === "remote";
 
   return `
     <header class="topbar">
@@ -28,6 +30,7 @@ export function renderHeader(active = "path") {
         <span class="xp-count" data-value="${xp}">${xp} XP</span>
       </div>
       <button class="sound-toggle" title="${muted ? "Sound an" : "Sound aus"}">${muted ? "🔇" : "🔊"}</button>
+      ${remoteMode ? `<button class="logout-btn" title="Abmelden">🚪</button>` : ""}
       <nav class="topbar__nav">
         <a href="#/" class="${active === "path" ? "is-active" : ""}">Lernpfad</a>
         <a href="#/profil" class="${active === "profil" ? "is-active" : ""}">Profil</a>
@@ -37,15 +40,24 @@ export function renderHeader(active = "path") {
 }
 
 // Muss nach dem Einsetzen von renderHeader() ins DOM aufgerufen werden,
-// damit der Sound-Schalter funktioniert.
+// damit Sound-Schalter und Abmelde-Button funktionieren.
 export function wireHeader(root) {
-  const btn = root.querySelector(".sound-toggle");
-  if (!btn) return;
-  btn.onclick = () => {
-    const muted = toggleMuted();
-    btn.textContent = muted ? "🔇" : "🔊";
-    btn.title = muted ? "Sound an" : "Sound aus";
-  };
+  const soundBtn = root.querySelector(".sound-toggle");
+  if (soundBtn) {
+    soundBtn.onclick = () => {
+      const muted = toggleMuted();
+      soundBtn.textContent = muted ? "🔇" : "🔊";
+      soundBtn.title = muted ? "Sound an" : "Sound aus";
+    };
+  }
+
+  const logoutBtn = root.querySelector(".logout-btn");
+  if (logoutBtn) {
+    logoutBtn.onclick = async () => {
+      await logout();
+      location.reload();
+    };
+  }
 }
 
 export function starRow(count) {

@@ -1,4 +1,6 @@
 // Profil: XP, Level, Gesamtfortschritt, Streak und Badge-Sammlung.
+// Im Schulmodus zusaetzlich: Passwort aendern statt Fortschritt zuruecksetzen
+// (das Zuruecksetzen macht dort die Lehrkraft, siehe PLAN.md Abschnitt 10).
 
 import { renderHeader, wireHeader } from "../ui.js";
 import {
@@ -9,7 +11,9 @@ import {
   getBadges,
   getStreak,
   resetProgress,
-} from "../progress.js";
+  getBackendMode,
+} from "../store.js";
+import { changePassword } from "../progress-remote.js";
 import { flattenLessons } from "../content.js";
 import { BADGES } from "../badges.js";
 
@@ -26,6 +30,7 @@ export function renderProfile(app, curriculum) {
   const streak = getStreak();
   const earnedBadges = getBadges();
   const badgesEarnedCount = Object.keys(earnedBadges).length;
+  const remoteMode = getBackendMode() === "remote";
 
   app.innerHTML = `
     ${renderHeader("profil")}
@@ -64,19 +69,25 @@ export function renderProfile(app, curriculum) {
         </div>
       </section>
 
-      <div class="danger">
-        <button class="btn btn--ghost btn--reset">Fortschritt zurücksetzen</button>
-      </div>
+      ${remoteMode ? renderPasswordForm() : `
+        <div class="danger">
+          <button class="btn btn--ghost btn--reset">Fortschritt zurücksetzen</button>
+        </div>
+      `}
     </main>
   `;
 
-  app.querySelector(".btn--reset").onclick = () => {
-    if (confirm("Wirklich den gesamten Fortschritt löschen?")) {
-      resetProgress();
-      location.hash = "#/";
-      location.reload();
-    }
-  };
+  if (remoteMode) {
+    wirePasswordForm(app);
+  } else {
+    app.querySelector(".btn--reset").onclick = () => {
+      if (confirm("Wirklich den gesamten Fortschritt löschen?")) {
+        resetProgress();
+        location.hash = "#/";
+        location.reload();
+      }
+    };
+  }
 
   wireHeader(app);
 }
@@ -88,4 +99,39 @@ function renderBadge(badge, earned) {
       <span class="badge-chip__title">${badge.title}</span>
     </div>
   `;
+}
+
+function renderPasswordForm() {
+  return `
+    <section class="password-card">
+      <h2>Passwort ändern</h2>
+      <form class="password-form">
+        <input type="password" name="old" placeholder="Aktuelles Passwort" autocomplete="current-password" required>
+        <input type="password" name="new" placeholder="Neues Passwort (min. 4 Zeichen)" autocomplete="new-password" minlength="4" required>
+        <button type="submit" class="btn btn--primary">Ändern</button>
+        <p class="password-form__msg" hidden></p>
+      </form>
+    </section>
+  `;
+}
+
+function wirePasswordForm(app) {
+  const form = app.querySelector(".password-form");
+  const msg = form.querySelector(".password-form__msg");
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    msg.hidden = true;
+    const fd = new FormData(form);
+    try {
+      await changePassword(fd.get("old"), fd.get("new"));
+      msg.hidden = false;
+      msg.className = "password-form__msg password-form__msg--ok";
+      msg.textContent = "Passwort geändert.";
+      form.reset();
+    } catch (err) {
+      msg.hidden = false;
+      msg.className = "password-form__msg password-form__msg--error";
+      msg.textContent = "Das hat nicht geklappt. Ist das aktuelle Passwort richtig?";
+    }
+  };
 }

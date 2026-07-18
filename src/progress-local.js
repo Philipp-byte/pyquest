@@ -1,10 +1,11 @@
-// Fortschritts-Speicher fuer den DEMO-Modus (localStorage).
-// Im spaeteren Schulmodus (Phase M3) wird dieselbe Schnittstelle gegen eine
-// Server-API ausgetauscht – die Views bleiben unveraendert.
+// Fortschritts-Speicher fuer den DEMO-Modus (localStorage, z. B. GitHub Pages).
+// Bietet dieselbe Schnittstelle wie progress-remote.js (Schulmodus) - beide
+// werden ueber store.js ausgetauscht, die Views kennen den Unterschied nicht.
 
 import { flattenLessons } from "./content.js";
 import { updateStreak, DEFAULT_STREAK } from "./streak.js";
 import { BADGES } from "./badges.js";
+import { levelForXp } from "./level-math.js";
 
 const KEY = "pyquest.progress.v1";
 
@@ -31,32 +32,8 @@ function save(state) {
 
 let state = load();
 
-export function getState() {
-  return state;
-}
-
 export function getXp() {
   return state.xp;
-}
-
-// Level-Kurve: Level n benoetigt insgesamt 100 * n^1.5 XP.
-export function levelForXp(xp) {
-  let level = 1;
-  while (xp >= xpForLevel(level + 1)) level++;
-  return level;
-}
-
-export function xpForLevel(level) {
-  if (level <= 1) return 0;
-  return Math.round(100 * Math.pow(level - 1, 1.5));
-}
-
-// Fortschritt innerhalb des aktuellen Levels (0..1) fuer den Balken.
-export function levelProgress(xp) {
-  const level = levelForXp(xp);
-  const cur = xpForLevel(level);
-  const next = xpForLevel(level + 1);
-  return { level, cur, next, ratio: (xp - cur) / (next - cur) };
 }
 
 export function getLesson(lessonId) {
@@ -150,10 +127,6 @@ function evaluateBadges(curriculum) {
 
 export function getBadges() {
   return state.badges;
-}
-
-export function hasBadge(badgeId) {
-  return Boolean(state.badges[badgeId]);
 }
 
 export function getStreak() {
