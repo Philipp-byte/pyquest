@@ -1,15 +1,14 @@
 // Lektions-Player: spielt die Schritte einer Lektion nacheinander ab.
 // Schritt-Typen: explain, example, quiz, fill, code.
 
-import { renderHeader } from "../ui.js";
+import { renderHeader, wireHeader, animateNumber, html } from "../ui.js";
 import { renderMarkdown } from "../markdown.js";
-import { html } from "../ui.js";
 import { createEditor } from "../editor.js";
 import { runPython } from "../pyodide-runner.js";
 import { evaluateCode, evaluateFill } from "../evaluator.js";
-import { completeLesson, isUnlocked } from "../progress.js";
+import { completeLesson, isUnlocked, getXp, levelProgress } from "../progress.js";
 import { burstSmall, burstBig } from "../celebrate.js";
-import { navigate } from "../router.js";
+import { playCorrect, playWrong, playFinish, playLevelUp, playBadge } from "../sound.js";
 import { findLesson, flattenLessons } from "../content.js";
 
 export function renderLesson(app, curriculum, chapterId, lessonId) {
@@ -54,6 +53,7 @@ class LessonPlayer {
     this.stage = this.app.querySelector(".lesson__stage");
     this.footer = this.app.querySelector(".lesson__footer");
     this.progressFill = this.app.querySelector(".lesson__progress-fill");
+    wireHeader(this.app);
     this.renderStep();
   }
 
@@ -163,6 +163,7 @@ class LessonPlayer {
           feedback.hidden = false;
           feedback.className = "feedback feedback--ok";
           feedback.innerHTML = renderMarkdown(step.explainCorrect || "Richtig! ✅");
+          playCorrect();
           burstSmall();
           this.continueButton();
         } else {
@@ -172,6 +173,7 @@ class LessonPlayer {
           feedback.hidden = false;
           feedback.className = "feedback feedback--no";
           feedback.innerHTML = renderMarkdown(step.explainWrong || "Das war nicht richtig. Versuch es nochmal!");
+          playWrong();
         }
       };
       choicesEl.append(b);
@@ -220,6 +222,7 @@ class LessonPlayer {
         feedback.hidden = false;
         feedback.className = "feedback feedback--ok";
         feedback.textContent = "Richtig! ✅";
+        playCorrect();
         burstSmall();
         this.footer.innerHTML = "";
         this.continueButton();
@@ -228,6 +231,7 @@ class LessonPlayer {
         feedback.hidden = false;
         feedback.className = "feedback feedback--no";
         feedback.textContent = "Noch nicht ganz. Versuch es nochmal!";
+        playWrong();
       }
     };
   }
@@ -300,6 +304,7 @@ class LessonPlayer {
         feedback.hidden = false;
         feedback.className = "feedback feedback--ok";
         feedback.innerHTML = "🎉 Super, das ist richtig!";
+        playCorrect();
         burstSmall();
         checkBtn.disabled = true;
         runBtn.disabled = true;
@@ -315,6 +320,7 @@ class LessonPlayer {
           const failed = result.results.filter((r) => !r.ok).map((r) => `<li>${r.label}</li>`).join("");
           feedback.innerHTML = `Noch nicht ganz. Diese Prüfung fehlt noch:<ul>${failed}</ul>${step.hints?.length ? "Tipp: Nutze den 💡-Button." : ""}`;
         }
+        playWrong();
         checkBtn.disabled = false;
       }
     };
@@ -329,10 +335,20 @@ class LessonPlayer {
     const penalty = this.mistakes + (this.hintsUsed > 0 ? 1 : 0);
     const stars = Math.max(1, 3 - penalty);
 
-    const result = completeLesson(this.lesson.id, { xp: this.lesson.xp ?? 10, stars });
+    const result = completeLesson(
+      this.lesson.id,
+      { xp: this.lesson.xp ?? 10, stars },
+      this.curriculum
+    );
+
+    playFinish();
     burstBig();
+    this.updateHeaderXp();
+    if (result.leveledUp) setTimeout(() => playLevelUp(), 500);
+    if (result.newBadges.length) setTimeout(() => playBadge(), 900);
 
     const nextHref = this.nextLessonHref();
+    const streak = result.streak;
 
     this.stage.innerHTML = `
       <div class="card card--finish">
@@ -342,6 +358,28 @@ class LessonPlayer {
           ${[0,1,2].map(i => `<span class="star star--big ${i < stars ? "star--on" : ""}">★</span>`).join("")}
         </div>
         <p class="finish__xp">${result.firstTime ? `+${result.gainedXp} XP` : "Wiederholt – kein neues XP"}</p>
+
+        ${result.leveledUp ? `<p class="finish__levelup">🎉 Level ${result.level} erreicht!</p>` : ""}
+
+        <div class="finish__streak">
+          <span class="finish__streak-flame">🔥</span>
+          ${streak.current} ${streak.current === 1 ? "Tag" : "Tage"} in Folge
+          ${result.streakProtected ? `<span class="finish__streak-shield" title="Ein Tag Pause wurde verziehen">🛡 geschützt</span>` : ""}
+        </div>
+
+        ${result.newBadges.length ? `
+          <div class="finish__badges">
+            <p class="finish__badges-title">Neue Abzeichen!</p>
+            <div class="badge-reveal-row">
+              ${result.newBadges.map((b) => `
+                <div class="badge-chip badge-chip--earned badge-chip--new" title="${b.desc}">
+                  <span class="badge-chip__icon">${b.icon}</span>
+                  <span class="badge-chip__title">${b.title}</span>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        ` : ""}
       </div>
     `;
     this.footer.innerHTML = "";
@@ -351,6 +389,19 @@ class LessonPlayer {
       const nextBtn = html(`<a class="btn btn--primary" href="${nextHref}">Nächste Lektion →</a>`);
       this.footer.append(nextBtn);
     }
+  }
+
+  // Aktualisiert Level/XP-Balken/Zahl im (bereits gerenderten) Header live,
+  // ohne die ganze Seite neu zu laden.
+  updateHeaderXp() {
+    const xp = getXp();
+    const { level, ratio } = levelProgress(xp);
+    const xpEl = this.app.querySelector(".xp-count");
+    const fillEl = this.app.querySelector(".xpbar__fill");
+    const levelEl = this.app.querySelector(".badge-level");
+    if (xpEl) animateNumber(xpEl, xp);
+    if (fillEl) fillEl.style.width = `${Math.round(ratio * 100)}%`;
+    if (levelEl) levelEl.textContent = `Level ${level}`;
   }
 
   nextLessonHref() {

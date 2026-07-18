@@ -1,10 +1,17 @@
-// Profil: XP, Level, Gesamtfortschritt und gesammelte Sterne.
-// Badges/Streak folgen in Phase M2.
+// Profil: XP, Level, Gesamtfortschritt, Streak und Badge-Sammlung.
 
-import { renderHeader, starRow } from "../ui.js";
-import { getXp, levelProgress, getLesson, isDone } from "../progress.js";
+import { renderHeader, wireHeader } from "../ui.js";
+import {
+  getXp,
+  levelProgress,
+  getLesson,
+  isDone,
+  getBadges,
+  getStreak,
+  resetProgress,
+} from "../progress.js";
 import { flattenLessons } from "../content.js";
-import { resetProgress } from "../progress.js";
+import { BADGES } from "../badges.js";
 
 export function renderProfile(app, curriculum) {
   const xp = getXp();
@@ -15,6 +22,10 @@ export function renderProfile(app, curriculum) {
   const stars = flat.reduce((sum, f) => sum + (getLesson(f.lessonId).stars || 0), 0);
   const maxStars = total * 3;
   const pct = total ? Math.round((done / total) * 100) : 0;
+
+  const streak = getStreak();
+  const earnedBadges = getBadges();
+  const badgesEarnedCount = Object.keys(earnedBadges).length;
 
   app.innerHTML = `
     ${renderHeader("profil")}
@@ -35,6 +46,24 @@ export function renderProfile(app, curriculum) {
         <div class="stat"><span class="stat__num">⭐ ${stars}/${maxStars}</span><span class="stat__label">Sterne</span></div>
       </div>
 
+      <section class="streak-card">
+        <div class="streak-card__flame">🔥</div>
+        <div class="streak-card__body">
+          <div class="streak-card__row">
+            <span class="streak-card__num">${streak.current}</span>
+            <span class="streak-card__label">${streak.current === 1 ? "Tag" : "Tage"} in Folge</span>
+          </div>
+          <p class="streak-card__best">Beste Serie: ${streak.best} ${streak.best === 1 ? "Tag" : "Tage"}</p>
+        </div>
+      </section>
+
+      <section class="badges-section">
+        <h2>Abzeichen <span class="badges-section__count">${badgesEarnedCount}/${BADGES.length}</span></h2>
+        <div class="badges-grid">
+          ${BADGES.map((b) => renderBadge(b, Boolean(earnedBadges[b.id]))).join("")}
+        </div>
+      </section>
+
       <div class="danger">
         <button class="btn btn--ghost btn--reset">Fortschritt zurücksetzen</button>
       </div>
@@ -48,4 +77,15 @@ export function renderProfile(app, curriculum) {
       location.reload();
     }
   };
+
+  wireHeader(app);
+}
+
+function renderBadge(badge, earned) {
+  return `
+    <div class="badge-chip ${earned ? "badge-chip--earned" : "badge-chip--locked"}" title="${badge.desc}">
+      <span class="badge-chip__icon">${earned ? badge.icon : "🔒"}</span>
+      <span class="badge-chip__title">${badge.title}</span>
+    </div>
+  `;
 }

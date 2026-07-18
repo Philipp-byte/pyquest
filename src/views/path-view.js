@@ -1,7 +1,7 @@
 // Lernpfad: Kapitel als Abschnitte, Lektionen als Knoten auf einem Pfad
 // (Duolingo-artige Landkarte). Zeigt Fortschritt, Sterne und Sperren.
 
-import { renderHeader, starRow } from "../ui.js";
+import { renderHeader, starRow, wireHeader } from "../ui.js";
 import { getLesson, isDone, isUnlocked } from "../progress.js";
 
 export function renderPath(app, curriculum) {
@@ -19,6 +19,7 @@ export function renderPath(app, curriculum) {
       ${chaptersHtml}
     </main>
   `;
+  wireHeader(app);
 }
 
 function renderChapter(curriculum, chapter) {

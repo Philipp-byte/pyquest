@@ -96,6 +96,14 @@ body {
 }
 .topbar__nav a.is-active { background: var(--green); color: #fff; }
 
+.sound-toggle {
+  border: 1px solid var(--border); background: var(--surface-2);
+  width: 40px; height: 40px; border-radius: 50%; font-size: 1.1rem;
+  cursor: pointer; display: grid; place-items: center; flex: none;
+  transition: transform .1s;
+}
+.sound-toggle:active { transform: scale(.9); }
+
 /* ---------- Path ---------- */
 .path { max-width: 720px; margin: 0 auto; padding: 1.5rem 1rem 5rem; }
 .path__intro h1 { font-size: 2rem; margin: .3rem 0; }
@@ -280,6 +288,30 @@ body {
 .finish__emoji { font-size: 4rem; animation: bob 1.6s ease-in-out infinite; }
 .finish__stars { margin: .5rem 0; }
 .finish__xp { font-size: 1.4rem; font-weight: 900; color: var(--green-dark); }
+.finish__levelup {
+  font-size: 1.1rem; font-weight: 900; color: #fff; display: inline-block;
+  background: linear-gradient(135deg, var(--purple), var(--blue));
+  padding: .5rem 1.1rem; border-radius: 999px; margin: .3rem 0 0;
+  animation: pop .4s ease;
+}
+.finish__streak {
+  margin-top: 1rem; display: inline-flex; align-items: center; gap: .5rem;
+  font-weight: 800; color: var(--fg-soft); background: var(--surface-2);
+  padding: .5rem 1rem; border-radius: 999px; border: 1px solid var(--border);
+}
+.finish__streak-flame { font-size: 1.2rem; }
+.finish__streak-shield {
+  font-size: .78rem; font-weight: 800; color: var(--blue);
+  border-left: 1px solid var(--border); padding-left: .5rem; margin-left: .2rem;
+}
+.finish__badges { margin-top: 1.4rem; }
+.finish__badges-title { font-weight: 800; color: var(--fg-soft); margin-bottom: .6rem; }
+.badge-reveal-row { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; }
+@keyframes pop {
+  0% { transform: scale(.6); opacity: 0; }
+  60% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); }
+}
 
 /* ---------- Profile ---------- */
 .profile { max-width: 720px; margin: 0 auto; padding: 1.5rem 1rem 5rem; }
@@ -292,6 +324,38 @@ body {
 .stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem; text-align: center; box-shadow: var(--shadow); }
 .stat__num { display: block; font-size: 1.6rem; font-weight: 900; color: var(--fg); }
 .stat__label { color: var(--muted); font-weight: 700; font-size: .85rem; }
+
+.streak-card {
+  margin-top: 1.4rem; display: flex; align-items: center; gap: 1rem;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--yellow) 20%, var(--surface)), var(--surface));
+  border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.4rem;
+  box-shadow: var(--shadow);
+}
+.streak-card__flame { font-size: 2.2rem; }
+.streak-card__row { display: flex; align-items: baseline; gap: .4rem; }
+.streak-card__num { font-size: 1.8rem; font-weight: 900; }
+.streak-card__label { color: var(--fg-soft); font-weight: 700; }
+.streak-card__best { margin: .1rem 0 0; color: var(--muted); font-size: .85rem; }
+
+.badges-section { margin-top: 2rem; }
+.badges-section h2 { display: flex; align-items: center; gap: .6rem; font-size: 1.15rem; }
+.badges-section__count { font-size: .85rem; font-weight: 700; color: var(--muted); background: var(--surface-2); padding: .15rem .55rem; border-radius: 999px; border: 1px solid var(--border); }
+.badges-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: .8rem; margin-top: .8rem;
+}
+.badge-chip {
+  display: flex; flex-direction: column; align-items: center; gap: .4rem;
+  padding: 1rem .6rem; border-radius: var(--radius); text-align: center;
+  border: 1px solid var(--border); background: var(--surface);
+}
+.badge-chip__icon { font-size: 1.8rem; }
+.badge-chip__title { font-size: .82rem; font-weight: 700; }
+.badge-chip--earned { background: color-mix(in srgb, var(--yellow) 14%, var(--surface)); border-color: color-mix(in srgb, var(--yellow) 50%, var(--border)); box-shadow: var(--shadow); }
+.badge-chip--locked { opacity: .55; }
+.badge-chip--locked .badge-chip__icon { filter: grayscale(1); }
+.badge-chip--new { animation: pop .5s ease; }
+
 .danger { margin-top: 2rem; text-align: center; }
 
 /* ---------- Responsive ---------- */
