@@ -132,7 +132,7 @@ class LessonPlayer {
       status.textContent = "";
       output.hidden = false;
       output.textContent = res.error
-        ? `⚠ ${res.error.friendly}\n${res.error.detail}`
+        ? `${res.error.original}\n\n→ ${res.error.explanation}`
         : res.stdout || "(keine Ausgabe)";
       runBtn.disabled = false;
     };
@@ -278,7 +278,7 @@ class LessonPlayer {
       status.textContent = "";
       output.hidden = false;
       output.textContent = res.error
-        ? `⚠ ${res.error.friendly}\n${res.error.detail}`
+        ? `${res.error.original}\n\n→ ${res.error.explanation}`
         : res.stdout || "(keine Ausgabe)";
       runBtn.disabled = false;
     };
@@ -310,7 +310,7 @@ class LessonPlayer {
         feedback.hidden = false;
         feedback.className = "feedback feedback--no";
         if (result.error) {
-          feedback.innerHTML = `⚠ <strong>${result.error.friendly}</strong><br><span class="err-detail">${escape(result.error.detail)}</span>`;
+          feedback.innerHTML = `<span class="err-detail">${escape(result.error.original)}</span><br>→ ${escape(result.error.explanation)}`;
         } else {
           const failed = result.results.filter((r) => !r.ok).map((r) => `<li>${r.label}</li>`).join("");
           feedback.innerHTML = `Noch nicht ganz. Diese Prüfung fehlt noch:<ul>${failed}</ul>${step.hints?.length ? "Tipp: Nutze den 💡-Button." : ""}`;

@@ -82,26 +82,28 @@ function stripTrailingNewline(s) {
   return s.replace(/\n$/, "");
 }
 
-// Uebersetzt haeufige Python-Fehler in verstaendliche deutsche Hinweise.
+// Belaesst die originale Python-Fehlermeldung unveraendert (englisch, wie
+// Python sie ausgibt) und ergaenzt eine deutsche ERKLAERUNG dazu – die
+// Meldung selbst wird nicht uebersetzt.
 function friendlyError(e) {
   const msg = String(e.message || e);
-  const lastLine =
+  const original =
     msg.trim().split("\n").filter(Boolean).pop() || "Unbekannter Fehler";
 
   const map = [
-    [/SyntaxError/, "Syntaxfehler: Da hat sich ein Tippfehler eingeschlichen. Prüfe Klammern, Anführungszeichen und Doppelpunkte."],
-    [/IndentationError/, "Einrückungsfehler: Achte auf die Leerzeichen am Zeilenanfang. In Python müssen Blöcke gleichmäßig eingerückt sein."],
-    [/NameError/, "Namensfehler: Python kennt diesen Namen nicht. Hast du dich vertippt oder eine Variable vergessen zu definieren?"],
-    [/TypeError/, "Typfehler: Hier passen zwei Dinge nicht zusammen – z. B. Text und Zahl gemischt."],
+    [/SyntaxError/, "Ein Syntaxfehler: Irgendwo stimmt die Schreibweise nicht. Prüfe Klammern, Anführungszeichen und Doppelpunkte."],
+    [/IndentationError/, "Ein Einrückungsfehler: Achte auf die Leerzeichen am Zeilenanfang. In Python müssen Blöcke gleichmäßig eingerückt sein."],
+    [/NameError/, "Ein Namensfehler: Python kennt diesen Namen nicht. Hast du dich vertippt oder eine Variable vergessen zu definieren?"],
+    [/TypeError/, "Ein Typfehler: Hier passen zwei Dinge nicht zusammen – z. B. Text und Zahl gemischt."],
     [/ZeroDivisionError/, "Du hast durch 0 geteilt – das geht in der Mathematik nicht."],
-    [/IndexError/, "Index-Fehler: Du greifst auf eine Stelle in einer Liste zu, die es nicht gibt."],
-    [/KeyError/, "Schlüssel-Fehler: Diesen Schlüssel gibt es im Dictionary nicht."],
-    [/ValueError/, "Wert-Fehler: Der Wert passt nicht zu dem, was erwartet wird."],
+    [/IndexError/, "Ein Index-Fehler: Du greifst auf eine Stelle in einer Liste zu, die es nicht gibt."],
+    [/KeyError/, "Ein Schlüssel-Fehler: Diesen Schlüssel gibt es im Dictionary nicht."],
+    [/ValueError/, "Ein Wert-Fehler: Der Wert passt nicht zu dem, was erwartet wird."],
     [/ModuleNotFoundError/, "Dieses Modul ist hier nicht verfügbar."],
   ];
 
-  for (const [re, friendly] of map) {
-    if (re.test(msg)) return { friendly, detail: lastLine };
+  for (const [re, explanation] of map) {
+    if (re.test(msg)) return { original, explanation };
   }
-  return { friendly: "Es ist ein Fehler aufgetreten.", detail: lastLine };
+  return { original, explanation: "Schau dir die Fehlermeldung oben genau an – oft steht die betroffene Zeile dabei." };
 }
