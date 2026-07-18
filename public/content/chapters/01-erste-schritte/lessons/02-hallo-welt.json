@@ -23,15 +23,15 @@
     },
     {
       "type": "code",
-      "task": "Schreibe ein Programm, das **`Hallo Welt!`** ausgibt.",
+      "task": "Jetzt du! Schreibe ein Programm, das **`Python ist so cool!`** ausgibt.",
       "starterCode": "# Schreibe deinen Code hier\n",
       "hints": [
-        "Nutze den Befehl print()",
+        "Nutze den Befehl print() wie im Beispiel",
         "Der Text gehört in Anführungszeichen",
-        "So sieht die Lösung aus: print(\"Hallo Welt!\")"
+        "So sieht die Lösung aus: print(\"Python ist so cool!\")"
       ],
       "tests": [
-        { "type": "output", "expected": "Hallo Welt!" }
+        { "type": "output", "expected": "Python ist so cool!" }
       ]
     }
   ]
