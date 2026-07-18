@@ -83,27 +83,69 @@ function stripTrailingNewline(s) {
 }
 
 // Belaesst die originale Python-Fehlermeldung unveraendert (englisch, wie
-// Python sie ausgibt) und ergaenzt eine deutsche ERKLAERUNG dazu – die
-// Meldung selbst wird nicht uebersetzt.
+// Python sie ausgibt) und ergaenzt eine deutsche ERKLAERUNG dazu, die moeglichst
+// konkret auf die wahrscheinliche Ursache und Loesung hinweist – die Meldung
+// selbst wird nicht uebersetzt.
 function friendlyError(e) {
   const msg = String(e.message || e);
   const original =
     msg.trim().split("\n").filter(Boolean).pop() || "Unbekannter Fehler";
 
-  const map = [
-    [/SyntaxError/, "Ein Syntaxfehler: Irgendwo stimmt die Schreibweise nicht. Prüfe Klammern, Anführungszeichen und Doppelpunkte."],
-    [/IndentationError/, "Ein Einrückungsfehler: Achte auf die Leerzeichen am Zeilenanfang. In Python müssen Blöcke gleichmäßig eingerückt sein."],
-    [/NameError/, "Ein Namensfehler: Python kennt diesen Namen nicht. Hast du dich vertippt oder eine Variable vergessen zu definieren?"],
-    [/TypeError/, "Ein Typfehler: Hier passen zwei Dinge nicht zusammen – z. B. Text und Zahl gemischt."],
-    [/ZeroDivisionError/, "Du hast durch 0 geteilt – das geht in der Mathematik nicht."],
-    [/IndexError/, "Ein Index-Fehler: Du greifst auf eine Stelle in einer Liste zu, die es nicht gibt."],
-    [/KeyError/, "Ein Schlüssel-Fehler: Diesen Schlüssel gibt es im Dictionary nicht."],
-    [/ValueError/, "Ein Wert-Fehler: Der Wert passt nicht zu dem, was erwartet wird."],
-    [/ModuleNotFoundError/, "Dieses Modul ist hier nicht verfügbar."],
-  ];
+  return { original, explanation: explainError(msg) };
+}
 
-  for (const [re, explanation] of map) {
-    if (re.test(msg)) return { original, explanation };
+function explainError(msg) {
+  // NameError: haeufigster Anfaengerfehler ist ein vergessenes Anfuehrungszeichen,
+  // dadurch haelt Python den Text faelschlich fuer einen Variablennamen.
+  const nameMatch = msg.match(/NameError: name '([^']+)' is not defined/);
+  if (nameMatch) {
+    const name = nameMatch[1];
+    return (
+      `Python kennt den Namen „${name}" nicht und behandelt ihn wie eine Variable. ` +
+      `Wolltest du den Text „${name}" ausgeben? Dann fehlen die Anführungszeichen: ` +
+      `schreibe "${name}" statt ${name}. ` +
+      `Falls es wirklich eine Variable sein soll, musst du ihr vorher einen Wert geben.`
+    );
   }
-  return { original, explanation: "Schau dir die Fehlermeldung oben genau an – oft steht die betroffene Zeile dabei." };
+
+  if (/unterminated string literal|EOL while scanning string/.test(msg)) {
+    return "Ein Anführungszeichen fehlt oder ist zu viel. Jeder Text braucht ein Anführungszeichen am Anfang UND am Ende.";
+  }
+  if (/unexpected EOF|was never closed|SyntaxError: '.*' was never closed/.test(msg)) {
+    return "Eine Klammer wurde geöffnet, aber nicht wieder geschlossen. Prüfe, ob zu jeder ( auch eine ) gehört.";
+  }
+  if (/expected ':'/.test(msg)) {
+    return "Am Ende der Zeile fehlt ein Doppelpunkt (:) – z. B. nach if, for, while oder def.";
+  }
+  if (/IndentationError/.test(msg)) {
+    return "Die Einrückung stimmt nicht. Zeilen, die zu einem Block gehören (z. B. nach einem :), müssen gleich weit eingerückt sein – am besten mit 4 Leerzeichen.";
+  }
+  if (/SyntaxError/.test(msg)) {
+    return "Irgendwo stimmt die Schreibweise nicht. Prüfe Klammern, Anführungszeichen und Doppelpunkte in der angezeigten Zeile.";
+  }
+  if (/can only concatenate str.*to str|unsupported operand type.*str.*int|str.*int/.test(msg) && /TypeError/.test(msg)) {
+    return "Du versuchst, Text und Zahl direkt zu verbinden. Wandle die Zahl mit str(zahl) in Text um – oder die Eingabe mit int(text) in eine Zahl.";
+  }
+  if (/TypeError/.test(msg)) {
+    return "Hier passen zwei Dinge nicht zusammen – oft werden Text und Zahl vermischt. Prüfe, ob du an einer Stelle str() oder int() brauchst.";
+  }
+  if (/ZeroDivisionError/.test(msg)) {
+    return "Du teilst durch 0 – das ist mathematisch nicht möglich. Prüfe den Wert, durch den du teilst.";
+  }
+  if (/IndexError/.test(msg)) {
+    return "Du greifst auf eine Stelle in einer Liste zu, die es nicht gibt. Denk daran: die erste Stelle ist 0, nicht 1.";
+  }
+  if (/KeyError/.test(msg)) {
+    return "Diesen Schlüssel gibt es im Dictionary nicht. Prüfe die Schreibweise des Schlüssels.";
+  }
+  if (/ValueError.*invalid literal for int/.test(msg)) {
+    return "Du versuchst, Text in eine Zahl umzuwandeln, der keine Zahl ist. int() funktioniert nur mit Ziffern wie \"42\".";
+  }
+  if (/ValueError/.test(msg)) {
+    return "Der Wert passt nicht zu dem, was erwartet wird. Prüfe, was du an dieser Stelle übergibst.";
+  }
+  if (/ModuleNotFoundError|ImportError/.test(msg)) {
+    return "Dieses Modul ist hier nicht verfügbar.";
+  }
+  return "Schau dir die Fehlermeldung oben genau an – oft steht die betroffene Zeile mit dabei.";
 }
