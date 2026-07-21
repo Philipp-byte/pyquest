@@ -2,7 +2,7 @@
 
 import { levelProgress, getXp, getBackendMode } from "./store.js";
 import { isMuted, toggleMuted } from "./sound.js";
-import { logout } from "./progress-remote.js";
+import { logout, isLeaderboardEnabled } from "./progress-remote.js";
 
 // Erzeugt ein Element aus HTML-String.
 export function html(str) {
@@ -33,6 +33,7 @@ export function renderHeader(active = "path") {
       ${remoteMode ? `<button class="logout-btn" title="Abmelden">🚪</button>` : ""}
       <nav class="topbar__nav">
         <a href="#/" class="${active === "path" ? "is-active" : ""}">Lernpfad</a>
+        ${remoteMode && isLeaderboardEnabled() ? `<a href="#/rangliste" class="${active === "rangliste" ? "is-active" : ""}">Rangliste</a>` : ""}
         <a href="#/profil" class="${active === "profil" ? "is-active" : ""}">Profil</a>
       </nav>
     </header>

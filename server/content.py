@@ -17,3 +17,11 @@ def load_chapter_lesson_map():
         chapter = json.loads(chapter_path.read_text(encoding="utf-8"))
         chapters.append({"id": chapter["id"], "lessonIds": chapter["lessons"]})
     return chapters
+
+
+def chapter_id_for_lesson(lesson_id):
+    """Zu welchem Kapitel gehoert eine Lektion? None, falls unbekannt."""
+    for chapter in load_chapter_lesson_map():
+        if lesson_id in chapter["lessonIds"]:
+            return chapter["id"]
+    return None

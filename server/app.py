@@ -16,9 +16,11 @@ from pathlib import Path
 import click
 from flask import Flask, jsonify, request, send_from_directory, session
 
+import admin_routes
 import progress_logic as pl
+import teacher_routes
 from auth import hash_password, login_required, verify_password
-from content import load_chapter_lesson_map
+from content import chapter_id_for_lesson, load_chapter_lesson_map
 from db import get_db, init_db
 
 BASE_DIR = Path(__file__).parent
@@ -42,6 +44,9 @@ app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 
 with app.app_context():
     init_db()
+
+app.register_blueprint(teacher_routes.bp)
+app.register_blueprint(admin_routes.bp)
 
 
 # ---------------------------------------------------------------- Hilfsfunktionen
@@ -95,7 +100,21 @@ def build_state(conn, user_id):
         "lastActiveDate": streak_row["last_active_date"] if streak_row else None,
         "lastFreezeWeek": streak_row["last_freeze_week"] if streak_row else None,
     }
-    return {"xp": user["xp"], "lessons": lessons, "badges": badges, "streak": streak}
+
+    locked_chapters = []
+    if user["class_id"]:
+        locked_chapters = [
+            row["chapter_id"]
+            for row in conn.execute(
+                "SELECT chapter_id FROM unlocks WHERE class_id=? AND locked=1",
+                (user["class_id"],),
+            ).fetchall()
+        ]
+
+    return {
+        "xp": user["xp"], "lessons": lessons, "badges": badges, "streak": streak,
+        "lockedChapters": locked_chapters,
+    }
 
 
 # ---------------------------------------------------------------- API-Routen
@@ -165,7 +184,58 @@ def me():
     user = conn.execute(
         "SELECT * FROM users WHERE id=?", (session["user_id"],)
     ).fetchone()
-    return jsonify({"pseudonym": user["pseudonym"], "role": user["role"]})
+    result = {"id": user["id"], "pseudonym": user["pseudonym"], "role": user["role"]}
+    if user["role"] == "student" and user["class_id"]:
+        cls = conn.execute(
+            "SELECT leaderboard_enabled FROM classes WHERE id=?", (user["class_id"],)
+        ).fetchone()
+        result["leaderboardEnabled"] = bool(cls["leaderboard_enabled"]) if cls else False
+    return jsonify(result)
+
+
+@app.get("/api/progress/leaderboard")
+@login_required
+def leaderboard():
+    conn = get_db()
+    user = conn.execute(
+        "SELECT * FROM users WHERE id=?", (session["user_id"],)
+    ).fetchone()
+    if not user["class_id"]:
+        return jsonify({"enabled": False, "entries": []})
+    cls = conn.execute(
+        "SELECT leaderboard_enabled FROM classes WHERE id=?", (user["class_id"],)
+    ).fetchone()
+    if not cls or not cls["leaderboard_enabled"]:
+        return jsonify({"enabled": False, "entries": []})
+
+    rows = conn.execute(
+        """SELECT pseudonym, xp FROM users
+           WHERE class_id=? AND role='student' ORDER BY xp DESC, pseudonym""",
+        (user["class_id"],),
+    ).fetchall()
+    entries = [
+        {
+            "pseudonym": r["pseudonym"],
+            "xp": r["xp"],
+            "level": pl.level_for_xp(r["xp"]),
+            "isMe": r["pseudonym"] == user["pseudonym"],
+        }
+        for r in rows
+    ]
+    return jsonify({"enabled": True, "entries": entries})
+
+
+@app.get("/api/settings/public")
+def public_settings():
+    conn = get_db()
+    rows = conn.execute(
+        "SELECT key, value FROM settings WHERE key IN ('school_name', 'default_sound_enabled')"
+    ).fetchall()
+    values = {r["key"]: r["value"] for r in rows}
+    return jsonify({
+        "schoolName": values.get("school_name", ""),
+        "defaultSoundEnabled": values.get("default_sound_enabled", "1") == "1",
+    })
 
 
 @app.get("/api/progress/state")
@@ -188,6 +258,15 @@ def complete_lesson():
     conn = get_db()
     user_id = session["user_id"]
     user = conn.execute("SELECT * FROM users WHERE id=?", (user_id,)).fetchone()
+
+    if user["class_id"]:
+        chapter_id = chapter_id_for_lesson(lesson_id)
+        locked = conn.execute(
+            "SELECT 1 FROM unlocks WHERE class_id=? AND chapter_id=? AND locked=1",
+            (user["class_id"], chapter_id),
+        ).fetchone()
+        if locked:
+            return jsonify({"error": "chapter_locked"}), 403
 
     existing = conn.execute(
         "SELECT * FROM progress WHERE user_id=? AND lesson_id=?", (user_id, lesson_id)
@@ -304,7 +383,9 @@ def serve_frontend(path):
 
 # ---------------------------------------------------------------- CLI (Account-Bootstrap)
 # Volle Klassen-/Account-Verwaltung mit automatischer Pseudonym-Generierung
-# folgt im Lehrer-Dashboard (Phase M4). Bis dahin: einfache CLI-Befehle.
+# gibt es jetzt im Lehrer-Dashboard (teacher_routes.py). Diese CLI-Befehle
+# bleiben fuer das allererste Anlegen von Admin-/Lehrer-Accounts nuetzlich,
+# bevor jemand sich ueberhaupt einloggen kann.
 
 @app.cli.command("create-user")
 @click.argument("pseudonym")

@@ -6,6 +6,8 @@
 CREATE TABLE IF NOT EXISTS classes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
+    teacher_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+    leaderboard_enabled INTEGER NOT NULL DEFAULT 0,
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
@@ -51,4 +53,19 @@ CREATE TABLE IF NOT EXISTS streaks (
     best INTEGER NOT NULL DEFAULT 0,
     last_active_date TEXT,
     last_freeze_week TEXT
+);
+
+-- Kapitel, die eine Lehrkraft fuer ihre Klasse gesperrt hat (Unterrichtstempo
+-- steuern). Keine Zeile = Kapitel offen. locked=1 = gesperrt.
+CREATE TABLE IF NOT EXISTS unlocks (
+    class_id INTEGER NOT NULL REFERENCES classes(id) ON DELETE CASCADE,
+    chapter_id TEXT NOT NULL,
+    locked INTEGER NOT NULL DEFAULT 1,
+    PRIMARY KEY (class_id, chapter_id)
+);
+
+-- Globale Einstellungen (Admin-Bereich).
+CREATE TABLE IF NOT EXISTS settings (
+    key TEXT PRIMARY KEY,
+    value TEXT
 );

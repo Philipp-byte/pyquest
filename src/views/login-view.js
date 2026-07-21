@@ -3,14 +3,22 @@
 // gueltige Sitzung besteht - siehe main.js (detectSchoolMode).
 
 import { login } from "../progress-remote.js";
+import { api } from "../api.js";
 
-export function renderLogin(app, { onLoggedIn }) {
+export async function renderLogin(app, { onLoggedIn }) {
+  let schoolName = "";
+  try {
+    ({ schoolName } = await api("/api/settings/public"));
+  } catch {
+    // Kein Problem, dann bleibt der generische Untertitel stehen.
+  }
+
   app.innerHTML = `
     <div class="login-screen">
       <div class="login-card">
         <div class="login-card__logo">🐍</div>
         <h1>PyQuest</h1>
-        <p class="login-card__sub">Schulmodus – bitte anmelden</p>
+        <p class="login-card__sub">${schoolName ? escapeHtml(schoolName) : "Schulmodus – bitte anmelden"}</p>
         <form class="login-form">
           <label>Benutzername
             <input type="text" name="pseudonym" autocomplete="username" required autofocus>
@@ -43,4 +51,8 @@ export function renderLogin(app, { onLoggedIn }) {
       submitBtn.disabled = false;
     }
   };
+}
+
+function escapeHtml(s = "") {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }

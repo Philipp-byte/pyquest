@@ -19,6 +19,15 @@ export function setMuted(muted) {
   localStorage.setItem(KEY, muted ? "1" : "0");
 }
 
+// Wendet die vom Admin gesetzte Standardeinstellung nur an, wenn die
+// Nutzerin/der Nutzer noch nie selbst am Sound-Schalter gedreht hat (kein
+// Ueberschreiben einer bewussten eigenen Wahl).
+export function applyDefaultIfUnset(defaultEnabled) {
+  if (localStorage.getItem(KEY) === null) {
+    setMuted(!defaultEnabled);
+  }
+}
+
 export function toggleMuted() {
   const next = !isMuted();
   setMuted(next);

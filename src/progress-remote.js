@@ -7,30 +7,27 @@
 // PLAN.md Abschnitt 2. Es wird kein Schuelercode an den Server geschickt.
 
 import { flattenLessons } from "./content.js";
+import { api } from "./api.js";
 
 let state = {
   xp: 0,
   lessons: {},
   badges: {},
   streak: { current: 0, best: 0, lastActiveDate: null, lastFreezeWeek: null },
+  lockedChapters: [],
 };
 
-async function api(path, options = {}) {
-  const res = await fetch(path, {
-    credentials: "same-origin",
-    headers: { "Content-Type": "application/json" },
-    ...options,
-  });
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    throw new Error(body.error || `Serverfehler (${res.status})`);
-  }
-  return res.json();
+let leaderboardEnabled = false;
+
+export function isLeaderboardEnabled() {
+  return leaderboardEnabled;
 }
 
 export async function whoAmI() {
   try {
-    return await api("/api/me");
+    const me = await api("/api/me");
+    if (me) leaderboardEnabled = Boolean(me.leaderboardEnabled);
+    return me;
   } catch {
     return null;
   }
@@ -47,7 +44,11 @@ export async function login(pseudonym, password) {
 
 export async function logout() {
   await api("/api/auth/logout", { method: "POST" });
-  state = { xp: 0, lessons: {}, badges: {}, streak: { current: 0, best: 0, lastActiveDate: null, lastFreezeWeek: null } };
+  state = {
+    xp: 0, lessons: {}, badges: {},
+    streak: { current: 0, best: 0, lastActiveDate: null, lastFreezeWeek: null },
+    lockedChapters: [],
+  };
 }
 
 export async function changePassword(oldPassword, newPassword) {
@@ -74,6 +75,7 @@ export function isDone(lessonId) {
 }
 
 export function isUnlocked(curriculum, chapterId, lessonId) {
+  if ((state.lockedChapters || []).includes(chapterId)) return false;
   const flat = flattenLessons(curriculum);
   const idx = flat.findIndex(
     (f) => f.chapterId === chapterId && f.lessonId === lessonId

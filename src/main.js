@@ -13,8 +13,13 @@ import { renderPath } from "./views/path-view.js";
 import { renderLesson } from "./views/lesson-view.js";
 import { renderProfile } from "./views/profile-view.js";
 import { renderLogin } from "./views/login-view.js";
+import { renderLeaderboard } from "./views/leaderboard-view.js";
+import { renderTeacherDashboard } from "./views/teacher-view.js";
+import { renderAdminDashboard } from "./views/admin-view.js";
 import { setBackendMode } from "./store.js";
-import { whoAmI, loadState, logout } from "./progress-remote.js";
+import { whoAmI, loadState } from "./progress-remote.js";
+import { api } from "./api.js";
+import { applyDefaultIfUnset } from "./sound.js";
 
 const app = document.getElementById("app");
 let curriculum = null;
@@ -61,10 +66,24 @@ async function boot() {
 // beiden Faellen greift (nicht nur beim Boot mit vorhandenem Cookie).
 async function enterApp(me) {
   if (!me) me = await whoAmI();
-  if (me.role !== "student") {
-    renderRolePlaceholder(me);
+
+  if (me.role === "teacher") {
+    await renderTeacherDashboard(app, me);
     return;
   }
+  if (me.role === "admin") {
+    await renderAdminDashboard(app, me);
+    return;
+  }
+
+  try {
+    const { defaultSoundEnabled } = await api("/api/settings/public");
+    applyDefaultIfUnset(defaultSoundEnabled);
+  } catch {
+    // Keine harte Abhaengigkeit - ohne erreichbare Einstellung bleibt der
+    // eingebaute Standard (Sound an) bestehen.
+  }
+
   await loadState();
   startApp();
 }
@@ -75,25 +94,10 @@ function startApp() {
     renderLesson(app, curriculum, chapter, lesson)
   );
   route("/profil", () => renderProfile(app, curriculum));
+  route("/rangliste", () => renderLeaderboard(app));
 
   const resolve = startRouter(() => renderPath(app, curriculum));
   resolve();
-}
-
-// Lehrer-/Admin-Dashboard folgt in Phase M4 - bis dahin ein einfacher Hinweis
-// statt einer halb gebauten Ansicht.
-function renderRolePlaceholder(me) {
-  app.innerHTML = `
-    <div class="boot">
-      <div class="boot__logo">🧑‍🏫</div>
-      <p>Hallo ${me.pseudonym}! Das Lehrer-/Admin-Dashboard kommt in einer späteren Phase.</p>
-      <button class="btn btn--ghost" id="logout-btn">Abmelden</button>
-    </div>
-  `;
-  document.getElementById("logout-btn").onclick = async () => {
-    await logout();
-    location.reload();
-  };
 }
 
 boot();

@@ -22,3 +22,18 @@ def login_required(f):
         return f(*args, **kwargs)
 
     return wrapper
+
+
+def roles_required(*roles):
+    def decorator(f):
+        @wraps(f)
+        def wrapper(*args, **kwargs):
+            if "user_id" not in session:
+                return jsonify({"error": "not_authenticated"}), 401
+            if session.get("role") not in roles:
+                return jsonify({"error": "forbidden"}), 403
+            return f(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
