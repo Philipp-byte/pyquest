@@ -1,0 +1,42 @@
+{
+  "id": "02-dateien-lesen",
+  "title": "Dateien lesen",
+  "icon": "📖",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Zum Lesen öffnest du eine Datei im Modus **`\"r\"`** (read). Mit **`.read()`** bekommst du den kompletten Inhalt als Text zurück."
+    },
+    {
+      "type": "example",
+      "text": "Erst schreiben, dann wieder lesen:",
+      "code": "with open(\"notizen.txt\", \"w\") as datei:\n    datei.write(\"Hallo Datei!\")\n\nwith open(\"notizen.txt\", \"r\") as datei:\n    inhalt = datei.read()\nprint(inhalt)"
+    },
+    {
+      "type": "explain",
+      "text": "Versuchst du, eine Datei zu lesen, die es nicht gibt, bekommst du einen **`FileNotFoundError`**. Deshalb muss die Datei vorher existieren (z. B. weil du sie zuerst geschrieben hast)."
+    },
+    {
+      "type": "quiz",
+      "question": "Welcher Modus wird zum Lesen einer Datei verwendet?",
+      "choices": ["\"w\"", "\"r\"", "\"read\""],
+      "answer": 1,
+      "explainCorrect": "Richtig! \"r\" steht für read (lesen).",
+      "explainWrong": "Zum Lesen nutzt man den Modus \"r\" (read)."
+    },
+    {
+      "type": "code",
+      "task": "Schreibe den Text **`Python macht Spaß`** in eine Datei namens **`text.txt`**. Lies die Datei danach wieder ein und gib den Inhalt aus.",
+      "starterCode": "",
+      "hints": [
+        "Erst schreiben mit \"w\", dann in einem zweiten with-Block lesen mit \"r\"",
+        "inhalt = datei.read() merkt sich den Inhalt zum Ausgeben",
+        "with open(\"text.txt\", \"w\") as datei:\n    datei.write(\"Python macht Spaß\")\n\nwith open(\"text.txt\", \"r\") as datei:\n    inhalt = datei.read()\nprint(inhalt)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "Python macht Spaß" }
+      ]
+    }
+  ]
+}

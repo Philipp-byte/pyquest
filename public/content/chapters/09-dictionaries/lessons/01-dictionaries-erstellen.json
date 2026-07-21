@@ -1,0 +1,42 @@
+{
+  "id": "01-dictionaries-erstellen",
+  "title": "Dictionaries erstellen und lesen",
+  "icon": "🗂️",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Eine Liste greift über eine **Position** (Index) auf Werte zu. Ein **Dictionary** greift stattdessen über einen **Schlüssel** (Key) zu – wie ein Wörterbuch oder ein Karteikasten."
+    },
+    {
+      "type": "example",
+      "text": "Ein Dictionary mit Schlüssel-Wert-Paaren:",
+      "code": "person = {\"name\": \"Ada\", \"alter\": 28}\nprint(person[\"name\"])\nprint(person[\"alter\"])"
+    },
+    {
+      "type": "explain",
+      "text": "Ein Dictionary steht in geschweiften Klammern **`{ }`**. Jeder Eintrag besteht aus `schlüssel: wert`. Zugriff erfolgt mit `dictionary[\"schlüssel\"]` – ähnlich wie bei Listen, aber mit einem Namen statt einer Zahl."
+    },
+    {
+      "type": "quiz",
+      "question": "Wie greift man in Python auf einen Wert im Dictionary `person` zu, dessen Schlüssel `\"name\"` ist?",
+      "choices": ["person(name)", "person[\"name\"]", "person.name()"],
+      "answer": 1,
+      "explainCorrect": "Richtig! Der Zugriff erfolgt mit eckigen Klammern und dem Schlüssel als Text.",
+      "explainWrong": "Der Zugriff erfolgt mit `person[\"name\"]` – eckige Klammern mit dem Schlüssel als Text."
+    },
+    {
+      "type": "code",
+      "task": "Lege ein Dictionary **`schueler`** mit den Einträgen `\"name\": \"Max\"` und `\"klasse\": \"BK1\"` an. Gib den Wert von **`\"klasse\"`** aus.",
+      "starterCode": "",
+      "hints": [
+        "schueler = {\"name\": \"Max\", \"klasse\": \"BK1\"}",
+        "print(schueler[\"klasse\"])",
+        "schueler = {\"name\": \"Max\", \"klasse\": \"BK1\"}\nprint(schueler[\"klasse\"])"
+      ],
+      "tests": [
+        { "type": "output", "expected": "BK1" }
+      ]
+    }
+  ]
+}

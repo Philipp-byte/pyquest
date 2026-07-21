@@ -1,0 +1,46 @@
+{
+  "id": "01-dateien-schreiben",
+  "title": "Dateien schreiben",
+  "icon": "💾",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Mit **`open()`** kannst du eine Datei öffnen, um Text hineinzuschreiben. Der beste Weg dafür ist die **`with`-Anweisung** – sie schließt die Datei automatisch wieder, auch wenn etwas schiefgeht."
+    },
+    {
+      "type": "example",
+      "text": "Eine Datei anlegen und beschreiben:",
+      "code": "with open(\"notizen.txt\", \"w\") as datei:\n    datei.write(\"Hallo Welt\")\nprint(\"Datei gespeichert!\")"
+    },
+    {
+      "type": "explain",
+      "text": "**`\"w\"`** steht für \"write\" (schreiben). Existiert die Datei schon, wird ihr Inhalt dabei **komplett überschrieben**! Der eingerückte Code unter `with ... as datei:` gehört zum \"Datei ist geöffnet\"-Block."
+    },
+    {
+      "type": "quiz",
+      "question": "Was passiert im Modus \"w\", wenn die Datei schon existiert?",
+      "choices": [
+        "Der neue Text wird angehängt",
+        "Der bisherige Inhalt wird komplett überschrieben",
+        "Es gibt einen Fehler"
+      ],
+      "answer": 1,
+      "explainCorrect": "Richtig! \"w\" überschreibt den kompletten bisherigen Inhalt.",
+      "explainWrong": "Im Modus \"w\" wird der bisherige Inhalt der Datei komplett überschrieben. Zum Anhängen gibt es den Modus \"a\"."
+    },
+    {
+      "type": "code",
+      "task": "Schreibe den Text **`Mein erstes Python-Projekt`** in eine Datei namens **`projekt.txt`** (nutze `with open(...) as ...`). Gib danach **`Fertig!`** aus.",
+      "starterCode": "",
+      "hints": [
+        "with open(\"projekt.txt\", \"w\") as datei:\n    datei.write(\"Mein erstes Python-Projekt\")",
+        "Danach: print(\"Fertig!\")",
+        "with open(\"projekt.txt\", \"w\") as datei:\n    datei.write(\"Mein erstes Python-Projekt\")\nprint(\"Fertig!\")"
+      ],
+      "tests": [
+        { "type": "output", "expected": "Fertig!" }
+      ]
+    }
+  ]
+}

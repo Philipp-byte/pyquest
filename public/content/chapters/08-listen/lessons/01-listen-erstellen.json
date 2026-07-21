@@ -1,0 +1,42 @@
+{
+  "id": "01-listen-erstellen",
+  "title": "Listen erstellen und lesen",
+  "icon": "📋",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Eine **Liste** speichert mehrere Werte in einer einzigen Variable, in eckigen Klammern **`[ ]`**, getrennt durch Kommas."
+    },
+    {
+      "type": "example",
+      "text": "Auf ein Element zugreifst du über seinen **Index** – und der beginnt bei **0**, nicht bei 1!",
+      "code": "farben = [\"rot\", \"gruen\", \"blau\"]\nprint(farben[0])\nprint(farben[2])"
+    },
+    {
+      "type": "explain",
+      "text": "`farben[0]` ist das **erste** Element (`\"rot\"`), `farben[2]` das **dritte** (`\"blau\"`). Mit `farben[-1]` bekommst du das **letzte** Element, egal wie lang die Liste ist. Mit `len(farben)` erfährst du, wie viele Elemente die Liste hat."
+    },
+    {
+      "type": "quiz",
+      "question": "Welchen Index hat das erste Element einer Liste?",
+      "choices": ["1", "0", "-1"],
+      "answer": 1,
+      "explainCorrect": "Richtig! Listen-Indizes beginnen bei 0.",
+      "explainWrong": "Der erste Index einer Liste ist immer 0, nicht 1."
+    },
+    {
+      "type": "code",
+      "task": "Lege eine Liste **`tiere`** mit den Werten `\"Hund\"`, `\"Katze\"`, `\"Maus\"` an und gib das **zweite** Element aus (soll `Katze` sein).",
+      "starterCode": "",
+      "hints": [
+        "tiere = [\"Hund\", \"Katze\", \"Maus\"]",
+        "Das zweite Element hat Index 1",
+        "tiere = [\"Hund\", \"Katze\", \"Maus\"]\nprint(tiere[1])"
+      ],
+      "tests": [
+        { "type": "output", "expected": "Katze" }
+      ]
+    }
+  ]
+}

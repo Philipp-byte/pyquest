@@ -1,0 +1,42 @@
+{
+  "id": "01-definieren-und-aufrufen",
+  "title": "Funktionen definieren und aufrufen",
+  "icon": "🧰",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Eine **Funktion** ist ein wiederverwendbarer Codeblock mit einem Namen. Du definierst sie einmal mit **`def`** und kannst sie danach beliebig oft **aufrufen**."
+    },
+    {
+      "type": "example",
+      "text": "Definieren mit def, aufrufen mit Klammern:",
+      "code": "def begruessung():\n    print(\"Hallo!\")\n\nbegruessung()"
+    },
+    {
+      "type": "explain",
+      "text": "Der Code innerhalb der Funktion (eingerückt) wird erst ausgeführt, wenn die Funktion **aufgerufen** wird – also wenn ihr Name mit Klammern dahinter geschrieben wird: `begruessung()`."
+    },
+    {
+      "type": "quiz",
+      "question": "Mit welchem Schlüsselwort definiert man eine Funktion in Python?",
+      "choices": ["function", "def", "func"],
+      "answer": 1,
+      "explainCorrect": "Richtig! In Python startet eine Funktionsdefinition mit def.",
+      "explainWrong": "In Python nutzt man das Schlüsselwort `def`, gefolgt vom Funktionsnamen und Klammern."
+    },
+    {
+      "type": "code",
+      "task": "Definiere eine Funktion **`zeige_stern`**, die einen Stern (`*`) ausgibt. Rufe sie danach **dreimal** auf.",
+      "starterCode": "",
+      "hints": [
+        "def zeige_stern():\n    print(\"*\")",
+        "Danach dreimal aufrufen: zeige_stern()",
+        "def zeige_stern():\n    print(\"*\")\n\nzeige_stern()\nzeige_stern()\nzeige_stern()"
+      ],
+      "tests": [
+        { "type": "output", "expected": "*\n*\n*" }
+      ]
+    }
+  ]
+}

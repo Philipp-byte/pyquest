@@ -1,0 +1,44 @@
+{
+  "id": "03-rueckgabewerte",
+  "title": "Rückgabewerte",
+  "icon": "↩️",
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Mit **`return`** kann eine Funktion ein Ergebnis **zurückgeben**, das du danach weiterverwenden kannst – zum Beispiel in einer Variable speichern.\n\nDas ist etwas anderes als `print()`: `print()` zeigt nur etwas an, `return` gibt einen Wert an die Stelle zurück, wo die Funktion aufgerufen wurde."
+    },
+    {
+      "type": "example",
+      "text": "quadrat gibt einen Wert zurück, den wir speichern:",
+      "code": "def quadrat(zahl):\n    return zahl * zahl\n\nergebnis = quadrat(5)\nprint(ergebnis)"
+    },
+    {
+      "type": "explain",
+      "text": "Sobald Python auf `return` trifft, verlässt es die Funktion sofort mit diesem Wert. Hat eine Funktion **kein** `return`, gibt sie automatisch **`None`** zurück (\"nichts\")."
+    },
+    {
+      "type": "quiz",
+      "question": "Was gibt eine Funktion zurück, die kein return enthält?",
+      "choices": ["0", "None", "Einen Fehler"],
+      "answer": 1,
+      "explainCorrect": "Richtig! Ohne return gibt eine Funktion automatisch None zurück.",
+      "explainWrong": "Ohne explizites `return` gibt eine Funktion automatisch `None` zurück."
+    },
+    {
+      "type": "code",
+      "task": "Definiere eine Funktion **`verdopple(zahl)`**, die mit **`return`** (nicht mit print!) das Doppelte der Zahl zurückgibt.",
+      "starterCode": "",
+      "hints": [
+        "Nutze return, nicht print",
+        "def verdopple(zahl):\n    return zahl * 2",
+        "def verdopple(zahl):\n    return zahl * 2"
+      ],
+      "tests": [
+        { "type": "func", "call": "verdopple(6)", "expected": 12 },
+        { "type": "func", "call": "verdopple(10)", "expected": 20 },
+        { "type": "func", "call": "verdopple(0)", "expected": 0 }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "id": "02-quiz-programm",
+  "title": "Projekt: Quiz-Programm",
+  "icon": "🧠",
+  "xp": 40,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Im letzten Projekt baust du ein kleines **Quiz-Programm**. Es nutzt eine **Funktion mit Rückgabewert**, um Fragen zu stellen und zu prüfen, ob die Antwort stimmt."
+    },
+    {
+      "type": "example",
+      "text": "Eine Funktion, die eine Frage stellt und True/False zurückgibt:",
+      "code": "def frage_stellen(frage, richtige_antwort):\n    antwort = input(frage)\n    return antwort == richtige_antwort"
+    },
+    {
+      "type": "explain",
+      "text": "`frage_stellen(...)` liefert `True` oder `False` zurück – das kannst du direkt in einem `if` benutzen, um einen Zähler zu erhöhen: `if frage_stellen(...): richtig = richtig + 1`."
+    },
+    {
+      "type": "quiz",
+      "question": "Warum gibt frage_stellen() das Ergebnis mit return statt mit print() zurück?",
+      "choices": [
+        "Damit man das Ergebnis danach in einem if weiterverwenden kann",
+        "print() funktioniert in Funktionen generell nicht",
+        "Das ist egal, beides wäre identisch"
+      ],
+      "answer": 0,
+      "explainCorrect": "Genau! return gibt einen Wert zurück, den man z. B. in einem if oder einer Variable weiterverwenden kann.",
+      "explainWrong": "Mit return bekommt der Aufrufer den Wert zurück und kann ihn z. B. direkt in einem if prüfen – print() würde nur etwas anzeigen, aber keinen Wert zurückgeben."
+    },
+    {
+      "type": "code",
+      "task": "Vervollständige die Funktion **`frage_stellen(frage, richtige_antwort)`**: Sie soll die Frage per `input()` stellen und `True` oder `False` zurückgeben (Antwort == richtige_antwort). Rufe sie danach zweimal auf – mit `\"Hauptstadt von Frankreich? \"` / `\"Paris\"` und mit `\"Hauptstadt von Italien? \"` / `\"Rom\"` – und zähle die richtigen Antworten in `richtig`. Gib am Ende **`Du hast X von 2 richtig!`** aus.",
+      "starterCode": "def frage_stellen(frage, richtige_antwort):\n    # Hier deine Lösung\n    pass\n\nrichtig = 0\n\n# Rufe frage_stellen() zweimal auf und zähle richtig\n",
+      "needsInput": true,
+      "hints": [
+        "In frage_stellen: antwort = input(frage); return antwort == richtige_antwort",
+        "if frage_stellen(\"Hauptstadt von Frankreich? \", \"Paris\"): richtig = richtig + 1",
+        "def frage_stellen(frage, richtige_antwort):\n    antwort = input(frage)\n    return antwort == richtige_antwort\n\nrichtig = 0\nif frage_stellen(\"Hauptstadt von Frankreich? \", \"Paris\"):\n    richtig = richtig + 1\nif frage_stellen(\"Hauptstadt von Italien? \", \"Rom\"):\n    richtig = richtig + 1\n\nprint(\"Du hast \" + str(richtig) + \" von 2 richtig!\")"
+      ],
+      "tests": [
+        {
+          "type": "input_output",
+          "inputs": ["Paris", "Rom"],
+          "expected": "Hauptstadt von Frankreich? Paris\nHauptstadt von Italien? Rom\nDu hast 2 von 2 richtig!"
+        },
+        {
+          "type": "input_output",
+          "inputs": ["Berlin", "Rom"],
+          "expected": "Hauptstadt von Frankreich? Berlin\nHauptstadt von Italien? Rom\nDu hast 1 von 2 richtig!"
+        }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "🎉 **Geschafft!** Du hast den kompletten Grundkurs durchgearbeitet – von der ersten Ausgabe mit `print()` bis zu eigenen Funktionen, Klassen und einem echten kleinen Programm. Du kannst jetzt eigene Ideen in Python umsetzen. Weiter so!"
+    }
+  ]
+}

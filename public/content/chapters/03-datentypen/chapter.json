@@ -1,0 +1,12 @@
+{
+  "id": "03-datentypen",
+  "title": "Datentypen",
+  "icon": "🔤",
+  "color": "#a78bfa",
+  "description": "Zahlen, Text und Wahrheitswerte – und wie man zwischen ihnen umwandelt.",
+  "lessons": [
+    "01-zahlen",
+    "02-text",
+    "03-wahrheitswerte-und-umwandeln"
+  ]
+}

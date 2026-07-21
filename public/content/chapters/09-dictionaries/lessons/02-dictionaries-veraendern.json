@@ -1,0 +1,46 @@
+{
+  "id": "02-dictionaries-veraendern",
+  "title": "Dictionaries verändern",
+  "icon": "✏️",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Mit **`dictionary[\"schlüssel\"] = wert`** kannst du einen Eintrag verändern oder – falls der Schlüssel noch nicht existiert – **neu hinzufügen**."
+    },
+    {
+      "type": "example",
+      "text": "Einen Wert ändern und einen neuen hinzufügen:",
+      "code": "punkte = {\"Ada\": 10}\npunkte[\"Ada\"] = 15\npunkte[\"Alan\"] = 8\nprint(punkte)"
+    },
+    {
+      "type": "explain",
+      "text": "Existiert der Schlüssel schon (wie `\"Ada\"`), wird der **Wert überschrieben**. Existiert er noch nicht (wie `\"Alan\"`), wird ein **neuer Eintrag** angelegt – genau dieselbe Schreibweise für beides."
+    },
+    {
+      "type": "quiz",
+      "question": "Was passiert bei `punkte[\"Ada\"] = 15`, wenn \"Ada\" schon existiert?",
+      "choices": [
+        "Es gibt einen Fehler, weil der Schlüssel schon existiert",
+        "Der bisherige Wert wird überschrieben",
+        "Es wird ein zweiter Eintrag \"Ada\" angelegt"
+      ],
+      "answer": 1,
+      "explainCorrect": "Genau! Bei einem existierenden Schlüssel wird der Wert einfach überschrieben.",
+      "explainWrong": "Existiert der Schlüssel schon, wird der Wert einfach überschrieben – es entsteht kein zweiter Eintrag."
+    },
+    {
+      "type": "code",
+      "task": "Lege ein **leeres** Dictionary **`vokabeln`** an. Füge die Einträge `\"Hund\": \"dog\"` und `\"Katze\": \"cat\"` hinzu. Gib das Dictionary aus.",
+      "starterCode": "",
+      "hints": [
+        "Ein leeres Dictionary: vokabeln = {}",
+        "Danach: vokabeln[\"Hund\"] = \"dog\" usw.",
+        "vokabeln = {}\nvokabeln[\"Hund\"] = \"dog\"\nvokabeln[\"Katze\"] = \"cat\"\nprint(vokabeln)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "{'Hund': 'dog', 'Katze': 'cat'}" }
+      ]
+    }
+  ]
+}

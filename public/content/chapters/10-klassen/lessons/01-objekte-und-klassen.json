@@ -1,0 +1,46 @@
+{
+  "id": "01-objekte-und-klassen",
+  "title": "Objekte und Klassen",
+  "icon": "🏗️",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Eine **Klasse** ist ein **Bauplan** für Objekte. Stell dir einen Keksausstecher vor: Die Klasse ist der Ausstecher, jedes einzelne Objekt ist ein Keks, der damit ausgestochen wurde – gleiche Form, aber jeder Keks für sich."
+    },
+    {
+      "type": "example",
+      "text": "Eine leere Klasse und zwei Objekte davon:",
+      "code": "class Hund:\n    pass\n\nhund1 = Hund()\nhund2 = Hund()\nhund1.name = \"Bello\"\nhund2.name = \"Rex\"\nprint(hund1.name)\nprint(hund2.name)"
+    },
+    {
+      "type": "explain",
+      "text": "**`class Hund:`** definiert die Klasse. **`pass`** heißt \"hier kommt (noch) nichts rein\" – nur ein Platzhalter. `Hund()` erstellt ein neues **Objekt** (auch \"Instanz\" genannt).\n\nJedes Objekt hat seine **eigenen** Attribute: `hund1.name` und `hund2.name` sind unabhängig voneinander."
+    },
+    {
+      "type": "quiz",
+      "question": "Was entsteht, wenn man `Hund()` aufruft?",
+      "choices": [
+        "Ein neues Objekt (Instanz) der Klasse Hund",
+        "Die Klasse Hund wird gelöscht",
+        "Ein Fehler, weil Hund leer ist"
+      ],
+      "answer": 0,
+      "explainCorrect": "Genau! Hund() erzeugt ein neues Objekt nach dem Bauplan der Klasse.",
+      "explainWrong": "`Hund()` erstellt ein neues Objekt (eine Instanz) der Klasse Hund."
+    },
+    {
+      "type": "code",
+      "task": "Definiere eine leere Klasse **`Katze`** (mit `pass`). Erstelle ein Objekt **`meine_katze`** und weise ihm das Attribut **`name = \"Minka\"`** zu. Gib `meine_katze.name` aus.",
+      "starterCode": "",
+      "hints": [
+        "class Katze:\n    pass",
+        "meine_katze = Katze()\nmeine_katze.name = \"Minka\"",
+        "class Katze:\n    pass\n\nmeine_katze = Katze()\nmeine_katze.name = \"Minka\"\nprint(meine_katze.name)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "Minka" }
+      ]
+    }
+  ]
+}

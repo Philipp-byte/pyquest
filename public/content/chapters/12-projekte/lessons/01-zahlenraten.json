@@ -1,0 +1,51 @@
+{
+  "id": "01-zahlenraten",
+  "title": "Projekt: Zahlenraten",
+  "icon": "🎯",
+  "xp": 40,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Zeit für dein erstes richtiges Projekt! Du baust ein **Zahlenraten-Spiel**: Das Programm denkt sich eine Zahl aus (die wir hier fest vorgeben) und die spielende Person muss sie erraten. Nach jedem Versuch bekommt sie einen Hinweis: zu hoch oder zu niedrig."
+    },
+    {
+      "type": "explain",
+      "text": "Das kombiniert alles, was du schon kannst:\n\n- **`while True:`** für eine Schleife, die läuft, bis sie mit `break` beendet wird\n- **`input()`** und **`int()`** für die Eingabe\n- **`if`/`elif`/`else`** für die drei möglichen Fälle\n- **`break`**, um bei richtiger Antwort aufzuhören"
+    },
+    {
+      "type": "quiz",
+      "question": "Warum eignet sich `while True:` zusammen mit `break` für dieses Spiel?",
+      "choices": [
+        "Weil man vorher nicht weiß, wie viele Versuche gebraucht werden",
+        "Weil while True: automatisch nach 3 Versuchen aufhört",
+        "Weil for-Schleifen hier nicht erlaubt sind"
+      ],
+      "answer": 0,
+      "explainCorrect": "Genau! Die Anzahl der Versuche ist vorher unbekannt – break beendet die Schleife erst, wenn die Zahl erraten wurde.",
+      "explainWrong": "Man weiß vorher nicht, wie viele Versuche nötig sind. `while True:` mit `break` läuft so lange, bis die richtige Zahl kommt."
+    },
+    {
+      "type": "code",
+      "task": "Die Geheimzahl ist bereits als `geheimzahl = 7` vorgegeben. Schreibe eine Schleife, die mit `input(\"Rate die Zahl: \")` wiederholt einen Versuch abfragt (als Zahl umgewandelt). Gib **`Zu niedrig!`** aus, wenn der Versuch kleiner ist, **`Zu hoch!`**, wenn er größer ist, und **`Richtig!`**, wenn er stimmt – dann soll die Schleife enden.",
+      "starterCode": "geheimzahl = 7\n\n# Schreibe hier deine Schleife\n",
+      "needsInput": true,
+      "hints": [
+        "Nutze while True: und darin input() + int()",
+        "if versuch < geheimzahl: ... elif versuch > geheimzahl: ... else: ... break",
+        "geheimzahl = 7\n\nwhile True:\n    versuch = int(input(\"Rate die Zahl: \"))\n    if versuch < geheimzahl:\n        print(\"Zu niedrig!\")\n    elif versuch > geheimzahl:\n        print(\"Zu hoch!\")\n    else:\n        print(\"Richtig!\")\n        break"
+      ],
+      "tests": [
+        {
+          "type": "input_output",
+          "inputs": ["3", "10", "7"],
+          "expected": "Rate die Zahl: 3\nZu niedrig!\nRate die Zahl: 10\nZu hoch!\nRate die Zahl: 7\nRichtig!"
+        },
+        {
+          "type": "input_output",
+          "inputs": ["7"],
+          "expected": "Rate die Zahl: 7\nRichtig!"
+        }
+      ]
+    }
+  ]
+}

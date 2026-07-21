@@ -1,0 +1,47 @@
+{
+  "id": "03-break-und-continue",
+  "title": "break und continue",
+  "icon": "⏭️",
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "**`break`** beendet eine Schleife sofort komplett. **`continue`** überspringt nur den aktuellen Durchlauf und macht mit dem nächsten weiter."
+    },
+    {
+      "type": "example",
+      "text": "break: Die Schleife hört bei 5 komplett auf.",
+      "code": "for i in range(10):\n    if i == 5:\n        break\n    print(i)"
+    },
+    {
+      "type": "example",
+      "text": "continue: Die 2 wird übersprungen, der Rest läuft weiter.",
+      "code": "for i in range(5):\n    if i == 2:\n        continue\n    print(i)"
+    },
+    {
+      "type": "quiz",
+      "question": "Was ist der Unterschied zwischen break und continue?",
+      "choices": [
+        "Beide beenden die Schleife komplett",
+        "break beendet die Schleife komplett, continue überspringt nur den aktuellen Durchlauf",
+        "break überspringt nur einen Durchlauf, continue beendet die Schleife"
+      ],
+      "answer": 1,
+      "explainCorrect": "Genau! break = komplett raus, continue = nur diesen Durchlauf überspringen.",
+      "explainWrong": "`break` beendet die ganze Schleife sofort. `continue` überspringt nur den aktuellen Durchlauf und macht weiter."
+    },
+    {
+      "type": "code",
+      "task": "Gehe mit einer `for`-Schleife durch die Zahlen **1 bis 10** (`range(1, 11)`). Überspringe alle **geraden** Zahlen mit `continue` und gib nur die ungeraden aus. Höre mit `break` komplett auf, sobald du die **7** ausgegeben hast.",
+      "starterCode": "",
+      "hints": [
+        "Gerade Zahlen erkennst du mit i % 2 == 0",
+        "Erst continue für gerade Zahlen, dann print(), dann break bei i == 7",
+        "for i in range(1, 11):\n    if i % 2 == 0:\n        continue\n    print(i)\n    if i == 7:\n        break"
+      ],
+      "tests": [
+        { "type": "output", "expected": "1\n3\n5\n7" }
+      ]
+    }
+  ]
+}

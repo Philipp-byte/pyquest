@@ -1,0 +1,46 @@
+{
+  "id": "02-parameter",
+  "title": "Parameter",
+  "icon": "🎛️",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Mit **Parametern** kannst du einer Funktion Werte übergeben, mit denen sie arbeitet. Die Parameter stehen in den Klammern der Definition."
+    },
+    {
+      "type": "example",
+      "text": "name ist hier ein Parameter:",
+      "code": "def begruesse(name):\n    print(\"Hallo \" + name + \"!\")\n\nbegruesse(\"Ada\")\nbegruesse(\"Alan\")"
+    },
+    {
+      "type": "explain",
+      "text": "Bei jedem Aufruf kann ein anderer Wert übergeben werden – die Funktion muss nur einmal geschrieben werden. Du kannst auch **mehrere Parameter** angeben, getrennt durch Kommas: `def addiere(a, b):`"
+    },
+    {
+      "type": "quiz",
+      "question": "Was ist der Vorteil von Parametern?",
+      "choices": [
+        "Die Funktion kann mit unterschiedlichen Werten wiederverwendet werden",
+        "Parameter machen den Code langsamer",
+        "Parameter sind nur für Zahlen erlaubt"
+      ],
+      "answer": 0,
+      "explainCorrect": "Genau! Parameter machen Funktionen flexibel wiederverwendbar.",
+      "explainWrong": "Parameter erlauben es, dieselbe Funktion mit unterschiedlichen Werten aufzurufen, statt sie mehrfach zu schreiben."
+    },
+    {
+      "type": "code",
+      "task": "Definiere eine Funktion **`addiere(a, b)`**, die die Summe von `a` und `b` ausgibt. Rufe sie auf mit `addiere(3, 4)` und `addiere(10, 5)`.",
+      "starterCode": "",
+      "hints": [
+        "def addiere(a, b):\n    print(a + b)",
+        "Danach aufrufen: addiere(3, 4) und addiere(10, 5)",
+        "def addiere(a, b):\n    print(a + b)\n\naddiere(3, 4)\naddiere(10, 5)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "7\n15" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "04-eingaben",
+  "title": "Eingaben",
+  "icon": "⌨️",
+  "color": "#f472b6",
+  "description": "Lass dein Programm mit den Nutzer:innen sprechen.",
+  "lessons": [
+    "01-input-lesen",
+    "02-eingaben-umwandeln"
+  ]
+}

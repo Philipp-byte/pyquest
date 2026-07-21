@@ -49,7 +49,9 @@ export async function runPython(code, { inputs = [], onStatus } = {}) {
   const namespace = pyodide.toPy({});
 
   // input() so umbiegen, dass es Testwerte zurueckgibt statt zu blockieren.
-  pyodide.globals.set("__pq_inputs", pyodide.toPy(inputs));
+  // Wichtig: im FRISCHEN namespace setzen (nicht pyodide.globals), sonst
+  // findet der Code unten (der mit globals: namespace laeuft) die Variable nicht.
+  namespace.set("__pq_inputs", pyodide.toPy(inputs));
   const prelude = `
 import builtins as __b
 __pq_i = 0

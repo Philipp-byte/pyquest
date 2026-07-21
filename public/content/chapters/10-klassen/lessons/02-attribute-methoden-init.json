@@ -1,0 +1,46 @@
+{
+  "id": "02-attribute-methoden-init",
+  "title": "Attribute, Methoden und __init__",
+  "icon": "⚙️",
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "**`__init__`** ist eine besondere Methode, die automatisch aufgerufen wird, wenn ein neues Objekt erstellt wird. Damit legst du die **Startwerte** (Attribute) fest, statt sie wie in der letzten Lektion einzeln zuzuweisen."
+    },
+    {
+      "type": "example",
+      "text": "__init__ setzt den Namen, bellen() ist eine eigene Methode:",
+      "code": "class Hund:\n    def __init__(self, name):\n        self.name = name\n\n    def bellen(self):\n        print(self.name + \" sagt: Wuff!\")\n\nhund1 = Hund(\"Bello\")\nhund1.bellen()"
+    },
+    {
+      "type": "explain",
+      "text": "**`self`** steht immer als erster Parameter da und bezeichnet \"dieses eine Objekt selbst\". Beim Aufruf `hund1.bellen()` musst du `self` **nicht** angeben – Python übergibt automatisch `hund1`.\n\n`Hund(\"Bello\")` ruft im Hintergrund `__init__(self, \"Bello\")` auf und setzt `self.name = \"Bello\"`."
+    },
+    {
+      "type": "quiz",
+      "question": "Wann wird __init__ aufgerufen?",
+      "choices": [
+        "Nur wenn man es manuell aufruft",
+        "Automatisch, wenn ein neues Objekt erstellt wird",
+        "Nie, es ist nur Dekoration"
+      ],
+      "answer": 1,
+      "explainCorrect": "Richtig! __init__ läuft automatisch bei jedem neuen Objekt.",
+      "explainWrong": "`__init__` wird automatisch aufgerufen, sobald ein neues Objekt der Klasse erstellt wird (z. B. `Hund(\"Bello\")`)."
+    },
+    {
+      "type": "code",
+      "task": "Definiere eine Klasse **`Person`** mit `__init__(self, name, alter)`, die `self.name` und `self.alter` setzt. Füge eine Methode **`vorstellen(self)`** hinzu, die **`Ich heiße NAME und bin ALTER Jahre alt.`** ausgibt. Erstelle eine Person mit Name `\"Mia\"` und Alter `17` und rufe `vorstellen()` auf.",
+      "starterCode": "",
+      "hints": [
+        "class Person:\n    def __init__(self, name, alter):\n        self.name = name\n        self.alter = alter",
+        "Denk an str(), um alter mit + zu verketten",
+        "class Person:\n    def __init__(self, name, alter):\n        self.name = name\n        self.alter = alter\n\n    def vorstellen(self):\n        print(\"Ich heiße \" + self.name + \" und bin \" + str(self.alter) + \" Jahre alt.\")\n\np = Person(\"Mia\", 17)\np.vorstellen()"
+      ],
+      "tests": [
+        { "type": "output", "expected": "Ich heiße Mia und bin 17 Jahre alt." }
+      ]
+    }
+  ]
+}

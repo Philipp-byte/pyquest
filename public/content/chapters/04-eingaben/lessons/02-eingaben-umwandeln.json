@@ -1,0 +1,43 @@
+{
+  "id": "02-eingaben-umwandeln",
+  "title": "Eingaben in Zahlen umwandeln",
+  "icon": "🔁",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Wichtig: **`input()`** liefert **immer Text** (str) zurück – auch wenn jemand eine Zahl eingibt!\n\nWillst du damit rechnen, musst du erst mit **`int()`** oder **`float()`** umwandeln."
+    },
+    {
+      "type": "explain",
+      "text": "Beispiel:\n```\nalter = input(\"Wie alt bist du? \")\nalter = int(alter)\nprint(\"Nächstes Jahr bist du \" + str(alter + 1) + \".\")\n```\nBei Eingabe `15`:\n```\nWie alt bist du? 15\nNächstes Jahr bist du 16.\n```\n\nOhne `int()` würde `alter + 1` einen **`TypeError`** auslösen, weil `alter` noch Text wäre."
+    },
+    {
+      "type": "quiz",
+      "question": "Was passiert bei `input(\"Zahl: \") + 1`, ohne Umwandlung?",
+      "choices": [
+        "Es funktioniert einwandfrei",
+        "Es gibt einen TypeError, weil Text und Zahl nicht direkt verrechnet werden können",
+        "Python wandelt automatisch um"
+      ],
+      "answer": 1,
+      "explainCorrect": "Richtig! input() liefert Text – ohne int()/float() gibt es einen TypeError.",
+      "explainWrong": "input() liefert immer Text zurück. Ohne int() oder float() zur Umwandlung gibt `text + zahl` einen TypeError."
+    },
+    {
+      "type": "code",
+      "task": "Frage mit `input()` **`Gib eine Zahl ein: `**, wandle die Eingabe in eine Zahl um, verdopple sie und gib **`Das Doppelte ist X`** aus (z. B. bei Eingabe 5: `Das Doppelte ist 10`).",
+      "starterCode": "",
+      "needsInput": true,
+      "hints": [
+        "Erst einlesen und umwandeln: zahl = int(input(\"Gib eine Zahl ein: \"))",
+        "Dann ausgeben: print(\"Das Doppelte ist \" + str(zahl * 2))",
+        "zahl = int(input(\"Gib eine Zahl ein: \"))\nprint(\"Das Doppelte ist \" + str(zahl * 2))"
+      ],
+      "tests": [
+        { "type": "input_output", "inputs": ["5"], "expected": "Gib eine Zahl ein: 5\nDas Doppelte ist 10" },
+        { "type": "input_output", "inputs": ["9"], "expected": "Gib eine Zahl ein: 9\nDas Doppelte ist 18" }
+      ]
+    }
+  ]
+}

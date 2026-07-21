@@ -1,0 +1,11 @@
+{
+  "id": "02-variablen",
+  "title": "Variablen",
+  "icon": "📦",
+  "color": "#38bdf8",
+  "description": "Speichere Werte unter einem Namen und arbeite damit weiter.",
+  "lessons": [
+    "01-was-ist-eine-variable",
+    "02-variablen-benutzen"
+  ]
+}

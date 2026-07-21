@@ -1,0 +1,50 @@
+{
+  "id": "03-wahrheitswerte-und-umwandeln",
+  "title": "Wahrheitswerte & Umwandeln",
+  "icon": "✅",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Ein **Wahrheitswert** (`bool`) kennt nur zwei Zustände: **`True`** (wahr) oder **`False`** (falsch).\n\nSie entstehen oft durch Vergleiche wie `5 > 3` (ergibt `True`)."
+    },
+    {
+      "type": "example",
+      "text": "Vergleiche ergeben Wahrheitswerte:",
+      "code": "print(5 > 3)\nprint(5 == 3)\nprint(type(5 > 3))"
+    },
+    {
+      "type": "explain",
+      "text": "Mit **`type(wert)`** findest du heraus, welchen Datentyp ein Wert hat: `int`, `float`, `str` oder `bool`.\n\nUmwandeln zwischen Typen:\n- **`str(5)`** → `\"5\"` (Zahl zu Text)\n- **`int(\"5\")`** → `5` (Text zu Ganzzahl)\n- **`float(\"3.5\")`** → `3.5` (Text zu Kommazahl)"
+    },
+    {
+      "type": "quiz",
+      "question": "Was gibt `type(3.5)` aus?",
+      "choices": ["<class 'int'>", "<class 'float'>", "<class 'str'>"],
+      "answer": 1,
+      "explainCorrect": "Richtig! 3.5 hat einen Nachkommateil – das ist ein float.",
+      "explainWrong": "3.5 ist eine Kommazahl, also vom Typ float."
+    },
+    {
+      "type": "fill",
+      "text": "Wandle den Text `\"12\"` in eine Ganzzahl um.",
+      "template": "zahl = ___(\"12\")",
+      "solution": "int",
+      "accept": ["int"],
+      "hint": "Die Funktion zum Umwandeln von Text in eine Ganzzahl heißt int()"
+    },
+    {
+      "type": "code",
+      "task": "Wandle den Text **`\"7\"`** in eine Zahl um, addiere **`3`** dazu und gib das Ergebnis aus (soll **`10`** sein).",
+      "starterCode": "",
+      "hints": [
+        "Erst umwandeln: zahl = int(\"7\")",
+        "Dann rechnen und ausgeben: print(zahl + 3)",
+        "zahl = int(\"7\")\nprint(zahl + 3)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "10" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "id": "02-text",
+  "title": "Text (Strings)",
+  "icon": "📝",
+  "xp": 20,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Text wird in Python **`str`** (String) genannt und steht in Anführungszeichen: `\"Hallo\"` oder `'Hallo'`.\n\nMit **`+`** kannst du Texte aneinanderhängen (verketten)."
+    },
+    {
+      "type": "example",
+      "text": "Texte verketten:",
+      "code": "vorname = \"Ada\"\nnachname = \"Lovelace\"\nprint(vorname + \" \" + nachname)"
+    },
+    {
+      "type": "explain",
+      "text": "Beachte: Du kannst Text **nicht** einfach mit einer Zahl verketten – `\"Alter: \" + 16` gibt einen Fehler (`TypeError`), weil Text und Zahl unterschiedliche Typen sind.\n\nDafür brauchst du **`str()`**, um die Zahl erst in Text umzuwandeln: `\"Alter: \" + str(16)`."
+    },
+    {
+      "type": "quiz",
+      "question": "Warum wirft `print(\"Punkte: \" + 5)` einen Fehler?",
+      "choices": [
+        "Weil man Text und Zahl nicht direkt verbinden kann",
+        "Weil \"Punkte: \" zu lang ist",
+        "Weil 5 keine gültige Zahl ist"
+      ],
+      "answer": 0,
+      "explainCorrect": "Genau! Text und Zahl müssen erst mit str() zusammengeführt werden.",
+      "explainWrong": "Text (str) und Zahl (int) lassen sich nicht direkt mit + verbinden. Man braucht str(5), um die Zahl in Text umzuwandeln."
+    },
+    {
+      "type": "fill",
+      "text": "Wandle die Zahl `alter` in Text um, damit die Verkettung funktioniert.",
+      "template": "print(\"Alter: \" + ___(alter))",
+      "solution": "str",
+      "accept": ["str"],
+      "hint": "Die Funktion zum Umwandeln in Text heißt str()"
+    },
+    {
+      "type": "code",
+      "task": "Lege `stadt = \"Weingarten\"` an und gib **`Ich wohne in Weingarten`** aus (nutze Verkettung mit `+`).",
+      "starterCode": "",
+      "hints": [
+        "stadt = \"Weingarten\"",
+        "print(\"Ich wohne in \" + stadt)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "Ich wohne in Weingarten" }
+      ]
+    }
+  ]
+}

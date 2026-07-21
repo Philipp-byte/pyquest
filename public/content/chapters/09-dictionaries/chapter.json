@@ -1,0 +1,11 @@
+{
+  "id": "09-dictionaries",
+  "title": "Dictionaries",
+  "icon": "🗂️",
+  "color": "#a78bfa",
+  "description": "Speichere Werte unter einem Namen (Schlüssel) statt unter einer Position.",
+  "lessons": [
+    "01-dictionaries-erstellen",
+    "02-dictionaries-veraendern"
+  ]
+}

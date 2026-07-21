@@ -1,0 +1,11 @@
+{
+  "id": "12-projekte",
+  "title": "Projekte",
+  "icon": "🚀",
+  "color": "#22c55e",
+  "description": "Bring alles zusammen, was du gelernt hast, in zwei kleinen Projekten.",
+  "lessons": [
+    "01-zahlenraten",
+    "02-quiz-programm"
+  ]
+}

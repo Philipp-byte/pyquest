@@ -1,0 +1,49 @@
+{
+  "id": "02-if-else",
+  "title": "if und else",
+  "icon": "🔀",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Mit **`if`** kannst du Code nur dann ausführen, wenn eine Bedingung zutrifft. Mit **`else`** legst du fest, was sonst passieren soll.\n\nWichtig: Nach `if bedingung:` und `else:` muss der zugehörige Code **eingerückt** sein (meist 4 Leerzeichen)."
+    },
+    {
+      "type": "example",
+      "text": "Ein Beispiel:",
+      "code": "alter = 20\nif alter >= 18:\n    print(\"Erwachsen\")\nelse:\n    print(\"Minderjährig\")"
+    },
+    {
+      "type": "explain",
+      "text": "Python prüft die Bedingung nach `if`. Ist sie **`True`**, wird der eingerückte Block darunter ausgeführt. Ist sie **`False`**, wird stattdessen der Block nach `else:` ausgeführt – nie beide!"
+    },
+    {
+      "type": "quiz",
+      "question": "Was passiert, wenn die Bedingung nach `if` False ist (und es ein else gibt)?",
+      "choices": [
+        "Gar nichts passiert",
+        "Der else-Block wird ausgeführt",
+        "Es gibt einen Fehler"
+      ],
+      "answer": 1,
+      "explainCorrect": "Richtig! Ist die if-Bedingung False, läuft stattdessen der else-Block.",
+      "explainWrong": "Ist die Bedingung False, wird der else-Block ausgeführt (falls vorhanden)."
+    },
+    {
+      "type": "code",
+      "task": "Frage mit `input()` **`Wie alt bist du? `** ab, wandle die Eingabe in eine Zahl um. Gib **`Erwachsen`** aus, wenn das Alter **18 oder mehr** ist, sonst **`Minderjährig`**.",
+      "starterCode": "",
+      "needsInput": true,
+      "hints": [
+        "Eingabe umwandeln: alter = int(input(\"Wie alt bist du? \"))",
+        "Dann if/else mit >= 18",
+        "alter = int(input(\"Wie alt bist du? \"))\nif alter >= 18:\n    print(\"Erwachsen\")\nelse:\n    print(\"Minderjährig\")"
+      ],
+      "tests": [
+        { "type": "input_output", "inputs": ["20"], "expected": "Wie alt bist du? 20\nErwachsen" },
+        { "type": "input_output", "inputs": ["15"], "expected": "Wie alt bist du? 15\nMinderjährig" },
+        { "type": "input_output", "inputs": ["18"], "expected": "Wie alt bist du? 18\nErwachsen" }
+      ]
+    }
+  ]
+}

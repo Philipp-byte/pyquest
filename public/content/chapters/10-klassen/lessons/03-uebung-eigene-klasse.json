@@ -1,0 +1,46 @@
+{
+  "id": "03-uebung-eigene-klasse",
+  "title": "Übung: eine eigene Klasse bauen",
+  "icon": "🏦",
+  "xp": 35,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Jetzt bringen wir alles zusammen: **`__init__`** setzt den Startzustand, eine **Methode** kann diesen Zustand später **verändern** – Attribute merken sich das über mehrere Methodenaufrufe hinweg."
+    },
+    {
+      "type": "example",
+      "text": "Ein einfaches Konto, bei dem einzahlen() den Kontostand erhöht:",
+      "code": "class Konto:\n    def __init__(self, kontostand):\n        self.kontostand = kontostand\n\n    def einzahlen(self, betrag):\n        self.kontostand = self.kontostand + betrag\n\nkonto = Konto(100)\nkonto.einzahlen(50)\nprint(konto.kontostand)"
+    },
+    {
+      "type": "explain",
+      "text": "`konto.einzahlen(50)` verändert `self.kontostand` **dauerhaft** im Objekt `konto`. Ruft man danach `konto.kontostand` ab, ist der neue Wert gespeichert – das Objekt \"merkt sich\" seinen Zustand."
+    },
+    {
+      "type": "quiz",
+      "question": "Warum ist konto.kontostand nach einzahlen() dauerhaft verändert?",
+      "choices": [
+        "Weil self.kontostand im Objekt gespeichert wird, nicht nur lokal in der Methode",
+        "Ist es nicht, der alte Wert bleibt bestehen",
+        "Weil Python das automatisch zurücksetzt"
+      ],
+      "answer": 0,
+      "explainCorrect": "Genau! self.kontostand gehört zum Objekt und bleibt über Methodenaufrufe hinweg erhalten.",
+      "explainWrong": "`self.kontostand` ist ein Attribut des Objekts – es bleibt gespeichert, auch nachdem die Methode fertig ist."
+    },
+    {
+      "type": "code",
+      "task": "Definiere eine Klasse **`Konto`** mit `__init__(self, kontostand)`. Füge eine Methode **`abheben(self, betrag)`** hinzu, die den Kontostand um `betrag` **verringert**. Erstelle ein Konto mit Startguthaben `200`, hebe `30` ab und gib den Kontostand aus (soll `170` sein).",
+      "starterCode": "",
+      "hints": [
+        "class Konto:\n    def __init__(self, kontostand):\n        self.kontostand = kontostand",
+        "def abheben(self, betrag):\n    self.kontostand = self.kontostand - betrag",
+        "class Konto:\n    def __init__(self, kontostand):\n        self.kontostand = kontostand\n\n    def abheben(self, betrag):\n        self.kontostand = self.kontostand - betrag\n\nkonto = Konto(200)\nkonto.abheben(30)\nprint(konto.kontostand)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "170" }
+      ]
+    }
+  ]
+}

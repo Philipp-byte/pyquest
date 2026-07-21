@@ -1,0 +1,45 @@
+{
+  "id": "01-vergleiche",
+  "title": "Vergleiche",
+  "icon": "⚖️",
+  "xp": 20,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Mit **Vergleichsoperatoren** prüfst du, ob etwas zutrifft. Das Ergebnis ist immer **`True`** oder **`False`**.\n\n- `==` gleich\n- `!=` ungleich\n- `<` kleiner, `>` größer\n- `<=` kleiner-gleich, `>=` größer-gleich"
+    },
+    {
+      "type": "explain",
+      "text": "**Achtung**, häufigster Anfängerfehler: **`==`** vergleicht (zwei Gleichheitszeichen), **`=`** weist zu (ein Gleichheitszeichen). `alter = 18` speichert, `alter == 18` vergleicht!"
+    },
+    {
+      "type": "example",
+      "text": "Ein paar Vergleiche ausprobieren:",
+      "code": "print(5 > 3)\nprint(5 == 3)\nprint(5 != 3)"
+    },
+    {
+      "type": "quiz",
+      "question": "Was ist der Unterschied zwischen `=` und `==`?",
+      "choices": [
+        "Kein Unterschied, beides funktioniert gleich",
+        "= weist einen Wert zu, == vergleicht zwei Werte",
+        "== ist nur für Text da"
+      ],
+      "answer": 1,
+      "explainCorrect": "Genau! = speichert einen Wert, == prüft, ob zwei Werte gleich sind.",
+      "explainWrong": "`=` speichert einen Wert in einer Variable, `==` vergleicht zwei Werte und ergibt True oder False."
+    },
+    {
+      "type": "code",
+      "task": "Vergleiche, ob **`10`** größer ist als **`7`**, und gib das Ergebnis aus (soll **`True`** sein).",
+      "starterCode": "",
+      "hints": [
+        "Nutze print() mit einem Vergleich",
+        "print(10 > 7)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "True" }
+      ]
+    }
+  ]
+}

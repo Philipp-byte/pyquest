@@ -1,0 +1,55 @@
+{
+  "id": "01-was-ist-eine-variable",
+  "title": "Was ist eine Variable?",
+  "icon": "📦",
+  "xp": 20,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Eine **Variable** ist wie eine beschriftete Kiste, in der du einen Wert aufbewahrst.\n\nDu gibst der Kiste einen Namen und packst etwas hinein – zum Beispiel eine Zahl oder einen Text. Später kannst du den Namen benutzen, um an den Wert zu kommen."
+    },
+    {
+      "type": "example",
+      "text": "So legst du eine Variable an – mit einem **`=`** (Zuweisung):",
+      "code": "alter = 16\nprint(alter)"
+    },
+    {
+      "type": "explain",
+      "text": "Wichtig: Das **`=`** in Python bedeutet nicht \"ist gleich\" wie in der Mathematik, sondern **\"speichere den Wert rechts in der Variable links\"**.\n\n`alter = 16` heißt also: \"Speichere 16 in der Variable `alter`\"."
+    },
+    {
+      "type": "quiz",
+      "question": "Was passiert bei `stadt = \"Weingarten\"`?",
+      "choices": [
+        "Python vergleicht stadt mit \"Weingarten\"",
+        "Der Text \"Weingarten\" wird in der Variable stadt gespeichert",
+        "Es passiert nichts, weil stadt schon existieren muss"
+      ],
+      "answer": 1,
+      "explainCorrect": "Genau! Der Wert rechts vom = wird in der Variable links gespeichert.",
+      "explainWrong": "Das `=` speichert den Wert rechts in der Variable links – hier wird \"Weingarten\" in `stadt` gespeichert."
+    },
+    {
+      "type": "fill",
+      "text": "Speichere die Zahl 5 in einer Variable namens `punkte`.",
+      "template": "punkte = ___",
+      "solution": "5",
+      "accept": ["5"],
+      "hint": "Einfach die Zahl 5 einsetzen – ohne Anführungszeichen, das ist keine Textvariable."
+    },
+    {
+      "type": "code",
+      "task": "Lege eine Variable **`name`** mit dem Text **`\"Ada\"`** an und gib sie mit `print()` aus.",
+      "starterCode": "",
+      "hints": [
+        "Erst die Variable anlegen: name = \"Ada\"",
+        "Dann ausgeben: print(name) – ohne Anführungszeichen um 'name', sonst wird der Wortlaut ausgegeben statt des Inhalts!",
+        "name = \"Ada\"\nprint(name)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "Ada" },
+        { "type": "var", "name": "name", "expected": "Ada" }
+      ]
+    }
+  ]
+}

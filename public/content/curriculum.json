@@ -1,6 +1,17 @@
 {
   "title": "PyQuest – Python lernen",
   "chapters": [
-    "01-erste-schritte"
+    "01-erste-schritte",
+    "02-variablen",
+    "03-datentypen",
+    "04-eingaben",
+    "05-bedingungen",
+    "06-schleifen",
+    "07-funktionen",
+    "08-listen",
+    "09-dictionaries",
+    "10-klassen",
+    "11-dateien",
+    "12-projekte"
   ]
 }

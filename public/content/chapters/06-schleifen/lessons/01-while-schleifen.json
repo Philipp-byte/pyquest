@@ -1,0 +1,46 @@
+{
+  "id": "01-while-schleifen",
+  "title": "while-Schleifen",
+  "icon": "🔁",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Eine **`while`-Schleife** wiederholt einen Codeblock, **solange** eine Bedingung wahr ist. Sobald die Bedingung `False` wird, hört die Schleife auf."
+    },
+    {
+      "type": "example",
+      "text": "Zähle von 1 bis 5 hoch:",
+      "code": "zaehler = 1\nwhile zaehler <= 5:\n    print(zaehler)\n    zaehler += 1"
+    },
+    {
+      "type": "explain",
+      "text": "**Achtung, Endlosschleife!** Vergisst du `zaehler += 1`, bleibt die Bedingung für immer `True` und das Programm läuft ewig weiter. Jede `while`-Schleife braucht etwas, das sich verändert, damit sie irgendwann endet."
+    },
+    {
+      "type": "quiz",
+      "question": "Was passiert, wenn man in der while-Schleife `zaehler += 1` vergisst?",
+      "choices": [
+        "Die Schleife läuft genau einmal",
+        "Die Schleife läuft endlos weiter (Endlosschleife)",
+        "Python meldet automatisch einen Fehler"
+      ],
+      "answer": 1,
+      "explainCorrect": "Richtig! Ohne Veränderung bleibt die Bedingung für immer wahr – eine Endlosschleife.",
+      "explainWrong": "Ohne das Hochzählen bleibt `zaehler <= 5` für immer True – die Schleife läuft endlos."
+    },
+    {
+      "type": "code",
+      "task": "Schreibe eine `while`-Schleife, die von **5 rückwärts bis 1** zählt und jede Zahl ausgibt.",
+      "starterCode": "",
+      "hints": [
+        "Starte bei 5 und zähle mit -= 1 runter",
+        "Die Bedingung lautet: solange die Zahl >= 1 ist",
+        "zaehler = 5\nwhile zaehler >= 1:\n    print(zaehler)\n    zaehler -= 1"
+      ],
+      "tests": [
+        { "type": "output", "expected": "5\n4\n3\n2\n1" }
+      ]
+    }
+  ]
+}

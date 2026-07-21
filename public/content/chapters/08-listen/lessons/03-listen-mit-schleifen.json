@@ -1,0 +1,46 @@
+{
+  "id": "03-listen-mit-schleifen",
+  "title": "Listen mit Schleifen durchlaufen",
+  "icon": "🔁",
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Mit einer **`for`-Schleife** kannst du jedes Element einer Liste der Reihe nach bearbeiten – ganz ohne Index."
+    },
+    {
+      "type": "example",
+      "text": "Jede Farbe einzeln ausgeben:",
+      "code": "farben = [\"rot\", \"gruen\", \"blau\"]\nfor farbe in farben:\n    print(farbe)"
+    },
+    {
+      "type": "explain",
+      "text": "Bei `for farbe in farben:` bekommt `farbe` bei jedem Durchlauf automatisch das nächste Element der Liste. Das lässt sich prima mit `if` kombinieren, um nur bestimmte Elemente zu behandeln."
+    },
+    {
+      "type": "quiz",
+      "question": "Was bekommt die Variable `farbe` bei `for farbe in farben:` in jedem Durchlauf?",
+      "choices": [
+        "Immer den Index (0, 1, 2, ...)",
+        "Das jeweils nächste Element der Liste",
+        "Immer das erste Element"
+      ],
+      "answer": 1,
+      "explainCorrect": "Richtig! for element in liste gibt dir direkt die Werte, nicht die Indizes.",
+      "explainWrong": "`for farbe in farben:` gibt dir bei jedem Durchlauf das nächste Element – nicht den Index."
+    },
+    {
+      "type": "code",
+      "task": "Lege die Liste **`zahlen = [3, 7, 2, 9, 4]`** an. Gib mit einer `for`-Schleife nur die Zahlen aus, die **größer als 4** sind.",
+      "starterCode": "",
+      "hints": [
+        "Gehe mit for zahl in zahlen: durch die Liste",
+        "Nutze if zahl > 4: davor",
+        "zahlen = [3, 7, 2, 9, 4]\nfor zahl in zahlen:\n    if zahl > 4:\n        print(zahl)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "7\n9" }
+      ]
+    }
+  ]
+}

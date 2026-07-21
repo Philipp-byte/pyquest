@@ -1,0 +1,49 @@
+{
+  "id": "03-elif-und-verknuepfungen",
+  "title": "elif und Verknüpfungen",
+  "icon": "🧩",
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Mit **`elif`** (\"else if\") kannst du mehrere Bedingungen nacheinander prüfen. Python prüft sie der Reihe nach und führt nur den **ersten** zutreffenden Block aus."
+    },
+    {
+      "type": "example",
+      "text": "Beispiel mit mehreren Stufen:",
+      "code": "note = 85\nif note >= 90:\n    print(\"Sehr gut\")\nelif note >= 70:\n    print(\"Gut\")\nelse:\n    print(\"Ausreichend\")"
+    },
+    {
+      "type": "explain",
+      "text": "Mit **`and`** (und) und **`or`** (oder) kannst du Bedingungen verknüpfen:\n\n- `a and b` → nur True, wenn **beide** True sind\n- `a or b` → True, wenn **mindestens eine** True ist\n\nBeispiel: `if alter >= 16 and hat_ausweis:` – Zutritt nur, wenn beides zutrifft."
+    },
+    {
+      "type": "quiz",
+      "question": "Wann ist `a and b` True?",
+      "choices": [
+        "Wenn mindestens eine der beiden Bedingungen True ist",
+        "Wenn beide Bedingungen True sind",
+        "Immer"
+      ],
+      "answer": 1,
+      "explainCorrect": "Genau! and ist nur True, wenn beide Seiten True sind.",
+      "explainWrong": "`and` ist nur dann True, wenn **beide** Bedingungen True sind. Für \"mindestens eine\" nutzt man `or`."
+    },
+    {
+      "type": "code",
+      "task": "Frage mit `input()` **`Temperatur: `** ab, wandle sie in eine Zahl um, und gib aus: **`Frost`** bei weniger als 0 Grad, **`Kalt`** bei weniger als 15 Grad, sonst **`Warm`**.",
+      "starterCode": "",
+      "needsInput": true,
+      "hints": [
+        "Nutze eine if/elif/else-Kette mit < 0 und < 15",
+        "temp = int(input(\"Temperatur: \"))",
+        "temp = int(input(\"Temperatur: \"))\nif temp < 0:\n    print(\"Frost\")\nelif temp < 15:\n    print(\"Kalt\")\nelse:\n    print(\"Warm\")"
+      ],
+      "tests": [
+        { "type": "input_output", "inputs": ["-5"], "expected": "Temperatur: -5\nFrost" },
+        { "type": "input_output", "inputs": ["10"], "expected": "Temperatur: 10\nKalt" },
+        { "type": "input_output", "inputs": ["25"], "expected": "Temperatur: 25\nWarm" }
+      ]
+    }
+  ]
+}

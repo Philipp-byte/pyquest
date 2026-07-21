@@ -241,6 +241,12 @@ class LessonPlayer {
     const card = html(`<div class="card card--code">
       <div class="prose task">${renderMarkdown(step.task)}</div>
       <div class="editor"></div>
+      ${step.needsInput ? `
+        <label class="sim-input-label">
+          🧪 Eingaben zum Ausprobieren (eine pro Zeile, für input())
+          <textarea class="sim-input" rows="2" placeholder="z. B.\nAda\n16"></textarea>
+        </label>
+      ` : ""}
       <div class="run-row">
         <button class="btn btn--primary btn--check">✓ Prüfen</button>
         <button class="btn btn--run">▶ Ausführen</button>
@@ -261,6 +267,7 @@ class LessonPlayer {
     const runBtn = card.querySelector(".btn--run");
     const checkBtn = card.querySelector(".btn--check");
     const hintBtn = card.querySelector(".btn--hint");
+    const simInput = card.querySelector(".sim-input");
 
     let hintIndex = 0;
     if (hintBtn) {
@@ -276,7 +283,9 @@ class LessonPlayer {
 
     runBtn.onclick = async () => {
       runBtn.disabled = true;
+      const inputs = simInput ? simInput.value.split("\n") : [];
       const res = await runPython(this.editor.getCode(), {
+        inputs,
         onStatus: (s) => (status.textContent = s),
       });
       status.textContent = "";

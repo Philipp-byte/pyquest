@@ -1,0 +1,12 @@
+{
+  "id": "07-funktionen",
+  "title": "Funktionen",
+  "icon": "🧰",
+  "color": "#38bdf8",
+  "description": "Baue eigene Bausteine, die du immer wieder benutzen kannst.",
+  "lessons": [
+    "01-definieren-und-aufrufen",
+    "02-parameter",
+    "03-rueckgabewerte"
+  ]
+}

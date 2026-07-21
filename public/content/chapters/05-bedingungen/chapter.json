@@ -1,0 +1,12 @@
+{
+  "id": "05-bedingungen",
+  "title": "Bedingungen",
+  "icon": "🔀",
+  "color": "#facc15",
+  "description": "Lass dein Programm Entscheidungen treffen.",
+  "lessons": [
+    "01-vergleiche",
+    "02-if-else",
+    "03-elif-und-verknuepfungen"
+  ]
+}

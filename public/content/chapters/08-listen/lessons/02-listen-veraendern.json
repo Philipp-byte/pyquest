@@ -1,0 +1,46 @@
+{
+  "id": "02-listen-veraendern",
+  "title": "Listen verändern",
+  "icon": "✏️",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Listen kannst du nachträglich verändern:\n\n- **`.append(wert)`** fügt ein neues Element **am Ende** hinzu\n- **`.remove(wert)`** entfernt das erste Vorkommen eines Werts\n- **`liste[i] = neuer_wert`** ersetzt das Element an Position `i`"
+    },
+    {
+      "type": "example",
+      "text": "Ein Element hinzufügen:",
+      "code": "einkaufsliste = [\"Brot\", \"Milch\"]\neinkaufsliste.append(\"Eier\")\nprint(einkaufsliste)"
+    },
+    {
+      "type": "explain",
+      "text": "Beim Ausgeben einer ganzen Liste zeigt Python sie in eckigen Klammern mit allen Elementen an – genau wie du sie angelegt hast."
+    },
+    {
+      "type": "quiz",
+      "question": "Was macht `.append(wert)` bei einer Liste?",
+      "choices": [
+        "Fügt den Wert am Ende der Liste hinzu",
+        "Ersetzt das erste Element",
+        "Löscht die Liste"
+      ],
+      "answer": 0,
+      "explainCorrect": "Genau! append() haengt einen neuen Wert ans Ende der Liste an.",
+      "explainWrong": "`.append(wert)` fügt den Wert am Ende der Liste hinzu, ohne etwas zu löschen."
+    },
+    {
+      "type": "code",
+      "task": "Lege eine **leere** Liste **`namen`** an. Füge nacheinander mit `.append()` die Werte `\"Ada\"`, `\"Alan\"` und `\"Grace\"` hinzu. Gib die Liste am Ende aus.",
+      "starterCode": "",
+      "hints": [
+        "Eine leere Liste: namen = []",
+        "Dreimal .append() aufrufen, dann print(namen)",
+        "namen = []\nnamen.append(\"Ada\")\nnamen.append(\"Alan\")\nnamen.append(\"Grace\")\nprint(namen)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "['Ada', 'Alan', 'Grace']" }
+      ]
+    }
+  ]
+}
