@@ -5,6 +5,10 @@
 // existiert /api/ping. Auf GitHub Pages (reines Static Hosting, Demo-Modus)
 // gibt es diese Route nicht -> automatischer Fallback auf localStorage,
 // ohne Build-Unterscheidung. Siehe PLAN.md Abschnitt 3.
+//
+// Login-/Lehrer-/Admin-/Rangliste-Views werden nur bei Bedarf per
+// dynamischem import() geladen (nicht im Haupt-Bundle) - die meisten
+// Aufrufe sind Demo-Modus oder Schueler:innen, die diese Views nie sehen.
 
 import "./styles.css";
 import { loadCurriculum } from "./content.js";
@@ -12,10 +16,6 @@ import { route, startRouter } from "./router.js";
 import { renderPath } from "./views/path-view.js";
 import { renderLesson } from "./views/lesson-view.js";
 import { renderProfile } from "./views/profile-view.js";
-import { renderLogin } from "./views/login-view.js";
-import { renderLeaderboard } from "./views/leaderboard-view.js";
-import { renderTeacherDashboard } from "./views/teacher-view.js";
-import { renderAdminDashboard } from "./views/admin-view.js";
 import { setBackendMode } from "./store.js";
 import { whoAmI, loadState } from "./progress-remote.js";
 import { api } from "./api.js";
@@ -51,6 +51,7 @@ async function boot() {
     setBackendMode("remote");
     const me = await whoAmI();
     if (!me) {
+      const { renderLogin } = await import("./views/login-view.js");
       renderLogin(app, { onLoggedIn: enterApp });
       return;
     }
@@ -68,10 +69,12 @@ async function enterApp(me) {
   if (!me) me = await whoAmI();
 
   if (me.role === "teacher") {
+    const { renderTeacherDashboard } = await import("./views/teacher-view.js");
     await renderTeacherDashboard(app, me);
     return;
   }
   if (me.role === "admin") {
+    const { renderAdminDashboard } = await import("./views/admin-view.js");
     await renderAdminDashboard(app, me);
     return;
   }
@@ -94,7 +97,10 @@ function startApp() {
     renderLesson(app, curriculum, chapter, lesson)
   );
   route("/profil", () => renderProfile(app, curriculum));
-  route("/rangliste", () => renderLeaderboard(app));
+  route("/rangliste", async () => {
+    const { renderLeaderboard } = await import("./views/leaderboard-view.js");
+    renderLeaderboard(app);
+  });
 
   const resolve = startRouter(() => renderPath(app, curriculum));
   resolve();

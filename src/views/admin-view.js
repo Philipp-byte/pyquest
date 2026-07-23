@@ -30,16 +30,16 @@ class AdminDashboard {
       <header class="topbar">
         <span class="topbar__brand">🐍 Py<span>Quest</span> · Admin</span>
         <span class="topbar__who">${this.me.pseudonym}</span>
-        <button class="logout-btn" title="Abmelden">🚪</button>
+        <button class="logout-btn" title="Abmelden" aria-label="Abmelden">🚪</button>
       </header>
       <main class="dashboard dashboard--single">
         <div class="panel">
           <div class="panel__header">
             <h3>Lehrer- &amp; Admin-Accounts</h3>
             <form class="new-teacher-form">
-              <input type="text" name="pseudonym" placeholder="Benutzername" required>
-              <input type="password" name="password" placeholder="Passwort" minlength="4" required>
-              <select name="role">
+              <input type="text" name="pseudonym" placeholder="Benutzername" aria-label="Benutzername" required>
+              <input type="password" name="password" placeholder="Passwort" aria-label="Passwort" minlength="4" required>
+              <select name="role" aria-label="Rolle">
                 <option value="teacher">Lehrkraft</option>
                 <option value="admin">Admin</option>
               </select>
@@ -47,25 +47,27 @@ class AdminDashboard {
             </form>
           </div>
           <p class="form-msg" hidden></p>
-          <table class="roster">
-            <thead><tr><th>Benutzername</th><th>Rolle</th><th>Zuletzt aktiv</th><th></th></tr></thead>
-            <tbody>
-              ${this.teachers
-                .map(
-                  (t) => `
-                <tr data-id="${t.id}">
-                  <td>${escapeHtml(t.pseudonym)}</td>
-                  <td>${t.role === "admin" ? "Admin" : "Lehrkraft"}</td>
-                  <td>${t.lastActive ? t.lastActive : "–"}</td>
-                  <td class="roster__actions">
-                    <button class="btn btn--ghost btn--sm btn--reset-pw">🔑</button>
-                    ${t.id === this.me.id ? "" : `<button class="btn btn--ghost btn--sm btn--delete">🗑</button>`}
-                  </td>
-                </tr>`
-                )
-                .join("")}
-            </tbody>
-          </table>
+          <div class="table-scroll">
+            <table class="roster">
+              <thead><tr><th>Benutzername</th><th>Rolle</th><th>Zuletzt aktiv</th><th></th></tr></thead>
+              <tbody>
+                ${this.teachers
+                  .map(
+                    (t) => `
+                  <tr data-id="${t.id}">
+                    <td>${escapeHtml(t.pseudonym)}</td>
+                    <td>${t.role === "admin" ? "Admin" : "Lehrkraft"}</td>
+                    <td>${t.lastActive ? t.lastActive : "–"}</td>
+                    <td class="roster__actions">
+                      <button class="btn btn--ghost btn--sm btn--reset-pw" title="Passwort zurücksetzen" aria-label="Passwort von ${escapeHtml(t.pseudonym)} zurücksetzen">🔑</button>
+                      ${t.id === this.me.id ? "" : `<button class="btn btn--ghost btn--sm btn--delete" title="Account löschen" aria-label="Account ${escapeHtml(t.pseudonym)} löschen">🗑</button>`}
+                    </td>
+                  </tr>`
+                  )
+                  .join("")}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <div class="panel">

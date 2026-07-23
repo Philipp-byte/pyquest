@@ -106,8 +106,8 @@ function renderPasswordForm() {
     <section class="password-card">
       <h2>Passwort ändern</h2>
       <form class="password-form">
-        <input type="password" name="old" placeholder="Aktuelles Passwort" autocomplete="current-password" required>
-        <input type="password" name="new" placeholder="Neues Passwort (min. 4 Zeichen)" autocomplete="new-password" minlength="4" required>
+        <input type="password" name="old" placeholder="Aktuelles Passwort" aria-label="Aktuelles Passwort" autocomplete="current-password" required>
+        <input type="password" name="new" placeholder="Neues Passwort (min. 4 Zeichen)" aria-label="Neues Passwort, mindestens 4 Zeichen" autocomplete="new-password" minlength="4" required>
         <button type="submit" class="btn btn--primary">Ändern</button>
         <p class="password-form__msg" hidden></p>
       </form>

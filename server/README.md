@@ -42,15 +42,24 @@ Zum Beenden: `Strg+C`.
 
 ## Accounts verwalten
 
-Weitere Accounts jederzeit per CLI anlegen:
+Die CLI-Befehle oben sind nur zum **Bootstrapping** gedacht (der allererste
+Admin-/Test-Account, bevor sich überhaupt jemand einloggen kann). Danach
+läuft die Verwaltung über die Weboberfläche:
+
+- **Lehrkräfte** (nach Login) verwalten unter `/` ihr eigenes Dashboard:
+  Klassen anlegen, Accounts per Klick generieren (druckbare
+  Pseudonym-Passwort-Liste), Fortschritt der Klasse einsehen, Kapitel
+  freischalten/sperren, Rangliste ein-/ausschalten.
+- **Admins** verwalten unter `/` Lehrer-/Admin-Accounts und globale
+  Einstellungen (Schulname, Sound-Standard).
+
+Bei Bedarf lassen sich weitere Accounts trotzdem jederzeit per CLI anlegen:
 
 ```bash
 flask --app app create-user <Pseudonym> <Passwort> --role student --class-name "<Klasse>"
 ```
 
-Rollen: `student`, `teacher`, `admin`. Ein vollständiges Lehrer-Dashboard mit
-automatischer Pseudonym-Generierung und Klassenverwaltung folgt in einer
-späteren Ausbaustufe (siehe `PLAN.md`, Phase M4) – bis dahin reicht diese CLI.
+Rollen: `student`, `teacher`, `admin`.
 
 ## Backup
 

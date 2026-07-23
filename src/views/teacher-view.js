@@ -35,14 +35,14 @@ class TeacherDashboard {
       <header class="topbar">
         <span class="topbar__brand">🐍 Py<span>Quest</span> · Lehrer</span>
         <span class="topbar__who">${this.me.pseudonym}</span>
-        <button class="logout-btn" title="Abmelden">🚪</button>
+        <button class="logout-btn" title="Abmelden" aria-label="Abmelden">🚪</button>
       </header>
       <main class="dashboard">
         <aside class="class-list">
           <h2>Meine Klassen</h2>
           <ul class="class-list__items"></ul>
           <form class="new-class-form">
-            <input type="text" name="name" placeholder="Neue Klasse…" required>
+            <input type="text" name="name" placeholder="Neue Klasse…" aria-label="Name der neuen Klasse" required>
             <button type="submit" class="btn btn--primary">+ Anlegen</button>
           </form>
         </aside>
@@ -128,35 +128,37 @@ class TeacherDashboard {
         <div class="panel__header">
           <h3>Accounts</h3>
           <form class="generate-form">
-            <input type="number" name="count" min="1" max="40" value="5" title="Anzahl">
+            <input type="number" name="count" min="1" max="40" value="5" title="Anzahl" aria-label="Anzahl neuer Accounts">
             <button type="submit" class="btn btn--primary">🎲 Accounts generieren</button>
           </form>
         </div>
         <div class="generated-list" hidden></div>
-        <table class="roster">
-          <thead>
-            <tr><th>Pseudonym</th><th>Level</th><th>XP</th><th>Lektionen</th><th>⭐</th><th>Zuletzt aktiv</th><th></th></tr>
-          </thead>
-          <tbody>
-            ${studentsData.students
-              .map(
-                (s) => `
-              <tr data-id="${s.id}">
-                <td>${escapeHtml(s.pseudonym)}</td>
-                <td>${s.level}</td>
-                <td>${s.xp}</td>
-                <td>${s.lessonsDone}/${s.totalLessons}</td>
-                <td>${s.stars}</td>
-                <td>${s.lastActive ? formatDate(s.lastActive) : "–"}</td>
-                <td class="roster__actions">
-                  <button class="btn btn--ghost btn--sm btn--reset-pw">🔑</button>
-                  <button class="btn btn--ghost btn--sm btn--delete-student">🗑</button>
-                </td>
-              </tr>`
-              )
-              .join("") || `<tr><td colspan="7" class="empty-hint">Noch keine Schüler:innen.</td></tr>`}
-          </tbody>
-        </table>
+        <div class="table-scroll">
+          <table class="roster">
+            <thead>
+              <tr><th>Pseudonym</th><th>Level</th><th>XP</th><th>Lektionen</th><th>⭐</th><th>Zuletzt aktiv</th><th></th></tr>
+            </thead>
+            <tbody>
+              ${studentsData.students
+                .map(
+                  (s) => `
+                <tr data-id="${s.id}">
+                  <td>${escapeHtml(s.pseudonym)}</td>
+                  <td>${s.level}</td>
+                  <td>${s.xp}</td>
+                  <td>${s.lessonsDone}/${s.totalLessons}</td>
+                  <td>${s.stars}</td>
+                  <td>${s.lastActive ? formatDate(s.lastActive) : "–"}</td>
+                  <td class="roster__actions">
+                    <button class="btn btn--ghost btn--sm btn--reset-pw" title="Passwort zurücksetzen" aria-label="Passwort von ${escapeHtml(s.pseudonym)} zurücksetzen">🔑</button>
+                    <button class="btn btn--ghost btn--sm btn--delete-student" title="Account löschen" aria-label="Account ${escapeHtml(s.pseudonym)} löschen">🗑</button>
+                  </td>
+                </tr>`
+                )
+                .join("") || `<tr><td colspan="7" class="empty-hint">Noch keine Schüler:innen.</td></tr>`}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div class="panel">

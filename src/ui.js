@@ -29,8 +29,8 @@ export function renderHeader(active = "path") {
         </div>
         <span class="xp-count" data-value="${xp}">${xp} XP</span>
       </div>
-      <button class="sound-toggle" title="${muted ? "Sound an" : "Sound aus"}">${muted ? "🔇" : "🔊"}</button>
-      ${remoteMode ? `<button class="logout-btn" title="Abmelden">🚪</button>` : ""}
+      <button class="sound-toggle" title="${muted ? "Sound an" : "Sound aus"}" aria-label="${muted ? "Sound an" : "Sound aus"}">${muted ? "🔇" : "🔊"}</button>
+      ${remoteMode ? `<button class="logout-btn" title="Abmelden" aria-label="Abmelden">🚪</button>` : ""}
       <nav class="topbar__nav">
         <a href="#/" class="${active === "path" ? "is-active" : ""}">Lernpfad</a>
         ${remoteMode && isLeaderboardEnabled() ? `<a href="#/rangliste" class="${active === "rangliste" ? "is-active" : ""}">Rangliste</a>` : ""}
@@ -49,6 +49,7 @@ export function wireHeader(root) {
       const muted = toggleMuted();
       soundBtn.textContent = muted ? "🔇" : "🔊";
       soundBtn.title = muted ? "Sound an" : "Sound aus";
+      soundBtn.setAttribute("aria-label", muted ? "Sound an" : "Sound aus");
     };
   }
 
