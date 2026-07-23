@@ -1,0 +1,47 @@
+{
+  "id": "03-f-strings",
+  "title": "Schöner ausgeben mit f-Strings",
+  "icon": "✨",
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Bisher hast du Text und Variablen mit `+` oder mit Kommas verbunden. Es geht aber viel eleganter: mit einem **f-String**.\n\nDu schreibst ein kleines **`f`** direkt vor die Anführungszeichen und setzt Variablen in **geschweifte Klammern `{ }`**:\n```\nname = \"Anna\"\nalter = 30\nprint(f\"Ich bin {name} und {alter} Jahre alt.\")\n```\nAusgabe: `Ich bin Anna und 30 Jahre alt.`"
+    },
+    {
+      "type": "explain",
+      "text": "Der große Vorteil: Du musst **nichts umwandeln**. Innerhalb der `{ }` darf sogar direkt gerechnet werden:\n```\npreis = 5\nprint(f\"Drei Stück kosten {preis * 3} Euro.\")\n```\nAusgabe: `Drei Stück kosten 15 Euro.` – kein `str()`, kein `+`, viel lesbarer."
+    },
+    {
+      "type": "quiz",
+      "question": "Was gibt dieses Programm aus?\n\n```\nx = 4\nprint(f\"Das Quadrat ist {x * x}.\")\n```",
+      "choices": ["Das Quadrat ist {x * x}.", "Das Quadrat ist 16.", "Das Quadrat ist 8."],
+      "answer": 1,
+      "explainCorrect": "Richtig! In den {} wird gerechnet: 4·4 = 16.",
+      "explainWrong": "Im f-String wird der Ausdruck in {} berechnet und eingesetzt: 4·4 = 16 → „Das Quadrat ist 16.“"
+    },
+    {
+      "type": "fill",
+      "text": "Vervollständige den f-String, damit der Name eingesetzt wird. (Setze nur den Buchstaben vor die Anführungszeichen.)",
+      "template": "print(___\"Hallo {name}!\")",
+      "solution": "f",
+      "accept": ["f"],
+      "hint": "Ein f-String beginnt mit einem kleinen f direkt vor dem Anführungszeichen."
+    },
+    {
+      "type": "code",
+      "task": "Frage `Name: ` und `Alter: ` ab (Alter als Zahl). Gib mit einem **f-String** aus: **`NAME ist ALTER Jahre alt.`** (bei Ada / 16: `Ada ist 16 Jahre alt.`).",
+      "starterCode": "",
+      "needsInput": true,
+      "hints": [
+        "name = input(\"Name: \")  und  alter = int(input(\"Alter: \"))",
+        "print(f\"{name} ist {alter} Jahre alt.\")",
+        "name = input(\"Name: \")\nalter = int(input(\"Alter: \"))\nprint(f\"{name} ist {alter} Jahre alt.\")"
+      ],
+      "tests": [
+        { "type": "input_output", "inputs": ["Ada", "16"], "expected": "Name: Ada\nAlter: 16\nAda ist 16 Jahre alt." },
+        { "type": "input_output", "inputs": ["Max", "40"], "expected": "Name: Max\nAlter: 40\nMax ist 40 Jahre alt." }
+      ]
+    }
+  ]
+}

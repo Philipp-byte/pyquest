@@ -3,9 +3,11 @@
   "title": "Eingaben",
   "icon": "⌨️",
   "color": "#f472b6",
-  "description": "Lass dein Programm mit den Nutzer:innen sprechen.",
+  "description": "Das EVA-Prinzip: Daten einlesen, verarbeiten und schön ausgeben.",
   "lessons": [
-    "01-input-lesen",
-    "02-eingaben-umwandeln"
+    "01-eva-und-input",
+    "02-eingaben-berechnen",
+    "03-f-strings",
+    "04-escape-sequenzen"
   ]
 }

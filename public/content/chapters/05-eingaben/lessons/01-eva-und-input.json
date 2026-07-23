@@ -1,0 +1,55 @@
+{
+  "id": "01-eva-und-input",
+  "title": "Das EVA-Prinzip & input()",
+  "icon": "⌨️",
+  "xp": 20,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Fast jedes Programm folgt dem **EVA-Prinzip** – drei Schritte:\n\n- **E**ingabe: Daten kommen ins Programm (z. B. vom Benutzer).\n- **V**erarbeitung: das Programm rechnet oder bearbeitet die Daten.\n- **A**usgabe: das Ergebnis wird angezeigt.\n\nBeispiel BMI-Rechner: **Eingabe** Gewicht & Größe → **Verarbeitung** BMI berechnen → **Ausgabe** BMI anzeigen."
+    },
+    {
+      "type": "explain",
+      "text": "Für die **Eingabe** gibt es die Funktion **`input()`**. Der Text in den Klammern ist die **Frage**, die angezeigt wird. Das Programm wartet dann, bis der Benutzer etwas eintippt und Enter drückt.\n```\nname = input(\"Wie heißt du? \")\nprint(\"Hallo \" + name + \"!\")\n```\nBei Eingabe `Ada`:\n```\nWie heißt du? Ada\nHallo Ada!\n```"
+    },
+    {
+      "type": "quiz",
+      "question": "Welche drei Schritte beschreibt das EVA-Prinzip?",
+      "choices": [
+        "Erstellen, Verändern, Anzeigen",
+        "Eingabe, Verarbeitung, Ausgabe",
+        "Eingeben, Vergleichen, Ausrechnen"
+      ],
+      "answer": 1,
+      "explainCorrect": "Genau! EVA steht für Eingabe – Verarbeitung – Ausgabe.",
+      "explainWrong": "EVA steht für Eingabe (Daten rein), Verarbeitung (rechnen) und Ausgabe (Ergebnis anzeigen)."
+    },
+    {
+      "type": "quiz",
+      "question": "Wofür steht der Text in den Klammern bei `input(\"Wie heißt du? \")`?",
+      "choices": [
+        "Für die Frage, die angezeigt wird",
+        "Für die Antwort der Nutzerin",
+        "Das ist nur Dekoration und wird ignoriert"
+      ],
+      "answer": 0,
+      "explainCorrect": "Richtig! Der Text ist die Aufforderung, die vor der Eingabe erscheint.",
+      "explainWrong": "Der Text in den Klammern ist die Frage/Aufforderung, die angezeigt wird, bevor auf die Eingabe gewartet wird."
+    },
+    {
+      "type": "code",
+      "task": "Frage mit `input(\"Wie heißt du? \")` nach dem Namen, speichere ihn in `name` und gib **`Hallo NAME!`** aus (bei Eingabe Ada: `Hallo Ada!`).",
+      "starterCode": "",
+      "needsInput": true,
+      "hints": [
+        "name = input(\"Wie heißt du? \")",
+        "print(\"Hallo \" + name + \"!\")",
+        "name = input(\"Wie heißt du? \")\nprint(\"Hallo \" + name + \"!\")"
+      ],
+      "tests": [
+        { "type": "input_output", "inputs": ["Ada"], "expected": "Wie heißt du? Ada\nHallo Ada!" },
+        { "type": "input_output", "inputs": ["Max"], "expected": "Wie heißt du? Max\nHallo Max!" }
+      ]
+    }
+  ]
+}

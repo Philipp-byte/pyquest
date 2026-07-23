@@ -1,0 +1,41 @@
+{
+  "id": "04-escape-sequenzen",
+  "title": "Escape-Sequenzen",
+  "icon": "⏎",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Eine **Escape-Sequenz** ist eine besondere Zeichenkombination in einem Text, die mit einem Backslash **`\\`** beginnt. Damit stellst du Zeichen dar, die man sonst schwer in einen String schreiben kann:\n\n- **`\\n`** – neue Zeile (New Line)\n- **`\\t`** – Tabulator (ein großer, gleichmäßiger Abstand)\n- **`\\\"`** – ein Anführungszeichen mitten im Text"
+    },
+    {
+      "type": "example",
+      "text": "Mit `\\n` kannst du **innerhalb eines einzigen print()** einen Zeilenumbruch machen:",
+      "code": "print(\"Zeile 1\\nZeile 2\")"
+    },
+    {
+      "type": "quiz",
+      "question": "Wie viele Zeilen gibt `print(\"A\\nB\\nC\")` aus?",
+      "choices": ["1 Zeile", "3 Zeilen", "Gar keine"],
+      "answer": 1,
+      "explainCorrect": "Richtig! Jedes \\n erzeugt einen Zeilenumbruch – A, B und C stehen untereinander.",
+      "explainWrong": "Jedes \\n bewirkt einen Zeilenumbruch. `A\\nB\\nC` gibt A, B, C in drei Zeilen aus."
+    },
+    {
+      "type": "explain",
+      "text": "Das Zeichen **`\\t`** (Tabulator) sorgt für einen sauberen Abstand – praktisch für Tabellen. Und wenn du ein **Anführungszeichen** mitten im Text brauchst, nutzt du **`\\\"`**, damit Python es nicht als Ende des Strings versteht:\n```\nprint(\"Er sagte: \\\"Hallo\\\"\")\n```\nAusgabe: `Er sagte: \"Hallo\"`"
+    },
+    {
+      "type": "code",
+      "task": "Gib mit einem **einzigen** `print()` und `\\n` diese zwei Zeilen aus:\n```\nPython\nist toll\n```",
+      "starterCode": "",
+      "hints": [
+        "Nutze \\n zwischen den beiden Wörtern",
+        "print(\"Python\\nist toll\")"
+      ],
+      "tests": [
+        { "type": "output", "expected": "Python\nist toll" }
+      ]
+    }
+  ]
+}

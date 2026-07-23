@@ -1,0 +1,63 @@
+{
+  "id": "02-eingaben-berechnen",
+  "title": "Mit Eingaben rechnen",
+  "icon": "🔁",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Ganz wichtig: **`input()` liefert immer Text** (`str`) zurück – auch wenn jemand eine Zahl eintippt!\n\nWillst du mit der Eingabe **rechnen**, musst du sie erst mit **`int()`** (Ganzzahl) oder **`float()`** (Kommazahl) umwandeln."
+    },
+    {
+      "type": "example",
+      "text": "Häufig kombiniert man beides in einer Zeile – input() innen, int() außen:",
+      "code": "alter = int(input(\"Wie alt bist du? \"))\nprint(\"Nächstes Jahr bist du\", alter + 1)"
+    },
+    {
+      "type": "quiz",
+      "question": "Was passiert bei `input(\"Zahl: \") + 1` ohne Umwandlung?",
+      "choices": [
+        "Es funktioniert einwandfrei",
+        "Es gibt einen TypeError – Text und Zahl lassen sich nicht direkt verrechnen",
+        "Python wandelt automatisch um"
+      ],
+      "answer": 1,
+      "explainCorrect": "Richtig! input() liefert Text – ohne int()/float() gibt es einen TypeError.",
+      "explainWrong": "input() liefert immer Text. `text + 1` (Text + Zahl) löst einen TypeError aus. Erst mit int() umwandeln!"
+    },
+    {
+      "type": "code",
+      "task": "Frage `Gib eine Zahl ein: ` ab, wandle die Eingabe in eine Zahl um, verdopple sie und gib **`Das Doppelte ist X`** aus (bei Eingabe 5: `Das Doppelte ist 10`).",
+      "starterCode": "",
+      "needsInput": true,
+      "hints": [
+        "Einlesen und umwandeln: zahl = int(input(\"Gib eine Zahl ein: \"))",
+        "Ausgeben: print(\"Das Doppelte ist\", zahl * 2)",
+        "zahl = int(input(\"Gib eine Zahl ein: \"))\nprint(\"Das Doppelte ist\", zahl * 2)"
+      ],
+      "tests": [
+        { "type": "input_output", "inputs": ["5"], "expected": "Gib eine Zahl ein: 5\nDas Doppelte ist 10" },
+        { "type": "input_output", "inputs": ["9"], "expected": "Gib eine Zahl ein: 9\nDas Doppelte ist 18" }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Jetzt eine echte Anwendung aus dem Fitnessstudio: die **maximale Herzfrequenz** beim Training. Die Faustformel lautet **220 − Alter**. Das ist klassisches EVA: Alter eingeben → 220 − Alter rechnen → Ergebnis ausgeben."
+    },
+    {
+      "type": "code",
+      "task": "Frage `Alter: ` ab, wandle in eine Zahl um, berechne die maximale Herzfrequenz (`220 - alter`) und gib **`Maximale Herzfrequenz: X`** aus (bei Eingabe 40: `Maximale Herzfrequenz: 180`).",
+      "starterCode": "",
+      "needsInput": true,
+      "hints": [
+        "alter = int(input(\"Alter: \"))",
+        "max_hf = 220 - alter",
+        "alter = int(input(\"Alter: \"))\nmax_hf = 220 - alter\nprint(\"Maximale Herzfrequenz:\", max_hf)"
+      ],
+      "tests": [
+        { "type": "input_output", "inputs": ["40"], "expected": "Alter: 40\nMaximale Herzfrequenz: 180" },
+        { "type": "input_output", "inputs": ["25"], "expected": "Alter: 25\nMaximale Herzfrequenz: 195" }
+      ]
+    }
+  ]
+}
