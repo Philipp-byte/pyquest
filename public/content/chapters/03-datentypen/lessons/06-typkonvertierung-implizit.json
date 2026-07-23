@@ -1,0 +1,54 @@
+{
+  "id": "06-typkonvertierung-implizit",
+  "title": "Typen umwandeln (implizit)",
+  "icon": "🤖",
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Manchmal wandelt **Python selbst** einen Typ um, ganz automatisch – ohne dass du eine Funktion aufrufst. Das nennt man **implizite** Typkonvertierung.\n\nDas passiert, wenn in einer Rechnung verschiedene Zahltypen zusammenkommen. Python macht dann aus dem „kleineren“ Typ den „größeren“, damit die Rechnung aufgeht."
+    },
+    {
+      "type": "example",
+      "text": "Hier wird ein `int` mit einem `float` addiert. Python wandelt die 10 automatisch in `10.0` um – das Ergebnis ist ein float:",
+      "code": "int_wert = 10\nfloat_wert = 20.5\nergebnis = int_wert + float_wert\nprint(ergebnis)\nprint(type(ergebnis))"
+    },
+    {
+      "type": "quiz",
+      "question": "Welchen Typ hat das Ergebnis von `5 + 2.0`?",
+      "choices": ["int", "float", "str"],
+      "answer": 1,
+      "explainCorrect": "Richtig! Sobald ein float beteiligt ist, wird das Ergebnis automatisch ein float: 7.0.",
+      "explainWrong": "Wenn ein int und ein float zusammen gerechnet werden, macht Python den int implizit zum float – das Ergebnis 7.0 ist ein float."
+    },
+    {
+      "type": "explain",
+      "text": "Der Unterschied zusammengefasst:\n\n- **Explizit**: **Du** wandelst um, mit `int()`, `float()`, `str()`. (Du triffst die Entscheidung.)\n- **Implizit**: **Python** wandelt automatisch um, z. B. bei `int + float`. (Python entscheidet je nach Kontext.)\n\nText (`str`) wandelt Python übrigens **nie** automatisch um – `\"3\" + 4` bleibt ein Fehler. Da musst **du** ran."
+    },
+    {
+      "type": "quiz",
+      "question": "Was ist bei `x = y + z` (y ist int, z ist float) der Fall?",
+      "choices": [
+        "Explizite Konvertierung – du rufst eine Funktion auf",
+        "Implizite Konvertierung – Python macht y automatisch zum float",
+        "Gar keine Konvertierung"
+      ],
+      "answer": 1,
+      "explainCorrect": "Genau! Python wandelt y automatisch in einen float um – das ist implizit.",
+      "explainWrong": "Hier greift Python selbst ein: y (int) wird automatisch zum float, damit die Addition mit z klappt. Das ist implizite Konvertierung."
+    },
+    {
+      "type": "code",
+      "task": "Addiere die Ganzzahl **`7`** und die Kommazahl **`2.5`**, speichere das Ergebnis in `summe` und gib es aus. Python kümmert sich automatisch um die Umwandlung (Ergebnis: **9.5**).",
+      "starterCode": "",
+      "hints": [
+        "Einfach int + float rechnen – Python wandelt automatisch um",
+        "summe = 7 + 2.5\nprint(summe)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "9.5" },
+        { "type": "var", "name": "summe", "expected": 9.5 }
+      ]
+    }
+  ]
+}

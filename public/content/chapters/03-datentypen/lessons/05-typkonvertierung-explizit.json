@@ -1,0 +1,64 @@
+{
+  "id": "05-typkonvertierung-explizit",
+  "title": "Typen umwandeln (explizit)",
+  "icon": "🔁",
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Oft musst du einen Wert von einem Typ in einen anderen **umwandeln** (konvertieren). Wenn **du** das bewusst machst, heißt es **explizite** Typkonvertierung. Dafür gibt es eingebaute Funktionen:\n\n- **`int(wert)`** → macht eine Ganzzahl daraus\n- **`float(wert)`** → macht eine Kommazahl daraus\n- **`str(wert)`** → macht Text daraus"
+    },
+    {
+      "type": "example",
+      "text": "Ein float in einen int umwandeln – dabei geht die Nachkommastelle verloren (es wird **abgeschnitten**, nicht gerundet):",
+      "code": "float_wert = 12.7\nint_wert = int(float_wert)\nprint(int_wert)"
+    },
+    {
+      "type": "quiz",
+      "question": "Was gibt `print(int(3.9))` aus?",
+      "choices": ["4", "3", "3.9"],
+      "answer": 1,
+      "explainCorrect": "Richtig! int() schneidet die Nachkommastelle einfach ab – aus 3.9 wird 3 (nicht gerundet!).",
+      "explainWrong": "`int()` rundet nicht, sondern schneidet die Nachkommastelle ab: aus 3.9 wird 3."
+    },
+    {
+      "type": "explain",
+      "text": "Besonders wichtig: Ein **Text, der wie eine Zahl aussieht**, ist trotzdem Text. Erst `int()` oder `float()` macht daraus eine echte Zahl, mit der du rechnen kannst:\n```\nzahl_text = \"123\"\nzahl = int(zahl_text)\nprint(zahl + 10)   → 133\n```"
+    },
+    {
+      "type": "code",
+      "task": "Der Text **`\"4.23\"`** soll in eine echte Kommazahl umgewandelt werden. Wandle ihn mit `float()` um, speichere ihn in `zahl` und gib `zahl` aus.",
+      "starterCode": "text = \"4.23\"\n",
+      "hints": [
+        "float() macht aus Text eine Kommazahl",
+        "zahl = float(text)",
+        "text = \"4.23\"\nzahl = float(text)\nprint(zahl)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "4.23" },
+        { "type": "var", "name": "zahl", "expected": 4.23 }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Vorsicht: `int()` klappt nur, wenn der Text wirklich eine Zahl ist. **`int(\"5\")`** ergibt `5`, aber **`int(\"hallo\")`** wirft einen **`ValueError`** – „ungültiger Wert“. Das passiert oft, wenn eine Nutzereingabe keine Zahl enthält."
+    },
+    {
+      "type": "explain",
+      "text": "Auch `bool`-Werte kann man umwandeln. Bei **`int(True)`** kommt **`1`** heraus, bei **`int(False)`** kommt **`0`** heraus. So kann man mit Wahrheitswerten sogar rechnen (z. B. zählen, wie oft etwas `True` war)."
+    },
+    {
+      "type": "code",
+      "task": "Wandle den bool-Wert **`True`** mit `int()` in eine Zahl um, speichere sie in `zahl` und gib sie aus (soll **1** sein).",
+      "starterCode": "",
+      "hints": [
+        "int(True) ergibt 1, int(False) ergibt 0",
+        "zahl = int(True)\nprint(zahl)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "1" },
+        { "type": "var", "name": "zahl", "expected": 1 }
+      ]
+    }
+  ]
+}

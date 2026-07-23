@@ -1,0 +1,48 @@
+{
+  "id": "01-die-vier-datentypen",
+  "title": "Die vier Datentypen",
+  "icon": "🔤",
+  "xp": 20,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Jeder Wert in Python hat einen **Datentyp** – er sagt, um welche Art von Information es sich handelt. Für den Anfang sind vier Typen wichtig:\n\n- **`int`** – Ganze Zahlen: `123`, `-5`, `0`\n- **`float`** – Kommazahlen: `1.23`, `3.14`, `-0.5`\n- **`str`** – Zeichenketten (Text): `\"Hello\"`, `\"Ada\"`\n- **`bool`** – Wahrheitswerte: `True` oder `False`"
+    },
+    {
+      "type": "explain",
+      "text": "Warum ist der Typ wichtig? Weil Python je nach Typ **anders** rechnet. `3 + 4` ergibt `7` (Zahlen), aber `\"3\" + \"4\"` ergibt `\"34\"` (Text wird aneinandergehängt).\n\nMit der Funktion **`type(wert)`** findest du heraus, welchen Typ ein Wert hat:\n```\nprint(type(123))     → <class 'int'>\nprint(type(1.5))     → <class 'float'>\nprint(type(\"hi\"))    → <class 'str'>\nprint(type(True))    → <class 'bool'>\n```"
+    },
+    {
+      "type": "quiz",
+      "question": "Welchen Datentyp hat der Wert `3.14`?",
+      "choices": ["int", "float", "str"],
+      "answer": 1,
+      "explainCorrect": "Richtig! 3.14 hat einen Nachkommateil – das ist ein float.",
+      "explainWrong": "3.14 ist eine Kommazahl, also vom Typ float. (int wäre eine ganze Zahl ohne Komma.)"
+    },
+    {
+      "type": "quiz",
+      "question": "Und welchen Datentyp hat `True`?",
+      "choices": ["str", "int", "bool"],
+      "answer": 2,
+      "explainCorrect": "Genau! True und False sind die beiden Werte des Typs bool.",
+      "explainWrong": "True ist ein Wahrheitswert – der Typ dafür heißt bool. Er kann nur True oder False sein."
+    },
+    {
+      "type": "explain",
+      "text": "In der Praxis wählt man für jede Information den passenden Typ. Ein Fitnessstudio speichert z. B.:\n\n- Mitglieds-ID → **int** (`101`)\n- Vorname → **str** (`\"Max\"`)\n- Premium-Mitglied? → **bool** (`True`)\n- Durchschnittsbewertung → **float** (`4.5`)"
+    },
+    {
+      "type": "code",
+      "task": "Finde den Typ heraus: Gib mit `type()` und `print()` den Datentyp des Werts **`4.5`** aus.",
+      "starterCode": "",
+      "hints": [
+        "Nutze type() innerhalb von print()",
+        "print(type(4.5))"
+      ],
+      "tests": [
+        { "type": "output_contains", "expected": "float" }
+      ]
+    }
+  ]
+}

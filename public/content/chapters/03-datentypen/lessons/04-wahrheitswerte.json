@@ -1,0 +1,45 @@
+{
+  "id": "04-wahrheitswerte",
+  "title": "Wahrheitswerte (bool)",
+  "icon": "✅",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Ein **Wahrheitswert** (`bool`) kennt nur zwei Zustände: **`True`** (wahr) oder **`False`** (falsch).\n\nWichtig: `True` und `False` schreibt man **groß** und **ohne** Anführungszeichen – sie sind keine Texte, sondern eigene Werte."
+    },
+    {
+      "type": "explain",
+      "text": "Wahrheitswerte entstehen oft durch **Vergleiche**. Das Ergebnis eines Vergleichs ist immer `True` oder `False`:\n\n- `==` gleich, `!=` ungleich\n- `<` kleiner, `>` größer\n- `<=` kleiner-gleich, `>=` größer-gleich"
+    },
+    {
+      "type": "example",
+      "text": "Vergleiche ergeben bool-Werte:",
+      "code": "print(5 > 3)\nprint(5 == 3)\nprint(type(5 > 3))"
+    },
+    {
+      "type": "quiz",
+      "question": "Was gibt `print(10 >= 10)` aus?",
+      "choices": ["True", "False", "Fehler"],
+      "answer": 0,
+      "explainCorrect": "Richtig! >= heißt „größer oder gleich“ – 10 ist gleich 10, also True.",
+      "explainWrong": "`>=` bedeutet „größer oder gleich“. 10 ist gleich 10, deshalb ist die Aussage wahr: True."
+    },
+    {
+      "type": "explain",
+      "text": "**Aufgepasst beim Vergleichen:** `==` (zwei Gleichheitszeichen) **vergleicht**, `=` (ein Gleichheitszeichen) **weist zu**. `alter = 18` speichert 18 in `alter`. `alter == 18` prüft, ob `alter` gleich 18 ist. Das ist der häufigste Anfängerfehler!"
+    },
+    {
+      "type": "code",
+      "task": "Prüfe mit einem Vergleich, ob **7 kleiner ist als 3**, und gib das Ergebnis aus (soll **`False`** sein).",
+      "starterCode": "",
+      "hints": [
+        "Nutze print() mit einem Vergleich (kleiner-Operator <)",
+        "print(7 < 3)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "False" }
+      ]
+    }
+  ]
+}

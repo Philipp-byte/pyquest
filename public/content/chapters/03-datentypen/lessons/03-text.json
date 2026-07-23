@@ -1,0 +1,57 @@
+{
+  "id": "03-text",
+  "title": "Text (Strings)",
+  "icon": "📝",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Text wird in Python **`str`** (String) genannt und steht in **Anführungszeichen**: `\"Hallo\"` oder `'Hallo'` (beide gehen, Hauptsache gleich am Anfang und Ende).\n\nMit **`+`** kannst du Texte **aneinanderhängen** (verketten)."
+    },
+    {
+      "type": "example",
+      "text": "Zwei Texte und ein Leerzeichen dazwischen verketten:",
+      "code": "vorname = \"Ada\"\nnachname = \"Lovelace\"\nprint(vorname + \" \" + nachname)"
+    },
+    {
+      "type": "explain",
+      "text": "Achtung, häufiger Anfängerfehler: Du kannst Text **nicht** direkt mit einer Zahl verketten.\n```\nprint(\"Alter: \" + 16)   → TypeError!\n```\nText (`str`) und Zahl (`int`) sind verschiedene Typen. Du musst die Zahl erst mit **`str()`** in Text umwandeln:\n```\nprint(\"Alter: \" + str(16))   → Alter: 16\n```"
+    },
+    {
+      "type": "quiz",
+      "question": "Warum wirft `print(\"Punkte: \" + 5)` einen Fehler?",
+      "choices": [
+        "Weil man Text und Zahl nicht direkt verbinden kann",
+        "Weil \"Punkte: \" zu lang ist",
+        "Weil 5 keine gültige Zahl ist"
+      ],
+      "answer": 0,
+      "explainCorrect": "Genau! Text und Zahl müssen erst mit str() zusammengeführt werden.",
+      "explainWrong": "Text (str) und Zahl (int) lassen sich nicht direkt mit + verbinden. Man braucht `str(5)`, um die Zahl in Text umzuwandeln."
+    },
+    {
+      "type": "fill",
+      "text": "Wandle die Zahl `alter` in Text um, damit die Verkettung funktioniert.",
+      "template": "print(\"Alter: \" + ___(alter))",
+      "solution": "str",
+      "accept": ["str"],
+      "hint": "Die Funktion zum Umwandeln in Text heißt str()"
+    },
+    {
+      "type": "explain",
+      "text": "Ein bequemer Trick: `print()` kann auch **mehrere Werte** ausgeben, getrennt durch **Kommas**. Dann brauchst du kein `str()` und Python setzt automatisch ein Leerzeichen dazwischen:\n```\nalter = 16\nprint(\"Alter:\", alter)   → Alter: 16\n```"
+    },
+    {
+      "type": "code",
+      "task": "Lege `stadt = \"Weingarten\"` an und gib **`Ich wohne in Weingarten`** aus (nutze Verkettung mit `+`).",
+      "starterCode": "",
+      "hints": [
+        "stadt = \"Weingarten\"",
+        "print(\"Ich wohne in \" + stadt)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "Ich wohne in Weingarten" }
+      ]
+    }
+  ]
+}

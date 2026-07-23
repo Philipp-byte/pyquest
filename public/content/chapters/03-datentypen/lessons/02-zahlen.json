@@ -1,0 +1,65 @@
+{
+  "id": "02-zahlen",
+  "title": "Zahlen (int und float)",
+  "icon": "🔢",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Python kennt zwei Arten von Zahlen:\n\n- **`int`** (Ganzzahlen): `5`, `-3`, `100`\n- **`float`** (Kommazahlen): `3.14`, `-0.5`, `2.0`\n\nIm Deutschen schreibt man ein Komma (3,14) – in Python **immer einen Punkt**: `3.14`."
+    },
+    {
+      "type": "example",
+      "text": "Die Grundrechenarten funktionieren wie erwartet. Klick auf **Ausführen**:",
+      "code": "print(3 + 4)\nprint(10 - 2)\nprint(3 * 5)\nprint(10 / 4)"
+    },
+    {
+      "type": "explain",
+      "text": "Bei der Division gibt es eine Besonderheit:\n\n- **`/`** teilt normal und liefert **immer** eine Kommazahl: `10 / 4` → `2.5`, sogar `8 / 2` → `4.0`\n- **`//`** (Ganzzahldivision) liefert nur den **ganzen** Teil ohne Rest: `10 // 4` → `2`\n- **`%`** (Modulo) liefert den **Rest** einer Division: `10 % 4` → `2`"
+    },
+    {
+      "type": "quiz",
+      "question": "Was gibt `print(7 // 2)` aus?",
+      "choices": ["3.5", "3", "4"],
+      "answer": 1,
+      "explainCorrect": "Richtig! // rundet ab auf den ganzen Teil – 7 geteilt durch 2 ist 3 (Rest 1).",
+      "explainWrong": "`//` liefert nur den ganzen Teil ohne Rest: 7 // 2 = 3. (Mit `/` käme 3.5 heraus.)"
+    },
+    {
+      "type": "quiz",
+      "question": "Und was gibt `print(7 % 2)` aus?",
+      "choices": ["1", "3", "3.5"],
+      "answer": 0,
+      "explainCorrect": "Genau! % liefert den Rest: 7 geteilt durch 2 ist 3 Rest 1 – also 1.",
+      "explainWrong": "`%` (Modulo) liefert den Rest der Division: 7 = 3·2 + 1, also ist der Rest 1."
+    },
+    {
+      "type": "explain",
+      "text": "Mit **`**`** kannst du **potenzieren** (hoch rechnen): `2 ** 3` bedeutet 2·2·2 = `8`. Das brauchst du z. B. für Flächen (`seite ** 2`) oder Volumen (`seite ** 3`)."
+    },
+    {
+      "type": "code",
+      "task": "Berechne **2 hoch 10** (`2 ** 10`) und gib das Ergebnis aus (**1024**).",
+      "starterCode": "",
+      "hints": [
+        "Der Potenz-Operator ist **",
+        "print(2 ** 10)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "1024" }
+      ]
+    },
+    {
+      "type": "code",
+      "task": "Ein Trainingsraum ist **20** m lang, **15** m breit und **3** m hoch. Berechne das **Volumen** (Länge · Breite · Höhe) und gib es aus (**900**).",
+      "starterCode": "laenge = 20\nbreite = 15\nhoehe = 3\n",
+      "hints": [
+        "Volumen = laenge * breite * hoehe",
+        "volumen = laenge * breite * hoehe\nprint(volumen)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "900" }
+      ]
+    }
+  ]
+}
