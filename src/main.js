@@ -13,7 +13,7 @@
 import "./styles.css";
 import { loadCurriculum } from "./content.js";
 import { route, startRouter } from "./router.js";
-import { renderPath } from "./views/path-view.js";
+import { renderPath, renderChapterDetail } from "./views/path-view.js";
 import { renderLesson } from "./views/lesson-view.js";
 import { renderProfile } from "./views/profile-view.js";
 import { setBackendMode } from "./store.js";
@@ -93,6 +93,9 @@ async function enterApp(me) {
 
 function startApp() {
   route("/", () => renderPath(app, curriculum));
+  route("/chapter/:chapterId", ({ chapterId }) =>
+    renderChapterDetail(app, curriculum, chapterId)
+  );
   route("/lesson/:chapter/:lesson", ({ chapter, lesson }) =>
     renderLesson(app, curriculum, chapter, lesson)
   );

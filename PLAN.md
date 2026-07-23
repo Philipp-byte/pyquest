@@ -8,7 +8,7 @@ Vorbild: Duolingo / Mimo / Sololearn – aber datenschutzkonform, kostenlos und 
 ## 1. Leitidee
 
 Schülerinnen und Schüler (SuS) lernen Python **Schritt für Schritt direkt im Browser** –
-mit Levels, XP, Badges, Streaks und sofortigem Feedback. Lehrer sehen den Fortschritt
+mit Levels, XP, Badges und sofortigem Feedback. Lehrer sehen den Fortschritt
 ihrer Klassen in einem Dashboard. Alles läuft mit kostenlosen Open-Source-Technologien
 und ohne externe Dienste.
 
@@ -95,7 +95,6 @@ progress     user_id, lesson_id, status (locked|open|done), stars (0–3),
              attempts, hints_used, completed_at
 xp_events    user_id, amount, reason, timestamp        → Summe = XP, daraus Level
 badges       user_id, badge_id, earned_at
-streaks      user_id, current_streak, best_streak, last_active_date
 settings     key, value                                 → globale Einstellungen
 unlocks      class_id, chapter_id, locked (bool)        → Lehrer schaltet Kapitel frei/zu
 ```
@@ -178,12 +177,11 @@ Ablauf im Browser (alles via Pyodide, ohne Server):
 | **XP** | Pro Übung 5–20 XP, Bonus für fehlerfreie Lösung ohne Tipps |
 | **Level** | Steigende Kurve: Level n benötigt `100 × n^1.5` XP; Level-Up-Animation |
 | **Sterne** | 1–3 pro Lektion (Versuche + genutzte Tipps); Wiederholen erlaubt, um 3⭐ zu holen |
-| **Badges** | z. B. „Erste Schritte", „Schleifen-Meister", „7-Tage-Serie", „Fehlerjäger", „Kapitel perfekt" – als Sammelalbum im Profil |
-| **Streak** | Tägliche Lernserie mit Flammen-Symbol; „Streak-Schutz" 1×/Woche (verzeiht einen Tag Pause – schulfreundlich!) |
-| **Lernpfad** | Duolingo-artige „Landkarte": Kapitel als Inseln/Stationen auf einem Pfad, Lektionen als Knoten – erledigt / aktiv / gesperrt |
+| **Badges** | z. B. „Erste Schritte", „Fleißig", „Kapitel-Champion", „Highscore", „Sternensammler" – als Sammelalbum im Profil. Bewusst **kein** Streak-/Tagesserien-System: SuS lernen nur im Unterricht, nicht täglich – ein „X Tage in Folge"-Abzeichen wäre für sie nie erreichbar |
+| **Lernpfad** | Zweistufig: Kapitel-Übersicht (Kacheln mit Titel, Icon, Fortschrittsbalken) → Klick öffnet die Lektionen-Ansicht des Kapitels (Knotenpfad: erledigt / aktiv / gesperrt) |
 | **Fortschritt** | Ringe/Balken pro Kapitel + Gesamt-Prozentanzeige im Profil |
 | **Rangliste (optional)** | Pro Klasse, vom Lehrer ein-/ausschaltbar; zeigt nur Pseudonyme; optional „anonymer Modus" (nur eigene Platzierung sichtbar) |
-| **Feedback-Momente** | Konfetti bei Lektionsabschluss, Sound-Effekte (abschaltbar), animierte XP-Zähler, Maskottchen 🐍 mit motivierenden Sprüchen |
+| **Feedback-Momente** | Abwechselnde Erfolgs-Animationen bei richtigen Antworten/Lektionsabschluss (mehrere Konfetti-/Emoji-Varianten, zufällig ausgewählt, nicht immer dieselbe), Sound-Effekte (abschaltbar), animierte XP-Zähler, Maskottchen 🐍 mit motivierenden Sprüchen |
 
 ---
 
@@ -204,9 +202,10 @@ Ablauf im Browser (alles via Pyodide, ohne Server):
 
 ```
 /login            Login (Pseudonym + Passwort)
-/                 Lernpfad (Landkarte mit Kapiteln & Lektionen)
+/                 Kapitel-Übersicht (Kacheln)
+/chapter/…        Lektionen-Pfad eines Kapitels
 /lesson/…         Lektions-Player (Erklärung → Übungen → Belohnung)
-/profil           XP, Level, Badges, Streak, Statistik
+/profil           XP, Level, Badges, Statistik
 /rangliste        optional, pro Klasse
 /lehrer           Lehrer-Dashboard
 /admin            Admin-Bereich
@@ -236,7 +235,7 @@ Ablauf im Browser (alles via Pyodide, ohne Server):
 | Phase | Inhalt | Ergebnis |
 |---|---|---|
 | **M1 – Kern-Prototyp** | Statische App: Lernpfad-UI, Lektions-Player, Pyodide-Ausführung, CodeMirror, 1 Beispielkapitel, Bewertungs-Engine | Spielbare Demo im Browser |
-| **M2 – Gamification** | XP, Level, Sterne, Badges, Streak, Konfetti, Sounds, Profil – zunächst im localStorage | Demo-Modus komplett → auf GitHub Pages veröffentlichen |
+| **M2 – Gamification** | XP, Level, Sterne, Badges, Konfetti, Sounds, Profil – zunächst im localStorage | Demo-Modus komplett → auf GitHub Pages veröffentlichen |
 | **M3 – Server & Accounts** | Flask + SQLite, Login/Logout/Passwort ändern, Fortschritts-Sync, Rollen | Schulmodus funktionsfähig |
 | **M4 – Lehrer & Admin** | Klassenverwaltung, Account-Generator mit Druckliste, Dashboard mit Statistiken, Kapitel-Freischaltung | Einsatzbereit für eine Klasse |
 | **M5 – Inhalte** | Kapitel 1–13 (Was ist Python? → print → Variablen → Datentypen → input → if → Schleifen → Funktionen → Listen → Dictionaries → Klassen → Dateien → Projekte) | Vollständiger Lehrgang |

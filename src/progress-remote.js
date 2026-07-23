@@ -13,7 +13,6 @@ let state = {
   xp: 0,
   lessons: {},
   badges: {},
-  streak: { current: 0, best: 0, lastActiveDate: null, lastFreezeWeek: null },
   lockedChapters: [],
 };
 
@@ -44,11 +43,7 @@ export async function login(pseudonym, password) {
 
 export async function logout() {
   await api("/api/auth/logout", { method: "POST" });
-  state = {
-    xp: 0, lessons: {}, badges: {},
-    streak: { current: 0, best: 0, lastActiveDate: null, lastFreezeWeek: null },
-    lockedChapters: [],
-  };
+  state = { xp: 0, lessons: {}, badges: {}, lockedChapters: [] };
 }
 
 export async function changePassword(oldPassword, newPassword) {
@@ -85,8 +80,8 @@ export function isUnlocked(curriculum, chapterId, lessonId) {
 }
 
 // Schickt das Ergebnis an den Server (der ist die einzige Quelle der
-// Wahrheit fuer XP/Streak/Badges) und aktualisiert danach den lokalen Cache
-// mit der autoritativen Antwort.
+// Wahrheit fuer XP/Badges) und aktualisiert danach den lokalen Cache mit
+// der autoritativen Antwort.
 export async function completeLesson(lessonId, { xp = 10, stars = 3 } = {}) {
   const result = await api("/api/progress/complete-lesson", {
     method: "POST",
@@ -99,7 +94,6 @@ export async function completeLesson(lessonId, { xp = 10, stars = 3 } = {}) {
     stars: result.stars,
     completedAt: Date.now(),
   };
-  state.streak = result.streak;
   for (const b of result.newBadges) state.badges[b.id] = Date.now();
 
   return result;
@@ -107,10 +101,6 @@ export async function completeLesson(lessonId, { xp = 10, stars = 3 } = {}) {
 
 export function getBadges() {
   return state.badges;
-}
-
-export function getStreak() {
-  return state.streak;
 }
 
 // Im Schulmodus setzt sich niemand selbst zurueck - das macht die Lehrkraft

@@ -3,7 +3,6 @@
 // werden ueber store.js ausgetauscht, die Views kennen den Unterschied nicht.
 
 import { flattenLessons } from "./content.js";
-import { updateStreak, DEFAULT_STREAK } from "./streak.js";
 import { BADGES } from "./badges.js";
 import { levelForXp } from "./level-math.js";
 
@@ -13,7 +12,6 @@ const DEFAULT = {
   xp: 0,
   lessons: {}, // lessonId -> { status: "done", stars: 0..3, completedAt }
   badges: {}, // badgeId -> earnedAt (timestamp)
-  streak: { ...DEFAULT_STREAK },
 };
 
 function load() {
@@ -56,9 +54,9 @@ export function isUnlocked(curriculum, chapterId, lessonId) {
   return isDone(prev.lessonId);
 }
 
-// Schliesst eine Lektion ab, vergibt XP (nur beim ersten Mal), Sterne,
-// aktualisiert die Streak und wertet neue Badges aus. curriculum wird fuer
-// die Badge-Auswertung (z. B. "ganzes Kapitel abgeschlossen") benoetigt.
+// Schliesst eine Lektion ab, vergibt XP (nur beim ersten Mal), Sterne und
+// wertet neue Badges aus. curriculum wird fuer die Badge-Auswertung
+// (z. B. "ganzes Kapitel abgeschlossen") benoetigt.
 export function completeLesson(lessonId, { xp = 10, stars = 3 } = {}, curriculum = null) {
   const prev = state.lessons[lessonId];
   const firstTime = !prev || prev.status !== "done";
@@ -78,9 +76,6 @@ export function completeLesson(lessonId, { xp = 10, stars = 3 } = {}, curriculum
   }
   const levelAfter = levelForXp(state.xp);
 
-  const streakResult = updateStreak(state.streak);
-  state.streak = streakResult.streak;
-
   const newBadges = evaluateBadges(curriculum);
 
   save(state);
@@ -90,8 +85,6 @@ export function completeLesson(lessonId, { xp = 10, stars = 3 } = {}, curriculum
     stars: bestStars,
     leveledUp: levelAfter > levelBefore,
     level: levelAfter,
-    streak: state.streak,
-    streakProtected: streakResult.protected,
     newBadges,
   };
 }
@@ -102,6 +95,7 @@ function evaluateBadges(curriculum) {
   const flat = curriculum ? flattenLessons(curriculum) : [];
   const totalDone = flat.filter((f) => isDone(f.lessonId)).length;
   const perfectCount = flat.filter((f) => (getLesson(f.lessonId).stars || 0) === 3).length;
+  const starsTotal = flat.reduce((sum, f) => sum + (getLesson(f.lessonId).stars || 0), 0);
   const chaptersDoneCount = curriculum
     ? curriculum.chapters.filter((c) => c.lessons.every((l) => isDone(l.id))).length
     : 0;
@@ -109,8 +103,8 @@ function evaluateBadges(curriculum) {
   const ctx = {
     totalDone,
     perfectCount,
+    starsTotal,
     chaptersDoneCount,
-    streak: state.streak,
     level: levelForXp(state.xp),
   };
 
@@ -129,11 +123,7 @@ export function getBadges() {
   return state.badges;
 }
 
-export function getStreak() {
-  return state.streak;
-}
-
 export function resetProgress() {
-  state = { ...DEFAULT, lessons: {}, badges: {}, streak: { ...DEFAULT_STREAK } };
+  state = { ...DEFAULT, lessons: {}, badges: {} };
   save(state);
 }

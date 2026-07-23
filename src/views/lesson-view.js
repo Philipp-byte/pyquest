@@ -18,7 +18,7 @@ export function renderLesson(app, curriculum, chapterId, lessonId) {
     return;
   }
   if (!isUnlocked(curriculum, chapterId, lessonId)) {
-    app.innerHTML = `${renderHeader()}<main class="lesson"><p>Diese Lektion ist noch gesperrt. 🔒</p><a class="btn" href="#/">Zurück zum Lernpfad</a></main>`;
+    app.innerHTML = `${renderHeader()}<main class="lesson"><p>Diese Lektion ist noch gesperrt. 🔒</p><a class="btn" href="#/chapter/${chapterId}">Zurück zum Kapitel</a></main>`;
     return;
   }
 
@@ -43,7 +43,7 @@ class LessonPlayer {
       ${renderHeader()}
       <main class="lesson">
         <div class="lesson__top">
-          <a class="lesson__quit" href="#/" title="Lektion verlassen">✕</a>
+          <a class="lesson__quit" href="#/chapter/${this.lesson.chapterId}" title="Lektion verlassen">✕</a>
           <div class="lesson__progress"><div class="lesson__progress-fill"></div></div>
         </div>
         <div class="lesson__stage"></div>
@@ -357,7 +357,6 @@ class LessonPlayer {
     if (result.newBadges.length) setTimeout(() => playBadge(), 900);
 
     const nextHref = this.nextLessonHref();
-    const streak = result.streak;
 
     this.stage.innerHTML = `
       <div class="card card--finish">
@@ -369,12 +368,6 @@ class LessonPlayer {
         <p class="finish__xp">${result.firstTime ? `+${result.gainedXp} XP` : "Wiederholt – kein neues XP"}</p>
 
         ${result.leveledUp ? `<p class="finish__levelup">🎉 Level ${result.level} erreicht!</p>` : ""}
-
-        <div class="finish__streak">
-          <span class="finish__streak-flame">🔥</span>
-          ${streak.current} ${streak.current === 1 ? "Tag" : "Tage"} in Folge
-          ${result.streakProtected ? `<span class="finish__streak-shield" title="Ein Tag Pause wurde verziehen">🛡 geschützt</span>` : ""}
-        </div>
 
         ${result.newBadges.length ? `
           <div class="finish__badges">
@@ -392,7 +385,7 @@ class LessonPlayer {
       </div>
     `;
     this.footer.innerHTML = "";
-    const back = html(`<a class="btn btn--ghost" href="#/">Zum Lernpfad</a>`);
+    const back = html(`<a class="btn btn--ghost" href="#/chapter/${this.lesson.chapterId}">Zum Kapitel</a>`);
     this.footer.append(back);
     if (nextHref) {
       const nextBtn = html(`<a class="btn btn--primary" href="${nextHref}">Nächste Lektion →</a>`);

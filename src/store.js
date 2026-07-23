@@ -24,5 +24,4 @@ export const isDone = (...a) => backend.isDone(...a);
 export const isUnlocked = (...a) => backend.isUnlocked(...a);
 export const completeLesson = (...a) => backend.completeLesson(...a);
 export const getBadges = (...a) => backend.getBadges(...a);
-export const getStreak = (...a) => backend.getStreak(...a);
 export const resetProgress = (...a) => backend.resetProgress(...a);

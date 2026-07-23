@@ -115,8 +115,40 @@ body {
 
 /* ---------- Path ---------- */
 .path { max-width: 720px; margin: 0 auto; padding: 1.5rem 1rem 5rem; }
+.path--overview { max-width: 980px; }
 .path__intro h1 { font-size: 2rem; margin: .3rem 0; }
 .path__intro p { color: var(--fg-soft); margin-top: 0; }
+
+.back-link {
+  display: inline-flex; align-items: center; gap: .3rem;
+  color: var(--fg-soft); font-weight: 700; text-decoration: none;
+  margin-bottom: 1rem;
+}
+.back-link:hover { color: var(--green-dark); }
+
+/* Kapitel-Uebersicht: Kacheln statt langer Scroll-Liste. */
+.chapter-overview {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.2rem; margin-top: 1.5rem;
+}
+.chapter-card {
+  display: flex; gap: 1rem; align-items: flex-start; text-align: left;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow);
+  padding: 1.2rem; text-decoration: none; color: inherit;
+  transition: transform .15s, box-shadow .15s;
+}
+.chapter-card:not(.chapter-card--locked):hover {
+  transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06), 0 16px 32px rgba(15,23,42,.12);
+}
+.chapter-card--locked { opacity: .6; cursor: not-allowed; }
+.chapter-card__icon {
+  font-size: 1.8rem; width: 56px; height: 56px; flex: none;
+  display: grid; place-items: center; border-radius: 18px;
+  background: color-mix(in srgb, var(--chapter-color) 25%, var(--surface));
+}
+.chapter-card__body h2 { margin: 0; font-size: 1.1rem; }
+.chapter-card__body p { margin: .2rem 0 .6rem; color: var(--fg-soft); font-size: .88rem; }
 
 .chapter {
   margin-top: 2rem; background: var(--surface);
@@ -314,16 +346,6 @@ body {
   padding: .5rem 1.1rem; border-radius: 999px; margin: .3rem 0 0;
   animation: pop .4s ease;
 }
-.finish__streak {
-  margin-top: 1rem; display: inline-flex; align-items: center; gap: .5rem;
-  font-weight: 800; color: var(--fg-soft); background: var(--surface-2);
-  padding: .5rem 1rem; border-radius: 999px; border: 1px solid var(--border);
-}
-.finish__streak-flame { font-size: 1.2rem; }
-.finish__streak-shield {
-  font-size: .78rem; font-weight: 800; color: var(--blue);
-  border-left: 1px solid var(--border); padding-left: .5rem; margin-left: .2rem;
-}
 .finish__badges { margin-top: 1.4rem; }
 .finish__badges-title { font-weight: 800; color: var(--fg-soft); margin-bottom: .6rem; }
 .badge-reveal-row { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; }
@@ -344,18 +366,6 @@ body {
 .stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem; text-align: center; box-shadow: var(--shadow); }
 .stat__num { display: block; font-size: 1.6rem; font-weight: 900; color: var(--fg); }
 .stat__label { color: var(--muted); font-weight: 700; font-size: .85rem; }
-
-.streak-card {
-  margin-top: 1.4rem; display: flex; align-items: center; gap: 1rem;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--yellow) 20%, var(--surface)), var(--surface));
-  border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.4rem;
-  box-shadow: var(--shadow);
-}
-.streak-card__flame { font-size: 2.2rem; }
-.streak-card__row { display: flex; align-items: baseline; gap: .4rem; }
-.streak-card__num { font-size: 1.8rem; font-weight: 900; }
-.streak-card__label { color: var(--fg-soft); font-weight: 700; }
-.streak-card__best { margin: .1rem 0 0; color: var(--muted); font-size: .85rem; }
 
 .badges-section { margin-top: 2rem; }
 .badges-section h2 { display: flex; align-items: center; gap: .6rem; font-size: 1.15rem; }

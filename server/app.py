@@ -59,7 +59,11 @@ def compute_totals(conn, user_id):
         "SELECT COUNT(*) c FROM progress WHERE user_id=? AND status='done' AND stars=3",
         (user_id,),
     ).fetchone()["c"]
-    return total_done, perfect_count
+    stars_total = conn.execute(
+        "SELECT COALESCE(SUM(stars),0) c FROM progress WHERE user_id=? AND status='done'",
+        (user_id,),
+    ).fetchone()["c"]
+    return total_done, perfect_count, stars_total
 
 
 def compute_chapters_done(conn, user_id):
@@ -91,15 +95,6 @@ def build_state(conn, user_id):
             "SELECT * FROM badges WHERE user_id=?", (user_id,)
         ).fetchall()
     }
-    streak_row = conn.execute(
-        "SELECT * FROM streaks WHERE user_id=?", (user_id,)
-    ).fetchone()
-    streak = {
-        "current": streak_row["current"] if streak_row else 0,
-        "best": streak_row["best"] if streak_row else 0,
-        "lastActiveDate": streak_row["last_active_date"] if streak_row else None,
-        "lastFreezeWeek": streak_row["last_freeze_week"] if streak_row else None,
-    }
 
     locked_chapters = []
     if user["class_id"]:
@@ -112,7 +107,7 @@ def build_state(conn, user_id):
         ]
 
     return {
-        "xp": user["xp"], "lessons": lessons, "badges": badges, "streak": streak,
+        "xp": user["xp"], "lessons": lessons, "badges": badges,
         "lockedChapters": locked_chapters,
     }
 
@@ -299,30 +294,13 @@ def complete_lesson():
         )
     level_after = pl.level_for_xp(new_xp)
 
-    streak_row = conn.execute(
-        "SELECT * FROM streaks WHERE user_id=?", (user_id,)
-    ).fetchone()
-    streak_result = pl.update_streak(streak_row)
-    conn.execute(
-        """INSERT INTO streaks (user_id, current, best, last_active_date, last_freeze_week)
-           VALUES (?, ?, ?, ?, ?)
-           ON CONFLICT(user_id) DO UPDATE SET
-             current=excluded.current, best=excluded.best,
-             last_active_date=excluded.last_active_date,
-             last_freeze_week=excluded.last_freeze_week""",
-        (
-            user_id, streak_result["current"], streak_result["best"],
-            streak_result["last_active_date"], streak_result["last_freeze_week"],
-        ),
-    )
-
-    total_done, perfect_count = compute_totals(conn, user_id)
+    total_done, perfect_count, stars_total = compute_totals(conn, user_id)
     chapters_done = compute_chapters_done(conn, user_id)
     ctx = {
         "totalDone": total_done,
         "perfectCount": perfect_count,
+        "starsTotal": stars_total,
         "chaptersDoneCount": chapters_done,
-        "streakBest": streak_result["best"],
         "level": level_after,
     }
 
@@ -351,13 +329,6 @@ def complete_lesson():
         "stars": best_stars,
         "leveledUp": level_after > level_before,
         "level": level_after,
-        "streak": {
-            "current": streak_result["current"],
-            "best": streak_result["best"],
-            "lastActiveDate": streak_result["last_active_date"],
-            "lastFreezeWeek": streak_result["last_freeze_week"],
-        },
-        "streakProtected": streak_result["protected"],
         "newBadges": new_badges,
     })
 

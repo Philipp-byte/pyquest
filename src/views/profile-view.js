@@ -1,4 +1,4 @@
-// Profil: XP, Level, Gesamtfortschritt, Streak und Badge-Sammlung.
+// Profil: XP, Level, Gesamtfortschritt und Badge-Sammlung.
 // Im Schulmodus zusaetzlich: Passwort aendern statt Fortschritt zuruecksetzen
 // (das Zuruecksetzen macht dort die Lehrkraft, siehe PLAN.md Abschnitt 10).
 
@@ -9,7 +9,6 @@ import {
   getLesson,
   isDone,
   getBadges,
-  getStreak,
   resetProgress,
   getBackendMode,
 } from "../store.js";
@@ -27,7 +26,6 @@ export function renderProfile(app, curriculum) {
   const maxStars = total * 3;
   const pct = total ? Math.round((done / total) * 100) : 0;
 
-  const streak = getStreak();
   const earnedBadges = getBadges();
   const badgesEarnedCount = Object.keys(earnedBadges).length;
   const remoteMode = getBackendMode() === "remote";
@@ -50,17 +48,6 @@ export function renderProfile(app, curriculum) {
         <div class="stat"><span class="stat__num">${done}/${total}</span><span class="stat__label">Lektionen</span></div>
         <div class="stat"><span class="stat__num">⭐ ${stars}/${maxStars}</span><span class="stat__label">Sterne</span></div>
       </div>
-
-      <section class="streak-card">
-        <div class="streak-card__flame">🔥</div>
-        <div class="streak-card__body">
-          <div class="streak-card__row">
-            <span class="streak-card__num">${streak.current}</span>
-            <span class="streak-card__label">${streak.current === 1 ? "Tag" : "Tage"} in Folge</span>
-          </div>
-          <p class="streak-card__best">Beste Serie: ${streak.best} ${streak.best === 1 ? "Tag" : "Tage"}</p>
-        </div>
-      </section>
 
       <section class="badges-section">
         <h2>Abzeichen <span class="badges-section__count">${badgesEarnedCount}/${BADGES.length}</span></h2>

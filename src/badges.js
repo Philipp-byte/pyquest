@@ -1,5 +1,9 @@
 // Badge-Katalog. Bewusst generisch gehalten (keine festen Lektions-/Kapitel-IDs),
 // damit neue Kapitel/Lektionen (siehe content/) automatisch mitzaehlen.
+//
+// Bewusst KEINE Badges, die taegliches/aufeinanderfolgendes Lernen belohnen
+// (kein Streak-System): SuS koennen Python nur im Unterricht lernen, nicht
+// jeden Tag - ein "X Tage in Folge"-Abzeichen waere fuer sie nie erreichbar.
 // Erweiterbar auf den vollen Katalog aus PLAN.md Abschnitt 13.
 
 export const BADGES = [
@@ -46,18 +50,11 @@ export const BADGES = [
     check: (ctx) => ctx.chaptersDoneCount >= 1,
   },
   {
-    id: "streak-3",
-    icon: "🔥",
-    title: "Drei Tage dran",
-    desc: "Lerne 3 Tage in Folge.",
-    check: (ctx) => ctx.streak.best >= 3,
-  },
-  {
-    id: "streak-7",
-    icon: "🔥",
-    title: "Eine Woche stark",
-    desc: "Lerne 7 Tage in Folge.",
-    check: (ctx) => ctx.streak.best >= 7,
+    id: "kapitel-champion",
+    icon: "🏆",
+    title: "Kapitel-Champion",
+    desc: "Schließe 3 ganze Kapitel ab.",
+    check: (ctx) => ctx.chaptersDoneCount >= 3,
   },
   {
     id: "level-5",
@@ -65,5 +62,19 @@ export const BADGES = [
     title: "Level 5",
     desc: "Erreiche Level 5.",
     check: (ctx) => ctx.level >= 5,
+  },
+  {
+    id: "highscore",
+    icon: "👑",
+    title: "Highscore",
+    desc: "Erreiche Level 10.",
+    check: (ctx) => ctx.level >= 10,
+  },
+  {
+    id: "sternensammler",
+    icon: "✨",
+    title: "Sternensammler",
+    desc: "Sammle insgesamt 20 Sterne.",
+    check: (ctx) => ctx.starsTotal >= 20,
   },
 ];

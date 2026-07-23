@@ -47,14 +47,6 @@ CREATE TABLE IF NOT EXISTS badges (
     PRIMARY KEY (user_id, badge_id)
 );
 
-CREATE TABLE IF NOT EXISTS streaks (
-    user_id INTEGER PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
-    current INTEGER NOT NULL DEFAULT 0,
-    best INTEGER NOT NULL DEFAULT 0,
-    last_active_date TEXT,
-    last_freeze_week TEXT
-);
-
 -- Kapitel, die eine Lehrkraft fuer ihre Klasse gesperrt hat (Unterrichtstempo
 -- steuern). Keine Zeile = Kapitel offen. locked=1 = gesperrt.
 CREATE TABLE IF NOT EXISTS unlocks (
