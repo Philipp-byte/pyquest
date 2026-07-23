@@ -3,9 +3,11 @@
   "title": "Variablen",
   "icon": "📦",
   "color": "#38bdf8",
-  "description": "Speichere Werte unter einem Namen und arbeite damit weiter.",
+  "description": "Speichere Werte unter einem Namen, verändere sie und rechne damit.",
   "lessons": [
     "01-was-ist-eine-variable",
-    "02-variablen-benutzen"
+    "02-variablen-veraendern",
+    "03-variablennamen",
+    "04-rechnen-mit-variablen"
   ]
 }

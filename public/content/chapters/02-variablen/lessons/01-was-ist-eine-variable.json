@@ -6,49 +6,57 @@
   "steps": [
     {
       "type": "explain",
-      "text": "Eine **Variable** ist wie eine beschriftete Kiste, in der du einen Wert aufbewahrst.\n\nDu gibst der Kiste einen Namen und packst etwas hinein – zum Beispiel eine Zahl oder einen Text. Später kannst du den Namen benutzen, um an den Wert zu kommen."
-    },
-    {
-      "type": "example",
-      "text": "So legst du eine Variable an – mit einem **`=`** (Zuweisung):",
-      "code": "alter = 16\nprint(alter)"
+      "text": "Stell dir vor, du programmierst für ein **Fitnessstudio** eine App. Die App muss sich viele Dinge merken: den Namen eines Mitglieds, seine Trainingsstunden, ob es eine Premium-Mitgliedschaft hat.\n\nDafür gibt es **Variablen**. Eine Variable ist wie eine **beschriftete Kiste**, in der du einen Wert aufbewahrst – mit einem Namen, über den du jederzeit wieder an den Wert kommst."
     },
     {
       "type": "explain",
-      "text": "Wichtig: Das **`=`** in Python bedeutet nicht \"ist gleich\" wie in der Mathematik, sondern **\"speichere den Wert rechts in der Variable links\"**.\n\n`alter = 16` heißt also: \"Speichere 16 in der Variable `alter`\"."
+      "text": "Eine Variable **anlegen** heißt in Python: ihr einen Namen geben und einen Wert zuweisen – mit dem **`=`**.\n\n```\nmitglieds_id = 12345\n```\nDas bedeutet: „Speichere den Wert **12345** in der Variable **`mitglieds_id`**.“\n\nWichtig: Das `=` ist **keine** Gleichung wie in Mathe. Es heißt immer **„speichere rechts in links“**."
+    },
+    {
+      "type": "example",
+      "text": "Hier wird eine Variable angelegt und danach ausgegeben. Klick auf **Ausführen**:",
+      "code": "alter = 16\nprint(alter)"
     },
     {
       "type": "quiz",
-      "question": "Was passiert bei `stadt = \"Weingarten\"`?",
+      "question": "Was passiert bei `vorname = \"Max\"`?",
       "choices": [
-        "Python vergleicht stadt mit \"Weingarten\"",
-        "Der Text \"Weingarten\" wird in der Variable stadt gespeichert",
-        "Es passiert nichts, weil stadt schon existieren muss"
+        "Python vergleicht vorname mit \"Max\"",
+        "Der Text \"Max\" wird in der Variable vorname gespeichert",
+        "Es passiert nichts, weil vorname noch nicht existiert"
       ],
       "answer": 1,
-      "explainCorrect": "Genau! Der Wert rechts vom = wird in der Variable links gespeichert.",
-      "explainWrong": "Das `=` speichert den Wert rechts in der Variable links – hier wird \"Weingarten\" in `stadt` gespeichert."
+      "explainCorrect": "Genau! Der Wert rechts vom `=` wird in der Variable links gespeichert.",
+      "explainWrong": "Das `=` speichert den Wert rechts in der Variable links – hier wird \"Max\" in `vorname` gespeichert."
+    },
+    {
+      "type": "explain",
+      "text": "Du musst einer Variable nicht sofort einen Wert geben. Manchmal legt man sie erst **leer** an und füllt sie später:\n\n```\nvorname = \"\"\nvorname = \"John Doe\"\n```\nZuerst ist `vorname` ein leerer Text, danach steht „John Doe“ darin.\n\nDen Wert **muss** man aber setzen, bevor man ihn benutzt – eine Variable, die es noch gar nicht gibt, führt zu einem Fehler (`NameError`)."
     },
     {
       "type": "fill",
-      "text": "Speichere die Zahl 5 in einer Variable namens `punkte`.",
-      "template": "punkte = ___",
-      "solution": "5",
-      "accept": ["5"],
-      "hint": "Einfach die Zahl 5 einsetzen – ohne Anführungszeichen, das ist keine Textvariable."
+      "text": "Speichere die Zahl **50** in einer Variable namens `anzahl_buecher`.",
+      "template": "anzahl_buecher = ___",
+      "solution": "50",
+      "accept": ["50"],
+      "hint": "Einfach die Zahl 50 einsetzen – ohne Anführungszeichen, das ist keine Textvariable."
+    },
+    {
+      "type": "explain",
+      "text": "Zum Ausgeben schreibst du den **Namen** der Variable in `print()` – **ohne** Anführungszeichen. Mit Anführungszeichen würde nur der Name selbst ausgegeben, nicht der Inhalt!\n\n```\nname = \"Ada\"\nprint(name)     → Ada\nprint(\"name\")   → name\n```"
     },
     {
       "type": "code",
-      "task": "Lege eine Variable **`name`** mit dem Text **`\"Ada\"`** an und gib sie mit `print()` aus.",
+      "task": "Lege eine Variable **`vorname`** mit dem Text **`\"Ada\"`** an und gib ihren Inhalt mit `print()` aus.",
       "starterCode": "",
       "hints": [
-        "Erst die Variable anlegen: name = \"Ada\"",
-        "Dann ausgeben: print(name) – ohne Anführungszeichen um 'name', sonst wird der Wortlaut ausgegeben statt des Inhalts!",
-        "name = \"Ada\"\nprint(name)"
+        "Erst die Variable anlegen: vorname = \"Ada\"",
+        "Dann ausgeben: print(vorname) – ohne Anführungszeichen um vorname!",
+        "vorname = \"Ada\"\nprint(vorname)"
       ],
       "tests": [
         { "type": "output", "expected": "Ada" },
-        { "type": "var", "name": "name", "expected": "Ada" }
+        { "type": "var", "name": "vorname", "expected": "Ada" }
       ]
     }
   ]

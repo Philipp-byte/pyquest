@@ -1,0 +1,50 @@
+{
+  "id": "02-variablen-veraendern",
+  "title": "Variablen verändern",
+  "icon": "🔄",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Eine Variable behält immer nur den **letzten** Wert, der ihr zugewiesen wurde. Weist du ihr einen neuen Wert zu, wird der alte **überschrieben**.\n\nSchau dir dieses Beispiel genau an:\n```\nname = \"Johannes\"\nname = \"Peter\"\nprint(\"Der Name lautet \" + name)\n```\nAusgegeben wird: **Der Name lautet Peter** – der Wert „Johannes“ ist weg, weil er überschrieben wurde."
+    },
+    {
+      "type": "quiz",
+      "question": "Was gibt dieses Programm aus?\n\n```\npunkte = 10\npunkte = 25\nprint(punkte)\n```",
+      "choices": ["10", "25", "10 und 25"],
+      "answer": 1,
+      "explainCorrect": "Richtig! Die zweite Zuweisung überschreibt die erste – übrig bleibt 25.",
+      "explainWrong": "Eine Variable behält nur den letzten Wert. `punkte = 25` überschreibt die 10 – ausgegeben wird 25."
+    },
+    {
+      "type": "explain",
+      "text": "Oft willst du eine Variable **auf Basis ihres alten Werts** verändern – zum Beispiel Trainingsstunden erhöhen:\n```\ntrainingsstunden = 10\ntrainingsstunden = trainingsstunden + 5\nprint(trainingsstunden)   → 15\n```\nPython nimmt den aktuellen Wert (10), rechnet +5, und speichert das Ergebnis (15) wieder in `trainingsstunden`."
+    },
+    {
+      "type": "explain",
+      "text": "Dafür gibt es eine praktische **Kurzschreibweise**:\n\n- `x += 5`  bedeutet  `x = x + 5`\n- `x -= 3`  bedeutet  `x = x - 3`\n- `x *= 2`  bedeutet  `x = x * 2`\n\nSie machen genau dasselbe, sind aber kürzer zu tippen."
+    },
+    {
+      "type": "fill",
+      "text": "Erhöhe `trainingsstunden` mit der Kurzschreibweise um **10**.",
+      "template": "trainingsstunden ___ 10",
+      "solution": "+=",
+      "accept": ["+="],
+      "hint": "Die Kurzschreibweise für \"addiere und speichere\" ist +="
+    },
+    {
+      "type": "code",
+      "task": "Lege eine Variable **`xp`** mit dem Wert **`50`** an, erhöhe sie um **`20`** und gib den neuen Wert aus (das Ergebnis soll **`70`** sein).",
+      "starterCode": "",
+      "hints": [
+        "Erst xp = 50",
+        "Dann erhöhen: xp = xp + 20  (oder kurz: xp += 20)",
+        "xp = 50\nxp += 20\nprint(xp)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "70" },
+        { "type": "var", "name": "xp", "expected": 70 }
+      ]
+    }
+  ]
+}

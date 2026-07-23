@@ -1,0 +1,73 @@
+{
+  "id": "04-rechnen-mit-variablen",
+  "title": "Mit Variablen rechnen",
+  "icon": "🧮",
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Variablen sind besonders nützlich, wenn du mit ihnen **rechnest**. Du kannst Werte in Variablen speichern, sie verrechnen und das Ergebnis in einer **neuen** Variable ablegen.\n\nBeispiel: die **Fläche** eines Trainingsbereichs (Länge × Breite):\n```\nlaenge = 20\nbreite = 15\nflaeche = laenge * breite\nprint(flaeche)   → 300\n```"
+    },
+    {
+      "type": "quiz",
+      "question": "Was steht am Ende in `ergebnis`?\n\n```\na = 6\nb = 4\nergebnis = a + b\n```",
+      "choices": ["a + b", "10", "24"],
+      "answer": 1,
+      "explainCorrect": "Richtig! Python setzt die Werte ein: 6 + 4 = 10.",
+      "explainWrong": "Python rechnet mit den Werten der Variablen: a ist 6, b ist 4, also 6 + 4 = 10."
+    },
+    {
+      "type": "explain",
+      "text": "Jetzt du: Berechne die **Fläche** eines Raums. Denk daran – erst die beiden Werte in Variablen speichern, dann multiplizieren, dann das Ergebnis ausgeben."
+    },
+    {
+      "type": "code",
+      "task": "Lege `laenge = 20` und `breite = 15` an, berechne die **Fläche** (`laenge * breite`) in einer Variable `flaeche` und gib sie aus (Ergebnis: **300**).",
+      "starterCode": "",
+      "hints": [
+        "laenge = 20\nbreite = 15",
+        "flaeche = laenge * breite",
+        "laenge = 20\nbreite = 15\nflaeche = laenge * breite\nprint(flaeche)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "300" },
+        { "type": "var", "name": "flaeche", "expected": 300 }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Der **Umfang** eines Rechtecks ist `2 * (laenge + breite)`. Die **Klammern** sind wichtig: Python rechnet sonst zuerst `2 * laenge` und addiert dann die Breite – das wäre falsch. Klammern legen fest, was zuerst gerechnet wird."
+    },
+    {
+      "type": "code",
+      "task": "Berechne mit `laenge = 20` und `breite = 15` den **Umfang** `2 * (laenge + breite)` in einer Variable `umfang` und gib ihn aus (Ergebnis: **70**).",
+      "starterCode": "",
+      "hints": [
+        "Denk an die Klammern: 2 * (laenge + breite)",
+        "umfang = 2 * (laenge + breite)",
+        "laenge = 20\nbreite = 15\numfang = 2 * (laenge + breite)\nprint(umfang)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "70" },
+        { "type": "var", "name": "umfang", "expected": 70 }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Zum Schluss etwas Kniffligeres. Ein Schokoriegel wiegt 350 g und kostet 0,99 €. Ein zweiter Riegel wiegt 950 g bei **gleichem Preis pro Gramm**.\n\nDer Trick: Erst den **Preis pro Gramm** ausrechnen (`preis / gewicht`), dann mit dem neuen Gewicht multiplizieren."
+    },
+    {
+      "type": "code",
+      "task": "Gegeben: `gewicht1 = 350`, `preis1 = 0.99`, `gewicht2 = 950`. Berechne den Preis des zweiten Riegels in `preis2` und gib ihn aus.\n\nSo geht's: `preis_pro_gramm = preis1 / gewicht1`, dann `preis2 = preis_pro_gramm * gewicht2`.",
+      "starterCode": "gewicht1 = 350\npreis1 = 0.99\ngewicht2 = 950\n",
+      "hints": [
+        "Erst den Preis pro Gramm: preis_pro_gramm = preis1 / gewicht1",
+        "Dann: preis2 = preis_pro_gramm * gewicht2",
+        "gewicht1 = 350\npreis1 = 0.99\ngewicht2 = 950\npreis_pro_gramm = preis1 / gewicht1\npreis2 = preis_pro_gramm * gewicht2\nprint(preis2)"
+      ],
+      "tests": [
+        { "type": "var", "name": "preis2", "expected": 2.6871428571428573 }
+      ]
+    }
+  ]
+}
