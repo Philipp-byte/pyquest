@@ -1,0 +1,45 @@
+{
+  "id": "05-operatoren-anwenden",
+  "title": "Operatoren anwenden",
+  "icon": "🚗",
+  "xp": 35,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Jetzt bringst du die Operatoren in echten Programmen zusammen. Ein klassisches Beispiel aus dem Straßenverkehr: der **Mindestabstand** zwischen zwei Autos.\n\nFaustregel: Der Mindestabstand in Metern ist die **halbe Geschwindigkeit** (`geschwindigkeit / 2`)."
+    },
+    {
+      "type": "code",
+      "task": "Frage mit `input(\"Geschwindigkeit: \")` die Geschwindigkeit ab, wandle sie in eine Zahl um, berechne den Mindestabstand (`geschwindigkeit / 2`) und gib **`Mindestabstand: X Meter`** aus.\n\nBeispiel bei Eingabe 100: `Mindestabstand: 50.0 Meter`.",
+      "starterCode": "",
+      "needsInput": true,
+      "hints": [
+        "Eingabe in Zahl wandeln: geschwindigkeit = int(input(\"Geschwindigkeit: \"))",
+        "mindestabstand = geschwindigkeit / 2",
+        "geschwindigkeit = int(input(\"Geschwindigkeit: \"))\nmindestabstand = geschwindigkeit / 2\nprint(\"Mindestabstand:\", mindestabstand, \"Meter\")"
+      ],
+      "tests": [
+        { "type": "input_output", "inputs": ["100"], "expected": "Geschwindigkeit: 100\nMindestabstand: 50.0 Meter" },
+        { "type": "input_output", "inputs": ["80"], "expected": "Geschwindigkeit: 80\nMindestabstand: 40.0 Meter" }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Der **Anhalteweg** ist etwas komplexer. Er setzt sich zusammen aus:\n\n- **Reaktionsweg** = `geschwindigkeit * 0.3`\n- **Bremsweg** = `(geschwindigkeit / 10) ** 2`\n\nDer Anhalteweg ist die **Summe** beider. Hier siehst du gleich mehrere Operatoren im Einsatz: `*`, `/`, `**` und `+`."
+    },
+    {
+      "type": "code",
+      "task": "Berechne für `geschwindigkeit = 100` den **Anhalteweg**: `reaktionsweg = geschwindigkeit * 0.3`, `bremsweg = (geschwindigkeit / 10) ** 2`, dann `anhalteweg = reaktionsweg + bremsweg`. Gib `anhalteweg` aus (soll **130.0** sein).",
+      "starterCode": "geschwindigkeit = 100\n",
+      "hints": [
+        "reaktionsweg = geschwindigkeit * 0.3  → 30.0",
+        "bremsweg = (geschwindigkeit / 10) ** 2  → 100.0",
+        "geschwindigkeit = 100\nreaktionsweg = geschwindigkeit * 0.3\nbremsweg = (geschwindigkeit / 10) ** 2\nanhalteweg = reaktionsweg + bremsweg\nprint(anhalteweg)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "130.0" },
+        { "type": "var", "name": "anhalteweg", "expected": 130.0 }
+      ]
+    }
+  ]
+}

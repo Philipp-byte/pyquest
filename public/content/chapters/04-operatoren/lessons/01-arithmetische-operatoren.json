@@ -1,0 +1,49 @@
+{
+  "id": "01-arithmetische-operatoren",
+  "title": "Arithmetische Operatoren",
+  "icon": "➗",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "**Operatoren** sind spezielle Symbole, mit denen du Werte verrechnest oder vergleichst. Die bekanntesten sind die **arithmetischen** Operatoren für die Grundrechenarten:\n\n- **`+`** Addition · **`-`** Subtraktion · **`*`** Multiplikation · **`/`** Division"
+    },
+    {
+      "type": "example",
+      "text": "Ein paar Rechnungen – achte auf die Division:",
+      "code": "print(3 + 5)\nprint(5.7 - 2)\nprint(2 * 100.0)\nprint(6 / 3)"
+    },
+    {
+      "type": "explain",
+      "text": "Zwei besondere Operatoren solltest du kennen:\n\n- **`%`** (Modulo) liefert den **Rest** einer Division: `7 % 4` → `3` (7 = 1·4 + **3**)\n- **`//`** (Ganzzahldivision) liefert das ganzzahlige Ergebnis ohne Rest: `7 // 4` → `1`\n\nModulo ist überraschend nützlich – z. B. um zu prüfen, ob eine Zahl **gerade** ist: `zahl % 2 == 0`."
+    },
+    {
+      "type": "quiz",
+      "question": "Was ergibt `144 % 7`?",
+      "choices": ["20", "3", "7"],
+      "answer": 1,
+      "explainCorrect": "Richtig! 144 = 20·7 + 3, also ist der Rest 3.",
+      "explainWrong": "% liefert den Rest: 144 geteilt durch 7 ist 20 Rest 3 – also 3."
+    },
+    {
+      "type": "quiz",
+      "question": "Und was ergibt `123456 % 100`?",
+      "choices": ["1234", "56", "100"],
+      "answer": 1,
+      "explainCorrect": "Genau! Modulo 100 liefert immer die letzten zwei Ziffern – hier 56.",
+      "explainWrong": "% 100 liefert den Rest bei Division durch 100 – das sind die letzten beiden Ziffern: 56."
+    },
+    {
+      "type": "code",
+      "task": "Prüfe mit **Modulo**, ob **11** gerade ist: Gib `11 % 2` aus. (Bei einer geraden Zahl käme 0 heraus, hier also **1**.)",
+      "starterCode": "",
+      "hints": [
+        "Der Modulo-Operator ist %",
+        "print(11 % 2)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "1" }
+      ]
+    }
+  ]
+}

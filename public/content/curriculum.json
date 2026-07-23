@@ -4,14 +4,15 @@
     "01-erste-schritte",
     "02-variablen",
     "03-datentypen",
-    "04-eingaben",
-    "05-bedingungen",
-    "06-schleifen",
-    "07-funktionen",
-    "08-listen",
-    "09-dictionaries",
-    "10-klassen",
-    "11-dateien",
-    "12-projekte"
+    "04-operatoren",
+    "05-eingaben",
+    "06-bedingungen",
+    "07-schleifen",
+    "08-funktionen",
+    "09-listen",
+    "10-dictionaries",
+    "11-klassen",
+    "12-dateien",
+    "13-projekte"
   ]
 }

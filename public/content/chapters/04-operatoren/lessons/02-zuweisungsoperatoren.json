@@ -1,0 +1,42 @@
+{
+  "id": "02-zuweisungsoperatoren",
+  "title": "Zuweisungsoperatoren",
+  "icon": "📥",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Mit **Zuweisungsoperatoren** gibst du einer Variable einen Wert. Der Grundoperator ist das **`=`**.\n\nEs gibt aber praktische **kombinierte** Zuweisungsoperatoren, die einen Wert verändern und gleich wieder speichern:\n\n- **`x += 5`** bedeutet `x = x + 5` (dazuzählen)\n- **`x -= 5`** bedeutet `x = x - 5` (abziehen)\n- **`x *= 5`** bedeutet `x = x * 5` (malnehmen)\n- **`x /= 5`** bedeutet `x = x / 5` (teilen)\n- **`x %= 5`** bedeutet `x = x % 5` (Rest speichern)"
+    },
+    {
+      "type": "example",
+      "text": "So verändert `+=` den bestehenden Wert:",
+      "code": "punkte = 10\npunkte += 5\nprint(punkte)"
+    },
+    {
+      "type": "explain",
+      "text": "Solche Zuweisungen werden **nacheinander** ausgeführt – jede arbeitet mit dem Wert, den die vorige hinterlassen hat. Rechne im Kopf mit:\n```\nx = 13\nx += 12    # x ist jetzt 25\nx *= 12    # x ist jetzt 300\nx += 1     # x ist jetzt 301\n```"
+    },
+    {
+      "type": "quiz",
+      "question": "Welchen Wert hat `x` am Ende?\n\n```\nx = 13\nx += 12\nx *= 12\nx += 1\nx += 1\n```",
+      "choices": ["302", "312", "26"],
+      "answer": 0,
+      "explainCorrect": "Richtig! 13 → 25 → 300 → 301 → 302.",
+      "explainWrong": "Schritt für Schritt: 13 +12 = 25, ·12 = 300, +1 = 301, +1 = 302. Also 302."
+    },
+    {
+      "type": "code",
+      "task": "Starte mit `x = 13`, wende **`x += 12`**, dann **`x *= 12`**, dann zweimal **`x += 1`** an und gib `x` aus (soll **302** sein).",
+      "starterCode": "x = 13\n",
+      "hints": [
+        "Vier Zeilen: x += 12 / x *= 12 / x += 1 / x += 1",
+        "x = 13\nx += 12\nx *= 12\nx += 1\nx += 1\nprint(x)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "302" },
+        { "type": "var", "name": "x", "expected": 302 }
+      ]
+    }
+  ]
+}

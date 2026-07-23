@@ -1,0 +1,14 @@
+{
+  "id": "04-operatoren",
+  "title": "Operatoren",
+  "icon": "➕",
+  "color": "#f97316",
+  "description": "Rechnen, zuweisen, vergleichen und logisch verknüpfen.",
+  "lessons": [
+    "01-arithmetische-operatoren",
+    "02-zuweisungsoperatoren",
+    "03-vergleichsoperatoren",
+    "04-logische-operatoren",
+    "05-operatoren-anwenden"
+  ]
+}

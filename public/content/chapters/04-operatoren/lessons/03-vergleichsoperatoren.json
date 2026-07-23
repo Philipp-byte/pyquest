@@ -1,0 +1,49 @@
+{
+  "id": "03-vergleichsoperatoren",
+  "title": "Vergleichsoperatoren",
+  "icon": "⚖️",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Mit **Vergleichsoperatoren** vergleichst du zwei Werte. Das Ergebnis ist immer ein Wahrheitswert (**`True`** oder **`False`**):\n\n- **`==`** gleich · **`!=`** ungleich\n- **`<`** kleiner · **`>`** größer\n- **`<=`** kleiner-gleich · **`>=`** größer-gleich"
+    },
+    {
+      "type": "example",
+      "text": "Vergleiche liefern True/False:",
+      "code": "print(5 == 5)\nprint(5 != 7)\nprint(7 < 5)\nprint(10 <= 10)"
+    },
+    {
+      "type": "explain",
+      "text": "Der wichtigste Stolperstein: **`=`** weist zu, **`==`** vergleicht.\n\n- `alter = 18`  → speichert 18 in `alter`\n- `alter == 18` → prüft, ob `alter` gleich 18 ist (ergibt True/False)\n\nWenn du in einem Vergleich aus Versehen `=` statt `==` schreibst, gibt Python einen Fehler."
+    },
+    {
+      "type": "quiz",
+      "question": "Welcher Operator vergleicht zwei Werte auf **Gleichheit**?",
+      "choices": ["=", "==", "!="],
+      "answer": 1,
+      "explainCorrect": "Richtig! == vergleicht auf Gleichheit. Ein einzelnes = weist nur zu.",
+      "explainWrong": "Zum Vergleichen auf Gleichheit nimmt man `==` (zwei Gleichheitszeichen). Ein einzelnes `=` weist einen Wert zu."
+    },
+    {
+      "type": "quiz",
+      "question": "Welcher Operator prüft, ob zwei Werte **ungleich** sind?",
+      "choices": ["!=", "<>", "=/="],
+      "answer": 0,
+      "explainCorrect": "Genau! != bedeutet „ungleich“ in Python.",
+      "explainWrong": "In Python ist der Ungleich-Operator `!=`. (`<>` gibt es in Python nicht.)"
+    },
+    {
+      "type": "code",
+      "task": "Prüfe, ob **12 ungleich 15** ist, und gib das Ergebnis aus (soll **`True`** sein).",
+      "starterCode": "",
+      "hints": [
+        "Der Ungleich-Operator ist !=",
+        "print(12 != 15)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "True" }
+      ]
+    }
+  ]
+}
