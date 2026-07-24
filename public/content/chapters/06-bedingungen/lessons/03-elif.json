@@ -1,0 +1,53 @@
+{
+  "id": "03-elif",
+  "title": "Mehrere Fälle mit elif",
+  "icon": "🪜",
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Oft gibt es **mehr als zwei** Möglichkeiten. Mit **`elif`** (kurz für „else if“) prüfst du weitere Bedingungen. Python geht sie **von oben nach unten** durch und führt nur den **ersten** zutreffenden Block aus. Trifft keiner zu, kommt der `else`-Block.\n```\nnote = 5\nif note > 10:\n    print(\"sehr gut\")\nelif note > 3:\n    print(\"gut\")\nelse:\n    print(\"noch üben\")\n```"
+    },
+    {
+      "type": "quiz",
+      "question": "Was passiert, wenn keine der Bedingungen (if/elif) zutrifft?",
+      "choices": [
+        "Der else-Block wird ausgeführt",
+        "Der erste if-Block wird ausgeführt",
+        "Es gibt einen Fehler"
+      ],
+      "answer": 0,
+      "explainCorrect": "Richtig! Trifft keine Bedingung zu, läuft der else-Block (falls vorhanden).",
+      "explainWrong": "Wenn weder if noch ein elif zutrifft, wird der else-Block ausgeführt (falls es einen gibt)."
+    },
+    {
+      "type": "explain",
+      "text": "Wichtig ist die **Reihenfolge**: Python nimmt den **ersten** Treffer und ignoriert den Rest. Steht ein zu allgemeiner Fall zu weit oben, kommen speziellere Fälle nie dran. Ordne von **speziell → allgemein**."
+    },
+    {
+      "type": "quiz",
+      "question": "Was gibt dieses Programm aus?\n\n```\nx = 5\nif x > 10:\n    print(\"A\")\nelif x > 3:\n    print(\"B\")\nelse:\n    print(\"C\")\n```",
+      "choices": ["A", "B", "C"],
+      "answer": 1,
+      "explainCorrect": "Genau! x > 10 ist False, x > 3 ist True → erster Treffer ist B. Fertig.",
+      "explainWrong": "x ist 5: `x > 10` ist False, `x > 3` ist True. Python nimmt den ersten Treffer – das ist B."
+    },
+    {
+      "type": "code",
+      "task": "Die Bank zahlt gestaffelte Zinssätze. Frage `Anlagebetrag: ` ab (als Zahl) und gib den passenden **Zinssatz** aus:\n- bis 5000 → `2.0`\n- bis 10000 → `2.25`\n- bis 50000 → `2.5`\n- darüber → `2.75`",
+      "starterCode": "",
+      "needsInput": true,
+      "hints": [
+        "betrag = float(input(\"Anlagebetrag: \"))",
+        "if betrag <= 5000: ... elif betrag <= 10000: ... elif betrag <= 50000: ... else: ...",
+        "betrag = float(input(\"Anlagebetrag: \"))\nif betrag <= 5000:\n    print(2.0)\nelif betrag <= 10000:\n    print(2.25)\nelif betrag <= 50000:\n    print(2.5)\nelse:\n    print(2.75)"
+      ],
+      "tests": [
+        { "type": "input_output", "inputs": ["3000"], "expected": "Anlagebetrag: 3000\n2.0" },
+        { "type": "input_output", "inputs": ["8000"], "expected": "Anlagebetrag: 8000\n2.25" },
+        { "type": "input_output", "inputs": ["40000"], "expected": "Anlagebetrag: 40000\n2.5" },
+        { "type": "input_output", "inputs": ["90000"], "expected": "Anlagebetrag: 90000\n2.75" }
+      ]
+    }
+  ]
+}

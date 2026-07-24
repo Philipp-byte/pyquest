@@ -1,0 +1,45 @@
+{
+  "id": "01-die-if-anweisung",
+  "title": "Die if-Anweisung",
+  "icon": "❓",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Mit einer **If-Verzweigung** kann ein Programm **Entscheidungen** treffen: Ein Codeblock wird nur dann ausgeführt, wenn eine **Bedingung** wahr (`True`) ist.\n\nSo reagiert dein Programm flexibel auf verschiedene Situationen – statt immer stur dasselbe zu tun."
+    },
+    {
+      "type": "explain",
+      "text": "Die Syntax lautet **`if bedingung:`** – danach folgt der **eingerückte** Codeblock, der nur bei `True` ausgeführt wird:\n```\nx = 5\nif x > 3:\n    print(\"x ist größer als 3\")\n```\nZwei Dinge sind Pflicht:\n1. der **Doppelpunkt** `:` am Ende der if-Zeile\n2. die **Einrückung** (4 Leerzeichen) der Zeilen, die zum if gehören"
+    },
+    {
+      "type": "quiz",
+      "question": "Was gehört ans Ende der `if`-Zeile?",
+      "choices": ["Ein Semikolon ;", "Ein Doppelpunkt :", "Nichts"],
+      "answer": 1,
+      "explainCorrect": "Richtig! Nach der Bedingung kommt immer ein Doppelpunkt, dann der eingerückte Block.",
+      "explainWrong": "Am Ende der if-Zeile steht ein Doppelpunkt `:`. Darunter folgt der eingerückte Codeblock."
+    },
+    {
+      "type": "quiz",
+      "question": "Was gibt dieses Programm aus?\n\n```\nx = 2\nif x > 3:\n    print(\"groß\")\nprint(\"fertig\")\n```",
+      "choices": ["groß und fertig", "nur fertig", "nur groß"],
+      "answer": 1,
+      "explainCorrect": "Genau! x > 3 ist False, also wird \"groß\" übersprungen. \"fertig\" steht außerhalb des if und läuft immer.",
+      "explainWrong": "x ist 2, also ist `x > 3` False – „groß“ wird übersprungen. „fertig“ ist nicht eingerückt, gehört nicht zum if und läuft immer. Ausgabe: nur „fertig“."
+    },
+    {
+      "type": "code",
+      "task": "Lege `temperatur = 30` an. Gib **`Es ist heiß!`** aus, **wenn** die Temperatur größer als 25 ist (nutze eine `if`-Anweisung).",
+      "starterCode": "temperatur = 30\n",
+      "hints": [
+        "if temperatur > 25:",
+        "Vergiss den Doppelpunkt und die Einrückung nicht",
+        "temperatur = 30\nif temperatur > 25:\n    print(\"Es ist heiß!\")"
+      ],
+      "tests": [
+        { "type": "output", "expected": "Es ist heiß!" }
+      ]
+    }
+  ]
+}

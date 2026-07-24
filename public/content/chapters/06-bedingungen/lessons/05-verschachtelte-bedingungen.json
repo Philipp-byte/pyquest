@@ -1,0 +1,44 @@
+{
+  "id": "05-verschachtelte-bedingungen",
+  "title": "Verschachtelte Bedingungen",
+  "icon": "🪆",
+  "xp": 35,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Du kannst eine `if`-Verzweigung **in eine andere hineinsetzen** – man nennt das **verschachtelt**. Die innere Prüfung wird nur erreicht, wenn die äußere schon zutrifft. Jede Ebene wird dabei weiter **eingerückt**.\n```\nalter = 20\nif alter >= 18:\n    if student:\n        print(\"ermäßigt\")\n    else:\n        print(\"voller Preis\")\nelse:\n    print(\"Kinderticket\")\n```\nErst wird geprüft, ob jemand erwachsen ist – **danach** erst, ob er Student ist."
+    },
+    {
+      "type": "quiz",
+      "question": "Wann wird die **innere** if-Prüfung überhaupt erreicht?",
+      "choices": [
+        "Immer, unabhängig von der äußeren",
+        "Nur wenn die äußere Bedingung zutrifft",
+        "Nur wenn die äußere Bedingung False ist"
+      ],
+      "answer": 1,
+      "explainCorrect": "Richtig! Die innere Prüfung läuft nur, wenn die äußere Bedingung True war.",
+      "explainWrong": "Die innere if-Prüfung steht im Block der äußeren – sie wird nur erreicht, wenn die äußere Bedingung zutrifft."
+    },
+    {
+      "type": "explain",
+      "text": "Ein realistisches Beispiel: der **Wochenlohn**. Zuerst wird geprüft, ob die Eingaben **gültig** sind (höchstens 80 Stunden und höchstens 50 € Stundenlohn). Nur dann wird gerechnet – und **innen** entschieden, ob es Überstunden-Zuschlag gibt (für Stunden über 35 gibt es 50 % extra).\n```\nlohn = stunden * stundenlohn + zuschlag\n```"
+    },
+    {
+      "type": "code",
+      "task": "Frage `Stunden: ` und `Stundenlohn: ` ab (beide als Zahl mit `float`). Ist `stunden` höchstens 80 **und** `stundenlohn` höchstens 50: berechne den Lohn (für Stunden über 35 gibt es je einen Zuschlag von `stundenlohn * 0.5`) und gib ihn aus. Sonst gib **`Ungültige Eingabe!`** aus.\n\nBeispiel: 40 Stunden zu 20 € → **850.0**.",
+      "starterCode": "",
+      "needsInput": true,
+      "hints": [
+        "stunden = float(input(\"Stunden: \"))  und  stundenlohn = float(input(\"Stundenlohn: \"))",
+        "Außen prüfen: if stunden <= 80 and stundenlohn <= 50:  – innen: if stunden > 35: zuschlag = (stunden - 35) * stundenlohn * 0.5  else: zuschlag = 0",
+        "stunden = float(input(\"Stunden: \"))\nstundenlohn = float(input(\"Stundenlohn: \"))\nif stunden <= 80 and stundenlohn <= 50:\n    if stunden > 35:\n        zuschlag = (stunden - 35) * stundenlohn * 0.5\n    else:\n        zuschlag = 0\n    lohn = stunden * stundenlohn + zuschlag\n    print(lohn)\nelse:\n    print(\"Ungültige Eingabe!\")"
+      ],
+      "tests": [
+        { "type": "input_output", "inputs": ["40", "20"], "expected": "Stunden: 40\nStundenlohn: 20\n850.0" },
+        { "type": "input_output", "inputs": ["30", "20"], "expected": "Stunden: 30\nStundenlohn: 20\n600.0" },
+        { "type": "input_output", "inputs": ["90", "20"], "expected": "Stunden: 90\nStundenlohn: 20\nUngültige Eingabe!" }
+      ]
+    }
+  ]
+}

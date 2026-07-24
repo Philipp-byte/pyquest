@@ -6,43 +6,57 @@
   "steps": [
     {
       "type": "explain",
-      "text": "Mit **`if`** kannst du Code nur dann ausführen, wenn eine Bedingung zutrifft. Mit **`else`** legst du fest, was sonst passieren soll.\n\nWichtig: Nach `if bedingung:` und `else:` muss der zugehörige Code **eingerückt** sein (meist 4 Leerzeichen)."
-    },
-    {
-      "type": "example",
-      "text": "Ein Beispiel:",
-      "code": "alter = 20\nif alter >= 18:\n    print(\"Erwachsen\")\nelse:\n    print(\"Minderjährig\")"
-    },
-    {
-      "type": "explain",
-      "text": "Python prüft die Bedingung nach `if`. Ist sie **`True`**, wird der eingerückte Block darunter ausgeführt. Ist sie **`False`**, wird stattdessen der Block nach `else:` ausgeführt – nie beide!"
+      "text": "Mit **`else`** legst du fest, was passieren soll, **wenn die Bedingung nicht** zutrifft. So gibt es immer genau **einen** von zwei Wegen:\n```\nx = 2\nif x > 3:\n    print(\"x ist größer als 3\")\nelse:\n    print(\"x ist nicht größer als 3\")\n```\nIst die Bedingung `True`, läuft der `if`-Block. Ist sie `False`, läuft der `else`-Block – **nie beide**."
     },
     {
       "type": "quiz",
-      "question": "Was passiert, wenn die Bedingung nach `if` False ist (und es ein else gibt)?",
+      "question": "Wann wird der `else`-Block ausgeführt?",
       "choices": [
-        "Gar nichts passiert",
-        "Der else-Block wird ausgeführt",
-        "Es gibt einen Fehler"
+        "Immer, zusätzlich zum if-Block",
+        "Nur wenn die if-Bedingung False ist",
+        "Nur wenn die if-Bedingung True ist"
       ],
       "answer": 1,
-      "explainCorrect": "Richtig! Ist die if-Bedingung False, läuft stattdessen der else-Block.",
-      "explainWrong": "Ist die Bedingung False, wird der else-Block ausgeführt (falls vorhanden)."
+      "explainCorrect": "Richtig! Der else-Block läuft genau dann, wenn die if-Bedingung False ist.",
+      "explainWrong": "Der else-Block wird ausgeführt, wenn die if-Bedingung **False** ist. Bei True läuft nur der if-Block."
+    },
+    {
+      "type": "explain",
+      "text": "Ein Klassiker: die **Altersprüfung**. Ab 18 ist man volljährig. Das kombiniert Eingabe, Umwandlung in eine Zahl und eine if-else-Entscheidung."
     },
     {
       "type": "code",
-      "task": "Frage mit `input()` **`Wie alt bist du? `** ab, wandle die Eingabe in eine Zahl um. Gib **`Erwachsen`** aus, wenn das Alter **18 oder mehr** ist, sonst **`Minderjährig`**.",
+      "task": "Frage `Wie alt bist du? ` ab (als Zahl). Gib **`Du bist volljährig.`** aus, wenn das Alter **18 oder mehr** ist, sonst **`Du bist minderjährig.`**",
       "starterCode": "",
       "needsInput": true,
       "hints": [
-        "Eingabe umwandeln: alter = int(input(\"Wie alt bist du? \"))",
-        "Dann if/else mit >= 18",
-        "alter = int(input(\"Wie alt bist du? \"))\nif alter >= 18:\n    print(\"Erwachsen\")\nelse:\n    print(\"Minderjährig\")"
+        "alter = int(input(\"Wie alt bist du? \"))",
+        "if alter >= 18: ... else: ...",
+        "alter = int(input(\"Wie alt bist du? \"))\nif alter >= 18:\n    print(\"Du bist volljährig.\")\nelse:\n    print(\"Du bist minderjährig.\")"
       ],
       "tests": [
-        { "type": "input_output", "inputs": ["20"], "expected": "Wie alt bist du? 20\nErwachsen" },
-        { "type": "input_output", "inputs": ["15"], "expected": "Wie alt bist du? 15\nMinderjährig" },
-        { "type": "input_output", "inputs": ["18"], "expected": "Wie alt bist du? 18\nErwachsen" }
+        { "type": "input_output", "inputs": ["20"], "expected": "Wie alt bist du? 20\nDu bist volljährig." },
+        { "type": "input_output", "inputs": ["16"], "expected": "Wie alt bist du? 16\nDu bist minderjährig." },
+        { "type": "input_output", "inputs": ["18"], "expected": "Wie alt bist du? 18\nDu bist volljährig." }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Mit dem **Modulo-Operator `%`** kannst du prüfen, ob eine Zahl **gerade** ist: `zahl % 2 == 0` ist `True`, wenn beim Teilen durch 2 kein Rest bleibt."
+    },
+    {
+      "type": "code",
+      "task": "Frage `Gib eine Zahl ein: ` ab (als Zahl). Gib **`gerade`** aus, wenn sie gerade ist (`zahl % 2 == 0`), sonst **`ungerade`**.",
+      "starterCode": "",
+      "needsInput": true,
+      "hints": [
+        "zahl = int(input(\"Gib eine Zahl ein: \"))",
+        "if zahl % 2 == 0: ... else: ...",
+        "zahl = int(input(\"Gib eine Zahl ein: \"))\nif zahl % 2 == 0:\n    print(\"gerade\")\nelse:\n    print(\"ungerade\")"
+      ],
+      "tests": [
+        { "type": "input_output", "inputs": ["4"], "expected": "Gib eine Zahl ein: 4\ngerade" },
+        { "type": "input_output", "inputs": ["7"], "expected": "Gib eine Zahl ein: 7\nungerade" }
       ]
     }
   ]

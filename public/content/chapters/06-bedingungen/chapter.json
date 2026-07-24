@@ -3,10 +3,12 @@
   "title": "Bedingungen",
   "icon": "🔀",
   "color": "#facc15",
-  "description": "Lass dein Programm Entscheidungen treffen.",
+  "description": "Lass dein Programm Entscheidungen treffen – mit if, elif und else.",
   "lessons": [
-    "01-vergleiche",
+    "01-die-if-anweisung",
     "02-if-else",
-    "03-elif-und-verknuepfungen"
+    "03-elif",
+    "04-bedingungen-verknuepfen",
+    "05-verschachtelte-bedingungen"
   ]
 }

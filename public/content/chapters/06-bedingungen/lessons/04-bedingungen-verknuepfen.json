@@ -1,0 +1,65 @@
+{
+  "id": "04-bedingungen-verknuepfen",
+  "title": "Bedingungen verknüpfen",
+  "icon": "🔗",
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "In einer `if`-Bedingung kannst du mehrere Prüfungen mit **`and`** und **`or`** verknüpfen (das kennst du aus dem Operatoren-Kapitel):\n\n- **`and`** – der Block läuft nur, wenn **beide** Bedingungen zutreffen\n- **`or`** – der Block läuft, wenn **mindestens eine** zutrifft"
+    },
+    {
+      "type": "example",
+      "text": "Ein Login klappt nur, wenn Name **und** PIN stimmen:",
+      "code": "name = \"Peter\"\npin = \"1234\"\nif name == \"Peter\" and pin == \"1234\":\n    print(\"Zugang gewährt\")\nelse:\n    print(\"Zugang verweigert\")"
+    },
+    {
+      "type": "quiz",
+      "question": "Bei `if alter >= 16 and hat_ausweis:` – wann läuft der Block?",
+      "choices": [
+        "Wenn mindestens eine der beiden Bedingungen stimmt",
+        "Nur wenn beide Bedingungen stimmen",
+        "Immer"
+      ],
+      "answer": 1,
+      "explainCorrect": "Richtig! Bei `and` müssen beide Seiten True sein.",
+      "explainWrong": "`and` verlangt, dass **beide** Bedingungen True sind. Für „mindestens eine“ nimmt man `or`."
+    },
+    {
+      "type": "code",
+      "task": "Baue ein Anmeldesystem. Frage `Name: ` und `PIN: ` ab. Gib **`Zugang gewährt`** aus, wenn der Name **`Peter`** **und** die PIN **`1234`** ist, sonst **`Zugang verweigert`**.",
+      "starterCode": "",
+      "needsInput": true,
+      "hints": [
+        "name = input(\"Name: \")  und  pin = input(\"PIN: \")",
+        "if name == \"Peter\" and pin == \"1234\":",
+        "name = input(\"Name: \")\npin = input(\"PIN: \")\nif name == \"Peter\" and pin == \"1234\":\n    print(\"Zugang gewährt\")\nelse:\n    print(\"Zugang verweigert\")"
+      ],
+      "tests": [
+        { "type": "input_output", "inputs": ["Peter", "1234"], "expected": "Name: Peter\nPIN: 1234\nZugang gewährt" },
+        { "type": "input_output", "inputs": ["Peter", "0000"], "expected": "Name: Peter\nPIN: 0000\nZugang verweigert" },
+        { "type": "input_output", "inputs": ["Anna", "1234"], "expected": "Name: Anna\nPIN: 1234\nZugang verweigert" }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Mit **`or`** reicht **eine** zutreffende Bedingung. Beispiel Wochenende: frei ist, wer am **Samstag oder Sonntag** dran ist."
+    },
+    {
+      "type": "code",
+      "task": "Frage `Tag: ` ab. Gib **`Wochenende!`** aus, wenn der Tag **`Samstag`** **oder** **`Sonntag`** ist, sonst **`Arbeitstag`**.",
+      "starterCode": "",
+      "needsInput": true,
+      "hints": [
+        "tag = input(\"Tag: \")",
+        "if tag == \"Samstag\" or tag == \"Sonntag\":",
+        "tag = input(\"Tag: \")\nif tag == \"Samstag\" or tag == \"Sonntag\":\n    print(\"Wochenende!\")\nelse:\n    print(\"Arbeitstag\")"
+      ],
+      "tests": [
+        { "type": "input_output", "inputs": ["Samstag"], "expected": "Tag: Samstag\nWochenende!" },
+        { "type": "input_output", "inputs": ["Sonntag"], "expected": "Tag: Sonntag\nWochenende!" },
+        { "type": "input_output", "inputs": ["Montag"], "expected": "Tag: Montag\nArbeitstag" }
+      ]
+    }
+  ]
+}
