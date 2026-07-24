@@ -1,0 +1,71 @@
+{
+  "id": "01-for-und-range",
+  "title": "for-Schleifen und range()",
+  "icon": "🔂",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Eine **`for`-Schleife** wiederholt Code **für jedes Element einer Reihe** – zum Beispiel für jedes Element einer **Liste** (die kennst du schon aus dem letzten Kapitel) oder für jede Zahl einer Zahlenreihe.\n\nEine Zahlenreihe erzeugst du mit **`range()`**: **`range(n)`** liefert die Zahlen von `0` bis `n - 1`. Der große Vorteil gegenüber `while`: Du musst **nichts selbst hochzählen** – die Laufvariable bekommt bei jedem Durchlauf automatisch den nächsten Wert.\n\nIn der nächsten Lektion lässt du `for` dann direkt über deine **Listen** laufen."
+    },
+    {
+      "type": "example",
+      "text": "range(5) zählt von 0 bis 4:",
+      "code": "for i in range(5):\n    print(i)"
+    },
+    {
+      "type": "explain",
+      "text": "`range()` kann auch mit **Start und Ende** aufgerufen werden: **`range(1, 6)`** zählt von 1 bis 5.\n\n**Merke:** Das Ende ist immer **ausgeschlossen** – die 6 kommt also nicht mehr dran. Willst du bis 10 zählen, brauchst du `range(1, 11)`."
+    },
+    {
+      "type": "quiz",
+      "question": "Wie viele Zahlen gibt `for i in range(1, 6)` aus?",
+      "choices": ["4", "5", "6"],
+      "answer": 1,
+      "explainCorrect": "Richtig! 1, 2, 3, 4, 5 – das Ende (6) zählt nicht mehr mit. Das sind 5 Zahlen.",
+      "explainWrong": "range(1, 6) erzeugt 1, 2, 3, 4, 5 – das Ende ist ausgeschlossen. Das sind 5 Zahlen."
+    },
+    {
+      "type": "explain",
+      "text": "Mit einem **dritten Wert** legst du die **Schrittweite** fest: **`range(start, ende, schritt)`**.\n\n- `range(0, 10, 2)` → 0, 2, 4, 6, 8 (in Zweierschritten)\n- `range(10, 0, -1)` → 10, 9, 8, ... , 1 (**rückwärts** mit negativem Schritt)\n\nAchtung: `range(1, 11, -1)` erzeugt **gar keine** Zahlen – von 1 aus kommt man mit -1 nie bei 11 an."
+    },
+    {
+      "type": "quiz",
+      "question": "Wie oft wird die Schleife `for i in range(0, 5, 2):` ausgeführt?",
+      "choices": ["2-mal", "3-mal", "5-mal"],
+      "answer": 1,
+      "explainCorrect": "Richtig! range(0, 5, 2) erzeugt 0, 2 und 4 – das sind 3 Durchläufe.",
+      "explainWrong": "range(0, 5, 2) erzeugt die Werte 0, 2 und 4 (das Ende 5 ist ausgeschlossen) – also 3 Durchläufe."
+    },
+    {
+      "type": "code",
+      "task": "Gib mit einer `for`-Schleife die Zahlen **von 1 bis 10** aus (jede in einer eigenen Zeile).",
+      "starterCode": "",
+      "hints": [
+        "Nutze range() mit Start und Ende",
+        "Denk daran: das Ende von range() zählt nicht mehr mit, du brauchst also range(1, 11)",
+        "for i in range(1, 11):\n    print(i)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "1\n2\n3\n4\n5\n6\n7\n8\n9\n10" }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Auch mit `for` kannst du bequem **aufsummieren**: Ein Summierer vor der Schleife, in jedem Durchlauf `+=`. Weil `for` das Hochzählen selbst übernimmt, ist der Code oft kürzer als mit `while`."
+    },
+    {
+      "type": "code",
+      "task": "Berechne mit einer `for`-Schleife die **Summe aller Zahlen von 1 bis 100** und gib **nur das Ergebnis** aus.\n\nErwartet: **5050**",
+      "starterCode": "",
+      "hints": [
+        "Lege vorher summe = 0 an",
+        "for i in range(1, 101): summe += i",
+        "summe = 0\nfor i in range(1, 101):\n    summe += i\nprint(summe)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "5050" }
+      ]
+    }
+  ]
+}

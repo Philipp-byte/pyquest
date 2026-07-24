@@ -1,0 +1,76 @@
+{
+  "id": "02-for-mit-listen",
+  "title": "for-Schleife über Listen",
+  "icon": "📋",
+  "xp": 35,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Erinnerst du dich, wie mühsam es im Listen-Kapitel war, eine Liste mit `while`, einer Index-Variable und `len()` durchzulaufen? Jetzt kommt der elegante Weg.\n\nDie `for`-Schleife und **Listen** sind ein perfektes Team. Du kannst mit `for` **direkt über die Elemente einer Liste** laufen – ganz ohne `range()` und ohne Index:\n```\nfor element in liste:\n    # element ist bei jedem Durchlauf das nächste Listenelement\n```\nBei jedem Durchlauf steckt im Laufwort (hier `element`) automatisch das **nächste Element** der Liste."
+    },
+    {
+      "type": "example",
+      "text": "Über eine Liste von Namen laufen und jeden begrüßen:",
+      "code": "namen = [\"Anna\", \"Ben\", \"Carla\"]\nfor name in namen:\n    print(\"Hallo\", name)"
+    },
+    {
+      "type": "quiz",
+      "question": "Was steckt bei `for zahl in [2, 4, 6]:` nacheinander in `zahl`?",
+      "choices": [
+        "Die Indizes 0, 1, 2",
+        "Die Werte 2, 4, 6",
+        "Die ganze Liste [2, 4, 6]"
+      ],
+      "answer": 1,
+      "explainCorrect": "Richtig! Die for-Schleife liefert nacheinander die Elemente selbst: 2, dann 4, dann 6.",
+      "explainWrong": "Bei `for x in liste` bekommst du die **Elemente** selbst (2, 4, 6), nicht deren Positionen."
+    },
+    {
+      "type": "code",
+      "task": "In der Liste `farben` stehen drei Farben. Gib mit einer `for`-Schleife **jede Farbe** in einer eigenen Zeile aus.",
+      "starterCode": "farben = [\"rot\", \"gelb\", \"grün\"]\n",
+      "hints": [
+        "for farbe in farben:",
+        "Im Schleifenkörper: print(farbe)",
+        "farben = [\"rot\", \"gelb\", \"grün\"]\nfor farbe in farben:\n    print(farbe)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "rot\ngelb\ngrün" }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Sehr oft willst du die Elemente einer Liste **auswerten** – zum Beispiel **aufsummieren**. Dazu kombinierst du die Liste mit einem **Summierer** (`summe = 0`), wie du ihn schon von den while-Schleifen kennst."
+    },
+    {
+      "type": "code",
+      "task": "In der Liste `zahlen` stehen sechs Zahlen. Berechne mit einer `for`-Schleife ihre **Summe** und gib **nur das Ergebnis** aus.\n\nErwartet: **108**",
+      "starterCode": "zahlen = [4, 8, 15, 16, 23, 42]\n",
+      "hints": [
+        "Lege vor der Schleife summe = 0 an",
+        "for zahl in zahlen: summe += zahl",
+        "zahlen = [4, 8, 15, 16, 23, 42]\nsumme = 0\nfor zahl in zahlen:\n    summe += zahl\nprint(summe)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "108" }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Du kannst dir während des Durchlaufs auch etwas **merken** – zum Beispiel die bisher größte Zahl. Der Trick: Starte mit dem **ersten** Element (`zahlen[0]`) als bisherigem Maximum und prüfe für jedes weitere Element, ob es **größer** ist. Wenn ja, merkst du es dir."
+    },
+    {
+      "type": "code",
+      "task": "In der Liste `zahlen` stehen fünf Zahlen. Finde mit einer `for`-Schleife die **größte** Zahl und gib sie aus (ohne die fertige Funktion `max()` zu benutzen).\n\nErwartet: **19**",
+      "starterCode": "zahlen = [7, 2, 19, 5, 11]\n",
+      "hints": [
+        "Starte mit groesste = zahlen[0]",
+        "for zahl in zahlen: if zahl > groesste: groesste = zahl",
+        "zahlen = [7, 2, 19, 5, 11]\ngroesste = zahlen[0]\nfor zahl in zahlen:\n    if zahl > groesste:\n        groesste = zahl\nprint(groesste)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "19" }
+      ]
+    }
+  ]
+}

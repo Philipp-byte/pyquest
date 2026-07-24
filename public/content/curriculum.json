@@ -7,12 +7,13 @@
     "04-operatoren",
     "05-eingaben",
     "06-bedingungen",
-    "07-schleifen",
-    "08-funktionen",
-    "09-listen",
-    "10-dictionaries",
-    "11-klassen",
-    "12-dateien",
-    "13-projekte"
+    "07-while-schleifen",
+    "08-listen",
+    "09-for-schleifen",
+    "10-funktionen",
+    "11-dictionaries",
+    "12-klassen",
+    "13-dateien",
+    "14-projekte"
   ]
 }

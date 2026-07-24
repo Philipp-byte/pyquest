@@ -1,0 +1,72 @@
+{
+  "id": "01-while-schleifen",
+  "title": "while-Schleifen",
+  "icon": "🔁",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Oft soll ein Programm **ähnliche Anweisungen mehrfach hintereinander** ausführen. Genau dafür gibt es **Schleifen**. Sie sparen Zeit, vermeiden Tippfehler und machen den Code besser lesbar.\n\nEine **`while`-Schleife** wiederholt einen Codeblock, **solange** eine Bedingung wahr ist. Sobald die Bedingung `False` wird, hört die Schleife auf und das Programm läuft normal weiter."
+    },
+    {
+      "type": "example",
+      "text": "Zähle von 1 bis 5 hoch:",
+      "code": "zaehler = 1\nwhile zaehler <= 5:\n    print(zaehler)\n    zaehler += 1"
+    },
+    {
+      "type": "explain",
+      "text": "So läuft eine `while`-Schleife **Schritt für Schritt** ab:\n\n1. Die **Bedingung** hinter `while` wird geprüft.\n2. Ist sie `True`, wird der **eingerückte Block** ausgeführt.\n3. Danach springt Python **zurück** zum `while` und prüft die Bedingung erneut.\n4. Das wiederholt sich, bis die Bedingung `False` ergibt.\n\nDie Bedingung ist – wie bei `if` – immer ein **Wahrheitswert** (`bool`): entweder `True` oder `False`."
+    },
+    {
+      "type": "explain",
+      "text": "**Achtung, Endlosschleife!** Vergisst du `zaehler += 1`, bleibt die Bedingung für immer `True` und das Programm läuft ewig weiter. **Merke:** In jeder `while`-Schleife muss sich etwas verändern, das die Bedingung irgendwann `False` werden lässt."
+    },
+    {
+      "type": "quiz",
+      "question": "Was passiert, wenn man in der while-Schleife `zaehler += 1` vergisst?",
+      "choices": [
+        "Die Schleife läuft genau einmal",
+        "Die Schleife läuft endlos weiter (Endlosschleife)",
+        "Python meldet automatisch einen Fehler"
+      ],
+      "answer": 1,
+      "explainCorrect": "Richtig! Ohne Veränderung bleibt die Bedingung für immer wahr – eine Endlosschleife.",
+      "explainWrong": "Ohne das Hochzählen bleibt `zaehler <= 5` für immer True – die Schleife läuft endlos."
+    },
+    {
+      "type": "example",
+      "text": "Ein anschauliches Beispiel: **Lucy lernt laufen.** Man geht davon aus, dass Lucy laufen kann, sobald sie 100 Schritte am Stück geschafft hat. Bei jedem Versuch (Schleifendurchlauf) geht sie 2 Schritte mehr:",
+      "code": "schritte = 0\nwhile schritte < 100:\n    schritte += 2\n    print(f\"Lucy läuft: {schritte} Schritte\")\nprint(\"Lucy kann jetzt laufen!\")"
+    },
+    {
+      "type": "code",
+      "task": "Schreibe eine `while`-Schleife, die von **5 rückwärts bis 1** zählt und jede Zahl in einer eigenen Zeile ausgibt.",
+      "starterCode": "",
+      "hints": [
+        "Starte bei 5 und zähle mit -= 1 runter",
+        "Die Bedingung lautet: solange die Zahl >= 1 ist",
+        "zaehler = 5\nwhile zaehler >= 1:\n    print(zaehler)\n    zaehler -= 1"
+      ],
+      "tests": [
+        { "type": "output", "expected": "5\n4\n3\n2\n1" }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Sehr häufig braucht man eine Schleife, um **Werte aufzusummieren**. Dazu legt man vor der Schleife eine Variable `summe = 0` an und addiert in jedem Durchlauf einen Wert hinzu. Man nennt so eine Variable auch **Summierer** (oder Akkumulator)."
+    },
+    {
+      "type": "code",
+      "task": "Berechne mit einer `while`-Schleife die **Summe aller Zahlen von 1 bis 10** (also 1 + 2 + ... + 10) und gib **nur das Ergebnis** aus.\n\nErwartet: **55**",
+      "starterCode": "",
+      "hints": [
+        "Lege vorher an: summe = 0  und  zahl = 1",
+        "Solange zahl <= 10: summe += zahl  und danach  zahl += 1",
+        "summe = 0\nzahl = 1\nwhile zahl <= 10:\n    summe += zahl\n    zahl += 1\nprint(summe)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "55" }
+      ]
+    }
+  ]
+}

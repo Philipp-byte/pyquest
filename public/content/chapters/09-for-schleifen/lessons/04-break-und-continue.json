@@ -1,0 +1,100 @@
+{
+  "id": "04-break-und-continue",
+  "title": "break und continue",
+  "icon": "⏭️",
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Mit der **Schleifensteuerung** greifst du in den Ablauf einer Schleife ein:\n\n- **`break`** beendet die Schleife **sofort komplett** – das Programm macht danach hinter der Schleife weiter.\n- **`continue`** überspringt nur den **Rest des aktuellen Durchlaufs** und springt direkt zum nächsten."
+    },
+    {
+      "type": "example",
+      "text": "break: Sobald i die 13 erreicht, wird die Schleife verlassen – 13 und 14 werden nicht mehr ausgegeben.",
+      "code": "for i in range(10, 15):\n    if i == 13:\n        break\n    print(i)"
+    },
+    {
+      "type": "example",
+      "text": "continue: Die 13 wird übersprungen, danach läuft die Schleife normal weiter.",
+      "code": "for i in range(10, 15):\n    if i == 13:\n        continue\n    print(i)"
+    },
+    {
+      "type": "explain",
+      "text": "**Wichtig:** `break` und `continue` benutzt man fast immer **zusammen mit einem `if`**. Ein `break` oder `continue` ganz ohne Bedingung würde ja schon beim **allerersten** Durchlauf wirken – das ergäbe selten Sinn. Die `if`-Bedingung entscheidet, **wann** die Steuerung greift."
+    },
+    {
+      "type": "quiz",
+      "question": "Was ist der Unterschied zwischen break und continue?",
+      "choices": [
+        "Beide beenden die Schleife komplett",
+        "break beendet die Schleife komplett, continue überspringt nur den aktuellen Durchlauf",
+        "break überspringt nur einen Durchlauf, continue beendet die Schleife"
+      ],
+      "answer": 1,
+      "explainCorrect": "Genau! break = komplett raus, continue = nur diesen Durchlauf überspringen.",
+      "explainWrong": "`break` beendet die ganze Schleife sofort. `continue` überspringt nur den aktuellen Durchlauf und macht weiter."
+    },
+    {
+      "type": "quiz",
+      "question": "Mit welchem anderen Baustein werden break und continue meistens kombiniert?",
+      "choices": [
+        "Mit einer Verzweigung (if)",
+        "Mit einer Funktion",
+        "Mit einem Datentyp"
+      ],
+      "answer": 0,
+      "explainCorrect": "Richtig! Erst eine if-Bedingung entscheidet, wann break oder continue greifen soll.",
+      "explainWrong": "break und continue stehen fast immer in einem if-Block – die Bedingung legt fest, wann sie wirken."
+    },
+    {
+      "type": "code",
+      "task": "Gehe mit einer `for`-Schleife durch die Zahlen **1 bis 10** (`range(1, 11)`). Überspringe alle **geraden** Zahlen mit `continue` und gib nur die ungeraden aus. Höre mit `break` komplett auf, sobald du die **7** ausgegeben hast.",
+      "starterCode": "",
+      "hints": [
+        "Gerade Zahlen erkennst du mit i % 2 == 0",
+        "Erst continue für gerade Zahlen, dann print(), dann break bei i == 7",
+        "for i in range(1, 11):\n    if i % 2 == 0:\n        continue\n    print(i)\n    if i == 7:\n        break"
+      ],
+      "tests": [
+        { "type": "output", "expected": "1\n3\n5\n7" }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Ein typischer Einsatz von `break`: **abbrechen, sobald ein Ziel erreicht ist.** Der Benutzer gibt eine Grenze vor, und die Schleife stoppt, sobald sie dort ankommt."
+    },
+    {
+      "type": "code",
+      "task": "Frage mit `Zahl: ` eine ganze Zahl zwischen 0 und 10 ab. Gib die Zahlen **von 0 aufwärts** aus und **brich mit `break` ab**, sobald du die eingegebene Zahl ausgegeben hast (sie soll noch mit dabei sein).\n\nBeispiel: Eingabe **4** → 0, 1, 2, 3, 4 (untereinander).",
+      "starterCode": "",
+      "needsInput": true,
+      "hints": [
+        "grenze = int(input(\"Zahl: \"))  und  for i in range(11):",
+        "Erst print(i), dann prüfen: if i == grenze: break",
+        "grenze = int(input(\"Zahl: \"))\nfor i in range(11):\n    print(i)\n    if i == grenze:\n        break"
+      ],
+      "tests": [
+        { "type": "input_output", "inputs": ["4"], "expected": "Zahl: 4\n0\n1\n2\n3\n4" },
+        { "type": "input_output", "inputs": ["0"], "expected": "Zahl: 0\n0" }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Und ein typischer Einsatz von `continue`: **eine bestimmte Zahl auslassen.** Die Schleife läuft ganz normal durch, überspringt aber genau einen Wert."
+    },
+    {
+      "type": "code",
+      "task": "Frage mit `Zahl: ` eine ganze Zahl zwischen 0 und 10 ab. Gib die Zahlen **0 bis 10** aus, aber **überspringe** mit `continue` die eingegebene Zahl.\n\nBeispiel: Eingabe **4** → 0, 1, 2, 3, 5, 6, 7, 8, 9, 10 (die 4 fehlt).",
+      "starterCode": "",
+      "needsInput": true,
+      "hints": [
+        "weg = int(input(\"Zahl: \"))  und  for i in range(11):",
+        "if i == weg: continue  – erst danach print(i)",
+        "weg = int(input(\"Zahl: \"))\nfor i in range(11):\n    if i == weg:\n        continue\n    print(i)"
+      ],
+      "tests": [
+        { "type": "input_output", "inputs": ["4"], "expected": "Zahl: 4\n0\n1\n2\n3\n5\n6\n7\n8\n9\n10" }
+      ]
+    }
+  ]
+}

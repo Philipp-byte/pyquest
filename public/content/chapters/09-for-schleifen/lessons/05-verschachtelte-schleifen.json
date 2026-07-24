@@ -1,0 +1,59 @@
+{
+  "id": "05-verschachtelte-schleifen",
+  "title": "Verschachtelte Schleifen & Muster",
+  "icon": "🪆",
+  "xp": 40,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Du kannst eine Schleife **in eine andere hineinsetzen** – das nennt man **verschachtelt**. Für **jeden** Durchlauf der äußeren Schleife läuft die **innere Schleife komplett** durch.\n\nWenn die äußere Schleife 3-mal läuft und die innere jeweils 3-mal, ergibt das 3 · 3 = **9** Durchläufe insgesamt."
+    },
+    {
+      "type": "example",
+      "text": "Ein kleines Einmaleins mit zwei Schleifen – die innere Schleife (j) läuft für jedes i komplett durch:",
+      "code": "for i in range(1, 4):\n    for j in range(1, 4):\n        print(i, \"x\", j, \"=\", i * j)"
+    },
+    {
+      "type": "quiz",
+      "question": "Wie viele `print`-Zeilen erzeugt eine äußere Schleife mit 3 Durchläufen, in der eine innere Schleife mit 4 Durchläufen steckt?",
+      "choices": ["7", "12", "3"],
+      "answer": 1,
+      "explainCorrect": "Richtig! Für jeden der 3 äußeren Durchläufe läuft die innere 4-mal: 3 · 4 = 12.",
+      "explainWrong": "Die innere Schleife läuft für **jeden** äußeren Durchlauf komplett: 3 · 4 = 12 Zeilen."
+    },
+    {
+      "type": "explain",
+      "text": "Für **Muster** ist ein Trick praktisch: Du kannst einen Text mit `*` **vervielfachen**. `\"*\" * 4` ergibt `\"****\"`.\n\nSo baust du mit **einer** Schleife eine wachsende Sternenreihe – die Zeilennummer bestimmt, wie viele Sterne ausgegeben werden."
+    },
+    {
+      "type": "code",
+      "task": "Gib mit einer `for`-Schleife folgendes **Dreieck aus Sternen** aus (5 Zeilen):\n```\n*\n**\n***\n****\n*****\n```\nTipp: In Zeile `i` sollen `i` Sterne stehen – nutze `\"*\" * i`.",
+      "starterCode": "",
+      "hints": [
+        "Laufe von 1 bis 5: for i in range(1, 6)",
+        "Gib pro Durchlauf i Sterne aus: print(\"*\" * i)",
+        "for i in range(1, 6):\n    print(\"*\" * i)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "*\n**\n***\n****\n*****" }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Ein echtes **Raster** (Tabelle) entsteht erst mit einer Schleife **in** einer Schleife. Die äußere Schleife bestimmt die Reihe, die innere geht diese Reihe durch. So lässt sich zum Beispiel ein Einmaleins ausgeben."
+    },
+    {
+      "type": "code",
+      "task": "Gib mit **zwei verschachtelten** `for`-Schleifen das kleine Einmaleins für die Reihen **1 bis 3** aus. Jede Zeile soll die Form `i x j = Ergebnis` haben.\n\nErwartet (9 Zeilen):\n```\n1 x 1 = 1\n1 x 2 = 2\n1 x 3 = 3\n2 x 1 = 2\n...\n3 x 3 = 9\n```",
+      "starterCode": "",
+      "hints": [
+        "Äußere Schleife: for i in range(1, 4)  – innere: for j in range(1, 4)",
+        "Im Kern: print(i, \"x\", j, \"=\", i * j)",
+        "for i in range(1, 4):\n    for j in range(1, 4):\n        print(i, \"x\", j, \"=\", i * j)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "1 x 1 = 1\n1 x 2 = 2\n1 x 3 = 3\n2 x 1 = 2\n2 x 2 = 4\n2 x 3 = 6\n3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9" }
+      ]
+    }
+  ]
+}

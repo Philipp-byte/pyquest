@@ -1,0 +1,50 @@
+{
+  "id": "03-listen-mit-schleifen",
+  "title": "Listen mit while durchlaufen",
+  "icon": "🔁",
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Oft willst du **jedes Element** einer Liste bearbeiten. Mit den Bausteinen, die du schon kennst, geht das so: Du nimmst eine `while`-Schleife und eine **Index-Variable** `i`, die bei `0` startet.\n\nMit **`liste[i]`** holst du das Element an Position `i`, und mit **`len(liste)`** weißt du, wie viele Elemente es gibt. Die Schleife läuft, **solange** `i` kleiner als die Länge der Liste ist."
+    },
+    {
+      "type": "example",
+      "text": "Jede Farbe der Reihe nach ausgeben – i läuft von 0 bis zum letzten gültigen Index:",
+      "code": "farben = [\"rot\", \"gruen\", \"blau\"]\ni = 0\nwhile i < len(farben):\n    print(farben[i])\n    i += 1"
+    },
+    {
+      "type": "explain",
+      "text": "Wichtig ist wieder das **Hochzählen** mit `i += 1` – sonst bleibt `i` bei 0 stehen und du hast eine Endlosschleife. Die Bedingung `i < len(farben)` sorgt dafür, dass die Schleife **genau so oft** läuft, wie die Liste Elemente hat (der letzte gültige Index ist immer `len(...) - 1`)."
+    },
+    {
+      "type": "quiz",
+      "question": "Welche Bedingung sorgt dafür, dass die while-Schleife genau alle Elemente der Liste `farben` durchläuft?",
+      "choices": [
+        "while i < len(farben):",
+        "while i <= len(farben):",
+        "while farben > 0:"
+      ],
+      "answer": 0,
+      "explainCorrect": "Richtig! Bei `i < len(farben)` läuft i von 0 bis len-1 – genau über alle gültigen Indizes.",
+      "explainWrong": "Mit `i <= len(farben)` würdest du einen Index zu weit gehen (Fehler). Richtig ist `i < len(farben)`."
+    },
+    {
+      "type": "code",
+      "task": "Lege die Liste **`zahlen = [3, 7, 2, 9, 4]`** an. Durchlaufe sie mit einer `while`-Schleife und einer Index-Variable und gib nur die Zahlen aus, die **größer als 4** sind.\n\nErwartet: 7, dann 9 (untereinander).",
+      "starterCode": "",
+      "hints": [
+        "Starte mit i = 0 und laufe: while i < len(zahlen)",
+        "Prüfe if zahlen[i] > 4: print(zahlen[i]) – und vergiss i += 1 nicht",
+        "zahlen = [3, 7, 2, 9, 4]\ni = 0\nwhile i < len(zahlen):\n    if zahlen[i] > 4:\n        print(zahlen[i])\n    i += 1"
+      ],
+      "tests": [
+        { "type": "output", "expected": "7\n9" }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Das funktioniert – ist aber ganz schön umständlich mit `i`, `len()` und Hochzählen. **Merke dir das Beispiel:** Im nächsten Kapitel lernst du die **`for`-Schleife** kennen, mit der genau dasselbe in **einer** Zeile ohne Index gelingt. 😊"
+    }
+  ]
+}

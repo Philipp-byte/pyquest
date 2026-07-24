@@ -1,0 +1,71 @@
+{
+  "id": "02-while-anwenden",
+  "title": "while-Schleife anwenden",
+  "icon": "🧮",
+  "xp": 35,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Jetzt kombinierst du die `while`-Schleife mit einer **Eingabe**. Der Benutzer gibt eine Zahl ein, und die Schleife arbeitet mit dieser Zahl weiter. So werden Schleifen erst richtig nützlich.\n\nDenk daran: `input()` liefert immer **Text** – für Rechnungen wandelst du ihn mit `int(...)` in eine ganze Zahl um."
+    },
+    {
+      "type": "example",
+      "text": "Ein Countdown, der bei einer eingegebenen Zahl startet:",
+      "code": "zahl = int(input(\"Start: \"))\nwhile zahl >= 1:\n    print(zahl)\n    zahl -= 1\nprint(\"Los!\")"
+    },
+    {
+      "type": "code",
+      "task": "Frage mit `Zahl: ` eine ganze Zahl ab. Gib dann alle Zahlen von dieser Zahl **herunter bis 1** aus – jede in einer eigenen Zeile.\n\nBeispiel: Eingabe **5** → 5, 4, 3, 2, 1 (untereinander).",
+      "starterCode": "",
+      "needsInput": true,
+      "hints": [
+        "zahl = int(input(\"Zahl: \"))",
+        "while zahl >= 1: print(zahl) und danach zahl -= 1",
+        "zahl = int(input(\"Zahl: \"))\nwhile zahl >= 1:\n    print(zahl)\n    zahl -= 1"
+      ],
+      "tests": [
+        { "type": "input_output", "inputs": ["5"], "expected": "Zahl: 5\n5\n4\n3\n2\n1" },
+        { "type": "input_output", "inputs": ["3"], "expected": "Zahl: 3\n3\n2\n1" }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Als Nächstes ein **Summierer**: Der Benutzer gibt eine Zahl `n` ein, und das Programm addiert alle Zahlen von 0 bis `n`.\n\nDazu läuft eine Hilfsvariable `i` von 0 hoch bis `n` und wird jedes Mal auf `summe` addiert."
+    },
+    {
+      "type": "code",
+      "task": "Frage mit `Zahl: ` eine ganze Zahl `n` ab. Berechne die **Summe aller ganzen Zahlen von 0 bis n** und gib sie aus.\n\nBeispiel: Eingabe **4** → **10** (denn 0 + 1 + 2 + 3 + 4 = 10).",
+      "starterCode": "",
+      "needsInput": true,
+      "hints": [
+        "n = int(input(\"Zahl: \"))  und  summe = 0  und  i = 0",
+        "while i <= n: summe += i und danach i += 1",
+        "n = int(input(\"Zahl: \"))\nsumme = 0\ni = 0\nwhile i <= n:\n    summe += i\n    i += 1\nprint(summe)"
+      ],
+      "tests": [
+        { "type": "input_output", "inputs": ["4"], "expected": "Zahl: 4\n10" },
+        { "type": "input_output", "inputs": ["10"], "expected": "Zahl: 10\n55" }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Zum Schluss die **Fakultät**. Die Fakultät einer Zahl ist das **Produkt** aller Zahlen von 1 bis zu dieser Zahl. Beispiel: 4! = 4 · 3 · 2 · 1 = 24.\n\nHier brauchst du keinen Summierer, sondern einen **Produkt-Sammler**: Er startet bei `1` (nicht 0!) und wird mit `*=` multipliziert. **Wichtig:** Die Fakultät von 0 ist per Definition 1."
+    },
+    {
+      "type": "code",
+      "task": "Frage mit `Zahl: ` eine ganze Zahl ab und berechne ihre **Fakultät** (das Produkt aller Zahlen von 1 bis zu dieser Zahl). Gib das Ergebnis aus.\n\nBeispiel: Eingabe **4** → **24** (4·3·2·1). Eingabe **0** → **1**.",
+      "starterCode": "",
+      "needsInput": true,
+      "hints": [
+        "Starte mit fakultaet = 1 und i = 1",
+        "while i <= zahl: fakultaet *= i und danach i += 1",
+        "zahl = int(input(\"Zahl: \"))\nfakultaet = 1\ni = 1\nwhile i <= zahl:\n    fakultaet *= i\n    i += 1\nprint(fakultaet)"
+      ],
+      "tests": [
+        { "type": "input_output", "inputs": ["4"], "expected": "Zahl: 4\n24" },
+        { "type": "input_output", "inputs": ["5"], "expected": "Zahl: 5\n120" },
+        { "type": "input_output", "inputs": ["0"], "expected": "Zahl: 0\n1" }
+      ]
+    }
+  ]
+}
