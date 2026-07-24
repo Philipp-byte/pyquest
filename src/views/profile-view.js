@@ -13,6 +13,7 @@ import {
   getBackendMode,
 } from "../store.js";
 import { changePassword } from "../progress-remote.js";
+import { exportState, importState } from "../progress-local.js";
 import { flattenLessons } from "../content.js";
 import { BADGES } from "../badges.js";
 
@@ -57,6 +58,21 @@ export function renderProfile(app, curriculum) {
       </section>
 
       ${remoteMode ? renderPasswordForm() : `
+        <section class="save-section">
+          <h2>Fortschritt sichern</h2>
+          <p class="save-hint">Speichere deinen Fortschritt als Datei (z. B. auf deinem Netzlaufwerk, in OneDrive oder auf einem USB-Stick) und lade ihn beim nächsten Mal wieder. So bleibt er erhalten – auch wenn der Browser geleert wird oder du an einem anderen PC arbeitest.</p>
+          <div class="save-buttons">
+            <button class="btn btn--primary btn--export">💾 Fortschritt exportieren</button>
+            <button class="btn btn--ghost btn--import">📂 Fortschritt laden</button>
+            <input type="file" accept=".json,application/json" class="import-file" hidden aria-hidden="true">
+          </div>
+          <p class="save-msg" hidden></p>
+        </section>
+
+        <div class="report-cta">
+          <a class="btn btn--primary" href="#/bericht">📄 Bericht für die Lehrkraft erstellen</a>
+        </div>
+
         <div class="danger">
           <button class="btn btn--ghost btn--reset">Fortschritt zurücksetzen</button>
         </div>
@@ -74,9 +90,54 @@ export function renderProfile(app, curriculum) {
         location.reload();
       }
     };
+    wireSaveSection(app);
   }
 
   wireHeader(app);
+}
+
+function wireSaveSection(app) {
+  const msg = app.querySelector(".save-msg");
+  const fileInput = app.querySelector(".import-file");
+
+  app.querySelector(".btn--export").onclick = () => {
+    const blob = new Blob([exportState()], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const namePart = (localStorage.getItem("pyquest.studentName") || "")
+      .trim().replace(/[^a-zA-Z0-9]+/g, "_").replace(/^_|_$/g, "");
+    const datum = new Date().toISOString().slice(0, 10);
+    a.href = url;
+    a.download = `pyquest_fortschritt_${namePart ? namePart + "_" : ""}${datum}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    showMsg(msg, "Fortschritt heruntergeladen. Bewahre die Datei gut auf!", true);
+  };
+
+  app.querySelector(".btn--import").onclick = () => fileInput.click();
+
+  fileInput.onchange = async () => {
+    const file = fileInput.files[0];
+    if (!file) return;
+    try {
+      const text = await file.text();
+      importState(text);
+      showMsg(msg, "Fortschritt geladen! Die Seite wird neu aufgebaut …", true);
+      setTimeout(() => location.reload(), 900);
+    } catch (e) {
+      showMsg(msg, String(e.message || e), false);
+    } finally {
+      fileInput.value = "";
+    }
+  };
+}
+
+function showMsg(el, text, ok) {
+  el.hidden = false;
+  el.className = "save-msg " + (ok ? "save-msg--ok" : "save-msg--error");
+  el.textContent = text;
 }
 
 function renderBadge(badge, earned) {

@@ -100,6 +100,10 @@ function startApp() {
     renderLesson(app, curriculum, chapter, lesson)
   );
   route("/profil", () => renderProfile(app, curriculum));
+  route("/bericht", async () => {
+    const { renderReport } = await import("./views/report-view.js");
+    renderReport(app, curriculum);
+  });
   route("/rangliste", async () => {
     const { renderLeaderboard } = await import("./views/leaderboard-view.js");
     renderLeaderboard(app);

@@ -386,7 +386,20 @@ body {
 .badge-chip--locked .badge-chip__icon { filter: grayscale(1); }
 .badge-chip--new { animation: pop .5s ease; }
 
-.danger { margin-top: 2rem; text-align: center; }
+.save-section {
+  margin-top: 2rem; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 1.4rem; box-shadow: var(--shadow);
+}
+.save-section h2 { margin-top: 0; font-size: 1.1rem; }
+.save-hint { color: var(--fg-soft); font-size: .9rem; margin: 0 0 1rem; }
+.save-buttons { display: flex; gap: .6rem; flex-wrap: wrap; }
+.save-msg { margin: .8rem 0 0; font-weight: 700; }
+.save-msg--ok { color: var(--green-dark); }
+.save-msg--error { color: #be185d; }
+
+.report-cta { margin-top: 1.4rem; text-align: center; }
+
+.danger { margin-top: 1.4rem; text-align: center; }
 
 .password-card {
   margin-top: 2rem; background: var(--surface); border: 1px solid var(--border);
@@ -526,11 +539,52 @@ body {
 .leaderboard__level { color: var(--fg-soft); font-size: .85rem; }
 .leaderboard__xp { font-weight: 900; color: var(--green-dark); }
 
+/* ---------- Lernbericht (Demo-Modus, druckbar) ---------- */
+.report { max-width: 720px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+.report__toolbar {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 1.1rem 1.3rem; box-shadow: var(--shadow); margin-bottom: 1.4rem;
+  display: flex; flex-direction: column; gap: .8rem;
+}
+.report__hint { margin: 0; color: var(--fg-soft); font-size: .9rem; }
+.report__namefield { font-weight: 700; display: flex; flex-direction: column; gap: .3rem; max-width: 360px; }
+.report__name-input {
+  font-family: var(--font); font-size: 1rem; padding: .7rem .9rem;
+  border-radius: 12px; border: 2px solid var(--border); background: var(--surface-2); color: var(--fg);
+}
+.report__name-input:focus { outline: none; border-color: var(--green); }
+.report__print { align-self: flex-start; }
+
+.report__sheet {
+  background: #fff; color: #1d1d1b; border: 1px solid var(--border);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow); padding: 2rem;
+}
+.report__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; border-bottom: 3px solid #009fe3; padding-bottom: .8rem; margin-bottom: 1.2rem; }
+.report__brand { color: #009fe3; font-weight: 900; }
+.report__head h1 { margin: .1rem 0 0; color: #00344d; font-size: 1.9rem; }
+.report__meta { text-align: right; font-size: .9rem; color: #1d1d1b; }
+.report__meta span { color: #6e7b85; }
+.report__stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: .8rem; margin-bottom: 1.4rem; }
+.report__stat { text-align: center; background: #f2f7fb; border: 1px solid #d5dee3; border-radius: 12px; padding: .8rem .4rem; }
+.report__stat-num { display: block; font-size: 1.25rem; font-weight: 900; color: #00344d; }
+.report__stat span:last-child { font-size: .72rem; color: #6e7b85; font-weight: 700; }
+.report__sheet h2 { color: #00344d; font-size: 1.15rem; margin: 1.2rem 0 .5rem; }
+.report__badgecount { color: #6e7b85; font-weight: 700; font-size: .85rem; }
+.report__table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+.report__table th { text-align: left; background: #00344d; color: #fff; padding: .5rem .7rem; font-size: .82rem; }
+.report__table td { padding: .45rem .7rem; border-bottom: 1px solid #e2e8f0; }
+.report__badges { columns: 2; list-style: none; padding: 0; margin: .4rem 0; }
+.report__badges li { padding: .2rem 0; break-inside: avoid; }
+.report__none { color: #6e7b85; }
+.report__foot { margin-top: 1.4rem; color: #6e7b85; font-size: .78rem; border-top: 1px solid #e2e8f0; padding-top: .6rem; }
+
 @media print {
   body * { visibility: hidden; }
-  .generated-list, .generated-list * { visibility: visible; }
+  .generated-list, .generated-list *,
+  .report__sheet, .report__sheet * { visibility: visible; }
   .generated-list { position: absolute; top: 0; left: 0; width: 100%; padding: 1rem; }
   .generated-list__head .btn--print { display: none; }
+  .report__sheet { position: absolute; top: 0; left: 0; width: 100%; border: none; box-shadow: none; border-radius: 0; padding: 0; }
 }
 
 /* ---------- Responsive ---------- */

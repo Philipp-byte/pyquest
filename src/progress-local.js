@@ -127,3 +127,41 @@ export function resetProgress() {
   state = { ...DEFAULT, lessons: {}, badges: {} };
   save(state);
 }
+
+// ---------------------------------------------------------------- Export/Import
+// Fuer die cache-unabhaengige Sicherung: Der Fortschritt wird als Datei
+// exportiert (Download) und spaeter wieder eingelesen (Datei-Auswahl). So bleibt
+// er erhalten, auch wenn der Browser geleert wird oder an einem anderen PC
+// gearbeitet wird. Es ist kein Server und keine Cloud beteiligt.
+
+export function exportState() {
+  return JSON.stringify(
+    { app: "PyQuest", version: 1, exportedAt: new Date().toISOString(), state },
+    null,
+    2
+  );
+}
+
+// Liest eine zuvor exportierte Datei ein. Akzeptiert die Wrapper-Form
+// ({app, version, state}) genauso wie einen rohen Zustand. Wirft bei
+// ungueltigem Inhalt einen Fehler mit verstaendlicher Meldung.
+export function importState(text) {
+  let parsed;
+  try {
+    parsed = JSON.parse(text);
+  } catch {
+    throw new Error("Die Datei ist keine gültige PyQuest-Datei (kein JSON).");
+  }
+  const incoming = parsed && parsed.state ? parsed.state : parsed;
+  if (!incoming || typeof incoming !== "object" || typeof incoming.lessons !== "object") {
+    throw new Error("Die Datei enthält keinen gültigen PyQuest-Fortschritt.");
+  }
+  state = {
+    ...DEFAULT,
+    xp: Number(incoming.xp) || 0,
+    lessons: incoming.lessons || {},
+    badges: incoming.badges || {},
+  };
+  save(state);
+  return true;
+}
