@@ -1,0 +1,47 @@
+{
+  "id": "02-suchen-in-strings",
+  "title": "Suchen in Strings",
+  "icon": "🔍",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Mit dem **`in`**-Operator prüfst du, ob ein Teilstring in einem String **vorkommt**. Das Ergebnis ist ein `bool`: `True` oder `False`. Du kennst `in` schon aus Listen – bei Strings funktioniert es genauso."
+    },
+    {
+      "type": "example",
+      "text": "in prüft, ob \"World\" in text enthalten ist:",
+      "code": "text = \"Hello World\"\nenthalten = \"World\" in text\nprint(enthalten)"
+    },
+    {
+      "type": "explain",
+      "text": "Willst du wissen, **an welcher Position** ein Teilstring beginnt, nutzt du **`.find(teilstring)`**. Sie gibt den **Index** des ersten Treffers zurück – oder **`-1`**, wenn nichts gefunden wurde."
+    },
+    {
+      "type": "example",
+      "text": "find() liefert den Startindex des Treffers:",
+      "code": "text = \"Hello World\"\nposition = text.find(\"World\")\nprint(position)"
+    },
+    {
+      "type": "quiz",
+      "question": "Was gibt `\"Hallo\".find(\"xyz\")` zurück, wenn \"xyz\" nicht im String vorkommt?",
+      "choices": ["0", "-1", "None"],
+      "answer": 1,
+      "explainCorrect": "Richtig! find() gibt -1 zurück, wenn der Teilstring nicht gefunden wird.",
+      "explainWrong": "Wird nichts gefunden, gibt `.find()` **-1** zurück (nicht None und nicht 0)."
+    },
+    {
+      "type": "code",
+      "task": "In `email` steht eine E-Mail-Adresse. Prüfe mit **`in`**, ob sie das Zeichen **`@`** enthält, und gib das Ergebnis aus. Gib danach mit **`.find(\"@\")`** die **Position** des `@`-Zeichens aus.",
+      "starterCode": "email = \"ada@python.de\"\n",
+      "hints": [
+        "print(\"@\" in email)",
+        "print(email.find(\"@\"))",
+        "email = \"ada@python.de\"\nprint(\"@\" in email)\nprint(email.find(\"@\"))"
+      ],
+      "tests": [
+        { "type": "output", "expected": "True\n3" }
+      ]
+    }
+  ]
+}

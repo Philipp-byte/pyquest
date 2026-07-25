@@ -1,0 +1,48 @@
+{
+  "id": "07-datentypen-anwenden",
+  "title": "Datentypen anwenden",
+  "icon": "🎒",
+  "xp": 40,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Jetzt kombinierst du alles aus diesem Kapitel: die vier Datentypen, sinnvolle **Standardwerte** und **Typkonvertierung** bei Nutzereingaben.\n\nEin typisches Muster: Du legst Variablen erst mit einem **Standardwert** an (z. B. `0` oder `\"Unbekannt\"`), bevor der Benutzer echte Werte eingibt. So hat jede Variable von Anfang an einen **gültigen** Wert – auch bevor `input()` läuft."
+    },
+    {
+      "type": "example",
+      "text": "Standardwert zuerst, dann per input() überschreiben – die Eingabe muss dabei in den richtigen Typ umgewandelt werden:",
+      "code": "punkte = 0\nprint(punkte)\npunkte = int(input(\"Punkte: \"))\nprint(punkte)"
+    },
+    {
+      "type": "code",
+      "task": "Lege vier Variablen mit **Standardwerten** an: `anzahl_faecher = 0` (int), `notenschnitt = 0.0` (float), `anwesend = False` (bool), `vorname = \"Unbekannt\"` (str).\n\nGib alle vier **Standardwerte** aus (jede in einer eigenen Zeile, ohne Beschriftung, nur mit `print(...)`).",
+      "starterCode": "",
+      "hints": [
+        "anzahl_faecher = 0\nnotenschnitt = 0.0\nanwesend = False\nvorname = \"Unbekannt\"",
+        "Danach vier Print-Aufrufe, je einer pro Variable",
+        "anzahl_faecher = 0\nnotenschnitt = 0.0\nanwesend = False\nvorname = \"Unbekannt\"\nprint(anzahl_faecher)\nprint(notenschnitt)\nprint(anwesend)\nprint(vorname)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "0\n0.0\nFalse\nUnbekannt" }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Jetzt sollen die Standardwerte durch **echte Eingaben** ersetzt werden. `input()` liefert immer Text – du musst also **explizit umwandeln**:\n\n- Zahl (int): `int(input(...))`\n- Kommazahl (float): `float(input(...))`\n- Wahrheitswert (bool): `input()` liefert `\"ja\"`/`\"nein\"` als Text – daraus baust du selbst einen `bool`, z. B. mit `antwort == \"ja\"`"
+    },
+    {
+      "type": "code",
+      "task": "Frage nacheinander ab: `Anzahl Fächer: ` (als **int**), `Notenschnitt: ` (als **float**) und `Vorname: ` (als **str**, direkt verwendbar). Gib danach alle drei eingelesenen Werte aus (jeder in einer eigenen Zeile, nur der Wert, keine Beschriftung).",
+      "starterCode": "",
+      "needsInput": true,
+      "hints": [
+        "anzahl_faecher = int(input(\"Anzahl Fächer: \"))",
+        "notenschnitt = float(input(\"Notenschnitt: \"))  und  vorname = input(\"Vorname: \")",
+        "anzahl_faecher = int(input(\"Anzahl Fächer: \"))\nnotenschnitt = float(input(\"Notenschnitt: \"))\nvorname = input(\"Vorname: \")\nprint(anzahl_faecher)\nprint(notenschnitt)\nprint(vorname)"
+      ],
+      "tests": [
+        { "type": "input_output", "inputs": ["6", "2.3", "Ada"], "expected": "Anzahl Fächer: 6\nNotenschnitt: 2.3\nVorname: Ada\n6\n2.3\nAda" }
+      ]
+    }
+  ]
+}

@@ -55,7 +55,7 @@
       "starterCode": "laenge = 20\nbreite = 15\nhoehe = 3\n",
       "hints": [
         "Volumen = laenge * breite * hoehe",
-        "volumen = laenge * breite * hoehe\nprint(volumen)"
+        "laenge = 20\nbreite = 15\nhoehe = 3\nvolumen = laenge * breite * hoehe\nprint(volumen)"
       ],
       "tests": [
         { "type": "output", "expected": "900" }

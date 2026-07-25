@@ -1,0 +1,49 @@
+{
+  "id": "06-string-funktionen-anwenden",
+  "title": "String-Funktionen anwenden",
+  "icon": "🏆",
+  "xp": 40,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Jedes Zeichen hat intern einen **Zahlencode** (den ASCII-/Unicode-Wert). Mit **`ord(zeichen)`** bekommst du diesen Code, mit **`chr(zahl)`** umgekehrt das Zeichen zu einem Code.\n\nDamit lässt sich zum Beispiel die **Position eines Buchstabens im Alphabet** berechnen: `ord('A')` ist 65, `ord('B')` ist 66, usw. Ziehst du `ord('A')` ab und addierst 1, bekommst du die Position (A = 1, B = 2, ...)."
+    },
+    {
+      "type": "example",
+      "text": "Position von 'C' im Alphabet berechnen:",
+      "code": "buchstabe = \"C\"\nposition = ord(buchstabe.upper()) - ord(\"A\") + 1\nprint(position)"
+    },
+    {
+      "type": "code",
+      "task": "Frage mit `Buchstabe: ` einen einzelnen Buchstaben ab. Berechne seine **Position im Alphabet** (A = 1, B = 2, ...) und gib **nur die Zahl** aus. Achte darauf, die Eingabe zuerst mit `.upper()` in einen Großbuchstaben umzuwandeln.\n\nBeispiel: Eingabe `b` → **2**",
+      "starterCode": "",
+      "needsInput": true,
+      "hints": [
+        "buchstabe = input(\"Buchstabe: \")",
+        "position = ord(buchstabe.upper()) - ord(\"A\") + 1",
+        "buchstabe = input(\"Buchstabe: \")\nposition = ord(buchstabe.upper()) - ord(\"A\") + 1\nprint(position)"
+      ],
+      "tests": [
+        { "type": "input_output", "inputs": ["b"], "expected": "Buchstabe: b\n2" },
+        { "type": "input_output", "inputs": ["Z"], "expected": "Buchstabe: Z\n26" }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Jetzt kombinierst du **`split()`** und **`join()`**: Ein Datensatz im Format `Nachname|Vorname|Personalnummer|Wohnort` soll umsortiert werden, sodass die Personalnummer **vorne** steht: `Personalnummer|Nachname|Vorname|Wohnort`.\n\nErst zerlegst du den String mit `split()` in seine Teile, dann baust du ihn in der **neuen Reihenfolge** mit `join()` wieder zusammen."
+    },
+    {
+      "type": "code",
+      "task": "In `datensatz` steht **`\"Klein|Max|XZ_1234|Berlin\"`** im Format `Nachname|Vorname|Personalnummer|Wohnort`.\n\n1. Zerlege den String mit `.split(\"|\")` in eine Liste `teile`.\n2. Baue daraus eine **neue Liste** in der Reihenfolge `[Personalnummer, Nachname, Vorname, Wohnort]`.\n3. Verbinde sie mit `\"|\".join(...)` zu einem String und gib ihn aus.\n\nErwartet: **`XZ_1234|Klein|Max|Berlin`**",
+      "starterCode": "datensatz = \"Klein|Max|XZ_1234|Berlin\"\n",
+      "hints": [
+        "teile = datensatz.split(\"|\")  → teile[0]=Nachname, teile[1]=Vorname, teile[2]=Personalnummer, teile[3]=Wohnort",
+        "neu = [teile[2], teile[0], teile[1], teile[3]]  und  print(\"|\".join(neu))",
+        "datensatz = \"Klein|Max|XZ_1234|Berlin\"\nteile = datensatz.split(\"|\")\nneu = [teile[2], teile[0], teile[1], teile[3]]\nprint(\"|\".join(neu))"
+      ],
+      "tests": [
+        { "type": "output", "expected": "XZ_1234|Klein|Max|Berlin" }
+      ]
+    }
+  ]
+}

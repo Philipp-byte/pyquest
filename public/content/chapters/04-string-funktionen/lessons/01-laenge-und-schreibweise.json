@@ -1,0 +1,47 @@
+{
+  "id": "01-laenge-und-schreibweise",
+  "title": "Länge und Schreibweise",
+  "icon": "🔠",
+  "xp": 25,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Strings gehören zu den am häufigsten benutzten Datentypen – Python bringt viele eingebaute **Funktionen und Methoden** mit, um Text zu untersuchen und zu verändern. Los geht's mit den einfachsten: Länge messen und Groß-/Kleinschreibung ändern.\n\nMit **`len(text)`** erfährst du, aus wie vielen Zeichen ein String besteht (Leerzeichen zählen mit!)."
+    },
+    {
+      "type": "example",
+      "text": "len() zählt alle Zeichen, auch das Leerzeichen:",
+      "code": "text = \"Hello World\"\nprint(len(text))"
+    },
+    {
+      "type": "explain",
+      "text": "Mit den **Methoden** `.upper()` und `.lower()` (Punktschreibweise, wie du sie schon von `.append()` bei Listen kennst) wandelst du einen String komplett in Groß- bzw. Kleinbuchstaben um. Der **ursprüngliche** String bleibt dabei unverändert – die Methode gibt einen **neuen** String zurück."
+    },
+    {
+      "type": "example",
+      "text": "upper() und lower() erzeugen jeweils einen neuen String:",
+      "code": "text = \"Hello World\"\nprint(text.upper())\nprint(text.lower())"
+    },
+    {
+      "type": "quiz",
+      "question": "Was gibt `len(\"Python\")` zurück?",
+      "choices": ["5", "6", "7"],
+      "answer": 1,
+      "explainCorrect": "Richtig! \"Python\" hat 6 Buchstaben.",
+      "explainWrong": "\"Python\" besteht aus 6 Zeichen: P-y-t-h-o-n."
+    },
+    {
+      "type": "code",
+      "task": "In der Variable `satz` steht ein Text. Gib zuerst seine **Länge** aus (`len(...)`), dann den Text in **Großbuchstaben** (`.upper()`).",
+      "starterCode": "satz = \"Ich liebe Python\"\n",
+      "hints": [
+        "print(len(satz))",
+        "print(satz.upper())",
+        "satz = \"Ich liebe Python\"\nprint(len(satz))\nprint(satz.upper())"
+      ],
+      "tests": [
+        { "type": "output", "expected": "16\nICH LIEBE PYTHON" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "id": "05-verbinden-mit-join",
+  "title": "Verbinden mit join()",
+  "icon": "🔗",
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "**`.join()`** ist quasi das **Gegenteil** von `.split()`: Es fügt die Elemente einer **Liste** zu einem **einzigen String** zusammen, getrennt durch ein Trennzeichen.\n\n**Achtung, ungewohnte Reihenfolge:** Das Trennzeichen steht **vor** dem Punkt, die Liste kommt als Argument **in die Klammer**: `\"trennzeichen\".join(liste)`."
+    },
+    {
+      "type": "example",
+      "text": "Die Wörter werden mit einem Leerzeichen verbunden:",
+      "code": "woerter = [\"Hello\", \"World\"]\ntext = \" \".join(woerter)\nprint(text)"
+    },
+    {
+      "type": "explain",
+      "text": "Du kannst als Trennzeichen **jeden** String verwenden – auch mehrere Zeichen oder gar keins (`\"\"`). So lässt sich `split()` und `join()` auch **kombinieren**, um Text umzuformatieren: erst zerlegen, dann in neuer Form wieder zusammensetzen."
+    },
+    {
+      "type": "quiz",
+      "question": "Was gibt `\" und \".join([\"Katze\", \"Hund\", \"Maus\"])` zurück?",
+      "choices": [
+        "Katze und Hund und Maus",
+        "Katze, Hund, Maus",
+        "['Katze', 'Hund', 'Maus']"
+      ],
+      "answer": 0,
+      "explainCorrect": "Richtig! join() verbindet die Listenelemente mit dem angegebenen Trennzeichen.",
+      "explainWrong": "join() fügt zwischen jedes Element den String \" und \" ein: \"Katze und Hund und Maus\"."
+    },
+    {
+      "type": "code",
+      "task": "In `namen` steht die Liste **`[\"Ada\", \"Alan\", \"Grace\"]`**. Verbinde die Namen mit **`, `** (Komma + Leerzeichen) zu einem einzigen String und gib ihn aus.\n\nErwartet: **`Ada, Alan, Grace`**",
+      "starterCode": "namen = [\"Ada\", \"Alan\", \"Grace\"]\n",
+      "hints": [
+        "text = \", \".join(namen)",
+        "print(text)",
+        "namen = [\"Ada\", \"Alan\", \"Grace\"]\ntext = \", \".join(namen)\nprint(text)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "Ada, Alan, Grace" }
+      ]
+    }
+  ]
+}

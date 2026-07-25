@@ -1,0 +1,15 @@
+{
+  "id": "04-string-funktionen",
+  "title": "String-Funktionen",
+  "icon": "🔡",
+  "color": "#ec4899",
+  "description": "Text durchsuchen, zerlegen, verbinden und umformen – die wichtigsten Werkzeuge für Strings.",
+  "lessons": [
+    "01-laenge-und-schreibweise",
+    "02-suchen-in-strings",
+    "03-teilstrings-mit-slicing",
+    "04-ersetzen-und-teilen",
+    "05-verbinden-mit-join",
+    "06-string-funktionen-anwenden"
+  ]
+}

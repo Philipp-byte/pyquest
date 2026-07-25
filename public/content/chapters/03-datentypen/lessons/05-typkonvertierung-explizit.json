@@ -45,7 +45,7 @@
     },
     {
       "type": "explain",
-      "text": "Auch `bool`-Werte kann man umwandeln. Bei **`int(True)`** kommt **`1`** heraus, bei **`int(False)`** kommt **`0`** heraus. So kann man mit Wahrheitswerten sogar rechnen (z. B. zählen, wie oft etwas `True` war)."
+      "text": "Auch `bool`-Werte kann man umwandeln. Bei **`int(True)`** kommt **`1`** heraus, bei **`int(False)`** kommt **`0`** heraus. So kann man mit Wahrheitswerten sogar rechnen (z. B. zählen, wie oft etwas `True` war).\n\nUmgekehrt macht **`str(True)`** den Text **`\"True\"`** daraus – praktisch, um einen Wahrheitswert mit anderem Text zu verbinden."
     },
     {
       "type": "code",

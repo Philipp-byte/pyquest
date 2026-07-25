@@ -1,0 +1,53 @@
+{
+  "id": "04-logische-operatoren",
+  "title": "Logische Operatoren",
+  "icon": "🔗",
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Mit **logischen Operatoren** verknüpfst du Wahrheitswerte oder mehrere Bedingungen. Es gibt drei:\n\n- **`and`** (logisches UND) – nur `True`, wenn **beide** Seiten `True` sind\n- **`or`** (logisches ODER) – `True`, wenn **mindestens eine** Seite `True` ist\n- **`not`** (logisches NICHT) – **dreht** einen Wahrheitswert um: `not True` → `False`"
+    },
+    {
+      "type": "example",
+      "text": "Mit True und False durchgespielt:",
+      "code": "a = True\nb = False\nprint(a and b)\nprint(a or b)\nprint(not a)"
+    },
+    {
+      "type": "quiz",
+      "question": "Wann ist `a and b` True?",
+      "choices": [
+        "Wenn mindestens eine Seite True ist",
+        "Wenn beide Seiten True sind",
+        "Immer"
+      ],
+      "answer": 1,
+      "explainCorrect": "Genau! and ist nur True, wenn beide Seiten True sind.",
+      "explainWrong": "`and` ist nur dann True, wenn **beide** Seiten True sind. Für „mindestens eine“ nutzt man `or`."
+    },
+    {
+      "type": "explain",
+      "text": "Bei kniffligen Ausdrücken hilft es, **von innen nach außen** zu rechnen. Beispiel mit `x1 = True`, `x2 = False`:\n```\nnot (x1 or x2)\n= not (True or False)\n= not True\n= False\n```\nZuerst die Klammer (`or`), dann das `not` davor."
+    },
+    {
+      "type": "quiz",
+      "question": "Was ergibt `not x1 and not x2` bei `x1 = True`, `x2 = False`?",
+      "choices": ["True", "False"],
+      "answer": 1,
+      "explainCorrect": "Richtig! not True = False, und False and (irgendwas) ist False.",
+      "explainWrong": "not x1 = False, not x2 = True. Dann `False and True` = False. (Sobald eine Seite von `and` False ist, ist das Ergebnis False.)"
+    },
+    {
+      "type": "code",
+      "task": "Gegeben `x1 = True` und `x2 = False`. Gib das Ergebnis von **`x1 or x2`** aus (soll **`True`** sein).",
+      "starterCode": "x1 = True\nx2 = False\n",
+      "hints": [
+        "or ist True, wenn mindestens eine Seite True ist",
+        "x1 = True\nx2 = False\nprint(x1 or x2)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "True" }
+      ]
+    }
+  ]
+}

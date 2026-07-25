@@ -1,0 +1,47 @@
+{
+  "id": "04-ersetzen-und-teilen",
+  "title": "Ersetzen und Teilen",
+  "icon": "🧩",
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Mit **`.replace(alt, neu)`** ersetzt du in einem String alle Vorkommen von `alt` durch `neu`. Auch hier gilt: Der ursprüngliche String bleibt unverändert, du bekommst einen **neuen** String zurück."
+    },
+    {
+      "type": "example",
+      "text": "replace() ersetzt jedes Vorkommen von \"World\":",
+      "code": "text = \"Hello World\"\nneu = text.replace(\"World\", \"Universe\")\nprint(neu)"
+    },
+    {
+      "type": "explain",
+      "text": "Mit **`.split(trennzeichen)`** zerlegst du einen String an jedem Vorkommen des Trennzeichens in eine **Liste** von Teilstrings. Das ist super praktisch, um Text mit fester Struktur (z. B. `\"Nachname|Vorname|Ort\"`) zu zerlegen."
+    },
+    {
+      "type": "example",
+      "text": "split(\",\") zerlegt den String an jedem Komma:",
+      "code": "text = \"Hello, World\"\nteile = text.split(\",\")\nprint(teile)"
+    },
+    {
+      "type": "quiz",
+      "question": "Was für einen Datentyp gibt `.split(...)` zurück?",
+      "choices": ["Einen String", "Eine Liste", "Ein Dictionary"],
+      "answer": 1,
+      "explainCorrect": "Richtig! split() zerlegt einen String immer in eine Liste von Teilstrings.",
+      "explainWrong": "`.split(...)` gibt immer eine **Liste** zurück, auch wenn kein Trennzeichen gefunden wird (dann mit nur einem Element)."
+    },
+    {
+      "type": "code",
+      "task": "In `datensatz` steht **`\"Klein|Max|Berlin\"`**. Zerlege den Text mit `.split(\"|\")` und speichere das Ergebnis in `teile`. Gib `teile` aus.\n\nErwartet: `['Klein', 'Max', 'Berlin']`",
+      "starterCode": "datensatz = \"Klein|Max|Berlin\"\n",
+      "hints": [
+        "teile = datensatz.split(\"|\")",
+        "print(teile)",
+        "datensatz = \"Klein|Max|Berlin\"\nteile = datensatz.split(\"|\")\nprint(teile)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "['Klein', 'Max', 'Berlin']" }
+      ]
+    }
+  ]
+}

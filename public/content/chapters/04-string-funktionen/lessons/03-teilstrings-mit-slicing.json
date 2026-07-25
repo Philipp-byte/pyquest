@@ -1,0 +1,42 @@
+{
+  "id": "03-teilstrings-mit-slicing",
+  "title": "Teilstrings mit Slicing",
+  "icon": "✂️",
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Mit **Slicing** (`string[start:ende]`) schneidest du einen **Teilstring** heraus. Genau wie bei `range()` ist der Index **`start`** dabei, der Index **`ende`** aber **nicht mehr** – er wird ausgeschlossen.\n\nJedes Zeichen im String hat einen Index, beginnend bei **0** – genau wie bei Listen."
+    },
+    {
+      "type": "example",
+      "text": "text[6:11] holt die Zeichen an den Positionen 6 bis 10:",
+      "code": "text = \"Hello World\"\nteil = text[6:11]\nprint(teil)"
+    },
+    {
+      "type": "explain",
+      "text": "Lässt du eine Seite **weg**, nimmt Python automatisch den Anfang bzw. das Ende:\n\n- **`text[:5]`** → alles **vom Anfang bis** Index 4\n- **`text[6:]`** → alles **ab** Index 6 **bis zum Ende**\n\nAuch **negative Indizes** funktionieren: `text[-1]` ist das letzte Zeichen."
+    },
+    {
+      "type": "quiz",
+      "question": "Was gibt `\"Wasserfallreiniger\"[4:9]` zurück?",
+      "choices": ["erfal", "serfa", "wasse"],
+      "answer": 0,
+      "explainCorrect": "Richtig! Ab Index 4 bis (ausschließlich) 9 ergibt das \"erfal\".",
+      "explainWrong": "Zähle ab Index 0: W(0)a(1)s(2)s(3)e(4)r(5)f(6)a(7)l(8) – Index 4 bis 8 ergibt \"erfal\"."
+    },
+    {
+      "type": "code",
+      "task": "In `seriennummer` steht der Text **`\"SE7133131855\"`**. Extrahiere mit Slicing:\n1. Die ersten **2** Zeichen (das Druckerei-Kürzel) → gib sie aus\n2. Alles **ohne** die ersten 2 und **ohne** das letzte Zeichen (die eigentliche Nummer) → gib sie aus",
+      "starterCode": "seriennummer = \"SE7133131855\"\n",
+      "hints": [
+        "Druckerei-Kürzel: seriennummer[:2]",
+        "Mittelteil ohne erste 2 und letzte 1 Zeichen: seriennummer[2:-1]",
+        "seriennummer = \"SE7133131855\"\nprint(seriennummer[:2])\nprint(seriennummer[2:-1])"
+      ],
+      "tests": [
+        { "type": "output", "expected": "SE\n713313185" }
+      ]
+    }
+  ]
+}

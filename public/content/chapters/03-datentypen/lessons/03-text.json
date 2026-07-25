@@ -47,7 +47,7 @@
       "starterCode": "",
       "hints": [
         "stadt = \"Weingarten\"",
-        "print(\"Ich wohne in \" + stadt)"
+        "stadt = \"Weingarten\"\nprint(\"Ich wohne in \" + stadt)"
       ],
       "tests": [
         { "type": "output", "expected": "Ich wohne in Weingarten" }

@@ -4,16 +4,17 @@
     "01-erste-schritte",
     "02-variablen",
     "03-datentypen",
-    "04-operatoren",
-    "05-eingaben",
-    "06-bedingungen",
-    "07-while-schleifen",
-    "08-listen",
-    "09-for-schleifen",
-    "10-funktionen",
-    "11-dictionaries",
-    "12-klassen",
-    "13-dateien",
-    "14-projekte"
+    "04-string-funktionen",
+    "05-operatoren",
+    "06-eingaben",
+    "07-bedingungen",
+    "08-while-schleifen",
+    "09-listen",
+    "10-for-schleifen",
+    "11-funktionen",
+    "12-dictionaries",
+    "13-klassen",
+    "14-dateien",
+    "15-projekte"
   ]
 }
