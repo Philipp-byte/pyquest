@@ -13,6 +13,7 @@ Benutzung:
 import argparse
 import json
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -35,6 +36,7 @@ from docx.oxml import OxmlElement
 ROOT = Path(__file__).resolve().parent.parent
 CONTENT = ROOT / "public" / "content"
 OUTDIR = Path(__file__).resolve().parent
+PUBLIC_WORKSHEETS = ROOT / "public" / "worksheets"
 SOFFICE = r"C:\Program Files\LibreOffice\program\soffice.exe"
 
 NAVY = RGBColor.from_string(jj.NAVY)
@@ -403,6 +405,10 @@ def main():
         if not args.no_pdf:
             pdf = to_pdf(docx)
             print("PDF :", pdf.name)
+            PUBLIC_WORKSHEETS.mkdir(parents=True, exist_ok=True)
+            published = PUBLIC_WORKSHEETS / f"{cid}.pdf"
+            shutil.copyfile(pdf, published)
+            print("     ->", published.relative_to(ROOT))
 
 
 if __name__ == "__main__":

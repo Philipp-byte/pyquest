@@ -175,6 +175,21 @@ body {
 .chapter__count { font-size: .8rem; color: var(--muted); font-weight: 700; }
 
 .chapter__nodes { padding: 1.5rem 1rem; display: flex; flex-direction: column; gap: .2rem; }
+
+.worksheet-cta {
+  display: flex; align-items: center; justify-content: center; gap: .5rem;
+  margin: 0 1rem 1.5rem; padding: 1rem 1.2rem;
+  border-radius: var(--radius); font-weight: 800; text-align: center;
+  text-decoration: none; border: 2px solid var(--chapter-color, var(--green));
+  color: var(--fg); background: color-mix(in srgb, var(--chapter-color, var(--green)) 14%, var(--surface));
+  transition: transform .1s, filter .15s;
+}
+.worksheet-cta:hover { filter: brightness(1.05); transform: translateY(-1px); }
+.worksheet-cta--locked {
+  border-style: dashed; border-color: var(--border); color: var(--muted);
+  background: var(--surface-2); font-weight: 700; cursor: default;
+}
+.worksheet-cta--locked:hover { filter: none; transform: none; }
 .node-link { text-decoration: none; color: inherit; }
 .node-link--disabled { cursor: not-allowed; }
 .node {

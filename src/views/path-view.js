@@ -5,6 +5,18 @@
 import { renderHeader, starRow, wireHeader } from "../ui.js";
 import { getLesson, isDone, isUnlocked } from "../store.js";
 
+const WORKSHEET_MIN_STARS = 2;
+const WORKSHEET_BASE = `${import.meta.env.BASE_URL}worksheets/`;
+
+// Das Arbeitsblatt eines Kapitels ist erst freigeschaltet, wenn ALLE
+// Lektionen abgeschlossen sind UND jede davon mindestens WORKSHEET_MIN_STARS
+// Sterne hat (nicht nur irgendwann "done" mit wenig Muehe).
+function isWorksheetUnlocked(chapter) {
+  return chapter.lessons.every(
+    (l) => isDone(l.id) && (getLesson(l.id).stars ?? 0) >= WORKSHEET_MIN_STARS
+  );
+}
+
 export function renderPath(app, curriculum) {
   const cards = curriculum.chapters
     .map((chapter) => renderChapterCard(curriculum, chapter))
@@ -57,6 +69,7 @@ export function renderChapterDetail(app, curriculum, chapterId) {
   const total = chapter.lessons.length;
   const doneCount = chapter.lessons.filter((l) => isDone(l.id)).length;
   const pct = total ? Math.round((doneCount / total) * 100) : 0;
+  const worksheetUnlocked = isWorksheetUnlocked(chapter);
 
   const nodes = chapter.lessons
     .map((lesson, i) => {
@@ -99,8 +112,24 @@ export function renderChapterDetail(app, curriculum, chapterId) {
           </div>
         </div>
         <div class="chapter__nodes">${nodes}</div>
+        ${renderWorksheetSection(chapter, worksheetUnlocked)}
       </section>
     </main>
   `;
   wireHeader(app);
+}
+
+function renderWorksheetSection(chapter, unlocked) {
+  if (unlocked) {
+    return `
+      <a class="worksheet-cta" href="${WORKSHEET_BASE}${chapter.id}.pdf" target="_blank" rel="noopener">
+        📄 Informations- &amp; Aufgabenblatt herunterladen
+      </a>
+    `;
+  }
+  return `
+    <div class="worksheet-cta worksheet-cta--locked">
+      🔒 Arbeitsblatt: Schließe alle Lektionen dieses Kapitels mit mindestens ${WORKSHEET_MIN_STARS} ${WORKSHEET_MIN_STARS === 1 ? "Stern" : "Sternen"} ab, um es freizuschalten.
+    </div>
+  `;
 }
