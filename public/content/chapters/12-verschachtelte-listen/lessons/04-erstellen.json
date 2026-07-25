@@ -1,0 +1,46 @@
+{
+  "id": "04-erstellen",
+  "title": "Verschachtelte Listen erstellen",
+  "icon": "🏗️",
+  "xp": 35,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Oft willst du eine verschachtelte Liste **programmatisch** erzeugen, statt sie von Hand auszuschreiben – zum Beispiel ein leeres Spielfeld. Dafür baust du mit einer **äußeren Schleife** Zeile für Zeile auf: In jedem Durchlauf erzeugst du eine **neue innere Liste** und hängst sie mit `.append()` an die äußere Liste an."
+    },
+    {
+      "type": "example",
+      "text": "Zeile für Zeile eine neue innere Liste erzeugen und anhängen:",
+      "code": "matrix = []\nfor zeile_nr in range(3):\n    neue_zeile = [0, 0, 0]\n    matrix.append(neue_zeile)\nprint(matrix)"
+    },
+    {
+      "type": "explain",
+      "text": "**Achtung, klassische Falle!** Man könnte auf die Idee kommen, eine Zeile mit `*` zu **vervielfachen**: `[[0, 0, 0]] * 3`. Das sieht auf den ersten Blick richtig aus – ist es aber **nicht**!\n\nDabei entstehen **drei Verweise auf dieselbe innere Liste**, keine drei unabhängigen Zeilen. Änderst du eine Zeile, ändern sich **alle**:\n```\nfalsch = [[0, 0, 0]] * 3\nfalsch[0][0] = 9\nprint(falsch)   → [[9, 0, 0], [9, 0, 0], [9, 0, 0]]  😱\n```\n**Merke:** Für unabhängige Zeilen musst du sie **einzeln** in einer Schleife erzeugen (wie im Beispiel oben) – niemals mit `*` vervielfachen."
+    },
+    {
+      "type": "quiz",
+      "question": "Warum ist `[[0, 0]] * 3` gefährlich für eine Matrix?",
+      "choices": [
+        "Es erzeugt zu wenige Zeilen",
+        "Alle drei Zeilen zeigen auf dieselbe innere Liste – eine Änderung wirkt sich auf alle aus",
+        "Python erlaubt das gar nicht"
+      ],
+      "answer": 1,
+      "explainCorrect": "Richtig! * vervielfacht nur die Referenz, nicht den Inhalt – gefährliche Falle bei verschachtelten Listen.",
+      "explainWrong": "`* 3` erzeugt drei Verweise auf **dieselbe** innere Liste. Änderst du eine Zeile, ändern sich scheinbar alle – das ist meist nicht gewollt."
+    },
+    {
+      "type": "code",
+      "task": "Erzeuge mit einer `for`-Schleife eine **3x4-Matrix** (3 Zeilen, je 4 Elemente) namens `matrix`, komplett gefüllt mit dem Wert **`0`**. Baue jede Zeile **einzeln** auf (keine `*`-Vervielfachung!) und hänge sie mit `.append()` an. Gib `matrix` am Ende aus.",
+      "starterCode": "",
+      "hints": [
+        "matrix = []\nfor zeile_nr in range(3):\n    neue_zeile = [0, 0, 0, 0]\n    matrix.append(neue_zeile)",
+        "print(matrix) am Ende nicht vergessen",
+        "matrix = []\nfor zeile_nr in range(3):\n    neue_zeile = [0, 0, 0, 0]\n    matrix.append(neue_zeile)\nprint(matrix)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]" }
+      ]
+    }
+  ]
+}

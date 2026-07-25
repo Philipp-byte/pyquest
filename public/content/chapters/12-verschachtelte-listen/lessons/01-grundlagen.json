@@ -1,0 +1,51 @@
+{
+  "id": "01-grundlagen",
+  "title": "Verschachtelte Listen – Grundlagen",
+  "icon": "🗃️",
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Eine Liste kann **alles** enthalten – auch **andere Listen**. Eine „Liste von Listen“ nennt man **verschachtelte Liste** (in anderen Sprachen auch: **mehrdimensionales Array** oder **2D-Array**).\n\nDamit lassen sich **Tabellen** oder **Raster** abbilden: Jede innere Liste ist eine **Zeile**. Ein gutes Beispiel ist eine Notentabelle: jede Zeile enthält die Noten einer Schülerin oder eines Schülers."
+    },
+    {
+      "type": "example",
+      "text": "3 Schüler, je 3 Noten – noten[0] ist die komplette erste Zeile:",
+      "code": "noten = [[2, 3, 1], [4, 2, 3], [1, 1, 2]]\nprint(noten[0])"
+    },
+    {
+      "type": "explain",
+      "text": "Um auf ein **einzelnes** Element zuzugreifen, brauchst du **zwei** Indizes hintereinander: **`liste[zeile][spalte]`**. Zuerst wählst du die Zeile (die äußere Liste), dann das Element in dieser Zeile (die innere Liste)."
+    },
+    {
+      "type": "example",
+      "text": "noten[1][2] ist die dritte Note der zweiten Schülerin:",
+      "code": "noten = [[2, 3, 1], [4, 2, 3], [1, 1, 2]]\nprint(noten[1][2])"
+    },
+    {
+      "type": "quiz",
+      "question": "Was liefert `noten[1][2]` bei `noten = [[2, 3, 1], [4, 2, 3], [1, 1, 2]]`?",
+      "choices": ["4", "3", "2"],
+      "answer": 1,
+      "explainCorrect": "Richtig! noten[1] ist [4, 2, 3], und davon Index 2 ist die 3.",
+      "explainWrong": "noten[1] ist die zweite Zeile [4, 2, 3]. Davon ist Index 2 (das dritte Element) die 3."
+    },
+    {
+      "type": "explain",
+      "text": "Mit `len()` bekommst du wie gewohnt die **Anzahl der Elemente**. Bei einer verschachtelten Liste liefert `len(liste)` die Anzahl der **Zeilen**, und `len(liste[0])` die Anzahl der Elemente in der **ersten Zeile** (also meist die Spaltenanzahl)."
+    },
+    {
+      "type": "code",
+      "task": "In `sitzplan` steht eine verschachtelte Liste: 2 Reihen mit je 3 Namen. Gib aus:\n1. Die **komplette erste Reihe** (`sitzplan[0]`)\n2. Den Namen in der **zweiten Reihe, dritter Platz** (`sitzplan[1][2]`)\n3. Die **Anzahl der Reihen** (`len(sitzplan)`)",
+      "starterCode": "sitzplan = [[\"Ada\", \"Alan\", \"Grace\"], [\"Linus\", \"Tim\", \"Katie\"]]\n",
+      "hints": [
+        "print(sitzplan[0])",
+        "print(sitzplan[1][2])  und  print(len(sitzplan))",
+        "sitzplan = [[\"Ada\", \"Alan\", \"Grace\"], [\"Linus\", \"Tim\", \"Katie\"]]\nprint(sitzplan[0])\nprint(sitzplan[1][2])\nprint(len(sitzplan))"
+      ],
+      "tests": [
+        { "type": "output", "expected": "['Ada', 'Alan', 'Grace']\nKatie\n2" }
+      ]
+    }
+  ]
+}

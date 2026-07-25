@@ -1,0 +1,46 @@
+{
+  "id": "03-mit-schleifen-durchlaufen",
+  "title": "Mit Schleifen durchlaufen",
+  "icon": "🔁",
+  "xp": 35,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Um **jedes Element** einer verschachtelten Liste zu besuchen, brauchst du **zwei ineinander verschachtelte** `for`-Schleifen – genau wie beim Einmaleins-Beispiel im Schleifen-Kapitel.\n\nDie **äußere** Schleife läuft über die **Zeilen**, die **innere** Schleife läuft über die **Elemente** innerhalb der aktuellen Zeile."
+    },
+    {
+      "type": "example",
+      "text": "Die äußere Schleife holt jede Zeile, die innere jedes Element darin:",
+      "code": "matrix = [[1, 2, 3], [4, 5, 6]]\nfor zeile in matrix:\n    for wert in zeile:\n        print(wert, end=\" \")\n    print()"
+    },
+    {
+      "type": "explain",
+      "text": "Das `print()` **ohne Argument** nach der inneren Schleife sorgt für den **Zeilenumbruch** – es beendet die aktuelle Zeile, bevor die nächste Zeile der Matrix beginnt."
+    },
+    {
+      "type": "quiz",
+      "question": "Warum braucht man ZWEI verschachtelte for-Schleifen, um eine 2D-Liste komplett auszugeben?",
+      "choices": [
+        "Weil Python das so vorschreibt",
+        "Die äußere holt jede Zeile, die innere jedes Element in der Zeile",
+        "Eine Schleife reicht, zwei sind nur schneller"
+      ],
+      "answer": 1,
+      "explainCorrect": "Richtig! Jede Ebene der Verschachtelung braucht ihre eigene Schleife.",
+      "explainWrong": "Eine verschachtelte Liste hat zwei Ebenen (Zeilen und Elemente darin) – jede Ebene braucht eine eigene for-Schleife."
+    },
+    {
+      "type": "code",
+      "task": "Gib die verschachtelte Liste `matrix` **zeilenweise** aus: In jeder Zeile stehen die Zahlen durch ein Leerzeichen getrennt, nach jeder Zeile folgt ein Zeilenumbruch.",
+      "starterCode": "matrix = [[7, 8, 9], [1, 2, 3], [4, 5, 6]]\n",
+      "hints": [
+        "for zeile in matrix:\n    for wert in zeile:\n        print(wert, end=\" \")\n    print()",
+        "Vergiss das leere print() am Ende der äußeren Schleife nicht (Zeilenumbruch)",
+        "matrix = [[7, 8, 9], [1, 2, 3], [4, 5, 6]]\nfor zeile in matrix:\n    for wert in zeile:\n        print(wert, end=\" \")\n    print()"
+      ],
+      "tests": [
+        { "type": "output", "expected": "7 8 9\n1 2 3\n4 5 6" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "id": "06-verschachtelte-listen-anwenden",
+  "title": "Verschachtelte Listen anwenden",
+  "icon": "🏆",
+  "xp": 45,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Jetzt kombinierst du alles: verschachtelte Schleifen, Positionen (`i`, `j`) und das **Merken des bisher besten Werts** (das kennst du schon von der Suche nach der größten Zahl in einer einfachen Liste).\n\nUm bei einer Matrix nicht nur den **größten Wert**, sondern auch seine **Position** zu finden, läufst du mit `range(len(matrix))` über die Zeilen-**Indizes** und mit `range(len(matrix[i]))` über die Spalten-**Indizes** – so hast du beide Indizes zur Hand, wenn du den neuen Rekord findest."
+    },
+    {
+      "type": "example",
+      "text": "Bei jedem neuen Rekord werden Wert UND Position gemerkt:",
+      "code": "matrix = [[3, 7], [9, 1]]\ngroesster = matrix[0][0]\nfor i in range(len(matrix)):\n    for j in range(len(matrix[i])):\n        if matrix[i][j] > groesster:\n            groesster = matrix[i][j]\nprint(groesster)"
+    },
+    {
+      "type": "code",
+      "task": "Finde in `matrix` den **größten Wert** und seine **Position**. Starte mit `groesster_wert = matrix[0][0]`, `zeile_index = 0`, `spalte_index = 0`. Durchlaufe mit **Indizes** (`range(len(matrix))` und `range(len(matrix[i]))`) und aktualisiere bei jedem neuen Rekord alle drei Variablen.\n\nGib am Ende `groesster_wert` aus, dann `zeile_index` und `spalte_index` (mit `print(zeile_index, spalte_index)` in einer Zeile).",
+      "starterCode": "matrix = [[3, 7, 2], [9, 1, 8], [4, 6, 5]]\n",
+      "hints": [
+        "groesster_wert = matrix[0][0]\nzeile_index = 0\nspalte_index = 0\nfor i in range(len(matrix)):\n    for j in range(len(matrix[i])):",
+        "if matrix[i][j] > groesster_wert: groesster_wert = matrix[i][j]; zeile_index = i; spalte_index = j",
+        "matrix = [[3, 7, 2], [9, 1, 8], [4, 6, 5]]\ngroesster_wert = matrix[0][0]\nzeile_index = 0\nspalte_index = 0\nfor i in range(len(matrix)):\n    for j in range(len(matrix[i])):\n        if matrix[i][j] > groesster_wert:\n            groesster_wert = matrix[i][j]\n            zeile_index = i\n            spalte_index = j\nprint(groesster_wert)\nprint(zeile_index, spalte_index)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "9\n1 0" }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Eine Notentabelle wie ganz am Anfang des Kapitels lässt sich jetzt auswerten: Für **jede Zeile** (jeden Schüler) berechnest du den **Durchschnitt** – Zeilensumme geteilt durch die Anzahl der Noten in dieser Zeile."
+    },
+    {
+      "type": "code",
+      "task": "In `noten` steht für 3 Schüler je eine Zeile mit Noten. Berechne für **jede Zeile** den Durchschnitt (Zeilensumme / Anzahl Noten in der Zeile) und gib ihn **gerundet auf 2 Nachkommastellen** aus (`round(durchschnitt, 2)`) – einen Durchschnitt pro Zeile.",
+      "starterCode": "noten = [[2, 3, 1], [4, 2, 3], [1, 1, 2]]\n",
+      "hints": [
+        "for zeile in noten:\n    summe = 0\n    for note in zeile:\n        summe += note",
+        "durchschnitt = summe / len(zeile)  und  print(round(durchschnitt, 2))",
+        "noten = [[2, 3, 1], [4, 2, 3], [1, 1, 2]]\nfor zeile in noten:\n    summe = 0\n    for note in zeile:\n        summe += note\n    durchschnitt = summe / len(zeile)\n    print(round(durchschnitt, 2))"
+      ],
+      "tests": [
+        { "type": "output", "expected": "2.0\n3.0\n1.33" }
+      ]
+    }
+  ]
+}

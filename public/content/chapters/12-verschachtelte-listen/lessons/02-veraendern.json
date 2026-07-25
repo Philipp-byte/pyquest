@@ -1,0 +1,51 @@
+{
+  "id": "02-veraendern",
+  "title": "Verschachtelte Listen verändern",
+  "icon": "✏️",
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Genau wie bei normalen Listen kannst du mit **`liste[zeile][spalte] = neuer_wert`** ein einzelnes Element **überschreiben**."
+    },
+    {
+      "type": "example",
+      "text": "Das Element in Zeile 0, Spalte 1 wird überschrieben:",
+      "code": "matrix = [[1, 2], [3, 4]]\nmatrix[0][1] = 99\nprint(matrix)"
+    },
+    {
+      "type": "explain",
+      "text": "Um eine **komplette neue Zeile** hinzuzufügen, benutzt du `.append()` auf der **äußeren** Liste – du hängst dabei eine **ganze Liste** an.\n\nUm dagegen ein Element **innerhalb** einer bestehenden Zeile zu ergänzen, rufst du `.append()` auf der **inneren** Liste auf: `matrix[1].append(...)`."
+    },
+    {
+      "type": "example",
+      "text": "append() auf der äußeren Liste fügt eine neue Zeile hinzu:",
+      "code": "matrix = [[1, 2], [3, 4]]\nmatrix.append([5, 6])\nprint(matrix)"
+    },
+    {
+      "type": "quiz",
+      "question": "Wie fügst du der Zeile `matrix[1]` ein zusätzliches Element hinzu, ohne eine neue Zeile zu erzeugen?",
+      "choices": [
+        "matrix.append(wert)",
+        "matrix[1].append(wert)",
+        "matrix[wert].append(1)"
+      ],
+      "answer": 1,
+      "explainCorrect": "Richtig! matrix[1] ist die innere Liste – darauf rufst du append() auf.",
+      "explainWrong": "`matrix.append(wert)` würde eine neue ZEILE anhängen. Um innerhalb einer bestehenden Zeile zu ergänzen, rufst du append() auf `matrix[1]` selbst auf."
+    },
+    {
+      "type": "code",
+      "task": "Gegeben ist `klassenzimmer` mit 2 Reihen. Ändere den Namen in **Reihe 0, Platz 1** zu **`\"Neu\"`**. Füge danach der **Reihe 1** mit `.append()` den Namen **`\"Zusatz\"`** hinzu. Gib `klassenzimmer` am Ende aus.",
+      "starterCode": "klassenzimmer = [[\"Ada\", \"Alan\"], [\"Grace\", \"Linus\"]]\n",
+      "hints": [
+        "klassenzimmer[0][1] = \"Neu\"",
+        "klassenzimmer[1].append(\"Zusatz\")  und  print(klassenzimmer)",
+        "klassenzimmer = [[\"Ada\", \"Alan\"], [\"Grace\", \"Linus\"]]\nklassenzimmer[0][1] = \"Neu\"\nklassenzimmer[1].append(\"Zusatz\")\nprint(klassenzimmer)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "[['Ada', 'Neu'], ['Grace', 'Linus', 'Zusatz']]" }
+      ]
+    }
+  ]
+}

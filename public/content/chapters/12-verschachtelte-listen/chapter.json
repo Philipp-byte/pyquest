@@ -1,0 +1,15 @@
+{
+  "id": "12-verschachtelte-listen",
+  "title": "Verschachtelte Listen",
+  "icon": "🧮",
+  "color": "#06b6d4",
+  "description": "Listen in Listen – Tabellen, Raster und mehrdimensionale Arrays.",
+  "lessons": [
+    "01-grundlagen",
+    "02-veraendern",
+    "03-mit-schleifen-durchlaufen",
+    "04-erstellen",
+    "05-zeilen-und-spaltensummen",
+    "06-verschachtelte-listen-anwenden"
+  ]
+}

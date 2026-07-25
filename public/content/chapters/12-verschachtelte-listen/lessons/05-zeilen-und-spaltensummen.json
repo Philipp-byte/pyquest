@@ -1,0 +1,60 @@
+{
+  "id": "05-zeilen-und-spaltensummen",
+  "title": "Zeilen- und Spaltensummen",
+  "icon": "➕",
+  "xp": 40,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Eine typische Aufgabe bei Tabellen: die **Summe jeder Zeile** berechnen. Dafür läufst du mit der äußeren Schleife über die Zeilen und bildest für **jede Zeile** mit der inneren Schleife eine eigene Summe – die du danach in eine **Ergebnisliste** sammelst."
+    },
+    {
+      "type": "example",
+      "text": "Für jede Zeile wird die Summe gebildet und gesammelt:",
+      "code": "matrix = [[1, 2, 3], [4, 5, 6]]\nzeilensummen = []\nfor zeile in matrix:\n    summe = 0\n    for wert in zeile:\n        summe += wert\n    zeilensummen.append(summe)\nprint(zeilensummen)"
+    },
+    {
+      "type": "explain",
+      "text": "Eine **Spaltensumme** ist etwas trickreicher: Eine Spalte besteht aus dem Element an **derselben Position** in **jeder** Zeile. Für Spalte `k` brauchst du also aus **jeder** Zeile das Element `zeile[k]` – dafür reicht **eine** Schleife über die Zeilen."
+    },
+    {
+      "type": "example",
+      "text": "Summe der Spalte mit Index 1 (zweite Spalte):",
+      "code": "matrix = [[1, 2, 3], [4, 5, 6]]\nspalten_index = 1\nspaltensumme = 0\nfor zeile in matrix:\n    spaltensumme += zeile[spalten_index]\nprint(spaltensumme)"
+    },
+    {
+      "type": "quiz",
+      "question": "Wie viele Schleifen brauchst du mindestens, um die Summe EINER bestimmten Spalte zu berechnen?",
+      "choices": ["Keine", "Eine", "Zwei"],
+      "answer": 1,
+      "explainCorrect": "Richtig! Eine Schleife über die Zeilen reicht, weil du pro Zeile nur ein festes Element (zeile[k]) brauchst.",
+      "explainWrong": "Für eine EINZELNE Spalte reicht eine Schleife über die Zeilen – du brauchst ja nur `zeile[k]` aus jeder Zeile, keine zweite Schleife."
+    },
+    {
+      "type": "code",
+      "task": "Gegeben ist `matrix` (3 Zeilen à 3 Zahlen). Berechne mit verschachtelten Schleifen die **Summe jeder Zeile** und sammle die Ergebnisse in der Liste `zeilensummen`. Gib `zeilensummen` aus.",
+      "starterCode": "matrix = [[2, 4, 6], [1, 3, 5], [7, 8, 9]]\n",
+      "hints": [
+        "zeilensummen = []\nfor zeile in matrix:\n    summe = 0\n    for wert in zeile:\n        summe += wert\n    zeilensummen.append(summe)",
+        "print(zeilensummen)",
+        "matrix = [[2, 4, 6], [1, 3, 5], [7, 8, 9]]\nzeilensummen = []\nfor zeile in matrix:\n    summe = 0\n    for wert in zeile:\n        summe += wert\n    zeilensummen.append(summe)\nprint(zeilensummen)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "[12, 9, 24]" }
+      ]
+    },
+    {
+      "type": "code",
+      "task": "Berechne für dieselbe `matrix` die **Summe der Spalte mit Index 1** (also der zweiten Spalte) und gib sie aus.",
+      "starterCode": "matrix = [[2, 4, 6], [1, 3, 5], [7, 8, 9]]\n",
+      "hints": [
+        "spaltensumme = 0\nfor zeile in matrix:\n    spaltensumme += zeile[1]",
+        "print(spaltensumme)",
+        "matrix = [[2, 4, 6], [1, 3, 5], [7, 8, 9]]\nspaltensumme = 0\nfor zeile in matrix:\n    spaltensumme += zeile[1]\nprint(spaltensumme)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "15" }
+      ]
+    }
+  ]
+}
