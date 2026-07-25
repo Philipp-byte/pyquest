@@ -1,0 +1,51 @@
+{
+  "id": "05-suchen-und-entfernen",
+  "title": "Suchen und Entfernen",
+  "icon": "🔎",
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Du kennst **`in`** schon von Strings – bei Listen funktioniert es genauso: Es prüft, ob ein Wert **enthalten** ist, und liefert `True` oder `False`.\n\nMit **`.index(wert)`** findest du die **Position** eines Werts (den Index des **ersten** Treffers) – ähnlich wie `.find()` bei Strings. Anders als `.find()` wirft `.index()` aber einen **Fehler**, wenn der Wert nicht existiert."
+    },
+    {
+      "type": "example",
+      "text": "in prüft die Existenz, index() liefert die Position:",
+      "code": "tiere = [\"Hund\", \"Katze\", \"Maus\"]\nprint(\"Katze\" in tiere)\nprint(tiere.index(\"Katze\"))"
+    },
+    {
+      "type": "explain",
+      "text": "Mit **`.count(wert)`** zählst du, **wie oft** ein Wert in der Liste vorkommt. Und mit **`.remove(wert)`** entfernst du das **erste** Vorkommen eines Werts aus der Liste (die Liste wird dabei direkt verändert)."
+    },
+    {
+      "type": "example",
+      "text": "count() zählt Vorkommen, remove() löscht das erste Vorkommen:",
+      "code": "zahlen = [3, 7, 3, 9, 3]\nprint(zahlen.count(3))\nzahlen.remove(3)\nprint(zahlen)"
+    },
+    {
+      "type": "quiz",
+      "question": "Was macht `.remove(wert)`, wenn der Wert mehrfach in der Liste vorkommt?",
+      "choices": [
+        "Entfernt alle Vorkommen",
+        "Entfernt nur das erste Vorkommen",
+        "Gibt einen Fehler zurück"
+      ],
+      "answer": 1,
+      "explainCorrect": "Richtig! .remove() löscht nur das erste gefundene Vorkommen, der Rest bleibt stehen.",
+      "explainWrong": ".remove() entfernt genau **ein** Vorkommen – das erste, das gefunden wird. Der Rest bleibt in der Liste."
+    },
+    {
+      "type": "code",
+      "task": "In `noten` steht eine Liste mit Schulnoten. Gib aus, **wie oft** die Note `3` vorkommt (`.count()`). Entferne danach **eine** `5` mit `.remove()` und gib die **komplette Liste** aus.",
+      "starterCode": "noten = [2, 3, 5, 1, 3, 5, 4]\n",
+      "hints": [
+        "print(noten.count(3))",
+        "noten.remove(5)  und  print(noten)",
+        "noten = [2, 3, 5, 1, 3, 5, 4]\nprint(noten.count(3))\nnoten.remove(5)\nprint(noten)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "2\n[2, 3, 1, 3, 5, 4]" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "id": "04-verbinden-und-slicing",
+  "title": "Listen verbinden und Slicing",
+  "icon": "🧵",
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Mit **`+`** kannst du zwei Listen zu einer **neuen** Liste **verbinden** (verketten) – genau wie du es von Strings kennst."
+    },
+    {
+      "type": "example",
+      "text": "+ hängt liste2 hinten an liste1 an:",
+      "code": "liste1 = [1, 2, 3]\nliste2 = [4, 5, 6]\nkombiniert = liste1 + liste2\nprint(kombiniert)"
+    },
+    {
+      "type": "explain",
+      "text": "Auch **Slicing** funktioniert bei Listen genauso wie bei Strings: **`liste[start:ende]`** gibt eine **neue Teilliste** zurück – der `ende`-Index ist wieder **ausgeschlossen**."
+    },
+    {
+      "type": "example",
+      "text": "liste[1:4] holt die Elemente an den Indizes 1, 2 und 3:",
+      "code": "zahlen = [10, 20, 30, 40, 50]\nteil = zahlen[1:4]\nprint(teil)"
+    },
+    {
+      "type": "quiz",
+      "question": "Was gibt `[1, 2, 3] + [4, 5]` zurück?",
+      "choices": ["[5, 7]", "[1, 2, 3, 4, 5]", "Einen Fehler"],
+      "answer": 1,
+      "explainCorrect": "Richtig! + verbindet zwei Listen zu einer neuen, längeren Liste.",
+      "explainWrong": "Bei Listen addiert `+` **nicht** die Zahlen, sondern hängt die zweite Liste an die erste an: [1, 2, 3, 4, 5]."
+    },
+    {
+      "type": "code",
+      "task": "In `gruppe_a` und `gruppe_b` stehen zwei Listen. Verbinde sie mit `+` zu `alle`, gib `alle` aus. Gib danach mit Slicing nur die **letzten zwei** Namen von `alle` aus (`alle[-2:]`).",
+      "starterCode": "gruppe_a = [\"Ada\", \"Alan\"]\ngruppe_b = [\"Grace\", \"Linus\", \"Tim\"]\n",
+      "hints": [
+        "alle = gruppe_a + gruppe_b",
+        "print(alle)  und  print(alle[-2:])",
+        "gruppe_a = [\"Ada\", \"Alan\"]\ngruppe_b = [\"Grace\", \"Linus\", \"Tim\"]\nalle = gruppe_a + gruppe_b\nprint(alle)\nprint(alle[-2:])"
+      ],
+      "tests": [
+        { "type": "output", "expected": "['Ada', 'Alan', 'Grace', 'Linus', 'Tim']\n['Linus', 'Tim']" }
+      ]
+    }
+  ]
+}

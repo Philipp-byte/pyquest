@@ -1,0 +1,47 @@
+{
+  "id": "06-listen-anwenden",
+  "title": "Listen anwenden",
+  "icon": "🏆",
+  "xp": 45,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Jetzt kombinierst du **Listen** mit der **while-Schleife** – genau wie in der letzten Lektion des Schleifen-Kapitels: eine Index-Variable `i`, die Bedingung `i < len(liste)`, und Zugriff über `liste[i]`.\n\nAufgabe: In `zahlen` fehlt **genau eine** Zahl aus der Reihe 1 bis 10. Finde sie mit einem mathematischen Trick: Die **Soll-Summe** von 1 bis 10 lässt sich direkt berechnen (`n * (n + 1) // 2`, mit n = 10). Die **Ist-Summe** bildest du selbst über die Liste. Die **Differenz** ist die fehlende Zahl!"
+    },
+    {
+      "type": "example",
+      "text": "Soll-Summe direkt berechnet, Ist-Summe über die Liste aufsummiert:",
+      "code": "n = 5\nsoll_summe = n * (n + 1) // 2\nprint(soll_summe)"
+    },
+    {
+      "type": "code",
+      "task": "In `zahlen` fehlt eine Zahl aus der Reihe **1 bis 10**. Berechne:\n1. `soll_summe` – die Summe von 1 bis 10, direkt mit der Formel `n * (n + 1) // 2` (n = 10)\n2. `ist_summe` – die tatsächliche Summe der Liste, mit einer `while`-Schleife und Index aufsummiert\n3. `fehlende_zahl` – die Differenz `soll_summe - ist_summe`\n\nGib am Ende nur `fehlende_zahl` aus.",
+      "starterCode": "zahlen = [1, 2, 4, 5, 6, 7, 8, 9, 10]\n",
+      "hints": [
+        "n = 10\nsoll_summe = n * (n + 1) // 2",
+        "ist_summe = 0\ni = 0\nwhile i < len(zahlen):\n    ist_summe += zahlen[i]\n    i += 1",
+        "zahlen = [1, 2, 4, 5, 6, 7, 8, 9, 10]\nn = 10\nsoll_summe = n * (n + 1) // 2\nist_summe = 0\ni = 0\nwhile i < len(zahlen):\n    ist_summe += zahlen[i]\n    i += 1\nfehlende_zahl = soll_summe - ist_summe\nprint(fehlende_zahl)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "3" }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Ein weiterer typischer Einsatz: **prüfen, ob es Duplikate gibt.** Dafür baust du eine **zweite, leere Liste** auf – die „schon gesehen“-Liste. Für jedes Element prüfst du mit `in`, ob es dort **schon drin** ist. Wenn ja, hast du ein Duplikat gefunden!"
+    },
+    {
+      "type": "code",
+      "task": "In `zahlen` steht eine Liste mit **genau einer** doppelten Zahl. Finde sie: Lege eine leere Liste `gesehen = []` an. Durchlaufe `zahlen` mit `while` und Index. Ist das aktuelle Element **bereits** in `gesehen`, gib es aus und **beende** die Schleife mit `break`. Sonst füge es mit `.append()` zu `gesehen` hinzu.",
+      "starterCode": "zahlen = [4, 8, 15, 16, 23, 8, 42]\n",
+      "hints": [
+        "gesehen = []\ni = 0\nwhile i < len(zahlen):",
+        "if zahlen[i] in gesehen: print(zahlen[i]); break  else: gesehen.append(zahlen[i])  – i += 1 nicht vergessen",
+        "zahlen = [4, 8, 15, 16, 23, 8, 42]\ngesehen = []\ni = 0\nwhile i < len(zahlen):\n    if zahlen[i] in gesehen:\n        print(zahlen[i])\n        break\n    gesehen.append(zahlen[i])\n    i += 1"
+      ],
+      "tests": [
+        { "type": "output", "expected": "8" }
+      ]
+    }
+  ]
+}

@@ -7,6 +7,9 @@
   "lessons": [
     "01-listen-erstellen",
     "02-listen-veraendern",
-    "03-listen-mit-schleifen"
+    "03-listen-mit-schleifen",
+    "04-verbinden-und-slicing",
+    "05-suchen-und-entfernen",
+    "06-listen-anwenden"
   ]
 }
