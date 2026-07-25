@@ -6,7 +6,7 @@
   "steps": [
     {
       "type": "explain",
-      "text": "Eine **Funktion** ist ein wiederverwendbarer Codeblock mit einem Namen. Du definierst sie einmal mit **`def`** und kannst sie danach beliebig oft **aufrufen**."
+      "text": "Bisher hast du Code immer **von oben nach unten** ausgeführt. Aber was, wenn du dieselben Anweisungen an **mehreren Stellen** im Programm brauchst? Dafür gibt es **Funktionen**.\n\nEine Funktion ist ein **Unterprogramm**: ein benannter Codeblock, der eine bestimmte Aufgabe erledigt. Du schreibst ihn **einmal** und kannst ihn danach beliebig oft **aufrufen** – das spart Tipparbeit und macht dein Programm übersichtlicher."
     },
     {
       "type": "example",
@@ -15,7 +15,7 @@
     },
     {
       "type": "explain",
-      "text": "Der Code innerhalb der Funktion (eingerückt) wird erst ausgeführt, wenn die Funktion **aufgerufen** wird – also wenn ihr Name mit Klammern dahinter geschrieben wird: `begruessung()`."
+      "text": "Der Code innerhalb der Funktion (eingerückt) wird erst ausgeführt, wenn die Funktion **aufgerufen** wird – also wenn ihr Name mit Klammern dahinter geschrieben wird: `begruessung()`.\n\n**Merke (PEP 8):** Funktionsnamen beginnen in Python mit einem **Kleinbuchstaben** und werden in **snake_case** geschrieben (Wörter durch Unterstriche getrennt), z. B. `produkte_information`."
     },
     {
       "type": "quiz",
@@ -36,6 +36,23 @@
       ],
       "tests": [
         { "type": "output", "expected": "*\n*\n*" }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Eine Funktion kann auch **mehrere Zeilen** ausführen – ihr Codeblock funktioniert wie jeder andere eingerückte Block (z. B. bei `if` oder `for`)."
+    },
+    {
+      "type": "code",
+      "task": "Definiere eine Funktion **`begruessen`**, die genau zwei Zeilen ausgibt: **`Willkommen!`** und **`Schön, dass du da bist.`**. Rufe die Funktion **zweimal** auf.",
+      "starterCode": "",
+      "hints": [
+        "def begruessen():\n    print(\"Willkommen!\")\n    print(\"Schön, dass du da bist.\")",
+        "Danach zweimal aufrufen: begruessen()",
+        "def begruessen():\n    print(\"Willkommen!\")\n    print(\"Schön, dass du da bist.\")\n\nbegruessen()\nbegruessen()"
+      ],
+      "tests": [
+        { "type": "output", "expected": "Willkommen!\nSchön, dass du da bist.\nWillkommen!\nSchön, dass du da bist." }
       ]
     }
   ]

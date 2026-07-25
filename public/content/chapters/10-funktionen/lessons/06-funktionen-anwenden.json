@@ -1,0 +1,47 @@
+{
+  "id": "06-funktionen-anwenden",
+  "title": "Funktionen anwenden",
+  "icon": "🏪",
+  "xp": 40,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Jetzt kombinierst du alles: **Parameter**, **`return`** und **`global`**. Ein typischer Einsatz ist ein **Zähler**, der bei jedem Funktionsaufruf um eins steigt und danach zurückgegeben wird – zum Beispiel, um Kunden in einem Laden zu zählen."
+    },
+    {
+      "type": "example",
+      "text": "Jeder Aufruf begrüßt eine Person UND zählt sie mit:",
+      "code": "kunden_zahl = 0\n\ndef begruessen_und_zaehlen(name):\n    global kunden_zahl\n    kunden_zahl += 1\n    print(\"Hallo\", name)\n    return kunden_zahl\n\nprint(begruessen_und_zaehlen(\"Ada\"))\nprint(begruessen_und_zaehlen(\"Alan\"))"
+    },
+    {
+      "type": "code",
+      "task": "Lege die globale Variable **`gesamtsumme = 0.0`** an. Definiere eine Funktion **`kassieren(betrag)`**, die `betrag` zur `gesamtsumme` addiert (mit `global`) und die **neue Gesamtsumme zurückgibt**.\n\nRufe `kassieren` dreimal auf – mit `12.5`, `8.0` und `20.0` – und gib bei jedem Aufruf das **Ergebnis** aus (`print(kassieren(...))`).\n\nErwartet: 12.5, 20.5, 40.5 (untereinander).",
+      "starterCode": "gesamtsumme = 0.0\n",
+      "hints": [
+        "def kassieren(betrag):\n    global gesamtsumme",
+        "gesamtsumme += betrag  und  return gesamtsumme",
+        "gesamtsumme = 0.0\n\ndef kassieren(betrag):\n    global gesamtsumme\n    gesamtsumme += betrag\n    return gesamtsumme\n\nprint(kassieren(12.5))\nprint(kassieren(8.0))\nprint(kassieren(20.0))"
+      ],
+      "tests": [
+        { "type": "output", "expected": "12.5\n20.5\n40.5" }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Eine Funktion kann auch **je nach Situation** eine andere Meldung zurückgeben – zum Beispiel, wenn ein Platzlimit erreicht ist. Das kombiniert `if`/`else`, `global` und `return` in einer Funktion."
+    },
+    {
+      "type": "code",
+      "task": "Lege die globale Variable **`anzahl_teilnehmer = 0`** an. Definiere eine Funktion **`lesung_anmelden()`** (ohne Parameter): Ist `anzahl_teilnehmer` **kleiner als 3**, erhöhe sie um 1 (mit `global`) und **gib** **`Angemeldet!`** **zurück**. Ist das Limit erreicht, **gib** **`Warteliste!`** **zurück**.\n\nRufe `lesung_anmelden()` **viermal** auf und gib jedes Ergebnis aus.\n\nErwartet: Angemeldet!, Angemeldet!, Angemeldet!, Warteliste! (untereinander).",
+      "starterCode": "anzahl_teilnehmer = 0\n",
+      "hints": [
+        "def lesung_anmelden():\n    global anzahl_teilnehmer",
+        "if anzahl_teilnehmer < 3: anzahl_teilnehmer += 1; return \"Angemeldet!\"  else: return \"Warteliste!\"",
+        "anzahl_teilnehmer = 0\n\ndef lesung_anmelden():\n    global anzahl_teilnehmer\n    if anzahl_teilnehmer < 3:\n        anzahl_teilnehmer += 1\n        return \"Angemeldet!\"\n    else:\n        return \"Warteliste!\"\n\nprint(lesung_anmelden())\nprint(lesung_anmelden())\nprint(lesung_anmelden())\nprint(lesung_anmelden())"
+      ],
+      "tests": [
+        { "type": "output", "expected": "Angemeldet!\nAngemeldet!\nAngemeldet!\nWarteliste!" }
+      ]
+    }
+  ]
+}

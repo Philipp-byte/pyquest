@@ -41,6 +41,23 @@
       "tests": [
         { "type": "output", "expected": "7\n15" }
       ]
+    },
+    {
+      "type": "explain",
+      "text": "Bei **mehreren** Parametern zählt die **Reihenfolge**: Der erste übergebene Wert landet im ersten Parameter, der zweite im zweiten, und so weiter.\n\n```\ndef buch_info(titel, autor):\n    print(titel, \"von\", autor)\n\nbuch_info(\"1984\", \"George Orwell\")\n```"
+    },
+    {
+      "type": "code",
+      "task": "Definiere eine Funktion **`buch_info(titel, autor, preis)`**, die die drei Werte im Format **`Titel: ..., Autor: ..., Preis: ... Euro`** ausgibt.\n\nRufe sie auf mit `buch_info(\"Moby Dick\", \"Herman Melville\", 14.99)`.",
+      "starterCode": "",
+      "hints": [
+        "def buch_info(titel, autor, preis):\n    print(\"Titel:\", titel, \"Autor:\", autor, \"Preis:\", preis, \"Euro\")",
+        "Achte auf die genaue Formatierung mit f-string: f\"Titel: {titel}, Autor: {autor}, Preis: {preis} Euro\"",
+        "def buch_info(titel, autor, preis):\n    print(f\"Titel: {titel}, Autor: {autor}, Preis: {preis} Euro\")\n\nbuch_info(\"Moby Dick\", \"Herman Melville\", 14.99)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "Titel: Moby Dick, Autor: Herman Melville, Preis: 14.99 Euro" }
+      ]
     }
   ]
 }

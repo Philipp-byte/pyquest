@@ -7,6 +7,9 @@
   "lessons": [
     "01-definieren-und-aufrufen",
     "02-parameter",
-    "03-rueckgabewerte"
+    "03-standardwerte",
+    "04-rueckgabewerte",
+    "05-globale-variablen",
+    "06-funktionen-anwenden"
   ]
 }

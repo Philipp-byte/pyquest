@@ -1,0 +1,46 @@
+{
+  "id": "05-globale-variablen",
+  "title": "Globale Variablen verändern",
+  "icon": "🌐",
+  "xp": 35,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Eine Variable, die **außerhalb** aller Funktionen angelegt wird, heißt **globale Variable**. Du kannst sie in einer Funktion zwar **lesen** – aber wenn du ihr innerhalb der Funktion einen **neuen Wert zuweisen** willst, brauchst du das Schlüsselwort **`global`**."
+    },
+    {
+      "type": "example",
+      "text": "Ohne global würde Python eine NEUE lokale Variable anlegen, statt die globale zu verändern:",
+      "code": "anzahl = 0\n\ndef erhoehen():\n    global anzahl\n    anzahl += 1\n\nerhoehen()\nerhoehen()\nprint(anzahl)"
+    },
+    {
+      "type": "explain",
+      "text": "`global anzahl` sagt Python: „Ich meine hier **die** globale Variable `anzahl`, nicht eine neue lokale.“ Ohne diese Zeile würde `anzahl += 1` einen Fehler auslösen, weil Python `anzahl` sonst als **neue, lokale** Variable behandelt, die beim Lesen noch keinen Wert hat.\n\n**Typischer Einsatz:** ein Zähler oder eine Summe, die über mehrere Funktionsaufrufe hinweg **erhalten bleiben** soll – zum Beispiel ein Lagerbestand, der bei jedem Verkauf sinkt."
+    },
+    {
+      "type": "quiz",
+      "question": "Wofür brauchst du `global` in einer Funktion?",
+      "choices": [
+        "Um eine globale Variable zu lesen",
+        "Um einer globalen Variable innerhalb der Funktion einen neuen Wert zuzuweisen",
+        "Um eine Funktion global aufrufbar zu machen"
+      ],
+      "answer": 1,
+      "explainCorrect": "Richtig! Lesen geht immer – global brauchst du nur, um die globale Variable zu verändern.",
+      "explainWrong": "Eine globale Variable **lesen** kannst du in einer Funktion immer. `global` brauchst du nur, wenn du ihr einen **neuen Wert zuweisen** willst."
+    },
+    {
+      "type": "code",
+      "task": "Lege die globale Variable **`lagerbestand = 24`** an. Definiere eine Funktion **`verkaufen()`**, die den Lagerbestand um **1 verringert** (mit `global`) und ihn danach ausgibt. Rufe `verkaufen()` **dreimal** auf.\n\nErwartet: 23, 22, 21 (untereinander).",
+      "starterCode": "lagerbestand = 24\n",
+      "hints": [
+        "def verkaufen():\n    global lagerbestand",
+        "lagerbestand -= 1  und  print(lagerbestand)",
+        "lagerbestand = 24\n\ndef verkaufen():\n    global lagerbestand\n    lagerbestand -= 1\n    print(lagerbestand)\n\nverkaufen()\nverkaufen()\nverkaufen()"
+      ],
+      "tests": [
+        { "type": "output", "expected": "23\n22\n21" }
+      ]
+    }
+  ]
+}

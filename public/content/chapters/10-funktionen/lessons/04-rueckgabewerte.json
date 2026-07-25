@@ -1,5 +1,5 @@
 {
-  "id": "03-rueckgabewerte",
+  "id": "04-rueckgabewerte",
   "title": "Rückgabewerte",
   "icon": "↩️",
   "xp": 30,
@@ -38,6 +38,23 @@
         { "type": "func", "call": "verdopple(6)", "expected": 12 },
         { "type": "func", "call": "verdopple(10)", "expected": 20 },
         { "type": "func", "call": "verdopple(0)", "expected": 0 }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Ein zurückgegebener Wert kann sofort **weiterverwendet** werden – zum Beispiel als Argument für eine andere Berechnung, oder direkt in `print()`. So kombinierst du mehrere Funktionen miteinander."
+    },
+    {
+      "type": "code",
+      "task": "Definiere eine Funktion **`durchschnitt(a, b, c)`**, die mit `return` den **Durchschnitt** der drei Zahlen zurückgibt.\n\nRufe sie mit `durchschnitt(10.5, 15.0, 9.0)` auf, speichere das Ergebnis in einer Variable und gib es aus.\n\nErwartet: **11.5**",
+      "starterCode": "",
+      "hints": [
+        "def durchschnitt(a, b, c):\n    return (a + b + c) / 3",
+        "ergebnis = durchschnitt(10.5, 15.0, 9.0)  und  print(ergebnis)",
+        "def durchschnitt(a, b, c):\n    return (a + b + c) / 3\n\nergebnis = durchschnitt(10.5, 15.0, 9.0)\nprint(ergebnis)"
+      ],
+      "tests": [
+        { "type": "output", "expected": "11.5" }
       ]
     }
   ]

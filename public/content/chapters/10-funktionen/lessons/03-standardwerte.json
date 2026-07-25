@@ -1,0 +1,46 @@
+{
+  "id": "03-standardwerte",
+  "title": "Standardwerte für Parameter",
+  "icon": "⚙️",
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Manchmal soll ein Parameter **optional** sein – die Funktion soll auch **ohne** ihn funktionieren. Dafür gibst du dem Parameter einen **Standardwert** (Default): `parameter=wert`.\n\nWird beim Aufruf **kein** Wert für diesen Parameter übergeben, wird automatisch der Standardwert benutzt."
+    },
+    {
+      "type": "example",
+      "text": "rabatt hat den Standardwert 0 – wird er nicht angegeben, gibt es keinen Rabatt:",
+      "code": "def preis_anzeigen(preis, rabatt=0):\n    print(preis - rabatt)\n\npreis_anzeigen(100)\npreis_anzeigen(100, 20)"
+    },
+    {
+      "type": "explain",
+      "text": "In Python gibt es (anders als z. B. in Java) **kein** „Überladen“ von Funktionen mit gleichem Namen. Stattdessen macht man Parameter mit Standardwerten **optional** – so kann eine einzige Funktion flexibel auf verschiedene Aufrufe reagieren.\n\n**Wichtig:** Parameter **mit** Standardwert müssen in der Definition immer **nach** den Parametern **ohne** Standardwert stehen."
+    },
+    {
+      "type": "quiz",
+      "question": "Was passiert bei `def gruss(name, text=\"Hallo\"):`, wenn du die Funktion nur mit `gruss(\"Ada\")` aufrufst?",
+      "choices": [
+        "Es gibt einen Fehler, weil text fehlt",
+        "text bekommt automatisch den Wert \"Hallo\"",
+        "text bleibt leer"
+      ],
+      "answer": 1,
+      "explainCorrect": "Richtig! Ohne Angabe wird der Standardwert \"Hallo\" verwendet.",
+      "explainWrong": "Ein Parameter mit Standardwert bekommt diesen Wert automatisch, wenn beim Aufruf nichts anderes übergeben wird."
+    },
+    {
+      "type": "code",
+      "task": "Definiere eine Funktion **`kunden_info(name, alter, buch=None)`**. Ist `buch` **`None`**, gib **`Name: ..., Alter: ...`** aus. Sonst gib zusätzlich das Buch aus: **`Name: ..., Alter: ..., Gekauftes Buch: ...`**.\n\nRufe die Funktion zweimal auf: `kunden_info(\"Anna\", 28)` und `kunden_info(\"Max\", 30, \"Harry Potter\")`.",
+      "starterCode": "",
+      "hints": [
+        "def kunden_info(name, alter, buch=None):",
+        "if buch is None: ... else: ...  – nutze f-strings für die Ausgabe",
+        "def kunden_info(name, alter, buch=None):\n    if buch is None:\n        print(f\"Name: {name}, Alter: {alter}\")\n    else:\n        print(f\"Name: {name}, Alter: {alter}, Gekauftes Buch: {buch}\")\n\nkunden_info(\"Anna\", 28)\nkunden_info(\"Max\", 30, \"Harry Potter\")"
+      ],
+      "tests": [
+        { "type": "output", "expected": "Name: Anna, Alter: 28\nName: Max, Alter: 30, Gekauftes Buch: Harry Potter" }
+      ]
+    }
+  ]
+}
