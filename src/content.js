@@ -13,23 +13,31 @@ async function loadJson(path) {
 let cache = null;
 
 // Laedt das komplette Curriculum inkl. aller Kapitel und Lektionen.
+//
+// Wichtig: Kapitel und Lektionen werden PARALLEL geladen (Promise.all), nicht
+// nacheinander. Es sind rund 85 kleine JSON-Dateien; beim Hosting auf GitHub
+// Pages kostet jede Anfrage ~150 ms Latenz. Sequenziell waren das ueber 16
+// Sekunden Ladezeit, parallel bleiben drei Wellen (Curriculum -> alle Kapitel
+// -> alle Lektionen) und damit deutlich unter einer Sekunde.
 export async function loadCurriculum() {
   if (cache) return cache;
 
   const curriculum = await loadJson("curriculum.json");
-  const chapters = [];
 
-  for (const chapterId of curriculum.chapters) {
-    const chapter = await loadJson(`chapters/${chapterId}/chapter.json`);
-    const lessons = [];
-    for (const lessonId of chapter.lessons) {
-      const lesson = await loadJson(
-        `chapters/${chapterId}/lessons/${lessonId}.json`
+  const chapters = await Promise.all(
+    curriculum.chapters.map(async (chapterId) => {
+      const chapter = await loadJson(`chapters/${chapterId}/chapter.json`);
+      const lessons = await Promise.all(
+        chapter.lessons.map(async (lessonId) => {
+          const lesson = await loadJson(
+            `chapters/${chapterId}/lessons/${lessonId}.json`
+          );
+          return { ...lesson, chapterId };
+        })
       );
-      lessons.push({ ...lesson, chapterId });
-    }
-    chapters.push({ ...chapter, lessons });
-  }
+      return { ...chapter, lessons };
+    })
+  );
 
   cache = { title: curriculum.title, chapters };
   return cache;

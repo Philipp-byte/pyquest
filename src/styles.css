@@ -632,4 +632,16 @@ body {
   .panel__header form { flex-wrap: wrap; }
   .new-teacher-form { flex-direction: column; align-items: stretch; }
   .new-teacher-form .btn { width: 100%; }
+  /* Die Kapitel-Tabelle im Lernbericht ist breiter als ein schmales
+     Handy-Display. Statt ueber den Kartenrand hinauszulaufen, wird sie
+     innerhalb des Blattes seitlich scrollbar. Beim Drucken (A4) greift
+     diese Regel nicht, dort ist genug Platz. */
+  .report__sheet { overflow-x: auto; }
+  .report__sheet table { min-width: 320px; }
+  /* Titel und Namens-/Datumsfeld passen nebeneinander nicht mehr auf ein
+     schmales Display und wuerden sonst ueber den Kartenrand laufen. */
+  .report__head { flex-wrap: wrap; }
+  /* Vier Kennzahl-Kacheln nebeneinander sind auf dem Handy zu schmal fuer
+     ihre Beschriftung - zwei Reihen zu zweit passen. */
+  .report__stats { grid-template-columns: repeat(2, 1fr); }
 }

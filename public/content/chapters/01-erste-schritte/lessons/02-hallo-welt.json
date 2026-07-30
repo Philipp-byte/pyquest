@@ -28,7 +28,7 @@
       "hints": [
         "Nutze den Befehl print() wie im Beispiel",
         "Der Text gehört in Anführungszeichen",
-        "So sieht die Lösung aus: print(\"Python ist so cool!\")"
+        "print(\"Python ist so cool!\")"
       ],
       "tests": [
         { "type": "output", "expected": "Python ist so cool!" }

@@ -14,7 +14,6 @@ import "./styles.css";
 import { loadCurriculum } from "./content.js";
 import { route, startRouter } from "./router.js";
 import { renderPath, renderChapterDetail } from "./views/path-view.js";
-import { renderLesson } from "./views/lesson-view.js";
 import { renderProfile } from "./views/profile-view.js";
 import { setBackendMode } from "./store.js";
 import { whoAmI, loadState } from "./progress-remote.js";
@@ -34,8 +33,14 @@ async function detectSchoolMode() {
 }
 
 async function boot() {
+  // Beides gleichzeitig starten statt nacheinander: die Modus-Erkennung ist
+  // im Demo-Modus eine 404-Rundreise, die sonst die Ladezeit verlaengert.
+  // detectSchoolMode() faengt eigene Fehler ab und wirft nie.
+  const curriculumPromise = loadCurriculum();
+  const schoolModePromise = detectSchoolMode();
+
   try {
-    curriculum = await loadCurriculum();
+    curriculum = await curriculumPromise;
   } catch (e) {
     app.innerHTML = `<div class="boot boot--error">
       <div class="boot__logo">😕</div>
@@ -45,7 +50,7 @@ async function boot() {
     return;
   }
 
-  const schoolMode = await detectSchoolMode();
+  const schoolMode = await schoolModePromise;
 
   if (schoolMode) {
     setBackendMode("remote");
@@ -96,9 +101,13 @@ function startApp() {
   route("/chapter/:chapterId", ({ chapterId }) =>
     renderChapterDetail(app, curriculum, chapterId)
   );
-  route("/lesson/:chapter/:lesson", ({ chapter, lesson }) =>
-    renderLesson(app, curriculum, chapter, lesson)
-  );
+  // Die Lektionsansicht bringt den CodeMirror-Editor mit (der groesste
+  // Brocken im Bundle). Sie wird erst geladen, wenn wirklich eine Lektion
+  // geoeffnet wird - die Startseite bleibt dadurch deutlich schneller.
+  route("/lesson/:chapter/:lesson", async ({ chapter, lesson }) => {
+    const { renderLesson } = await import("./views/lesson-view.js");
+    renderLesson(app, curriculum, chapter, lesson);
+  });
   route("/profil", () => renderProfile(app, curriculum));
   route("/bericht", async () => {
     const { renderReport } = await import("./views/report-view.js");
