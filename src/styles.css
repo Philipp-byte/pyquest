@@ -446,7 +446,65 @@ body {
 /* Editor */
 .card--code .editor {
   margin: 1rem 0; border: 2px solid var(--border); border-radius: 14px;
-  overflow: hidden; height: 260px; background: var(--surface);
+  overflow: hidden; height: 260px; background: var(--editor-bg);
+}
+
+/* Farben der Syntaxhervorhebung (siehe src/editor.js).
+   Bewusst wenige, klar unterscheidbare Gruppen - Anfaenger sollen auf einen
+   Blick sehen: Was ist ein Schluesselwort, was eine Variable, was ein Text,
+   was ein Funktionsname. */
+:root {
+  --editor-bg: #ffffff;
+  --editor-gutter-bg: #f8fafc;
+  --editor-gutter-fg: #94a3b8;
+  --editor-gutter-active: #334155;
+  --editor-active-line: rgba(56, 189, 248, .10);
+  --editor-selection: rgba(56, 189, 248, .28);
+  --editor-caret: #0f172a;
+  --editor-bracket-match: rgba(34, 197, 94, .22);
+
+  --syn-comment: #64748b;
+  --syn-keyword: #7c3aed;   /* def, if, for, while, return   */
+  --syn-string: #15803d;    /* "Text"                        */
+  --syn-escape: #db2777;    /* \n, \t im Text                */
+  --syn-number: #c2410c;    /* 42, 3.14                      */
+  --syn-atom: #c2410c;      /* True, False, None             */
+  --syn-variable: #0e7490;  /* eigene Variablen              */
+  --syn-funcdef: #1d4ed8;   /* Name bei def name(...)        */
+  --syn-funccall: #2563eb;  /* print(...), eigene Aufrufe    */
+  --syn-method: #0891b2;    /* .append(...)                  */
+  --syn-property: #0891b2;  /* .attribut                     */
+  --syn-class: #a16207;     /* Klassennamen                  */
+  --syn-operator: #475569;  /* = + - * == +=                 */
+  --syn-bracket: #64748b;   /* ( ) [ ] { } , :               */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --editor-bg: #0f172a;
+    --editor-gutter-bg: #131c31;
+    --editor-gutter-fg: #64748b;
+    --editor-gutter-active: #e2e8f0;
+    --editor-active-line: rgba(56, 189, 248, .10);
+    --editor-selection: rgba(56, 189, 248, .30);
+    --editor-caret: #f1f5f9;
+    --editor-bracket-match: rgba(34, 197, 94, .28);
+
+    --syn-comment: #94a3b8;
+    --syn-keyword: #c4b5fd;
+    --syn-string: #86efac;
+    --syn-escape: #f9a8d4;
+    --syn-number: #fdba74;
+    --syn-atom: #fdba74;
+    --syn-variable: #67e8f9;
+    --syn-funcdef: #bfdbfe;
+    --syn-funccall: #93c5fd;
+    --syn-method: #a5f3fc;
+    --syn-property: #a5f3fc;
+    --syn-class: #fde68a;
+    --syn-operator: #cbd5e1;
+    --syn-bracket: #94a3b8;
+  }
 }
 .task { font-size: 1.05rem; }
 
