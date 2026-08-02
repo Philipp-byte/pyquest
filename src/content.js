@@ -39,8 +39,22 @@ export async function loadCurriculum() {
     })
   );
 
-  cache = { title: curriculum.title, chapters };
+  // Kapitel-Tests (nach je zwei Kapiteln) ebenfalls parallel dazuladen.
+  const tests = await Promise.all(
+    (curriculum.tests ?? []).map((testId) => loadJson(`tests/${testId}.json`))
+  );
+
+  cache = { title: curriculum.title, chapters, tests };
   return cache;
+}
+
+// Liefert den Test, der NACH diesem Kapitel kommt (oder null).
+export function testAfterChapter(curriculum, chapterId) {
+  return (curriculum.tests ?? []).find((t) => t.afterChapter === chapterId) ?? null;
+}
+
+export function findTest(curriculum, testId) {
+  return (curriculum.tests ?? []).find((t) => t.id === testId) ?? null;
 }
 
 // Liefert eine flache Liste aller Lektionen in Reihenfolge (fuer Freischaltlogik).

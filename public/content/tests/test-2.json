@@ -1,0 +1,56 @@
+{
+  "id": "test-2",
+  "title": "Test 2: Datentypen & Text verarbeiten",
+  "afterChapter": "04-string-funktionen",
+  "covers": "Kapitel 1–4",
+  "intro": "Jetzt kombinierst du **Variablen**, **Datentypen**, **Typumwandlung** und die **String-Funktionen**. Achte darauf, dass Text und Zahlen unterschiedliche Datentypen sind – wandle um, wo es nötig ist.",
+  "tasks": [
+    {
+      "id": "a1",
+      "title": "Datensatz zerlegen",
+      "prompt": "In der Variable `datensatz` steht ein Eintrag im Format `Name;Alter;Stadt`.\n\n1. Zerlege ihn mit **`.split(\";\")`**.\n2. Wandle das Alter in eine **ganze Zahl** um.\n3. Gib genau diese Zeile aus:\n```\nAnna wohnt in Heilbronn und ist in 5 Jahren 22 Jahre alt.\n```\nDas Alter in 5 Jahren muss **gerechnet** werden.",
+      "starterCode": "datensatz = \"Anna;17;Heilbronn\"\n",
+      "checks": [
+        { "type": "output", "expected": "Anna wohnt in Heilbronn und ist in 5 Jahren 22 Jahre alt.", "label": "Die Ausgabe stimmt genau" },
+        { "type": "source_matches", "pattern": "\\.split\\s*\\(", "label": "Der Datensatz wird mit .split() zerlegt" },
+        { "type": "source_matches", "pattern": "\\bint\\s*\\(", "label": "Das Alter wird mit int() in eine Zahl umgewandelt" },
+        { "type": "source_not_matches", "pattern": "22", "label": "Die 22 wird gerechnet, nicht hingeschrieben" }
+      ]
+    },
+    {
+      "id": "a2",
+      "title": "Passwort prüfen",
+      "prompt": "In `passwort` steht ein Passwort. Gib **drei Zeilen** aus:\n\n1. Die **Länge** des Passworts\n2. Ob der Text **`2026`** darin vorkommt (`True` oder `False`)\n3. Das Passwort komplett in **Großbuchstaben**",
+      "starterCode": "passwort = \"Sommer2026\"\n",
+      "checks": [
+        { "type": "output", "expected": "10\nTrue\nSOMMER2026", "label": "Länge, Enthalten-Prüfung und Großschreibung stimmen" },
+        { "type": "source_matches", "pattern": "\\blen\\s*\\(", "label": "Die Länge wird mit len() bestimmt" },
+        { "type": "source_matches", "pattern": "\\.upper\\s*\\(", "label": "Die Großschreibung entsteht mit .upper()" },
+        { "type": "source_not_matches", "pattern": "print\\s*\\(\\s*10\\b", "label": "Die Länge wird berechnet, nicht hingeschrieben" }
+      ]
+    },
+    {
+      "id": "a3",
+      "title": "Initialen bilden",
+      "prompt": "Aus `vorname` und `nachname` sollen die **Initialen** entstehen.\n\nGib genau aus:\n```\nA.L.\n```\nHole dir dazu jeweils den **ersten Buchstaben** und mache ihn **groß**.",
+      "starterCode": "vorname = \"ada\"\nnachname = \"lovelace\"\n",
+      "checks": [
+        { "type": "output", "expected": "A.L.", "label": "Die Ausgabe ist A.L." },
+        { "type": "source_matches", "pattern": "\\.upper\\s*\\(", "label": "Die Buchstaben werden mit .upper() großgemacht" },
+        { "type": "source_not_matches", "pattern": "[\"']A\\.L\\.[\"']", "label": "Die Initialen werden aus den Variablen gebaut" }
+      ]
+    },
+    {
+      "id": "a4",
+      "title": "E-Mail-Adresse bauen",
+      "prompt": "Aus dem vollen Namen soll eine Schul-E-Mail werden. Regel: alles **klein**, das Leerzeichen wird zu einem **Punkt**, dahinter kommt `@jjws.de`.\n\nAus `\"Max Mustermann\"` wird also:\n```\nmax.mustermann@jjws.de\n```\nGib die fertige Adresse aus.",
+      "starterCode": "name = \"Max Mustermann\"\n",
+      "checks": [
+        { "type": "output", "expected": "max.mustermann@jjws.de", "label": "Die E-Mail-Adresse stimmt" },
+        { "type": "source_matches", "pattern": "\\.lower\\s*\\(", "label": "Der Name wird mit .lower() kleingeschrieben" },
+        { "type": "source_matches", "pattern": "\\.replace\\s*\\(", "label": "Das Leerzeichen wird mit .replace() ersetzt" },
+        { "type": "source_not_matches", "pattern": "[\"']max\\.mustermann", "label": "Die Adresse wird berechnet, nicht hingeschrieben" }
+      ]
+    }
+  ]
+}

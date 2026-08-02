@@ -5,6 +5,7 @@
 import { flattenLessons } from "./content.js";
 import { BADGES } from "./badges.js";
 import { levelForXp } from "./level-math.js";
+import { exportTestResults, importTestResults, resetTestResults } from "./test-results.js";
 
 const KEY = "pyquest.progress.v1";
 
@@ -126,6 +127,7 @@ export function getBadges() {
 export function resetProgress() {
   state = { ...DEFAULT, lessons: {}, badges: {} };
   save(state);
+  resetTestResults();
 }
 
 // ---------------------------------------------------------------- Export/Import
@@ -136,7 +138,16 @@ export function resetProgress() {
 
 export function exportState() {
   return JSON.stringify(
-    { app: "PyQuest", version: 1, exportedAt: new Date().toISOString(), state },
+    {
+      app: "PyQuest",
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      state,
+      // Die Testergebnisse liegen in einem eigenen Speicher (test-results.js),
+      // gehoeren aber in dieselbe Sicherungsdatei - sonst waere die
+      // Rueckmeldung fuer die Lehrkraft nach einem Geraetewechsel weg.
+      tests: exportTestResults(),
+    },
     null,
     2
   );
@@ -163,5 +174,8 @@ export function importState(text) {
     badges: incoming.badges || {},
   };
   save(state);
+  // Testergebnisse mitnehmen, falls die Datei welche enthaelt (aeltere
+  // Sicherungen ohne Tests bleiben gueltig).
+  if (parsed && parsed.tests) importTestResults(parsed.tests);
   return true;
 }

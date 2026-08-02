@@ -1,0 +1,59 @@
+{
+  "id": "test-6",
+  "title": "Test 6: Funktionen & Tabellen",
+  "afterChapter": "12-verschachtelte-listen",
+  "covers": "Kapitel 1–12",
+  "intro": "In diesem Test schreibst du eigene **Funktionen** mit **Parametern** und **Rückgabewerten** und wendest sie auf **Listen** und **verschachtelte Listen** an.\n\nAchtung: Deine Funktionen sollen ihr Ergebnis mit **`return`** zurückgeben – nicht nur ausgeben.",
+  "tasks": [
+    {
+      "id": "a1",
+      "title": "Funktion für die Fläche",
+      "prompt": "Schreibe eine Funktion **`flaeche(laenge, breite)`**, die die Fläche eines Rechtecks berechnet und mit **`return`** zurückgibt.\n\nDie Funktion wird beim Prüfen automatisch mit verschiedenen Werten aufgerufen – du musst sie nur definieren.",
+      "starterCode": "",
+      "checks": [
+        { "type": "func", "call": "flaeche(3, 4)", "expected": 12, "label": "flaeche(3, 4) gibt 12 zurück" },
+        { "type": "func", "call": "flaeche(10, 2)", "expected": 20, "label": "flaeche(10, 2) gibt 20 zurück" },
+        { "type": "func", "call": "flaeche(7, 7)", "expected": 49, "label": "flaeche(7, 7) gibt 49 zurück" },
+        { "type": "source_matches", "pattern": "\\bdef\\s+flaeche\\s*\\(", "label": "Die Funktion heißt flaeche und ist mit def definiert" },
+        { "type": "source_matches", "pattern": "\\breturn\\b", "label": "Das Ergebnis wird mit return zurückgegeben" }
+      ]
+    },
+    {
+      "id": "a2",
+      "title": "Funktion für die Listensumme",
+      "prompt": "Schreibe eine Funktion **`summe_liste(zahlen)`**, die die Summe aller Zahlen einer Liste berechnet und **zurückgibt**.\n\nBilde die Summe selbst mit einer Schleife – **ohne** `sum()`. Bei einer leeren Liste soll `0` herauskommen.",
+      "starterCode": "",
+      "checks": [
+        { "type": "func", "call": "summe_liste([1, 2, 3])", "expected": 6, "label": "summe_liste([1, 2, 3]) gibt 6 zurück" },
+        { "type": "func", "call": "summe_liste([10, -4, 7])", "expected": 13, "label": "summe_liste([10, -4, 7]) gibt 13 zurück (auch mit negativen Zahlen)" },
+        { "type": "func", "call": "summe_liste([])", "expected": 0, "label": "Bei einer leeren Liste kommt 0 heraus (Grenzfall)" },
+        { "type": "source_matches", "pattern": "\\bdef\\s+summe_liste\\s*\\(", "label": "Die Funktion heißt summe_liste" },
+        { "type": "source_not_matches", "pattern": "\\bsum\\s*\\(", "label": "Die Summe wird selbst gebildet (kein sum())" }
+      ]
+    },
+    {
+      "id": "a3",
+      "title": "Zeilensummen einer Tabelle",
+      "prompt": "Schreibe eine Funktion **`zeilensummen(matrix)`**, die für eine verschachtelte Liste die Summe **jeder Zeile** berechnet und alle Summen als **Liste zurückgibt**.\n\nBeispiel: aus `[[1, 2], [3, 4]]` wird `[3, 7]`.",
+      "starterCode": "",
+      "checks": [
+        { "type": "func", "call": "zeilensummen([[1, 2], [3, 4]])", "expected": [3, 7], "label": "zeilensummen([[1, 2], [3, 4]]) gibt [3, 7] zurück" },
+        { "type": "func", "call": "zeilensummen([[5, 5, 5], [1, 1, 1], [0, 0, 0]])", "expected": [15, 3, 0], "label": "Auch bei drei Zeilen stimmen alle Summen" },
+        { "type": "source_matches", "pattern": "\\bdef\\s+zeilensummen\\s*\\(", "label": "Die Funktion heißt zeilensummen" },
+        { "type": "source_matches", "pattern": "\\breturn\\b", "label": "Die Liste wird mit return zurückgegeben" }
+      ]
+    },
+    {
+      "id": "a4",
+      "title": "Noten zählen mit Standardwert",
+      "prompt": "Schreibe eine Funktion **`note_zaehlen(matrix, grenze=4)`**, die zählt, **wie viele Werte** in einer verschachtelten Liste **kleiner oder gleich der Grenze** sind, und die Anzahl **zurückgibt**.\n\nDer Parameter `grenze` soll den **Standardwert 4** haben – wird er nicht angegeben, gilt 4.\n\nBeispiel: `note_zaehlen([[1, 5], [3, 6]])` ergibt `2` (die 1 und die 3).",
+      "starterCode": "",
+      "checks": [
+        { "type": "func", "call": "note_zaehlen([[1, 5], [3, 6]])", "expected": 2, "label": "Ohne Angabe der Grenze wird mit 4 gezählt (Ergebnis 2)" },
+        { "type": "func", "call": "note_zaehlen([[1, 5], [3, 6]], 6)", "expected": 4, "label": "Mit Grenze 6 werden alle 4 Werte gezählt" },
+        { "type": "func", "call": "note_zaehlen([[9, 9]], 4)", "expected": 0, "label": "Wenn nichts passt, kommt 0 heraus (Grenzfall)" },
+        { "type": "source_matches", "pattern": "grenze\\s*=\\s*4", "label": "Der Parameter grenze hat den Standardwert 4" }
+      ]
+    }
+  ]
+}

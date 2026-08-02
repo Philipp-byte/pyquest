@@ -1,0 +1,56 @@
+{
+  "id": "test-7",
+  "title": "Test 7: Dictionaries & Klassen",
+  "afterChapter": "14-klassen",
+  "covers": "Kapitel 1–14",
+  "intro": "Jetzt kommen **Dictionaries** und **Klassen** dazu – kombiniert mit Listen, Schleifen und Funktionen.\n\nDenk daran: Auf einen Wert im Dictionary greifst du mit `dict[\"schluessel\"]` zu, und eine Klasse bekommt ihre Startwerte in `__init__`.",
+  "tasks": [
+    {
+      "id": "a1",
+      "title": "Punkte aus dem Dictionary summieren",
+      "prompt": "Im Dictionary `punkte` stehen die Punktzahlen dreier Personen, in der Liste `namen` ihre Namen.\n\n1. Gehe die **Liste** mit einer `for`-Schleife durch.\n2. Hole zu jedem Namen den Wert aus dem **Dictionary** und bilde die **Summe**.\n3. Gib zuerst die Summe aus, dann in einer zweiten Zeile die Punktzahl von **Ada**.\n\nErwartet:\n```\n250\n90\n```",
+      "starterCode": "punkte = {\"Ada\": 90, \"Ben\": 75, \"Cem\": 85}\nnamen = [\"Ada\", \"Ben\", \"Cem\"]\n",
+      "checks": [
+        { "type": "output", "expected": "250\n90", "label": "Summe 250 und Adas Punktzahl 90 stimmen" },
+        { "type": "source_matches", "pattern": "\\bfor\\s+\\w+\\s+in\\b", "label": "Die Namen werden mit einer for-Schleife durchlaufen" },
+        { "type": "source_not_matches", "pattern": "\\bsum\\s*\\(", "label": "Die Summe wird selbst gebildet (kein sum())" },
+        { "type": "source_not_matches", "pattern": "print\\s*\\(\\s*250\\b", "label": "Die Summe wird berechnet, nicht hingeschrieben" }
+      ]
+    },
+    {
+      "id": "a2",
+      "title": "Lagerbestand pflegen",
+      "prompt": "Im Dictionary `lager` steht der aktuelle Bestand.\n\n1. Erhöhe den Bestand von **`Apfel`** um **3**.\n2. Nimm **`Milch`** mit dem Bestand **10** neu auf.\n3. Gib das komplette Dictionary aus.\n\nErwartet:\n```\n{'Apfel': 8, 'Brot': 2, 'Milch': 10}\n```",
+      "starterCode": "lager = {\"Apfel\": 5, \"Brot\": 2}\n",
+      "checks": [
+        { "type": "output", "expected": "{'Apfel': 8, 'Brot': 2, 'Milch': 10}", "label": "Das Dictionary enthält Apfel 8, Brot 2 und Milch 10" },
+        { "type": "source_not_matches", "pattern": "lager\\s*=\\s*\\{[^}]*Milch", "label": "Milch wird nachträglich aufgenommen, nicht direkt hineingeschrieben" }
+      ]
+    },
+    {
+      "id": "a3",
+      "title": "Klasse Schueler",
+      "prompt": "Schreibe eine Klasse **`Schueler`**:\n\n- Der Konstruktor **`__init__`** bekommt **`name`** und **`note`** und speichert beide als Attribute.\n- Die Methode **`vorstellen()`** gibt eine Zeile aus, zum Beispiel:\n```\nAda hat Note 2\n```\n\nLege danach zwei Schüler an – **Ada mit Note 2** und **Ben mit Note 3** – und rufe bei beiden `vorstellen()` auf.",
+      "starterCode": "",
+      "checks": [
+        { "type": "output", "expected": "Ada hat Note 2\nBen hat Note 3", "label": "Beide Schüler stellen sich korrekt vor" },
+        { "type": "source_matches", "pattern": "\\bclass\\s+Schueler\\b", "label": "Die Klasse heißt Schueler" },
+        { "type": "source_matches", "pattern": "def\\s+__init__\\s*\\(", "label": "Die Klasse hat einen Konstruktor __init__" },
+        { "type": "source_matches", "pattern": "def\\s+vorstellen\\s*\\(", "label": "Die Klasse hat eine Methode vorstellen()" },
+        { "type": "source_matches", "pattern": "self\\.name", "label": "Der Name wird als Attribut self.name gespeichert" }
+      ]
+    },
+    {
+      "id": "a4",
+      "title": "Durchschnitt einer Klasse",
+      "prompt": "Nutze wieder eine Klasse **`Schueler`** mit **`__init__(self, name, note)`**.\n\n1. Lege **drei** Schüler an: Ada (Note 2), Ben (Note 3) und Cem (Note 1).\n2. Sammle sie in einer **Liste**.\n3. Berechne mit einer `for`-Schleife den **Durchschnitt der Noten** und gib ihn aus.\n\nErwartet:\n```\n2.0\n```",
+      "starterCode": "",
+      "checks": [
+        { "type": "output", "expected": "2.0", "label": "Der Notendurchschnitt 2.0 wird ausgegeben" },
+        { "type": "source_matches", "pattern": "\\bclass\\s+Schueler\\b", "label": "Es wird die Klasse Schueler verwendet" },
+        { "type": "source_matches", "pattern": "\\bfor\\s+\\w+\\s+in\\b", "label": "Die Liste der Schüler wird mit einer for-Schleife durchlaufen" },
+        { "type": "source_not_matches", "pattern": "print\\s*\\(\\s*2\\.0", "label": "Der Durchschnitt wird berechnet, nicht hingeschrieben" }
+      ]
+    }
+  ]
+}

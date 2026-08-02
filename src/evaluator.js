@@ -16,6 +16,13 @@ export async function evaluateCode(userCode, tests = [], { onStatus } = {}) {
   let lastStdout = "";
 
   for (const test of tests) {
+    // Quelltext-Pruefungen (z. B. "es muss eine Schleife vorkommen") brauchen
+    // keinen Programmlauf - sie schauen direkt in den geschriebenen Code.
+    if (test.type === "source_matches" || test.type === "source_not_matches") {
+      results.push({ label: describeTest(test), ok: checkSource(userCode, test) });
+      continue;
+    }
+
     const inputs = test.inputs ?? [];
     const run = await runPython(userCode, { inputs, onStatus });
     lastStdout = run.stdout;
@@ -63,6 +70,41 @@ async function checkTest(run, test) {
   }
 }
 
+// Prueft den GESCHRIEBENEN Code (nicht sein Verhalten) gegen ein Muster.
+// Damit laesst sich in Tests verlangen, dass eine bestimmte Technik benutzt
+// wird - z. B. "loese das mit einer Schleife" statt alles einzeln hinzuschreiben.
+// Kommentare werden vorher entfernt, sonst wuerde ein "# for ..." schon zaehlen.
+function checkSource(userCode, test) {
+  const code = stripComments(String(userCode || ""));
+  const re = new RegExp(test.pattern, test.flags ?? "m");
+  const hit = re.test(code);
+  return test.type === "source_not_matches" ? !hit : hit;
+}
+
+// Entfernt Kommentare, laesst Zeichenketten aber unangetastet (ein '#' in
+// einem String ist kein Kommentar).
+function stripComments(code) {
+  let out = "";
+  let quote = null;
+  for (let i = 0; i < code.length; i++) {
+    const c = code[i];
+    if (quote) {
+      out += c;
+      if (c === "\\") { out += code[++i] ?? ""; continue; }
+      if (c === quote) quote = null;
+      continue;
+    }
+    if (c === '"' || c === "'") { quote = c; out += c; continue; }
+    if (c === "#") {
+      while (i < code.length && code[i] !== "\n") i++;
+      out += "\n";
+      continue;
+    }
+    out += c;
+  }
+  return out;
+}
+
 function toJs(val) {
   if (val && typeof val.toJs === "function") {
     const js = val.toJs();
@@ -81,7 +123,15 @@ function deepEqual(a, b) {
 }
 
 function describeTest(test) {
+  // In Tests bekommt jede Pruefung einen selbst formulierten, fuer Lernende
+  // verstaendlichen Text ("Gibt bei Eingabe 5 die Zahl 120 aus"). Der geht
+  // auch in den Lehrerbericht, deshalb hat er Vorrang.
+  if (test.label) return test.label;
+
   switch (test.type) {
+    case "source_matches":
+    case "source_not_matches":
+      return "Der Code erfüllt eine geforderte Vorgabe";
     case "output":
       return `Gibt „${test.expected}" aus`;
     case "output_contains":

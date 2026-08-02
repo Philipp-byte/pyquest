@@ -1,0 +1,51 @@
+{
+  "_hinweis": "Musterloesungen zu den Kapitel-Tests. Liegt BEWUSST ausserhalb von public/, damit die Loesungen nicht mit der App ausgeliefert werden. Dient der automatischen Pruefung (verify_tests.py) und als Grundlage fuer ein Loesungsblatt.",
+  "test-1": {
+    "a1": "name = \"Ada\"\nalter = 36\nprint(name, \"ist\", alter, \"Jahre alt.\")",
+    "a2": "fahrrad = 249\nhelm = 39\ngesamt = fahrrad + helm\nprint(gesamt)",
+    "a3": "laenge = 12\nbreite = 5\nflaeche = laenge * breite\numfang = 2 * laenge + 2 * breite\nprint(flaeche)\nprint(umfang)",
+    "a4": "punkte = 10\npunkte = punkte * 3\npunkte = punkte - 5\nprint(punkte)"
+  },
+  "test-2": {
+    "a1": "datensatz = \"Anna;17;Heilbronn\"\nteile = datensatz.split(\";\")\nname = teile[0]\nalter = int(teile[1])\nstadt = teile[2]\nprint(name, \"wohnt in\", stadt, \"und ist in 5 Jahren\", alter + 5, \"Jahre alt.\")",
+    "a2": "passwort = \"Sommer2026\"\nprint(len(passwort))\nprint(\"2026\" in passwort)\nprint(passwort.upper())",
+    "a3": "vorname = \"ada\"\nnachname = \"lovelace\"\nprint(vorname[0].upper() + \".\" + nachname[0].upper() + \".\")",
+    "a4": "name = \"Max Mustermann\"\nprint(name.lower().replace(\" \", \".\") + \"@jjws.de\")"
+  },
+  "test-3": {
+    "a1": "a = int(input(\"Erste Zahl: \"))\nb = int(input(\"Zweite Zahl: \"))\nprint(f\"{a} + {b} = {a + b}\")\nprint(f\"{a} - {b} = {a - b}\")\nprint(f\"{a} * {b} = {a * b}\")\nprint(f\"{a} // {b} = {a // b}\")\nprint(f\"{a} % {b} = {a % b}\")",
+    "a2": "s = int(input(\"Sekunden: \"))\nstunden = s // 3600\nminuten = (s % 3600) // 60\nsekunden = s % 60\nprint(f\"{stunden} h {minuten} min {sekunden} s\")",
+    "a3": "preis = float(input(\"Preis: \"))\nrabatt = float(input(\"Rabatt in %: \"))\nendpreis = preis - preis * rabatt / 100\nprint(f\"Endpreis: {endpreis:.2f} Euro\")",
+    "a4": "print(\"Name\\tPunkte\")\nprint(\"Ada\\t95\")\nprint(\"Sie sagte: \\\"Super!\\\"\")"
+  },
+  "test-4": {
+    "a1": "p = int(input(\"Punkte: \"))\nif p >= 90:\n    print(1)\nelif p >= 80:\n    print(2)\nelif p >= 65:\n    print(3)\nelif p >= 50:\n    print(4)\nelif p >= 30:\n    print(5)\nelse:\n    print(6)",
+    "a2": "n = int(input(\"Zahl: \"))\nsumme = 0\ni = 1\nwhile i <= n:\n    summe += i\n    i += 1\nprint(summe)",
+    "a3": "zahl = int(input(\"Zahl (1-10): \"))\nwhile zahl < 1 or zahl > 10:\n    zahl = int(input(\"Zahl (1-10): \"))\nprint(\"Danke:\", zahl)",
+    "a4": "geheim = 7\nzahl = int(input(\"Rate: \"))\nwhile zahl != geheim:\n    if zahl < geheim:\n        print(\"zu klein\")\n    else:\n        print(\"zu groß\")\n    zahl = int(input(\"Rate: \"))\nprint(\"Richtig!\")"
+  },
+  "test-5": {
+    "a1": "zahlen = [12, 7, 25, 3, 18]\nsumme = 0\ngroesste = zahlen[0]\nfor z in zahlen:\n    summe += z\n    if z > groesste:\n        groesste = z\nprint(summe)\nprint(groesste)\nprint(summe / len(zahlen))",
+    "a2": "zahlen = [4, 7, 10, 13, 16, 21]\ngerade = []\nfor z in zahlen:\n    if z % 2 == 0:\n        gerade.append(z)\nprint(gerade)",
+    "a3": "woerter = [\"Haus\", \"Fahrrad\", \"Auto\", \"Computer\", \"Baum\"]\nlaengstes = woerter[0]\nfor w in woerter:\n    if len(w) > len(laengstes):\n        laengstes = w\nprint(laengstes)",
+    "a4": "noten = [2, 5, 3, 1, 4]\nsumme = 0\nfor n in noten:\n    summe += n\ndurchschnitt = summe / len(noten)\nprint(durchschnitt)\nif durchschnitt <= 4:\n    print(\"bestanden\")\nelse:\n    print(\"nicht bestanden\")"
+  },
+  "test-6": {
+    "a1": "def flaeche(laenge, breite):\n    return laenge * breite",
+    "a2": "def summe_liste(zahlen):\n    summe = 0\n    for z in zahlen:\n        summe += z\n    return summe",
+    "a3": "def zeilensummen(matrix):\n    ergebnis = []\n    for zeile in matrix:\n        summe = 0\n        for wert in zeile:\n            summe += wert\n        ergebnis.append(summe)\n    return ergebnis",
+    "a4": "def note_zaehlen(matrix, grenze=4):\n    anzahl = 0\n    for zeile in matrix:\n        for wert in zeile:\n            if wert <= grenze:\n                anzahl += 1\n    return anzahl"
+  },
+  "test-7": {
+    "a1": "punkte = {\"Ada\": 90, \"Ben\": 75, \"Cem\": 85}\nnamen = [\"Ada\", \"Ben\", \"Cem\"]\nsumme = 0\nfor name in namen:\n    summe += punkte[name]\nprint(summe)\nprint(punkte[\"Ada\"])",
+    "a2": "lager = {\"Apfel\": 5, \"Brot\": 2}\nlager[\"Apfel\"] = lager[\"Apfel\"] + 3\nlager[\"Milch\"] = 10\nprint(lager)",
+    "a3": "class Schueler:\n    def __init__(self, name, note):\n        self.name = name\n        self.note = note\n\n    def vorstellen(self):\n        print(self.name, \"hat Note\", self.note)\n\nada = Schueler(\"Ada\", 2)\nben = Schueler(\"Ben\", 3)\nada.vorstellen()\nben.vorstellen()",
+    "a4": "class Schueler:\n    def __init__(self, name, note):\n        self.name = name\n        self.note = note\n\nklasse = [Schueler(\"Ada\", 2), Schueler(\"Ben\", 3), Schueler(\"Cem\", 1)]\nsumme = 0\nfor s in klasse:\n    summe += s.note\nprint(summe / len(klasse))"
+  },
+  "test-8": {
+    "a1": "with open(\"punkte.txt\", \"w\") as datei:\n    datei.write(\"Ada;90\")\n\nwith open(\"punkte.txt\", \"r\") as datei:\n    inhalt = datei.read()\n\nteile = inhalt.split(\";\")\nprint(teile[0], int(teile[1]) + 10)",
+    "a2": "def bestanden(noten):\n    if len(noten) == 0:\n        return False\n    summe = 0\n    for n in noten:\n        summe += n\n    return summe / len(noten) <= 4",
+    "a3": "def durchschnitte(matrix):\n    ergebnis = []\n    for zeile in matrix:\n        summe = 0\n        for wert in zeile:\n            summe += wert\n        ergebnis.append(summe / len(zeile))\n    return ergebnis",
+    "a4": "loesungen = [\"4\", \"8\", \"6\"]\nrichtig = 0\nfor i in range(3):\n    antwort = input(\"Antwort: \")\n    if antwort == loesungen[i]:\n        richtig += 1\nprint(richtig)"
+  }
+}

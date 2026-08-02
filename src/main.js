@@ -108,6 +108,12 @@ function startApp() {
     const { renderLesson } = await import("./views/lesson-view.js");
     renderLesson(app, curriculum, chapter, lesson);
   });
+  // Kapitel-Test (nach je zwei Kapiteln) - eigene Ansicht, ebenfalls
+  // nachgeladen, weil sie den Editor mitbringt.
+  route("/test/:testId", async ({ testId }) => {
+    const { renderTest } = await import("./views/test-view.js");
+    renderTest(app, curriculum, testId);
+  });
   route("/profil", () => renderProfile(app, curriculum));
   route("/bericht", async () => {
     const { renderReport } = await import("./views/report-view.js");

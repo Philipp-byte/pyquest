@@ -1,0 +1,58 @@
+{
+  "id": "test-3",
+  "title": "Test 3: Eingaben & Rechnen",
+  "afterChapter": "06-eingaben",
+  "covers": "Kapitel 1–6",
+  "intro": "Ab jetzt arbeitest du mit **Eingaben**. Denk daran: `input()` liefert immer **Text** – für Rechnungen musst du umwandeln. Nutze **f-Strings** für schöne Ausgaben und die **Operatoren** `//` und `%`, wo sie passen.\n\nDie Eingaben werden beim Prüfen automatisch eingesetzt – schreibe die Eingabeaufforderungen genau so, wie sie in der Aufgabe stehen.",
+  "tasks": [
+    {
+      "id": "a1",
+      "title": "Kleiner Taschenrechner",
+      "prompt": "Frage zwei ganze Zahlen ab – mit den Eingabeaufforderungen **`Erste Zahl: `** und **`Zweite Zahl: `**.\n\nGib danach genau diese fünf Zeilen aus (Beispiel für 17 und 5):\n```\n17 + 5 = 22\n17 - 5 = 12\n17 * 5 = 85\n17 // 5 = 3\n17 % 5 = 2\n```\nBenutze dafür **f-Strings**.",
+      "starterCode": "",
+      "needsInput": true,
+      "checks": [
+        { "type": "input_output", "inputs": ["17", "5"], "expected": "Erste Zahl: 17\nZweite Zahl: 5\n17 + 5 = 22\n17 - 5 = 12\n17 * 5 = 85\n17 // 5 = 3\n17 % 5 = 2", "label": "Bei 17 und 5 stimmen alle fünf Zeilen" },
+        { "type": "input_output", "inputs": ["20", "6"], "expected": "Erste Zahl: 20\nZweite Zahl: 6\n20 + 6 = 26\n20 - 6 = 14\n20 * 6 = 120\n20 // 6 = 3\n20 % 6 = 2", "label": "Bei 20 und 6 stimmen alle fünf Zeilen" },
+        { "type": "source_matches", "pattern": "f[\"']", "label": "Die Ausgabe entsteht mit f-Strings" },
+        { "type": "source_matches", "pattern": "//", "label": "Die Ganzzahldivision // wird verwendet" }
+      ]
+    },
+    {
+      "id": "a2",
+      "title": "Sekunden umrechnen",
+      "prompt": "Frage eine Anzahl Sekunden ab – Eingabeaufforderung **`Sekunden: `**.\n\nRechne sie in Stunden, Minuten und Sekunden um und gib genau eine Zeile aus (Beispiel für 3725):\n```\n1 h 2 min 5 s\n```\nTipp: Dafür brauchst du **`//`** und **`%`**.",
+      "starterCode": "",
+      "needsInput": true,
+      "checks": [
+        { "type": "input_output", "inputs": ["3725"], "expected": "Sekunden: 3725\n1 h 2 min 5 s", "label": "3725 Sekunden ergeben 1 h 2 min 5 s" },
+        { "type": "input_output", "inputs": ["7384"], "expected": "Sekunden: 7384\n2 h 3 min 4 s", "label": "7384 Sekunden ergeben 2 h 3 min 4 s" },
+        { "type": "input_output", "inputs": ["59"], "expected": "Sekunden: 59\n0 h 0 min 59 s", "label": "59 Sekunden ergeben 0 h 0 min 59 s" },
+        { "type": "source_matches", "pattern": "%", "label": "Der Rest-Operator % wird verwendet" }
+      ]
+    },
+    {
+      "id": "a3",
+      "title": "Preis mit Rabatt",
+      "prompt": "Frage nacheinander ab:\n1. den Preis – Eingabeaufforderung **`Preis: `**\n2. den Rabatt in Prozent – Eingabeaufforderung **`Rabatt in %: `**\n\nBerechne den Endpreis und gib ihn auf **zwei Nachkommastellen** gerundet aus (Beispiel für 80 und 25):\n```\nEndpreis: 60.00 Euro\n```\nTipp: Mit `f\"{wert:.2f}\"` bekommst du zwei Nachkommastellen.",
+      "starterCode": "",
+      "needsInput": true,
+      "checks": [
+        { "type": "input_output", "inputs": ["80", "25"], "expected": "Preis: 80\nRabatt in %: 25\nEndpreis: 60.00 Euro", "label": "80 Euro mit 25 % Rabatt ergibt 60.00 Euro" },
+        { "type": "input_output", "inputs": ["49.99", "10"], "expected": "Preis: 49.99\nRabatt in %: 10\nEndpreis: 44.99 Euro", "label": "49.99 Euro mit 10 % Rabatt ergibt 44.99 Euro" },
+        { "type": "input_output", "inputs": ["120", "0"], "expected": "Preis: 120\nRabatt in %: 0\nEndpreis: 120.00 Euro", "label": "Ohne Rabatt bleibt der Preis gleich" },
+        { "type": "source_matches", "pattern": "\\bfloat\\s*\\(", "label": "Die Eingaben werden mit float() in Kommazahlen umgewandelt" }
+      ]
+    },
+    {
+      "id": "a4",
+      "title": "Tabelle mit Escape-Sequenzen",
+      "prompt": "Gib genau diese drei Zeilen aus:\n```\nName\tPunkte\nAda\t95\nSie sagte: \"Super!\"\n```\nZwischen den Spalten steht ein **Tabulator**. In der letzten Zeile stehen echte **Anführungszeichen** im Text.\n\nTipp: `\\t` erzeugt einen Tabulator, `\\\"` ein Anführungszeichen im Text.",
+      "starterCode": "",
+      "checks": [
+        { "type": "output", "expected": "Name\tPunkte\nAda\t95\nSie sagte: \"Super!\"", "label": "Alle drei Zeilen stimmen genau (mit Tabulatoren)" },
+        { "type": "source_matches", "pattern": "\\\\t", "label": "Der Tabulator wird mit der Escape-Sequenz \\t erzeugt" }
+      ]
+    }
+  ]
+}

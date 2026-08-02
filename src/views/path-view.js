@@ -4,6 +4,8 @@
 
 import { renderHeader, starRow, wireHeader } from "../ui.js";
 import { getLesson, isDone, isUnlocked } from "../store.js";
+import { testAfterChapter } from "../content.js";
+import { getTestResult } from "../test-results.js";
 
 const WORKSHEET_MIN_STARS = 2;
 const WORKSHEET_BASE = `${import.meta.env.BASE_URL}worksheets/`;
@@ -18,8 +20,14 @@ function isWorksheetUnlocked(chapter) {
 }
 
 export function renderPath(app, curriculum) {
+  // Nach jedem Kapitel, auf das ein Test folgt, wird zusaetzlich eine
+  // Test-Kachel eingeschoben.
   const cards = curriculum.chapters
-    .map((chapter) => renderChapterCard(curriculum, chapter))
+    .map((chapter) => {
+      const card = renderChapterCard(curriculum, chapter);
+      const test = testAfterChapter(curriculum, chapter.id);
+      return test ? card + renderTestCard(curriculum, test) : card;
+    })
     .join("");
 
   app.innerHTML = `
@@ -54,6 +62,37 @@ function renderChapterCard(curriculum, chapter) {
   return unlocked
     ? `<a class="chapter-card" style="--chapter-color:${chapter.color || "#22c55e"}" href="#/chapter/${chapter.id}">${inner}</a>`
     : `<div class="chapter-card chapter-card--locked" style="--chapter-color:${chapter.color || "#22c55e"}">${inner}</div>`;
+}
+
+// Kachel fuer einen Kapitel-Test. Freigeschaltet, sobald das Kapitel davor
+// vollstaendig abgeschlossen ist - Sterne spielen hier keine Rolle, der Test
+// soll ja gerade zeigen, was wirklich sitzt.
+function renderTestCard(curriculum, test) {
+  const chapter = curriculum.chapters.find((c) => c.id === test.afterChapter);
+  const unlocked = chapter ? chapter.lessons.every((l) => isDone(l.id)) : false;
+  const result = getTestResult(test.id);
+
+  const status = result
+    ? `<span class="test-card__score">${result.points} / ${result.maxPoints} Aufgaben gelöst</span>`
+    : unlocked
+      ? `<span class="test-card__open">Bereit – jetzt schreiben</span>`
+      : `<span class="test-card__locked">Schließe „${escapeHtml(chapter ? chapter.title : "")}“ ab, um den Test freizuschalten</span>`;
+
+  const inner = `
+    <div class="test-card__icon">${unlocked ? "📝" : "🔒"}</div>
+    <div class="test-card__body">
+      <h2>${escapeHtml(test.title)}</h2>
+      <p>Aufgaben aus ${escapeHtml(test.covers)} – kombiniert und selbst geschrieben.</p>
+      ${status}
+    </div>`;
+
+  return unlocked
+    ? `<a class="test-card${result ? " test-card--done" : ""}" href="#/test/${test.id}">${inner}</a>`
+    : `<div class="test-card test-card--locked">${inner}</div>`;
+}
+
+function escapeHtml(s = "") {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 // Lektionen-Pfad eines einzelnen Kapitels (Knoten, wie zuvor auf der

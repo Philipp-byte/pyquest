@@ -1,0 +1,64 @@
+{
+  "id": "test-4",
+  "title": "Test 4: Entscheidungen & Wiederholungen",
+  "afterChapter": "08-while-schleifen",
+  "covers": "Kapitel 1–8",
+  "intro": "Jetzt kommen **Bedingungen** und **while-Schleifen** dazu – kombiniert mit Eingaben und Rechnen. Achte darauf, dass deine Schleifen sicher enden: In jeder `while`-Schleife muss sich etwas verändern.",
+  "tasks": [
+    {
+      "id": "a1",
+      "title": "Notenschlüssel",
+      "prompt": "Frage eine Punktzahl ab – Eingabeaufforderung **`Punkte: `** – und gib die passende **Note** aus (nur die Ziffer):\n\n- ab 90 Punkten → `1`\n- ab 80 → `2`\n- ab 65 → `3`\n- ab 50 → `4`\n- ab 30 → `5`\n- darunter → `6`",
+      "starterCode": "",
+      "needsInput": true,
+      "checks": [
+        { "type": "input_output", "inputs": ["95"], "expected": "Punkte: 95\n1", "label": "95 Punkte ergeben Note 1" },
+        { "type": "input_output", "inputs": ["80"], "expected": "Punkte: 80\n2", "label": "Genau 80 Punkte ergeben Note 2 (Grenzfall)" },
+        { "type": "input_output", "inputs": ["70"], "expected": "Punkte: 70\n3", "label": "70 Punkte ergeben Note 3" },
+        { "type": "input_output", "inputs": ["50"], "expected": "Punkte: 50\n4", "label": "Genau 50 Punkte ergeben Note 4 (Grenzfall)" },
+        { "type": "input_output", "inputs": ["10"], "expected": "Punkte: 10\n6", "label": "10 Punkte ergeben Note 6" },
+        { "type": "source_matches", "pattern": "\\belif\\b", "label": "Die Fälle werden mit elif abgestuft" }
+      ]
+    },
+    {
+      "id": "a2",
+      "title": "Summe bis zur Eingabe",
+      "prompt": "Frage eine ganze Zahl ab – Eingabeaufforderung **`Zahl: `**.\n\nBerechne mit einer **`while`-Schleife** die Summe aller ganzen Zahlen von 1 bis zu dieser Zahl und gib **nur das Ergebnis** aus.\n\nBeispiel: Eingabe `10` → Ausgabe `55`",
+      "starterCode": "",
+      "needsInput": true,
+      "checks": [
+        { "type": "input_output", "inputs": ["10"], "expected": "Zahl: 10\n55", "label": "Bei 10 ist die Summe 55" },
+        { "type": "input_output", "inputs": ["5"], "expected": "Zahl: 5\n15", "label": "Bei 5 ist die Summe 15" },
+        { "type": "input_output", "inputs": ["1"], "expected": "Zahl: 1\n1", "label": "Bei 1 ist die Summe 1 (Grenzfall)" },
+        { "type": "source_matches", "pattern": "\\bwhile\\b", "label": "Es wird eine while-Schleife verwendet" },
+        { "type": "source_not_matches", "pattern": "\\bsum\\s*\\(", "label": "Die Summe wird selbst gebildet, nicht mit sum()" }
+      ]
+    },
+    {
+      "id": "a3",
+      "title": "Eingabe prüfen lassen",
+      "prompt": "Frage so lange eine Zahl ab, bis sie **zwischen 1 und 10** liegt. Die Eingabeaufforderung ist jedes Mal **`Zahl (1-10): `**.\n\nSobald die Zahl gültig ist, gib aus:\n```\nDanke: 7\n```\n(also `Danke: ` und dahinter die gültige Zahl)\n\nTipp: Hier brauchst du eine `while`-Schleife mit einer verknüpften Bedingung.",
+      "starterCode": "",
+      "needsInput": true,
+      "checks": [
+        { "type": "input_output", "inputs": ["0", "15", "7"], "expected": "Zahl (1-10): 0\nZahl (1-10): 15\nZahl (1-10): 7\nDanke: 7", "label": "Ungültige Eingaben werden wiederholt abgefragt" },
+        { "type": "input_output", "inputs": ["5"], "expected": "Zahl (1-10): 5\nDanke: 5", "label": "Eine sofort gültige Eingabe wird direkt angenommen" },
+        { "type": "input_output", "inputs": ["10"], "expected": "Zahl (1-10): 10\nDanke: 10", "label": "Die 10 ist noch gültig (Grenzfall)" },
+        { "type": "source_matches", "pattern": "\\bwhile\\b", "label": "Es wird eine while-Schleife verwendet" }
+      ]
+    },
+    {
+      "id": "a4",
+      "title": "Zahlenraten",
+      "prompt": "Die gesuchte Zahl ist fest **7**. Frage so lange Zahlen ab – Eingabeaufforderung **`Rate: `** – bis die 7 geraten wurde.\n\nGib nach jedem falschen Versuch aus:\n- `zu klein`, wenn die geratene Zahl kleiner als 7 ist\n- `zu groß`, wenn sie größer ist\n\nWenn die 7 geraten wurde, gib `Richtig!` aus.",
+      "starterCode": "",
+      "needsInput": true,
+      "checks": [
+        { "type": "input_output", "inputs": ["3", "9", "7"], "expected": "Rate: 3\nzu klein\nRate: 9\nzu groß\nRate: 7\nRichtig!", "label": "Zu kleine und zu große Tipps werden richtig gemeldet" },
+        { "type": "input_output", "inputs": ["7"], "expected": "Rate: 7\nRichtig!", "label": "Ein sofortiger Treffer beendet das Spiel" },
+        { "type": "input_output", "inputs": ["1", "2", "7"], "expected": "Rate: 1\nzu klein\nRate: 2\nzu klein\nRate: 7\nRichtig!", "label": "Mehrere zu kleine Tipps hintereinander funktionieren" },
+        { "type": "source_matches", "pattern": "\\bwhile\\b", "label": "Es wird eine while-Schleife verwendet" }
+      ]
+    }
+  ]
+}

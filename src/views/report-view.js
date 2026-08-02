@@ -10,6 +10,7 @@ import { renderHeader, wireHeader } from "../ui.js";
 import { getXp, levelProgress, getLesson, isDone, getBadges } from "../store.js";
 import { flattenLessons } from "../content.js";
 import { BADGES } from "../badges.js";
+import { getAllTestResults } from "../test-results.js";
 
 const NAME_KEY = "pyquest.studentName";
 
@@ -38,6 +39,57 @@ export function renderReport(app, curriculum) {
       <td>${cPct}%</td>
     </tr>`;
   }).join("");
+
+  // ---- Testauswertung fuer die Lehrkraft -------------------------------
+  // Zeigt pro Test nicht nur die Punktzahl, sondern bei jeder NICHT geloesten
+  // Aufgabe auch, welche Anforderung konkret gefehlt hat. Damit sieht die
+  // Lehrkraft, wo genau es hakt - ohne den Schuelercode zu speichern.
+  const testResults = getAllTestResults();
+  const tests = curriculum.tests ?? [];
+  const geschrieben = tests.filter((t) => testResults[t.id]);
+  const testPoints = geschrieben.reduce((s, t) => s + testResults[t.id].points, 0);
+  const testMax = geschrieben.reduce((s, t) => s + testResults[t.id].maxPoints, 0);
+
+  const testSection = tests.length === 0 ? "" : `
+        <h2>Tests <span class="report__badgecount">(${geschrieben.length} von ${tests.length} geschrieben${
+          geschrieben.length ? `, ${testPoints} / ${testMax} Aufgaben gelöst` : ""
+        })</span></h2>
+        ${geschrieben.length === 0
+          ? `<p class="report__none">Es wurde noch kein Test geschrieben.</p>`
+          : geschrieben.map((t) => {
+              const r = testResults[t.id];
+              const datum = new Date(r.completedAt).toLocaleDateString("de-DE", {
+                day: "2-digit", month: "2-digit", year: "numeric",
+              });
+              const offen = r.tasks.filter((task) => !task.passed);
+              return `
+        <div class="report__test">
+          <div class="report__test-head">
+            <strong>${escapeHtml(t.title)}</strong>
+            <span class="report__test-score">${r.points} / ${r.maxPoints} Aufgaben · ${r.percent}%</span>
+          </div>
+          <div class="report__test-meta">
+            ${escapeHtml(t.covers)} · geschrieben am ${datum}
+            ${r.durationSeconds ? ` · Bearbeitungszeit ${Math.max(1, Math.round(r.durationSeconds / 60))} min` : ""}
+            ${r.repeats ? ` · ${r.repeats + 1}. Durchgang` : ""}
+          </div>
+          ${offen.length === 0
+            ? `<p class="report__test-ok">Alle Aufgaben vollständig gelöst.</p>`
+            : `<table class="report__table report__table--test">
+                 <thead><tr><th>Nicht gelöste Aufgabe</th><th>Was gefehlt hat</th><th>Versuche</th></tr></thead>
+                 <tbody>${offen.map((task) => `
+                   <tr>
+                     <td>${escapeHtml(task.title)}</td>
+                     <td>${task.failedChecks.length
+                        ? `<ul class="report__missing">${task.failedChecks.map((f) => `<li>${escapeHtml(f)}</li>`).join("")}</ul>`
+                        : "<em>nicht bearbeitet</em>"}</td>
+                     <td>${task.attempts}</td>
+                   </tr>`).join("")}
+                 </tbody>
+               </table>`}
+        </div>`;
+            }).join("")}
+  `;
 
   const badgeList = BADGES.filter((b) => earned[b.id])
     .map((b) => `<li>${b.icon} ${escapeHtml(b.title)}</li>`).join("")
@@ -78,6 +130,8 @@ export function renderReport(app, curriculum) {
           <thead><tr><th>Kapitel</th><th>Lektionen</th><th>Sterne</th><th>Anteil</th></tr></thead>
           <tbody>${chapterRows}</tbody>
         </table>
+
+        ${testSection}
 
         <h2>Abzeichen <span class="report__badgecount">(${badgeCount} / ${BADGES.length})</span></h2>
         <ul class="report__badges">${badgeList}</ul>
