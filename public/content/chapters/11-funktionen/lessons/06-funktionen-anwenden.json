@@ -23,7 +23,15 @@
         "gesamtsumme = 0.0\n\ndef kassieren(betrag):\n    global gesamtsumme\n    gesamtsumme += betrag\n    return gesamtsumme\n\nprint(kassieren(12.5))\nprint(kassieren(8.0))\nprint(kassieren(20.0))"
       ],
       "tests": [
-        { "type": "output", "expected": "12.5\n20.5\n40.5" }
+        {
+          "type": "output",
+          "expected": "12.5\n20.5\n40.5"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bdef\\s+kassieren\\s*\\(",
+          "label": "Es gibt eine Funktion namens kassieren"
+        }
       ]
     },
     {
@@ -40,7 +48,15 @@
         "anzahl_teilnehmer = 0\n\ndef lesung_anmelden():\n    global anzahl_teilnehmer\n    if anzahl_teilnehmer < 3:\n        anzahl_teilnehmer += 1\n        return \"Angemeldet!\"\n    else:\n        return \"Warteliste!\"\n\nprint(lesung_anmelden())\nprint(lesung_anmelden())\nprint(lesung_anmelden())\nprint(lesung_anmelden())"
       ],
       "tests": [
-        { "type": "output", "expected": "Angemeldet!\nAngemeldet!\nAngemeldet!\nWarteliste!" }
+        {
+          "type": "output",
+          "expected": "Angemeldet!\nAngemeldet!\nAngemeldet!\nWarteliste!"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bdef\\s+lesung_anmelden\\s*\\(",
+          "label": "Es gibt eine Funktion namens lesung_anmelden"
+        }
       ]
     }
   ]

@@ -39,7 +39,20 @@
         "matrix = []\nfor zeile_nr in range(3):\n    neue_zeile = [0, 0, 0, 0]\n    matrix.append(neue_zeile)\nprint(matrix)"
       ],
       "tests": [
-        { "type": "output", "expected": "[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]" }
+        {
+          "type": "output",
+          "expected": "[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bfor\\s+\\w+\\s+in\\b",
+          "label": "Es wird eine for-Schleife verwendet"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\.append\\s*\\(",
+          "label": "Die Liste wird mit .append() gefüllt"
+        }
       ]
     }
   ]

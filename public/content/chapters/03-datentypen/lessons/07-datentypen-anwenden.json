@@ -23,7 +23,34 @@
         "anzahl_faecher = 0\nnotenschnitt = 0.0\nanwesend = False\nvorname = \"Unbekannt\"\nprint(anzahl_faecher)\nprint(notenschnitt)\nprint(anwesend)\nprint(vorname)"
       ],
       "tests": [
-        { "type": "output", "expected": "0\n0.0\nFalse\nUnbekannt" }
+        {
+          "type": "output",
+          "expected": "0\n0.0\nFalse\nUnbekannt"
+        },
+        {
+          "type": "var",
+          "name": "anwesend",
+          "expected": false,
+          "label": "Die Variable anwesend enthält den richtigen Wert"
+        },
+        {
+          "type": "var",
+          "name": "anzahl_faecher",
+          "expected": 0,
+          "label": "Die Variable anzahl_faecher enthält den richtigen Wert"
+        },
+        {
+          "type": "var",
+          "name": "notenschnitt",
+          "expected": 0.0,
+          "label": "Die Variable notenschnitt enthält den richtigen Wert"
+        },
+        {
+          "type": "var",
+          "name": "vorname",
+          "expected": "Unbekannt",
+          "label": "Die Variable vorname enthält den richtigen Wert"
+        }
       ]
     },
     {
@@ -41,7 +68,15 @@
         "anzahl_faecher = int(input(\"Anzahl Fächer: \"))\nnotenschnitt = float(input(\"Notenschnitt: \"))\nvorname = input(\"Vorname: \")\nprint(anzahl_faecher)\nprint(notenschnitt)\nprint(vorname)"
       ],
       "tests": [
-        { "type": "input_output", "inputs": ["6", "2.3", "Ada"], "expected": "Anzahl Fächer: 6\nNotenschnitt: 2.3\nVorname: Ada\n6\n2.3\nAda" }
+        {
+          "type": "input_output",
+          "inputs": [
+            "6",
+            "2.3",
+            "Ada"
+          ],
+          "expected": "Anzahl Fächer: 6\nNotenschnitt: 2.3\nVorname: Ada\n6\n2.3\nAda"
+        }
       ]
     }
   ]

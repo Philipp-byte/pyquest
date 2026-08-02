@@ -34,7 +34,9 @@
       "text": "Wandle die Zahl `alter` in Text um, damit die Verkettung funktioniert.",
       "template": "print(\"Alter: \" + ___(alter))",
       "solution": "str",
-      "accept": ["str"],
+      "accept": [
+        "str"
+      ],
       "hint": "Die Funktion zum Umwandeln in Text heißt str()"
     },
     {
@@ -50,7 +52,21 @@
         "stadt = \"Weingarten\"\nprint(\"Ich wohne in \" + stadt)"
       ],
       "tests": [
-        { "type": "output", "expected": "Ich wohne in Weingarten" }
+        {
+          "type": "output",
+          "expected": "Ich wohne in Weingarten"
+        },
+        {
+          "type": "var",
+          "name": "stadt",
+          "expected": "Weingarten",
+          "label": "Die Variable stadt enthält den richtigen Wert"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\+",
+          "label": "Die Ausgabe entsteht durch Verkettung mit +"
+        }
       ]
     }
   ]

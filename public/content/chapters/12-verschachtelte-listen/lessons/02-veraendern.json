@@ -44,7 +44,15 @@
         "klassenzimmer = [[\"Ada\", \"Alan\"], [\"Grace\", \"Linus\"]]\nklassenzimmer[0][1] = \"Neu\"\nklassenzimmer[1].append(\"Zusatz\")\nprint(klassenzimmer)"
       ],
       "tests": [
-        { "type": "output", "expected": "[['Ada', 'Neu'], ['Grace', 'Linus', 'Zusatz']]" }
+        {
+          "type": "output",
+          "expected": "[['Ada', 'Neu'], ['Grace', 'Linus', 'Zusatz']]"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\.append\\s*\\(",
+          "label": "Die Liste wird mit .append() gefüllt"
+        }
       ]
     }
   ]

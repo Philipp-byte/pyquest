@@ -16,7 +16,11 @@
     {
       "type": "quiz",
       "question": "Wie viele `print`-Zeilen erzeugt eine äußere Schleife mit 3 Durchläufen, in der eine innere Schleife mit 4 Durchläufen steckt?",
-      "choices": ["7", "12", "3"],
+      "choices": [
+        "7",
+        "12",
+        "3"
+      ],
       "answer": 1,
       "explainCorrect": "Richtig! Für jeden der 3 äußeren Durchläufe läuft die innere 4-mal: 3 · 4 = 12.",
       "explainWrong": "Die innere Schleife läuft für **jeden** äußeren Durchlauf komplett: 3 · 4 = 12 Zeilen."
@@ -35,7 +39,15 @@
         "for i in range(1, 6):\n    print(\"*\" * i)"
       ],
       "tests": [
-        { "type": "output", "expected": "*\n**\n***\n****\n*****" }
+        {
+          "type": "output",
+          "expected": "*\n**\n***\n****\n*****"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bfor\\s+\\w+\\s+in\\b",
+          "label": "Es wird eine for-Schleife verwendet"
+        }
       ]
     },
     {
@@ -52,7 +64,15 @@
         "for i in range(1, 4):\n    for j in range(1, 4):\n        print(i, \"x\", j, \"=\", i * j)"
       ],
       "tests": [
-        { "type": "output", "expected": "1 x 1 = 1\n1 x 2 = 2\n1 x 3 = 3\n2 x 1 = 2\n2 x 2 = 4\n2 x 3 = 6\n3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9" }
+        {
+          "type": "output",
+          "expected": "1 x 1 = 1\n1 x 2 = 2\n1 x 3 = 3\n2 x 1 = 2\n2 x 2 = 4\n2 x 3 = 6\n3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bfor\\s+\\w+\\s+in\\b",
+          "label": "Es wird eine for-Schleife verwendet"
+        }
       ]
     }
   ]

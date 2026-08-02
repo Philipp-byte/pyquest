@@ -56,7 +56,15 @@
         "for i in range(1, 11):\n    if i % 2 == 0:\n        continue\n    print(i)\n    if i == 7:\n        break"
       ],
       "tests": [
-        { "type": "output", "expected": "1\n3\n5\n7" }
+        {
+          "type": "output",
+          "expected": "1\n3\n5\n7"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bfor\\s+\\w+\\s+in\\b",
+          "label": "Es wird eine for-Schleife verwendet"
+        }
       ]
     },
     {
@@ -74,8 +82,20 @@
         "grenze = int(input(\"Zahl: \"))\nfor i in range(11):\n    print(i)\n    if i == grenze:\n        break"
       ],
       "tests": [
-        { "type": "input_output", "inputs": ["4"], "expected": "Zahl: 4\n0\n1\n2\n3\n4" },
-        { "type": "input_output", "inputs": ["0"], "expected": "Zahl: 0\n0" }
+        {
+          "type": "input_output",
+          "inputs": [
+            "4"
+          ],
+          "expected": "Zahl: 4\n0\n1\n2\n3\n4"
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "0"
+          ],
+          "expected": "Zahl: 0\n0"
+        }
       ]
     },
     {
@@ -93,7 +113,13 @@
         "weg = int(input(\"Zahl: \"))\nfor i in range(11):\n    if i == weg:\n        continue\n    print(i)"
       ],
       "tests": [
-        { "type": "input_output", "inputs": ["4"], "expected": "Zahl: 4\n0\n1\n2\n3\n5\n6\n7\n8\n9\n10" }
+        {
+          "type": "input_output",
+          "inputs": [
+            "4"
+          ],
+          "expected": "Zahl: 4\n0\n1\n2\n3\n5\n6\n7\n8\n9\n10"
+        }
       ]
     }
   ]

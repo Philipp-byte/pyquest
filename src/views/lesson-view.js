@@ -10,6 +10,7 @@ import { completeLesson, isUnlocked, getXp, levelProgress } from "../store.js";
 import { burstSmall, burstBig } from "../celebrate.js";
 import { playCorrect, playWrong, playFinish, playLevelUp, playBadge } from "../sound.js";
 import { findLesson, flattenLessons } from "../content.js";
+import { renderDiff } from "./diff-view.js";
 
 export function renderLesson(app, curriculum, chapterId, lessonId) {
   const found = findLesson(curriculum, chapterId, lessonId);
@@ -339,8 +340,15 @@ class LessonPlayer {
         if (result.error) {
           feedback.innerHTML = `<span class="err-detail">${escape(result.error.original)}</span><br>→ ${escape(result.error.explanation)}`;
         } else {
-          const failed = result.results.filter((r) => !r.ok).map((r) => `<li>${r.label}</li>`).join("");
-          feedback.innerHTML = `Noch nicht ganz. Diese Prüfung fehlt noch:<ul>${failed}</ul>${step.hints?.length ? "Tipp: Nutze den 💡-Button." : ""}`;
+          const offen = result.results.filter((r) => !r.ok);
+          const failed = offen.map((r) => `<li>${r.label}</li>`).join("");
+          // Wenn nur die Ausgabe abweicht, zeigen wir die genaue Stelle -
+          // ein vergessener Punkt ist sonst kaum zu finden.
+          const diff = offen.find((r) => r.diff)?.diff;
+          feedback.innerHTML =
+            `Noch nicht ganz. Diese Prüfung fehlt noch:<ul>${failed}</ul>` +
+            (diff ? renderDiff(diff) : "") +
+            (step.hints?.length ? "Tipp: Nutze den 💡-Button." : "");
         }
         playWrong();
         checkBtn.disabled = false;

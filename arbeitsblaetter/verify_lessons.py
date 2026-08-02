@@ -96,6 +96,37 @@ def check_one(code, check):
     raise ValueError("Unbekannter Pruef-Typ: " + kind)
 
 
+def task_passes(step, code):
+    for check in step["tests"]:
+        try:
+            if not check_one(code, check):
+                return False
+        except Exception:  # noqa: BLE001
+            return False
+    return True
+
+
+def negative_pass(curriculum):
+    """Gegenprobe: Eine Aufgabe darf nicht schon bestehen, wenn gar nichts
+    abgegeben wird (bzw. nur der vorgegebene Startcode). Sonst prueft sie in
+    Wahrheit nichts."""
+    geprueft = luecken = 0
+    for cid in curriculum["chapters"]:
+        chapter = json.loads((CONTENT / "chapters" / cid / "chapter.json").read_text(encoding="utf-8"))
+        for lid in chapter["lessons"]:
+            lesson = json.loads((CONTENT / "chapters" / cid / "lessons" / f"{lid}.json").read_text(encoding="utf-8"))
+            for si, step in enumerate(lesson["steps"]):
+                if step.get("type") != "code":
+                    continue
+                starter = step.get("starterCode") or ""
+                for name, code in (("leer", starter), ("nur pass", starter + "\npass\n")):
+                    geprueft += 1
+                    if task_passes(step, code):
+                        luecken += 1
+                        print(f'LUECKE {cid}/{lid} #{si}: besteht schon mit "{name}"')
+    return geprueft, luecken
+
+
 def main():
     curriculum = json.loads((CONTENT / "curriculum.json").read_text(encoding="utf-8"))
     total = fails = tips_checked = 0
@@ -133,8 +164,12 @@ def main():
                         print(f'HINWEIS-FEHLER {cid}/{lid} #{si}: Musterloesung loest noch einen Hinweis aus')
                         print(f'   {tip["text"][:90]}')
 
-    print(f"--- {total} Pruefungen + {tips_checked} Hinweis-Gegenproben, {fails} Fehler ---")
-    return 1 if fails else 0
+    print(f"--- Musterloesungen: {total} Pruefungen + {tips_checked} Hinweis-Gegenproben, {fails} Fehler ---")
+
+    geprueft, luecken = negative_pass(curriculum)
+    print(f"--- Gegenprobe: {geprueft} Leer-Abgaben geprueft, {luecken} Aufgaben ohne Wirkung ---")
+
+    return 1 if (fails or luecken) else 0
 
 
 if __name__ == "__main__":

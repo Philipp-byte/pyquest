@@ -39,7 +39,27 @@
         "zahlen = [3, 7, 2, 9, 4]\ni = 0\nwhile i < len(zahlen):\n    if zahlen[i] > 4:\n        print(zahlen[i])\n    i += 1"
       ],
       "tests": [
-        { "type": "output", "expected": "7\n9" }
+        {
+          "type": "output",
+          "expected": "7\n9"
+        },
+        {
+          "type": "var",
+          "name": "zahlen",
+          "expected": [
+            3,
+            7,
+            2,
+            9,
+            4
+          ],
+          "label": "Die Variable zahlen enthält den richtigen Wert"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bwhile\\b",
+          "label": "Es wird eine while-Schleife verwendet"
+        }
       ]
     },
     {

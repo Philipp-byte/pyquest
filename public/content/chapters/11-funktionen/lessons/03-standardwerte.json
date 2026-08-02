@@ -39,7 +39,15 @@
         "def kunden_info(name, alter, buch=None):\n    if buch is None:\n        print(f\"Name: {name}, Alter: {alter}\")\n    else:\n        print(f\"Name: {name}, Alter: {alter}, Gekauftes Buch: {buch}\")\n\nkunden_info(\"Anna\", 28)\nkunden_info(\"Max\", 30, \"Harry Potter\")"
       ],
       "tests": [
-        { "type": "output", "expected": "Name: Anna, Alter: 28\nName: Max, Alter: 30, Gekauftes Buch: Harry Potter" }
+        {
+          "type": "output",
+          "expected": "Name: Anna, Alter: 28\nName: Max, Alter: 30, Gekauftes Buch: Harry Potter"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bdef\\s+kunden_info\\s*\\(",
+          "label": "Es gibt eine Funktion namens kunden_info"
+        }
       ]
     }
   ]

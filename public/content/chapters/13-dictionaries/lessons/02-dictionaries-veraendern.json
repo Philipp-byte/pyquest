@@ -39,7 +39,19 @@
         "vokabeln = {}\nvokabeln[\"Hund\"] = \"dog\"\nvokabeln[\"Katze\"] = \"cat\"\nprint(vokabeln)"
       ],
       "tests": [
-        { "type": "output", "expected": "{'Hund': 'dog', 'Katze': 'cat'}" }
+        {
+          "type": "output",
+          "expected": "{'Hund': 'dog', 'Katze': 'cat'}"
+        },
+        {
+          "type": "var",
+          "name": "vokabeln",
+          "expected": {
+            "Hund": "dog",
+            "Katze": "cat"
+          },
+          "label": "Die Variable vokabeln enthält den richtigen Wert"
+        }
       ]
     }
   ]

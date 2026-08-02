@@ -15,7 +15,11 @@
     {
       "type": "quiz",
       "question": "Was gibt dieses Programm aus?\n\n```\nx = 4\nprint(f\"Das Quadrat ist {x * x}.\")\n```",
-      "choices": ["Das Quadrat ist {x * x}.", "Das Quadrat ist 16.", "Das Quadrat ist 8."],
+      "choices": [
+        "Das Quadrat ist {x * x}.",
+        "Das Quadrat ist 16.",
+        "Das Quadrat ist 8."
+      ],
       "answer": 1,
       "explainCorrect": "Richtig! In den {} wird gerechnet: 4·4 = 16.",
       "explainWrong": "Im f-String wird der Ausdruck in {} berechnet und eingesetzt: 4·4 = 16 → „Das Quadrat ist 16.“"
@@ -25,7 +29,9 @@
       "text": "Vervollständige den f-String, damit der Name eingesetzt wird. (Setze nur den Buchstaben vor die Anführungszeichen.)",
       "template": "print(___\"Hallo {name}!\")",
       "solution": "f",
-      "accept": ["f"],
+      "accept": [
+        "f"
+      ],
       "hint": "Ein f-String beginnt mit einem kleinen f direkt vor dem Anführungszeichen."
     },
     {
@@ -39,8 +45,27 @@
         "name = input(\"Name: \")\nalter = int(input(\"Alter: \"))\nprint(f\"{name} ist {alter} Jahre alt.\")"
       ],
       "tests": [
-        { "type": "input_output", "inputs": ["Ada", "16"], "expected": "Name: Ada\nAlter: 16\nAda ist 16 Jahre alt." },
-        { "type": "input_output", "inputs": ["Max", "40"], "expected": "Name: Max\nAlter: 40\nMax ist 40 Jahre alt." }
+        {
+          "type": "input_output",
+          "inputs": [
+            "Ada",
+            "16"
+          ],
+          "expected": "Name: Ada\nAlter: 16\nAda ist 16 Jahre alt."
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "Max",
+            "40"
+          ],
+          "expected": "Name: Max\nAlter: 40\nMax ist 40 Jahre alt."
+        },
+        {
+          "type": "source_matches",
+          "pattern": "f[\\\"']",
+          "label": "Die Ausgabe entsteht mit einem f-String"
+        }
       ]
     }
   ]

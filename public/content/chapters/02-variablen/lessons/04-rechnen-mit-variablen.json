@@ -11,7 +11,11 @@
     {
       "type": "quiz",
       "question": "Was steht am Ende in `ergebnis`?\n\n```\na = 6\nb = 4\nergebnis = a + b\n```",
-      "choices": ["a + b", "10", "24"],
+      "choices": [
+        "a + b",
+        "10",
+        "24"
+      ],
       "answer": 1,
       "explainCorrect": "Richtig! Python setzt die Werte ein: 6 + 4 = 10.",
       "explainWrong": "Python rechnet mit den Werten der Variablen: a ist 6, b ist 4, also 6 + 4 = 10."
@@ -30,8 +34,27 @@
         "laenge = 20\nbreite = 15\nflaeche = laenge * breite\nprint(flaeche)"
       ],
       "tests": [
-        { "type": "output", "expected": "300" },
-        { "type": "var", "name": "flaeche", "expected": 300 }
+        {
+          "type": "output",
+          "expected": "300"
+        },
+        {
+          "type": "var",
+          "name": "flaeche",
+          "expected": 300
+        },
+        {
+          "type": "var",
+          "name": "breite",
+          "expected": 15,
+          "label": "Die Variable breite enthält den richtigen Wert"
+        },
+        {
+          "type": "var",
+          "name": "laenge",
+          "expected": 20,
+          "label": "Die Variable laenge enthält den richtigen Wert"
+        }
       ]
     },
     {
@@ -48,8 +71,27 @@
         "laenge = 20\nbreite = 15\numfang = 2 * (laenge + breite)\nprint(umfang)"
       ],
       "tests": [
-        { "type": "output", "expected": "70" },
-        { "type": "var", "name": "umfang", "expected": 70 }
+        {
+          "type": "output",
+          "expected": "70"
+        },
+        {
+          "type": "var",
+          "name": "umfang",
+          "expected": 70
+        },
+        {
+          "type": "var",
+          "name": "breite",
+          "expected": 15,
+          "label": "Die Variable breite enthält den richtigen Wert"
+        },
+        {
+          "type": "var",
+          "name": "laenge",
+          "expected": 20,
+          "label": "Die Variable laenge enthält den richtigen Wert"
+        }
       ]
     },
     {
@@ -66,7 +108,17 @@
         "gewicht1 = 350\npreis1 = 0.99\ngewicht2 = 950\npreis_pro_gramm = preis1 / gewicht1\npreis2 = preis_pro_gramm * gewicht2\nprint(preis2)"
       ],
       "tests": [
-        { "type": "var", "name": "preis2", "expected": 2.6871428571428573 }
+        {
+          "type": "var",
+          "name": "preis2",
+          "expected": 2.6871428571428573
+        },
+        {
+          "type": "var",
+          "name": "preis_pro_gramm",
+          "expected": 0.0028285714285714286,
+          "label": "Die Variable preis_pro_gramm enthält den richtigen Wert"
+        }
       ]
     }
   ]

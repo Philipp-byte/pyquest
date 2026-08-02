@@ -23,7 +23,22 @@
         "matrix = [[3, 7, 2], [9, 1, 8], [4, 6, 5]]\ngroesster_wert = matrix[0][0]\nzeile_index = 0\nspalte_index = 0\nfor i in range(len(matrix)):\n    for j in range(len(matrix[i])):\n        if matrix[i][j] > groesster_wert:\n            groesster_wert = matrix[i][j]\n            zeile_index = i\n            spalte_index = j\nprint(groesster_wert)\nprint(zeile_index, spalte_index)"
       ],
       "tests": [
-        { "type": "output", "expected": "9\n1 0" }
+        {
+          "type": "output",
+          "expected": "9\n1 0"
+        },
+        {
+          "type": "var",
+          "name": "groesster_wert",
+          "expected": 9,
+          "label": "Die Variable groesster_wert enthält den richtigen Wert"
+        },
+        {
+          "type": "var",
+          "name": "spalte_index",
+          "expected": 0,
+          "label": "Die Variable spalte_index enthält den richtigen Wert"
+        }
       ]
     },
     {
@@ -40,7 +55,10 @@
         "noten = [[2, 3, 1], [4, 2, 3], [1, 1, 2]]\nfor zeile in noten:\n    summe = 0\n    for note in zeile:\n        summe += note\n    durchschnitt = summe / len(zeile)\n    print(round(durchschnitt, 2))"
       ],
       "tests": [
-        { "type": "output", "expected": "2.0\n3.0\n1.33" }
+        {
+          "type": "output",
+          "expected": "2.0\n3.0\n1.33"
+        }
       ]
     }
   ]

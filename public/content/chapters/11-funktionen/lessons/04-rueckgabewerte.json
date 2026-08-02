@@ -20,7 +20,11 @@
     {
       "type": "quiz",
       "question": "Was gibt eine Funktion zurück, die kein return enthält?",
-      "choices": ["0", "None", "Einen Fehler"],
+      "choices": [
+        "0",
+        "None",
+        "Einen Fehler"
+      ],
       "answer": 1,
       "explainCorrect": "Richtig! Ohne return gibt eine Funktion automatisch None zurück.",
       "explainWrong": "Ohne explizites `return` gibt eine Funktion automatisch `None` zurück."
@@ -35,9 +39,21 @@
         "def verdopple(zahl):\n    return zahl * 2"
       ],
       "tests": [
-        { "type": "func", "call": "verdopple(6)", "expected": 12 },
-        { "type": "func", "call": "verdopple(10)", "expected": 20 },
-        { "type": "func", "call": "verdopple(0)", "expected": 0 }
+        {
+          "type": "func",
+          "call": "verdopple(6)",
+          "expected": 12
+        },
+        {
+          "type": "func",
+          "call": "verdopple(10)",
+          "expected": 20
+        },
+        {
+          "type": "func",
+          "call": "verdopple(0)",
+          "expected": 0
+        }
       ]
     },
     {
@@ -54,7 +70,20 @@
         "def durchschnitt(a, b, c):\n    return (a + b + c) / 3\n\nergebnis = durchschnitt(10.5, 15.0, 9.0)\nprint(ergebnis)"
       ],
       "tests": [
-        { "type": "output", "expected": "11.5" }
+        {
+          "type": "output",
+          "expected": "11.5"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bdef\\s+durchschnitt\\s*\\(",
+          "label": "Es gibt eine Funktion namens durchschnitt"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\breturn\\b",
+          "label": "Das Ergebnis wird mit return zurückgegeben"
+        }
       ]
     }
   ]

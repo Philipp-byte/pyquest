@@ -39,7 +39,15 @@
         "def addiere(a, b):\n    print(a + b)\n\naddiere(3, 4)\naddiere(10, 5)"
       ],
       "tests": [
-        { "type": "output", "expected": "7\n15" }
+        {
+          "type": "output",
+          "expected": "7\n15"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bdef\\s+addiere\\s*\\(",
+          "label": "Es gibt eine Funktion namens addiere"
+        }
       ]
     },
     {
@@ -56,7 +64,15 @@
         "def buch_info(titel, autor, preis):\n    print(f\"Titel: {titel}, Autor: {autor}, Preis: {preis} Euro\")\n\nbuch_info(\"Moby Dick\", \"Herman Melville\", 14.99)"
       ],
       "tests": [
-        { "type": "output", "expected": "Titel: Moby Dick, Autor: Herman Melville, Preis: 14.99 Euro" }
+        {
+          "type": "output",
+          "expected": "Titel: Moby Dick, Autor: Herman Melville, Preis: 14.99 Euro"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bdef\\s+buch_info\\s*\\(",
+          "label": "Es gibt eine Funktion namens buch_info"
+        }
       ]
     }
   ]

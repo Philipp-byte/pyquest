@@ -35,7 +35,15 @@
         "farben = [\"rot\", \"gelb\", \"grün\"]\nfor farbe in farben:\n    print(farbe)"
       ],
       "tests": [
-        { "type": "output", "expected": "rot\ngelb\ngrün" }
+        {
+          "type": "output",
+          "expected": "rot\ngelb\ngrün"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bfor\\s+\\w+\\s+in\\b",
+          "label": "Es wird eine for-Schleife verwendet"
+        }
       ]
     },
     {
@@ -52,7 +60,15 @@
         "zahlen = [4, 8, 15, 16, 23, 42]\nsumme = 0\nfor zahl in zahlen:\n    summe += zahl\nprint(summe)"
       ],
       "tests": [
-        { "type": "output", "expected": "108" }
+        {
+          "type": "output",
+          "expected": "108"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bfor\\s+\\w+\\s+in\\b",
+          "label": "Es wird eine for-Schleife verwendet"
+        }
       ]
     },
     {
@@ -69,7 +85,15 @@
         "zahlen = [7, 2, 19, 5, 11]\ngroesste = zahlen[0]\nfor zahl in zahlen:\n    if zahl > groesste:\n        groesste = zahl\nprint(groesste)"
       ],
       "tests": [
-        { "type": "output", "expected": "19" }
+        {
+          "type": "output",
+          "expected": "19"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bfor\\s+\\w+\\s+in\\b",
+          "label": "Es wird eine for-Schleife verwendet"
+        }
       ]
     }
   ]

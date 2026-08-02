@@ -39,7 +39,25 @@
         "namen = []\nnamen.append(\"Ada\")\nnamen.append(\"Alan\")\nnamen.append(\"Grace\")\nprint(namen)"
       ],
       "tests": [
-        { "type": "output", "expected": "['Ada', 'Alan', 'Grace']" }
+        {
+          "type": "output",
+          "expected": "['Ada', 'Alan', 'Grace']"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\.append\\s*\\(",
+          "label": "Die Liste wird mit .append() gefüllt"
+        },
+        {
+          "type": "var",
+          "name": "namen",
+          "expected": [
+            "Ada",
+            "Alan",
+            "Grace"
+          ],
+          "label": "Die Variable namen enthält den richtigen Wert"
+        }
       ]
     }
   ]

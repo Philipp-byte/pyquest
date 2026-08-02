@@ -39,7 +39,15 @@
         "lagerbestand = 24\n\ndef verkaufen():\n    global lagerbestand\n    lagerbestand -= 1\n    print(lagerbestand)\n\nverkaufen()\nverkaufen()\nverkaufen()"
       ],
       "tests": [
-        { "type": "output", "expected": "23\n22\n21" }
+        {
+          "type": "output",
+          "expected": "23\n22\n21"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bdef\\s+verkaufen\\s*\\(",
+          "label": "Es gibt eine Funktion namens verkaufen"
+        }
       ]
     }
   ]

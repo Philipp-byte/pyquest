@@ -20,7 +20,11 @@
     {
       "type": "quiz",
       "question": "Mit welchem Schlüsselwort definiert man eine Funktion in Python?",
-      "choices": ["function", "def", "func"],
+      "choices": [
+        "function",
+        "def",
+        "func"
+      ],
       "answer": 1,
       "explainCorrect": "Richtig! In Python startet eine Funktionsdefinition mit def.",
       "explainWrong": "In Python nutzt man das Schlüsselwort `def`, gefolgt vom Funktionsnamen und Klammern."
@@ -35,7 +39,15 @@
         "def zeige_stern():\n    print(\"*\")\n\nzeige_stern()\nzeige_stern()\nzeige_stern()"
       ],
       "tests": [
-        { "type": "output", "expected": "*\n*\n*" }
+        {
+          "type": "output",
+          "expected": "*\n*\n*"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bdef\\s+zeige_stern\\s*\\(",
+          "label": "Es gibt eine Funktion namens zeige_stern"
+        }
       ]
     },
     {
@@ -52,7 +64,15 @@
         "def begruessen():\n    print(\"Willkommen!\")\n    print(\"Schön, dass du da bist.\")\n\nbegruessen()\nbegruessen()"
       ],
       "tests": [
-        { "type": "output", "expected": "Willkommen!\nSchön, dass du da bist.\nWillkommen!\nSchön, dass du da bist." }
+        {
+          "type": "output",
+          "expected": "Willkommen!\nSchön, dass du da bist.\nWillkommen!\nSchön, dass du da bist."
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bdef\\s+begruessen\\s*\\(",
+          "label": "Es gibt eine Funktion namens begruessen"
+        }
       ]
     }
   ]

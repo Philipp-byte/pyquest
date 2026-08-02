@@ -42,13 +42,24 @@
       "tests": [
         {
           "type": "input_output",
-          "inputs": ["Paris", "Rom"],
+          "inputs": [
+            "Paris",
+            "Rom"
+          ],
           "expected": "Hauptstadt von Frankreich? Paris\nHauptstadt von Italien? Rom\nDu hast 2 von 2 richtig!"
         },
         {
           "type": "input_output",
-          "inputs": ["Berlin", "Rom"],
+          "inputs": [
+            "Berlin",
+            "Rom"
+          ],
           "expected": "Hauptstadt von Frankreich? Berlin\nHauptstadt von Italien? Rom\nDu hast 1 von 2 richtig!"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bdef\\s+frage_stellen\\s*\\(",
+          "label": "Es gibt eine Funktion namens frage_stellen"
         }
       ]
     },

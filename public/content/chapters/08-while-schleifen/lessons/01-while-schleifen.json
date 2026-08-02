@@ -48,7 +48,15 @@
         "zaehler = 5\nwhile zaehler >= 1:\n    print(zaehler)\n    zaehler -= 1"
       ],
       "tests": [
-        { "type": "output", "expected": "5\n4\n3\n2\n1" }
+        {
+          "type": "output",
+          "expected": "5\n4\n3\n2\n1"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bwhile\\b",
+          "label": "Es wird eine while-Schleife verwendet"
+        }
       ]
     },
     {
@@ -65,7 +73,15 @@
         "summe = 0\nzahl = 1\nwhile zahl <= 10:\n    summe += zahl\n    zahl += 1\nprint(summe)"
       ],
       "tests": [
-        { "type": "output", "expected": "55" }
+        {
+          "type": "output",
+          "expected": "55"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bwhile\\b",
+          "label": "Es wird eine while-Schleife verwendet"
+        }
       ]
     }
   ]

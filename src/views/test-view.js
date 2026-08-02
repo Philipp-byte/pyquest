@@ -18,6 +18,7 @@ import { evaluateCode, evaluateTips } from "../evaluator.js";
 import { findTest } from "../content.js";
 import { saveTestResult, getTestResult } from "../test-results.js";
 import { burstBig } from "../celebrate.js";
+import { renderDiff } from "./diff-view.js";
 import { playCorrect, playWrong, playFinish } from "../sound.js";
 
 export function renderTest(app, curriculum, testId) {
@@ -175,7 +176,10 @@ class TestPlayer {
       checkList.innerHTML = result.results
         .map((r) => `<li class="check-list__item ${r.ok ? "is-ok" : "is-no"}">
             <span class="check-list__mark">${r.ok ? "✓" : "✗"}</span>
-            <span>${escapeHtml(r.label)}</span>
+            <div class="check-list__text">
+              <span>${escapeHtml(r.label)}</span>
+              ${r.diff ? renderDiff(r.diff) : ""}
+            </div>
           </li>`)
         .join("");
 

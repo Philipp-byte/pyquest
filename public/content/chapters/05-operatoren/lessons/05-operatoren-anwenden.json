@@ -66,6 +66,18 @@
           "type": "var",
           "name": "anhalteweg",
           "expected": 130.0
+        },
+        {
+          "type": "var",
+          "name": "bremsweg",
+          "expected": 100.0,
+          "label": "Die Variable bremsweg enthält den richtigen Wert"
+        },
+        {
+          "type": "var",
+          "name": "reaktionsweg",
+          "expected": 30.0,
+          "label": "Die Variable reaktionsweg enthält den richtigen Wert"
         }
       ]
     }

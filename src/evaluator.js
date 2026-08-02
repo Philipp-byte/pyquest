@@ -3,6 +3,7 @@
 // automatisch alle korrekten Loesungswege gueltig.
 
 import { runPython } from "./pyodide-runner.js";
+import { erklaereUnterschied } from "./output-diff.js";
 
 function normalize(s) {
   return String(s).replace(/\r\n/g, "\n").replace(/[ \t]+$/gm, "").trim();
@@ -39,7 +40,16 @@ export async function evaluateCode(userCode, tests = [], { onStatus } = {}) {
     } catch {
       ok = false;
     }
-    results.push({ label: describeTest(test), ok });
+
+    // Bei einer fehlgeschlagenen Ausgabe-Pruefung genau sagen, WO es hakt.
+    // Ein vergessener Punkt oder ein Leerzeichen zu viel ist sonst kaum zu
+    // finden - die Ausgabe sieht auf den ersten Blick ja richtig aus.
+    let diff = null;
+    if (!ok && (test.type === "output" || test.type === "input_output")) {
+      diff = erklaereUnterschied(normalize(test.expected), normalize(run.stdout));
+    }
+
+    results.push({ label: describeTest(test), ok, diff });
   }
 
   const passed = results.length > 0 && results.every((r) => r.ok) && !anyError;

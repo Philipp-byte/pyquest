@@ -23,7 +23,15 @@
         "zahlen = [1, 2, 4, 5, 6, 7, 8, 9, 10]\nn = 10\nsoll_summe = n * (n + 1) // 2\nist_summe = 0\ni = 0\nwhile i < len(zahlen):\n    ist_summe += zahlen[i]\n    i += 1\nfehlende_zahl = soll_summe - ist_summe\nprint(fehlende_zahl)"
       ],
       "tests": [
-        { "type": "output", "expected": "3" }
+        {
+          "type": "output",
+          "expected": "3"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bwhile\\b",
+          "label": "Es wird eine while-Schleife verwendet"
+        }
       ]
     },
     {
@@ -40,7 +48,15 @@
         "zahlen = [4, 8, 15, 16, 23, 8, 42]\ngesehen = []\ni = 0\nwhile i < len(zahlen):\n    if zahlen[i] in gesehen:\n        print(zahlen[i])\n        break\n    gesehen.append(zahlen[i])\n    i += 1"
       ],
       "tests": [
-        { "type": "output", "expected": "8" }
+        {
+          "type": "output",
+          "expected": "8"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\.append\\s*\\(",
+          "label": "Die Liste wird mit .append() gefüllt"
+        }
       ]
     }
   ]
