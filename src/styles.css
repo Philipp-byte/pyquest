@@ -150,6 +150,21 @@ body {
 .chapter-card__body h2 { margin: 0; font-size: 1.1rem; }
 .chapter-card__body p { margin: .2rem 0 .6rem; color: var(--fg-soft); font-size: .88rem; }
 
+/* "So geht es noch besser": Hinweis NACH einer richtigen Loesung.
+   Bewusst freundlich-neutral, nicht wie ein Fehler gestaltet. */
+.better {
+  margin-top: 1rem; padding: .9rem 1rem; border-radius: 14px;
+  background: color-mix(in srgb, var(--blue, #38bdf8) 10%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--blue, #38bdf8) 35%, var(--border));
+}
+.better__head { font-weight: 900; margin-bottom: .3rem; }
+.better__body p { margin: .35rem 0; font-size: .92rem; }
+.better__body code {
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 6px; padding: .05em .35em; font-size: .9em;
+}
+.test-summary__tips { margin: .3rem 0 0; padding-left: 1.1rem; color: var(--fg-soft); font-size: .82rem; }
+
 /* ---------- Kapitel-Tests ---------- */
 .test-card {
   display: flex; gap: 1rem; align-items: flex-start; text-align: left;
@@ -668,6 +683,9 @@ body {
 .report__test-meta { color: #6e7b85; font-size: .8rem; margin-top: .15rem; }
 .report__test-ok { color: #15803d; font-weight: 700; margin: .5rem 0 0; font-size: .88rem; }
 .report__table--test { margin-top: .6rem; font-size: .84rem; }
+.report__test-tips-head { margin: .6rem 0 .2rem; font-size: .84rem; font-weight: 700; color: #00344d; }
+.report__test-tips { margin: 0; padding-left: 1.1rem; font-size: .82rem; color: #3f4a52; }
+.report__test-tips li { margin: .15rem 0; }
 .report__missing { margin: 0; padding-left: 1.1rem; }
 .report__missing li { margin: .15rem 0; }
 .report__none { color: #6e7b85; font-style: italic; }

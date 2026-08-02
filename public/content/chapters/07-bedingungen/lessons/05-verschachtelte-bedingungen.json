@@ -35,9 +35,39 @@
         "stunden = float(input(\"Stunden: \"))\nstundenlohn = float(input(\"Stundenlohn: \"))\nif stunden <= 80 and stundenlohn <= 50:\n    if stunden > 35:\n        zuschlag = (stunden - 35) * stundenlohn * 0.5\n    else:\n        zuschlag = 0\n    lohn = stunden * stundenlohn + zuschlag\n    print(lohn)\nelse:\n    print(\"Ungültige Eingabe!\")"
       ],
       "tests": [
-        { "type": "input_output", "inputs": ["40", "20"], "expected": "Stunden: 40\nStundenlohn: 20\n850.0" },
-        { "type": "input_output", "inputs": ["30", "20"], "expected": "Stunden: 30\nStundenlohn: 20\n600.0" },
-        { "type": "input_output", "inputs": ["90", "20"], "expected": "Stunden: 90\nStundenlohn: 20\nUngültige Eingabe!" }
+        {
+          "type": "input_output",
+          "inputs": [
+            "40",
+            "20"
+          ],
+          "expected": "Stunden: 40\nStundenlohn: 20\n850.0"
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "30",
+            "20"
+          ],
+          "expected": "Stunden: 30\nStundenlohn: 20\n600.0"
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "90",
+            "20"
+          ],
+          "expected": "Stunden: 90\nStundenlohn: 20\nUngültige Eingabe!"
+        }
+      ],
+      "tips": [
+        {
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "print\\s*\\(.*[\\w)]\\s*[*/%+-]\\s*[\\w(].*\\)"
+          },
+          "text": "**Noch besser:** Rechne nicht mitten in `print()`. Lege das Ergebnis zuerst in einer Variable mit sprechendem Namen ab und gib danach diese Variable aus – das macht deinen Code lesbarer, und du kannst später damit weiterrechnen."
+        }
       ]
     }
   ]

@@ -11,5 +11,5 @@ server/__pycache__/
 server/venv/
 *.pyc
 
-# Artefakt aus verify_tests.py (Test 8 schreibt eine Datei)
-arbeitsblaetter/punkte.txt
+# Dateien, die beim Pruefen der Aufgaben entstehen (Kapitel Dateien / Test 8)
+arbeitsblaetter/*.txt

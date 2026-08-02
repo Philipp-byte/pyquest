@@ -19,8 +19,29 @@
         "geschwindigkeit = int(input(\"Geschwindigkeit: \"))\nmindestabstand = geschwindigkeit / 2\nprint(\"Mindestabstand:\", mindestabstand, \"Meter\")"
       ],
       "tests": [
-        { "type": "input_output", "inputs": ["100"], "expected": "Geschwindigkeit: 100\nMindestabstand: 50.0 Meter" },
-        { "type": "input_output", "inputs": ["80"], "expected": "Geschwindigkeit: 80\nMindestabstand: 40.0 Meter" }
+        {
+          "type": "input_output",
+          "inputs": [
+            "100"
+          ],
+          "expected": "Geschwindigkeit: 100\nMindestabstand: 50.0 Meter"
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "80"
+          ],
+          "expected": "Geschwindigkeit: 80\nMindestabstand: 40.0 Meter"
+        }
+      ],
+      "tips": [
+        {
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "print\\s*\\(.*[\\w)]\\s*[*/%+-]\\s*[\\w(].*\\)"
+          },
+          "text": "**Noch besser:** Rechne nicht mitten in `print()`. Lege das Ergebnis zuerst in einer Variable mit sprechendem Namen ab und gib danach diese Variable aus – das macht deinen Code lesbarer, und du kannst später damit weiterrechnen."
+        }
       ]
     },
     {
@@ -37,8 +58,15 @@
         "geschwindigkeit = 100\nreaktionsweg = geschwindigkeit * 0.3\nbremsweg = (geschwindigkeit / 10) ** 2\nanhalteweg = reaktionsweg + bremsweg\nprint(anhalteweg)"
       ],
       "tests": [
-        { "type": "output", "expected": "130.0" },
-        { "type": "var", "name": "anhalteweg", "expected": 130.0 }
+        {
+          "type": "output",
+          "expected": "130.0"
+        },
+        {
+          "type": "var",
+          "name": "anhalteweg",
+          "expected": 130.0
+        }
       ]
     }
   ]

@@ -70,6 +70,34 @@ async function checkTest(run, test) {
   }
 }
 
+// Prueft "So geht es noch besser"-Hinweise.
+//
+// Diese Pruefungen entscheiden NICHT ueber richtig oder falsch. Sie melden
+// sich erst, wenn eine Loesung bereits funktioniert, aber noch nicht sauber
+// geschrieben ist - z. B. wenn ein Ergebnis direkt in print() gerechnet wird,
+// statt es in einer sprechenden Variable abzulegen.
+//
+// Zurueck kommen die Texte der Hinweise, die noch offen sind.
+export async function evaluateTips(userCode, tips = [], { onStatus } = {}) {
+  const offen = [];
+  for (const tip of tips) {
+    const check = tip.check;
+    let ok = false;
+    try {
+      if (check.type === "source_matches" || check.type === "source_not_matches") {
+        ok = checkSource(userCode, check);
+      } else {
+        const run = await runPython(userCode, { inputs: check.inputs ?? [], onStatus });
+        ok = run.error ? false : await checkTest(run, check);
+      }
+    } catch {
+      ok = false;
+    }
+    if (!ok) offen.push(tip.text);
+  }
+  return offen;
+}
+
 // Prueft den GESCHRIEBENEN Code (nicht sein Verhalten) gegen ein Muster.
 // Damit laesst sich in Tests verlangen, dass eine bestimmte Technik benutzt
 // wird - z. B. "loese das mit einer Schleife" statt alles einzeln hinzuschreiben.

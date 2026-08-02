@@ -55,10 +55,21 @@
       "starterCode": "laenge = 20\nbreite = 15\nhoehe = 3\n",
       "hints": [
         "Volumen = laenge * breite * hoehe",
-        "laenge = 20\nbreite = 15\nhoehe = 3\nvolumen = laenge * breite * hoehe\nprint(volumen)"
+        "laenge = 20\nbreite = 15\nhoehe = 3\nvolumen = laenge * breite * hoehe\nprint(\"Das Volumen ist:\", volumen)"
       ],
       "tests": [
-        { "type": "output", "expected": "900" }
+        { "type": "output_contains", "expected": "900", "label": "Die Ausgabe enthält das Volumen 900" },
+        { "type": "source_not_matches", "pattern": "\\b900\\b", "label": "Das Volumen wird gerechnet, nicht hingeschrieben" }
+      ],
+      "tips": [
+        {
+          "check": { "type": "source_not_matches", "pattern": "print\\s*\\(.*[\\w)]\\s*[*/%+-]\\s*[\\w(].*\\)" },
+          "text": "**Noch besser:** Rechne nicht mitten in `print()`. Speichere das Ergebnis zuerst in einer Variable mit sprechendem Namen – `volumen = laenge * breite * hoehe` – und gib danach `volumen` aus. So kannst du später damit weiterrechnen und dein Code bleibt lesbar."
+        },
+        {
+          "check": { "type": "source_matches", "pattern": "print\\s*\\(\\s*[\"']" },
+          "text": "**Tipp für die Ausgabe:** Eine nackte Zahl sagt wenig. Schreibe dazu, was sie bedeutet – zum Beispiel `print(\"Das Volumen ist:\", volumen)`."
+        }
       ]
     }
   ]

@@ -62,6 +62,9 @@ export function renderReport(app, curriculum) {
                 day: "2-digit", month: "2-digit", year: "numeric",
               });
               const offen = r.tasks.filter((task) => !task.passed);
+              // Geloest, aber umstaendlich geschrieben - fuer die Lehrkraft
+              // oft genauso interessant wie ein Fehler.
+              const mitHinweis = r.tasks.filter((task) => task.passed && (task.openTips || []).length);
               return `
         <div class="report__test">
           <div class="report__test-head">
@@ -87,6 +90,13 @@ export function renderReport(app, curriculum) {
                    </tr>`).join("")}
                  </tbody>
                </table>`}
+          ${mitHinweis.length ? `
+            <p class="report__test-tips-head">Gelöst, aber mit Hinweis zum Vorgehen:</p>
+            <ul class="report__test-tips">
+              ${mitHinweis.map((task) => `<li><strong>${escapeHtml(task.title)}:</strong> ${
+                task.openTips.map((t) => escapeHtml(stripMd(t))).join(" ")
+              }</li>`).join("")}
+            </ul>` : ""}
         </div>`;
             }).join("")}
   `;
@@ -155,4 +165,9 @@ export function renderReport(app, curriculum) {
 
 function escapeHtml(s = "") {
   return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+// Im gedruckten Bericht sollen keine Markdown-Zeichen stehen.
+function stripMd(s = "") {
+  return String(s).replace(/\*\*/g, "").replace(/`/g, "");
 }

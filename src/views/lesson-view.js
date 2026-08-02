@@ -5,7 +5,7 @@ import { renderHeader, wireHeader, animateNumber, html } from "../ui.js";
 import { renderMarkdown } from "../markdown.js";
 import { createEditor } from "../editor.js";
 import { runPython } from "../pyodide-runner.js";
-import { evaluateCode, evaluateFill } from "../evaluator.js";
+import { evaluateCode, evaluateFill, evaluateTips } from "../evaluator.js";
 import { completeLesson, isUnlocked, getXp, levelProgress } from "../store.js";
 import { burstSmall, burstBig } from "../celebrate.js";
 import { playCorrect, playWrong, playFinish, playLevelUp, playBadge } from "../sound.js";
@@ -317,6 +317,19 @@ class LessonPlayer {
         burstSmall();
         checkBtn.disabled = true;
         runBtn.disabled = true;
+
+        // Die Loesung funktioniert - jetzt noch pruefen, ob sie auch sauber
+        // geschrieben ist. Solche Hinweise zaehlen nicht als Fehler, sie
+        // zeigen nur den besseren Weg.
+        const offen = await evaluateTips(this.editor.getCode(), step.tips ?? []);
+        if (offen.length) {
+          const box = html(`<div class="better">
+            <div class="better__head">💡 So geht es noch besser</div>
+            <div class="better__body">${offen.map((t) => renderMarkdown(t)).join("")}</div>
+          </div>`);
+          card.append(box);
+        }
+
         this.footer.innerHTML = "";
         this.continueButton();
       } else {

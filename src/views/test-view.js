@@ -14,7 +14,7 @@ import { renderHeader, wireHeader, html } from "../ui.js";
 import { renderMarkdown } from "../markdown.js";
 import { createEditor } from "../editor.js";
 import { runPython } from "../pyodide-runner.js";
-import { evaluateCode } from "../evaluator.js";
+import { evaluateCode, evaluateTips } from "../evaluator.js";
 import { findTest } from "../content.js";
 import { saveTestResult, getTestResult } from "../test-results.js";
 import { burstBig } from "../celebrate.js";
@@ -45,6 +45,7 @@ class TestPlayer {
       passed: false,
       attempts: 0,
       failedChecks: [],
+      openTips: [],
       totalChecks: t.checks.length,
       passedChecks: 0,
     }));
@@ -191,6 +192,18 @@ class TestPlayer {
         playCorrect();
         runBtn.disabled = true;
         skipBtn.disabled = true;
+
+        // Auch bei richtiger Loesung zurueckmelden, wenn es einen saubereren
+        // Weg gaebe. Das wandert auch in den Bogen fuer die Lehrkraft.
+        const offen = await evaluateTips(this.editor.getCode(), task.tips ?? []);
+        res.openTips = offen;
+        if (offen.length) {
+          card.append(html(`<div class="better">
+            <div class="better__head">💡 So geht es noch besser</div>
+            <div class="better__body">${offen.map((t) => renderMarkdown(t)).join("")}</div>
+          </div>`));
+        }
+
         this.nextButton("Weiter");
       } else {
         feedback.className = "feedback feedback--no";
@@ -252,7 +265,10 @@ class TestPlayer {
         <div>
           <strong>Aufgabe ${i + 1}: ${escapeHtml(r.title)}</strong>
           ${r.passed
-            ? `<span class="test-summary__meta">gelöst${r.attempts > 1 ? ` (${r.attempts} Versuche)` : ""}</span>`
+            ? `<span class="test-summary__meta">gelöst${r.attempts > 1 ? ` (${r.attempts} Versuche)` : ""}</span>
+               ${(r.openTips || []).length
+                 ? `<ul class="test-summary__tips">${r.openTips.map((t) => `<li>💡 ${escapeHtml(stripMd(t))}</li>`).join("")}</ul>`
+                 : ""}`
             : `<ul class="test-summary__missing">${
                 r.failedChecks.length
                   ? r.failedChecks.map((f) => `<li>${escapeHtml(f)}</li>`).join("")
@@ -285,4 +301,9 @@ class TestPlayer {
 
 function escapeHtml(s = "") {
   return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+// Für kurze Listeneinträge: Markdown-Auszeichnungen entfernen statt rendern.
+function stripMd(s = "") {
+  return String(s).replace(/\*\*/g, "").replace(/`/g, "");
 }

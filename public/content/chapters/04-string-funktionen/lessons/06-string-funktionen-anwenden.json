@@ -24,8 +24,29 @@
         "buchstabe = input(\"Buchstabe: \")\nposition = ord(buchstabe.upper()) - ord(\"A\") + 1\nprint(position)"
       ],
       "tests": [
-        { "type": "input_output", "inputs": ["b"], "expected": "Buchstabe: b\n2" },
-        { "type": "input_output", "inputs": ["Z"], "expected": "Buchstabe: Z\n26" }
+        {
+          "type": "input_output",
+          "inputs": [
+            "b"
+          ],
+          "expected": "Buchstabe: b\n2"
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "Z"
+          ],
+          "expected": "Buchstabe: Z\n26"
+        }
+      ],
+      "tips": [
+        {
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "print\\s*\\(.*[\\w)]\\s*[*/%+-]\\s*[\\w(].*\\)"
+          },
+          "text": "**Noch besser:** Rechne nicht mitten in `print()`. Lege das Ergebnis zuerst in einer Variable mit sprechendem Namen ab und gib danach diese Variable aus – das macht deinen Code lesbarer, und du kannst später damit weiterrechnen."
+        }
       ]
     },
     {
@@ -42,7 +63,10 @@
         "datensatz = \"Klein|Max|XZ_1234|Berlin\"\nteile = datensatz.split(\"|\")\nneu = [teile[2], teile[0], teile[1], teile[3]]\nprint(\"|\".join(neu))"
       ],
       "tests": [
-        { "type": "output", "expected": "XZ_1234|Klein|Max|Berlin" }
+        {
+          "type": "output",
+          "expected": "XZ_1234|Klein|Max|Berlin"
+        }
       ]
     }
   ]
