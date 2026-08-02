@@ -25,7 +25,11 @@
     {
       "type": "quiz",
       "question": "Was gibt `len(\"Python\")` zurück?",
-      "choices": ["5", "6", "7"],
+      "choices": [
+        "5",
+        "6",
+        "7"
+      ],
       "answer": 1,
       "explainCorrect": "Richtig! \"Python\" hat 6 Buchstaben.",
       "explainWrong": "\"Python\" besteht aus 6 Zeichen: P-y-t-h-o-n."
@@ -40,7 +44,15 @@
         "satz = \"Ich liebe Python\"\nprint(len(satz))\nprint(satz.upper())"
       ],
       "tests": [
-        { "type": "output", "expected": "16\nICH LIEBE PYTHON" }
+        {
+          "type": "output",
+          "expected": "16\nICH LIEBE PYTHON"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\b16\\b|ICH\\ LIEBE\\ PYTHON)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        }
       ]
     }
   ]

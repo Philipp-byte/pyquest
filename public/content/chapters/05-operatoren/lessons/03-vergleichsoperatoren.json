@@ -20,7 +20,11 @@
     {
       "type": "quiz",
       "question": "Welcher Operator vergleicht zwei Werte auf **Gleichheit**?",
-      "choices": ["=", "==", "!="],
+      "choices": [
+        "=",
+        "==",
+        "!="
+      ],
       "answer": 1,
       "explainCorrect": "Richtig! == vergleicht auf Gleichheit. Ein einzelnes = weist nur zu.",
       "explainWrong": "Zum Vergleichen auf Gleichheit nimmt man `==` (zwei Gleichheitszeichen). Ein einzelnes `=` weist einen Wert zu."
@@ -28,7 +32,11 @@
     {
       "type": "quiz",
       "question": "Welcher Operator prüft, ob zwei Werte **ungleich** sind?",
-      "choices": ["!=", "<>", "=/="],
+      "choices": [
+        "!=",
+        "<>",
+        "=/="
+      ],
       "answer": 0,
       "explainCorrect": "Genau! != bedeutet „ungleich“ in Python.",
       "explainWrong": "In Python ist der Ungleich-Operator `!=`. (`<>` gibt es in Python nicht.)"
@@ -42,7 +50,15 @@
         "print(12 != 15)"
       ],
       "tests": [
-        { "type": "output", "expected": "True" }
+        {
+          "type": "output",
+          "expected": "True"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\bTrue\\b)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        }
       ]
     }
   ]

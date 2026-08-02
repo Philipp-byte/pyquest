@@ -20,7 +20,11 @@
     {
       "type": "quiz",
       "question": "Welchen Index hat das erste Element einer Liste?",
-      "choices": ["1", "0", "-1"],
+      "choices": [
+        "1",
+        "0",
+        "-1"
+      ],
       "answer": 1,
       "explainCorrect": "Richtig! Listen-Indizes beginnen bei 0.",
       "explainWrong": "Der erste Index einer Liste ist immer 0, nicht 1."
@@ -35,7 +39,15 @@
         "tiere = [\"Hund\", \"Katze\", \"Maus\"]\nprint(tiere[1])"
       ],
       "tests": [
-        { "type": "output", "expected": "Katze" }
+        {
+          "type": "output",
+          "expected": "Katze"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\w\\s*\\[",
+          "label": "Auf das Element wird über seinen Index zugegriffen"
+        }
       ]
     }
   ]

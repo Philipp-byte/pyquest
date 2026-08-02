@@ -57,6 +57,11 @@
             "Grace"
           ],
           "label": "Die Variable namen enthält den richtigen Wert"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\['Ada',\\ 'Alan',\\ 'Grace'\\])",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
         }
       ]
     }

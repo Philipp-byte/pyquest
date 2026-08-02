@@ -39,7 +39,15 @@
         "class Konto:\n    def __init__(self, kontostand):\n        self.kontostand = kontostand\n\n    def abheben(self, betrag):\n        self.kontostand = self.kontostand - betrag\n\nkonto = Konto(200)\nkonto.abheben(30)\nprint(konto.kontostand)"
       ],
       "tests": [
-        { "type": "output", "expected": "170" }
+        {
+          "type": "output",
+          "expected": "170"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\b170\\b)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        }
       ]
     }
   ]

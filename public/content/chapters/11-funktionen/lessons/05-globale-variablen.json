@@ -47,6 +47,11 @@
           "type": "source_matches",
           "pattern": "\\bdef\\s+verkaufen\\s*\\(",
           "label": "Es gibt eine Funktion namens verkaufen"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\b23\\b|\\b22\\b|\\b21\\b)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
         }
       ]
     }

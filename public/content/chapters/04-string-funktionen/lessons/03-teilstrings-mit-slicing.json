@@ -20,7 +20,11 @@
     {
       "type": "quiz",
       "question": "Was gibt `\"Wasserfallreiniger\"[4:9]` zurück?",
-      "choices": ["erfal", "serfa", "wasse"],
+      "choices": [
+        "erfal",
+        "serfa",
+        "wasse"
+      ],
       "answer": 0,
       "explainCorrect": "Richtig! Ab Index 4 bis (ausschließlich) 9 ergibt das \"erfal\".",
       "explainWrong": "Zähle ab Index 0: W(0)a(1)s(2)s(3)e(4)r(5)f(6)a(7)l(8) – Index 4 bis 8 ergibt \"erfal\"."
@@ -35,7 +39,15 @@
         "seriennummer = \"SE7133131855\"\nprint(seriennummer[:2])\nprint(seriennummer[2:-1])"
       ],
       "tests": [
-        { "type": "output", "expected": "SE\n713313185" }
+        {
+          "type": "output",
+          "expected": "SE\n713313185"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\[\\s*-?\\d*\\s*:",
+          "label": "Der Teilstring entsteht durch Slicing"
+        }
       ]
     }
   ]

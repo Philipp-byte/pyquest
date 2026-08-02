@@ -16,7 +16,11 @@
     {
       "type": "quiz",
       "question": "Was gibt `print(int(3.9))` aus?",
-      "choices": ["4", "3", "3.9"],
+      "choices": [
+        "4",
+        "3",
+        "3.9"
+      ],
       "answer": 1,
       "explainCorrect": "Richtig! int() schneidet die Nachkommastelle einfach ab – aus 3.9 wird 3 (nicht gerundet!).",
       "explainWrong": "`int()` rundet nicht, sondern schneidet die Nachkommastelle ab: aus 3.9 wird 3."
@@ -35,8 +39,15 @@
         "text = \"4.23\"\nzahl = float(text)\nprint(zahl)"
       ],
       "tests": [
-        { "type": "output", "expected": "4.23" },
-        { "type": "var", "name": "zahl", "expected": 4.23 }
+        {
+          "type": "output",
+          "expected": "4.23"
+        },
+        {
+          "type": "var",
+          "name": "zahl",
+          "expected": 4.23
+        }
       ]
     },
     {
@@ -56,8 +67,20 @@
         "zahl = int(True)\nprint(zahl)"
       ],
       "tests": [
-        { "type": "output", "expected": "1" },
-        { "type": "var", "name": "zahl", "expected": 1 }
+        {
+          "type": "output",
+          "expected": "1"
+        },
+        {
+          "type": "var",
+          "name": "zahl",
+          "expected": 1
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\b1\\b)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        }
       ]
     }
   ]

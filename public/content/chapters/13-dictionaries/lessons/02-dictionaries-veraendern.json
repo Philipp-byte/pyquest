@@ -51,6 +51,11 @@
             "Katze": "cat"
           },
           "label": "Die Variable vokabeln enthält den richtigen Wert"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\{'Hund':\\ 'dog',\\ 'Katze':\\ 'cat'\\})",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
         }
       ]
     }

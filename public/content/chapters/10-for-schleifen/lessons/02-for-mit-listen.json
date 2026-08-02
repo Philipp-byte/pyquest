@@ -68,6 +68,11 @@
           "type": "source_matches",
           "pattern": "\\bfor\\s+\\w+\\s+in\\b",
           "label": "Es wird eine for-Schleife verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\b108\\b)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
         }
       ]
     },

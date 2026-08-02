@@ -11,7 +11,11 @@
     {
       "type": "quiz",
       "question": "Welcher dieser Variablennamen ist **nicht erlaubt**?",
-      "choices": ["anzahl_kurse", "12terWert", "_anton"],
+      "choices": [
+        "anzahl_kurse",
+        "12terWert",
+        "_anton"
+      ],
       "answer": 1,
       "explainCorrect": "Genau! Variablennamen dürfen nicht mit einer Zahl beginnen – `12terWert` ist nicht erlaubt.",
       "explainWrong": "`12terWert` ist nicht erlaubt: Variablennamen dürfen nicht mit einer Zahl beginnen. Buchstabe oder Unterstrich am Anfang sind Pflicht."
@@ -19,7 +23,11 @@
     {
       "type": "quiz",
       "question": "Und welcher hier ist **nicht erlaubt**?",
-      "choices": ["email_adresse", "vorname", "F.Schubert"],
+      "choices": [
+        "email_adresse",
+        "vorname",
+        "F.Schubert"
+      ],
       "answer": 2,
       "explainCorrect": "Richtig! Der Punkt ist ein Sonderzeichen und in Variablennamen nicht erlaubt.",
       "explainWrong": "`F.Schubert` ist nicht erlaubt: Der Punkt ist ein Sonderzeichen. Erlaubt sind nur Buchstaben, Ziffern (nicht am Anfang) und der Unterstrich."
@@ -31,7 +39,11 @@
     {
       "type": "quiz",
       "question": "Wie schreibt man in Python (Snake Case) einen Namen für „Anzahl der besuchten Kurse“?",
-      "choices": ["AnzahlBesuchteKurse", "anzahl besuchte kurse", "anzahl_besuchte_kurse"],
+      "choices": [
+        "AnzahlBesuchteKurse",
+        "anzahl besuchte kurse",
+        "anzahl_besuchte_kurse"
+      ],
       "answer": 2,
       "explainCorrect": "Genau! Kleinbuchstaben, Wörter mit Unterstrich getrennt – das ist Snake Case.",
       "explainWrong": "Snake Case heißt: alles klein, Wörter mit Unterstrich getrennt – also `anzahl_besuchte_kurse`. Leerzeichen sind ohnehin verboten."
@@ -46,7 +58,15 @@
         "durchschnittsbewertung = 4.5\nprint(durchschnittsbewertung)"
       ],
       "tests": [
-        { "type": "output", "expected": "4.5" }
+        {
+          "type": "output",
+          "expected": "4.5"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\w+\\s*=",
+          "label": "Der Wert wird in einer Variable gespeichert"
+        }
       ]
     }
   ]

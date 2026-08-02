@@ -16,7 +16,11 @@
     {
       "type": "quiz",
       "question": "Welchen Typ hat das Ergebnis von `5 + 2.0`?",
-      "choices": ["int", "float", "str"],
+      "choices": [
+        "int",
+        "float",
+        "str"
+      ],
       "answer": 1,
       "explainCorrect": "Richtig! Sobald ein float beteiligt ist, wird das Ergebnis automatisch ein float: 7.0.",
       "explainWrong": "Wenn ein int und ein float zusammen gerechnet werden, macht Python den int implizit zum float – das Ergebnis 7.0 ist ein float."
@@ -46,8 +50,20 @@
         "summe = 7 + 2.5\nprint(summe)"
       ],
       "tests": [
-        { "type": "output", "expected": "9.5" },
-        { "type": "var", "name": "summe", "expected": 9.5 }
+        {
+          "type": "output",
+          "expected": "9.5"
+        },
+        {
+          "type": "var",
+          "name": "summe",
+          "expected": 9.5
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\b9\\.5\\b)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        }
       ]
     }
   ]

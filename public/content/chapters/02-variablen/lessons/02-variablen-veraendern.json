@@ -11,7 +11,11 @@
     {
       "type": "quiz",
       "question": "Was gibt dieses Programm aus?\n\n```\npunkte = 10\npunkte = 25\nprint(punkte)\n```",
-      "choices": ["10", "25", "10 und 25"],
+      "choices": [
+        "10",
+        "25",
+        "10 und 25"
+      ],
       "answer": 1,
       "explainCorrect": "Richtig! Die zweite Zuweisung überschreibt die erste – übrig bleibt 25.",
       "explainWrong": "Eine Variable behält nur den letzten Wert. `punkte = 25` überschreibt die 10 – ausgegeben wird 25."
@@ -29,7 +33,9 @@
       "text": "Erhöhe `trainingsstunden` mit der Kurzschreibweise um **10**.",
       "template": "trainingsstunden ___ 10",
       "solution": "+=",
-      "accept": ["+="],
+      "accept": [
+        "+="
+      ],
       "hint": "Die Kurzschreibweise für \"addiere und speichere\" ist +="
     },
     {
@@ -42,8 +48,20 @@
         "xp = 50\nxp += 20\nprint(xp)"
       ],
       "tests": [
-        { "type": "output", "expected": "70" },
-        { "type": "var", "name": "xp", "expected": 70 }
+        {
+          "type": "output",
+          "expected": "70"
+        },
+        {
+          "type": "var",
+          "name": "xp",
+          "expected": 70
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\b70\\b)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        }
       ]
     }
   ]

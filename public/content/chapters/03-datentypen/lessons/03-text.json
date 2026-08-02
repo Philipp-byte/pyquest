@@ -66,6 +66,11 @@
           "type": "source_matches",
           "pattern": "\\+",
           "label": "Die Ausgabe entsteht durch Verkettung mit +"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:Ich\\ wohne\\ in\\ Weingarten)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
         }
       ]
     }

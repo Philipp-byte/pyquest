@@ -25,7 +25,11 @@
     {
       "type": "quiz",
       "question": "Was für einen Datentyp gibt `.split(...)` zurück?",
-      "choices": ["Einen String", "Eine Liste", "Ein Dictionary"],
+      "choices": [
+        "Einen String",
+        "Eine Liste",
+        "Ein Dictionary"
+      ],
       "answer": 1,
       "explainCorrect": "Richtig! split() zerlegt einen String immer in eine Liste von Teilstrings.",
       "explainWrong": "`.split(...)` gibt immer eine **Liste** zurück, auch wenn kein Trennzeichen gefunden wird (dann mit nur einem Element)."
@@ -40,7 +44,15 @@
         "datensatz = \"Klein|Max|Berlin\"\nteile = datensatz.split(\"|\")\nprint(teile)"
       ],
       "tests": [
-        { "type": "output", "expected": "['Klein', 'Max', 'Berlin']" }
+        {
+          "type": "output",
+          "expected": "['Klein', 'Max', 'Berlin']"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\['Klein',\\ 'Max',\\ 'Berlin'\\])",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        }
       ]
     }
   ]

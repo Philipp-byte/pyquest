@@ -47,6 +47,11 @@
           "type": "source_matches",
           "pattern": "\\bdef\\s+kunden_info\\s*\\(",
           "label": "Es gibt eine Funktion namens kunden_info"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:Name:\\ Anna,\\ Alter:\\ 28|Name:\\ Max,\\ Alter:\\ 30,\\ Gekauftes\\ Buch:\\ Harry\\ Potter)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
         }
       ]
     }

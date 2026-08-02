@@ -25,7 +25,11 @@
     {
       "type": "quiz",
       "question": "Was gibt `[1, 2, 3] + [4, 5]` zurück?",
-      "choices": ["[5, 7]", "[1, 2, 3, 4, 5]", "Einen Fehler"],
+      "choices": [
+        "[5, 7]",
+        "[1, 2, 3, 4, 5]",
+        "Einen Fehler"
+      ],
       "answer": 1,
       "explainCorrect": "Richtig! + verbindet zwei Listen zu einer neuen, längeren Liste.",
       "explainWrong": "Bei Listen addiert `+` **nicht** die Zahlen, sondern hängt die zweite Liste an die erste an: [1, 2, 3, 4, 5]."
@@ -40,7 +44,15 @@
         "gruppe_a = [\"Ada\", \"Alan\"]\ngruppe_b = [\"Grace\", \"Linus\", \"Tim\"]\nalle = gruppe_a + gruppe_b\nprint(alle)\nprint(alle[-2:])"
       ],
       "tests": [
-        { "type": "output", "expected": "['Ada', 'Alan', 'Grace', 'Linus', 'Tim']\n['Linus', 'Tim']" }
+        {
+          "type": "output",
+          "expected": "['Ada', 'Alan', 'Grace', 'Linus', 'Tim']\n['Linus', 'Tim']"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\['Ada',\\ 'Alan',\\ 'Grace',\\ 'Linus',\\ 'Tim'\\]|\\['Linus',\\ 'Tim'\\])",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        }
       ]
     }
   ]

@@ -54,6 +54,11 @@
           "name": "laenge",
           "expected": 20,
           "label": "Die Variable laenge enthält den richtigen Wert"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\b300\\b)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
         }
       ]
     },
@@ -91,6 +96,11 @@
           "name": "laenge",
           "expected": 20,
           "label": "Die Variable laenge enthält den richtigen Wert"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\b70\\b)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
         }
       ]
     },

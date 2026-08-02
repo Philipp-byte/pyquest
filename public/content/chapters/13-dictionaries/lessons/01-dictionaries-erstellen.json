@@ -20,7 +20,11 @@
     {
       "type": "quiz",
       "question": "Wie greift man in Python auf einen Wert im Dictionary `person` zu, dessen Schlüssel `\"name\"` ist?",
-      "choices": ["person(name)", "person[\"name\"]", "person.name()"],
+      "choices": [
+        "person(name)",
+        "person[\"name\"]",
+        "person.name()"
+      ],
       "answer": 1,
       "explainCorrect": "Richtig! Der Zugriff erfolgt mit eckigen Klammern und dem Schlüssel als Text.",
       "explainWrong": "Der Zugriff erfolgt mit `person[\"name\"]` – eckige Klammern mit dem Schlüssel als Text."
@@ -35,7 +39,15 @@
         "schueler = {\"name\": \"Max\", \"klasse\": \"BK1\"}\nprint(schueler[\"klasse\"])"
       ],
       "tests": [
-        { "type": "output", "expected": "BK1" }
+        {
+          "type": "output",
+          "expected": "BK1"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\w\\s*\\[",
+          "label": "Auf den Wert wird über seinen Schlüssel zugegriffen"
+        }
       ]
     }
   ]

@@ -39,7 +39,15 @@
         "class Katze:\n    pass\n\nmeine_katze = Katze()\nmeine_katze.name = \"Minka\"\nprint(meine_katze.name)"
       ],
       "tests": [
-        { "type": "output", "expected": "Minka" }
+        {
+          "type": "output",
+          "expected": "Minka"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bclass\\s+\\w+",
+          "label": "Es wird eine Klasse definiert"
+        }
       ]
     }
   ]

@@ -52,6 +52,11 @@
           "type": "source_matches",
           "pattern": "\\.append\\s*\\(",
           "label": "Die Liste wird mit .append() gefüllt"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\[\\[0,\\ 0,\\ 0,\\ 0\\],\\ \\[0,\\ 0,\\ 0,\\ 0\\],\\ \\[0,\\ 0,\\ 0,\\ 0\\]\\])",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
         }
       ]
     }

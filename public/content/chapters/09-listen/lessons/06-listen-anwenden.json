@@ -31,6 +31,11 @@
           "type": "source_matches",
           "pattern": "\\bwhile\\b",
           "label": "Es wird eine while-Schleife verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\b3\\b)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
         }
       ]
     },

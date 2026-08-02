@@ -31,6 +31,11 @@
           "type": "source_matches",
           "pattern": "\\bdef\\s+kassieren\\s*\\(",
           "label": "Es gibt eine Funktion namens kassieren"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\b20\\.5\\b|\\b40\\.5\\b)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
         }
       ]
     },

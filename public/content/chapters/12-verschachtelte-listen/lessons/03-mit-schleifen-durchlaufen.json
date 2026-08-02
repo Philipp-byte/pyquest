@@ -39,7 +39,15 @@
         "matrix = [[7, 8, 9], [1, 2, 3], [4, 5, 6]]\nfor zeile in matrix:\n    for wert in zeile:\n        print(wert, end=\" \")\n    print()"
       ],
       "tests": [
-        { "type": "output", "expected": "7 8 9\n1 2 3\n4 5 6" }
+        {
+          "type": "output",
+          "expected": "7 8 9\n1 2 3\n4 5 6"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:7\\ 8\\ 9|1\\ 2\\ 3|4\\ 5\\ 6)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        }
       ]
     }
   ]

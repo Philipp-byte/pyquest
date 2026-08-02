@@ -25,7 +25,11 @@
     {
       "type": "quiz",
       "question": "Was gibt `\"Hallo\".find(\"xyz\")` zurück, wenn \"xyz\" nicht im String vorkommt?",
-      "choices": ["0", "-1", "None"],
+      "choices": [
+        "0",
+        "-1",
+        "None"
+      ],
       "answer": 1,
       "explainCorrect": "Richtig! find() gibt -1 zurück, wenn der Teilstring nicht gefunden wird.",
       "explainWrong": "Wird nichts gefunden, gibt `.find()` **-1** zurück (nicht None und nicht 0)."
@@ -40,7 +44,15 @@
         "email = \"ada@python.de\"\nprint(\"@\" in email)\nprint(email.find(\"@\"))"
       ],
       "tests": [
-        { "type": "output", "expected": "True\n3" }
+        {
+          "type": "output",
+          "expected": "True\n3"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\bTrue\\b|\\b3\\b)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        }
       ]
     }
   ]

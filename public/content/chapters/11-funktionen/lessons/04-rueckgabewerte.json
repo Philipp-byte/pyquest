@@ -83,6 +83,11 @@
           "type": "source_matches",
           "pattern": "\\breturn\\b",
           "label": "Das Ergebnis wird mit return zurückgegeben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\b11\\.5\\b)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
         }
       ]
     }

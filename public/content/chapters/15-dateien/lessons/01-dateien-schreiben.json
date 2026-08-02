@@ -39,7 +39,15 @@
         "with open(\"projekt.txt\", \"w\") as datei:\n    datei.write(\"Mein erstes Python-Projekt\")\nprint(\"Fertig!\")"
       ],
       "tests": [
-        { "type": "output", "expected": "Fertig!" }
+        {
+          "type": "output",
+          "expected": "Fertig!"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "open\\s*\\(",
+          "label": "Die Datei wird mit open() geschrieben"
+        }
       ]
     }
   ]

@@ -20,7 +20,11 @@
     {
       "type": "quiz",
       "question": "Welchen Wert hat `x` am Ende?\n\n```\nx = 13\nx += 12\nx *= 12\nx += 1\nx += 1\n```",
-      "choices": ["302", "312", "26"],
+      "choices": [
+        "302",
+        "312",
+        "26"
+      ],
       "answer": 0,
       "explainCorrect": "Richtig! 13 → 25 → 300 → 301 → 302.",
       "explainWrong": "Schritt für Schritt: 13 +12 = 25, ·12 = 300, +1 = 301, +1 = 302. Also 302."
@@ -34,8 +38,20 @@
         "x = 13\nx += 12\nx *= 12\nx += 1\nx += 1\nprint(x)"
       ],
       "tests": [
-        { "type": "output", "expected": "302" },
-        { "type": "var", "name": "x", "expected": 302 }
+        {
+          "type": "output",
+          "expected": "302"
+        },
+        {
+          "type": "var",
+          "name": "x",
+          "expected": 302
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\b302\\b)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        }
       ]
     }
   ]

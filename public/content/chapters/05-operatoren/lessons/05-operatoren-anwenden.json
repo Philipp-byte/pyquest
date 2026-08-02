@@ -78,6 +78,11 @@
           "name": "reaktionsweg",
           "expected": 30.0,
           "label": "Die Variable reaktionsweg enthält den richtigen Wert"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\b130\\.0\\b)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
         }
       ]
     }

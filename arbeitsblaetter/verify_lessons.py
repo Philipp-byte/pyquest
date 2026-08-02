@@ -106,10 +106,43 @@ def task_passes(step, code):
     return True
 
 
+# Aufgaben, bei denen das woertliche Hinschreiben die RICHTIGE Loesung ist -
+# etwa "Schreibe ein Programm, das 'Python ist so cool!' ausgibt" oder die
+# Uebung zu Escape-Sequenzen. Dort waere ein Literal-Verbot unsinnig.
+AUSNAHMEN = {
+    ("01-erste-schritte", "02-hallo-welt", 3),
+    ("01-erste-schritte", "03-print-uebung", 2),
+    ("01-erste-schritte", "03-print-uebung", 3),
+    ("06-eingaben", "04-escape-sequenzen", 4),
+}
+
+
+def schummel_loesungen(step):
+    """Baut Abgaben, welche die Aufgabe NICHT loesen, aber die richtige
+    Ausgabe erzeugen - z. B. print(False) statt eines echten Vergleichs.
+
+    Besteht eine Aufgabe damit, prueft sie nur das Ergebnis und nicht den Weg.
+    Genau so rutschte print("Ich wohne in Weingarten") und print(False) durch.
+    """
+    varianten = []
+    for check in step["tests"]:
+        # Nur ohne Eingaben - mit input() ist das Nachbauen nicht sinnvoll.
+        if check["type"] != "output" or check.get("inputs"):
+            continue
+        erwartet = check["expected"]
+        # Ergebnis woertlich ausgeben
+        varianten.append(("Ergebnis hingeschrieben", f"print({json.dumps(erwartet)})"))
+        # Mehrzeilig: je Zeile ein print
+        if "\n" in erwartet:
+            zeilen = "\n".join(f"print({json.dumps(z)})" for z in erwartet.split("\n"))
+            varianten.append(("Zeile für Zeile hingeschrieben", zeilen))
+    return varianten
+
+
 def negative_pass(curriculum):
-    """Gegenprobe: Eine Aufgabe darf nicht schon bestehen, wenn gar nichts
-    abgegeben wird (bzw. nur der vorgegebene Startcode). Sonst prueft sie in
-    Wahrheit nichts."""
+    """Gegenprobe: Eine Aufgabe darf nicht bestehen, wenn nichts abgegeben
+    wird - und auch nicht, wenn nur das erwartete Ergebnis hingeschrieben
+    wird. Sonst prueft sie das Ergebnis statt der Aufgabe."""
     geprueft = luecken = 0
     for cid in curriculum["chapters"]:
         chapter = json.loads((CONTENT / "chapters" / cid / "chapter.json").read_text(encoding="utf-8"))
@@ -119,11 +152,15 @@ def negative_pass(curriculum):
                 if step.get("type") != "code":
                     continue
                 starter = step.get("starterCode") or ""
-                for name, code in (("leer", starter), ("nur pass", starter + "\npass\n")):
+                abgaben = [("leer", starter), ("nur pass", starter + "\npass\n")]
+                if (cid, lid, si) not in AUSNAHMEN:
+                    abgaben += [(name, starter + code) for name, code in schummel_loesungen(step)]
+                for name, code in abgaben:
                     geprueft += 1
                     if task_passes(step, code):
                         luecken += 1
                         print(f'LUECKE {cid}/{lid} #{si}: besteht schon mit "{name}"')
+                        print(f'    Aufgabe: {step["task"][:95]}')
     return geprueft, luecken
 
 

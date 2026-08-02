@@ -25,7 +25,11 @@
     {
       "type": "quiz",
       "question": "Was liefert `noten[1][2]` bei `noten = [[2, 3, 1], [4, 2, 3], [1, 1, 2]]`?",
-      "choices": ["4", "3", "2"],
+      "choices": [
+        "4",
+        "3",
+        "2"
+      ],
       "answer": 1,
       "explainCorrect": "Richtig! noten[1] ist [4, 2, 3], und davon Index 2 ist die 3.",
       "explainWrong": "noten[1] ist die zweite Zeile [4, 2, 3]. Davon ist Index 2 (das dritte Element) die 3."
@@ -44,7 +48,15 @@
         "sitzplan = [[\"Ada\", \"Alan\", \"Grace\"], [\"Linus\", \"Tim\", \"Katie\"]]\nprint(sitzplan[0])\nprint(sitzplan[1][2])\nprint(len(sitzplan))"
       ],
       "tests": [
-        { "type": "output", "expected": "['Ada', 'Alan', 'Grace']\nKatie\n2" }
+        {
+          "type": "output",
+          "expected": "['Ada', 'Alan', 'Grace']\nKatie\n2"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\['Ada',\\ 'Alan',\\ 'Grace'\\])",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        }
       ]
     }
   ]

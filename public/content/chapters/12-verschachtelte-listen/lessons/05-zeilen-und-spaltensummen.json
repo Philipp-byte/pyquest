@@ -25,7 +25,11 @@
     {
       "type": "quiz",
       "question": "Wie viele Schleifen brauchst du mindestens, um die Summe EINER bestimmten Spalte zu berechnen?",
-      "choices": ["Keine", "Eine", "Zwei"],
+      "choices": [
+        "Keine",
+        "Eine",
+        "Zwei"
+      ],
       "answer": 1,
       "explainCorrect": "Richtig! Eine Schleife über die Zeilen reicht, weil du pro Zeile nur ein festes Element (zeile[k]) brauchst.",
       "explainWrong": "Für eine EINZELNE Spalte reicht eine Schleife über die Zeilen – du brauchst ja nur `zeile[k]` aus jeder Zeile, keine zweite Schleife."
@@ -40,7 +44,15 @@
         "matrix = [[2, 4, 6], [1, 3, 5], [7, 8, 9]]\nzeilensummen = []\nfor zeile in matrix:\n    summe = 0\n    for wert in zeile:\n        summe += wert\n    zeilensummen.append(summe)\nprint(zeilensummen)"
       ],
       "tests": [
-        { "type": "output", "expected": "[12, 9, 24]" }
+        {
+          "type": "output",
+          "expected": "[12, 9, 24]"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\[12,\\ 9,\\ 24\\])",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        }
       ]
     },
     {
@@ -53,7 +65,15 @@
         "matrix = [[2, 4, 6], [1, 3, 5], [7, 8, 9]]\nspaltensumme = 0\nfor zeile in matrix:\n    spaltensumme += zeile[1]\nprint(spaltensumme)"
       ],
       "tests": [
-        { "type": "output", "expected": "15" }
+        {
+          "type": "output",
+          "expected": "15"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\b15\\b)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        }
       ]
     }
   ]

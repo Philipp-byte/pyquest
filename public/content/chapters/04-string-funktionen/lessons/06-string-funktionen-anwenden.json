@@ -66,6 +66,11 @@
         {
           "type": "output",
           "expected": "XZ_1234|Klein|Max|Berlin"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:XZ_1234\\|Klein\\|Max\\|Berlin)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
         }
       ]
     }

@@ -47,6 +47,11 @@
           "type": "source_matches",
           "pattern": "\\bdef\\s+addiere\\s*\\(",
           "label": "Es gibt eine Funktion namens addiere"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\b7\\b|\\b15\\b)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
         }
       ]
     },
@@ -72,6 +77,11 @@
           "type": "source_matches",
           "pattern": "\\bdef\\s+buch_info\\s*\\(",
           "label": "Es gibt eine Funktion namens buch_info"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:Titel:\\ Moby\\ Dick,\\ Autor:\\ Herman\\ Melville,\\ Preis:\\ 14\\.99\\ Euro)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
         }
       ]
     }

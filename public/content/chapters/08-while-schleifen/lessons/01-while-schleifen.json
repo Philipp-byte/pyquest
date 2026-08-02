@@ -56,6 +56,11 @@
           "type": "source_matches",
           "pattern": "\\bwhile\\b",
           "label": "Es wird eine while-Schleife verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\b4\\b|\\b3\\b|\\b2\\b)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
         }
       ]
     },
@@ -81,6 +86,11 @@
           "type": "source_matches",
           "pattern": "\\bwhile\\b",
           "label": "Es wird eine while-Schleife verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\b55\\b)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
         }
       ]
     }

@@ -20,7 +20,11 @@
     {
       "type": "quiz",
       "question": "Was ergibt `144 % 7`?",
-      "choices": ["20", "3", "7"],
+      "choices": [
+        "20",
+        "3",
+        "7"
+      ],
       "answer": 1,
       "explainCorrect": "Richtig! 144 = 20·7 + 3, also ist der Rest 3.",
       "explainWrong": "% liefert den Rest: 144 geteilt durch 7 ist 20 Rest 3 – also 3."
@@ -28,7 +32,11 @@
     {
       "type": "quiz",
       "question": "Und was ergibt `123456 % 100`?",
-      "choices": ["1234", "56", "100"],
+      "choices": [
+        "1234",
+        "56",
+        "100"
+      ],
       "answer": 1,
       "explainCorrect": "Genau! Modulo 100 liefert immer die letzten zwei Ziffern – hier 56.",
       "explainWrong": "% 100 liefert den Rest bei Division durch 100 – das sind die letzten beiden Ziffern: 56."
@@ -42,7 +50,15 @@
         "print(11 % 2)"
       ],
       "tests": [
-        { "type": "output", "expected": "1" }
+        {
+          "type": "output",
+          "expected": "1"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "[\\w)]\\s*[*/%+-]\\s*[\\w(]",
+          "label": "Das Ergebnis wird gerechnet"
+        }
       ]
     }
   ]

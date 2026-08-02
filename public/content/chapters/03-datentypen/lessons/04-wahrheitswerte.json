@@ -20,7 +20,11 @@
     {
       "type": "quiz",
       "question": "Was gibt `print(10 >= 10)` aus?",
-      "choices": ["True", "False", "Fehler"],
+      "choices": [
+        "True",
+        "False",
+        "Fehler"
+      ],
       "answer": 0,
       "explainCorrect": "Richtig! >= heißt „größer oder gleich“ – 10 ist gleich 10, also True.",
       "explainWrong": "`>=` bedeutet „größer oder gleich“. 10 ist gleich 10, deshalb ist die Aussage wahr: True."
@@ -38,7 +42,15 @@
         "print(7 < 3)"
       ],
       "tests": [
-        { "type": "output", "expected": "False" }
+        {
+          "type": "output",
+          "expected": "False"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:\\bFalse\\b)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        }
       ]
     }
   ]

@@ -15,7 +15,11 @@
     {
       "type": "quiz",
       "question": "Was gehört ans Ende der `if`-Zeile?",
-      "choices": ["Ein Semikolon ;", "Ein Doppelpunkt :", "Nichts"],
+      "choices": [
+        "Ein Semikolon ;",
+        "Ein Doppelpunkt :",
+        "Nichts"
+      ],
       "answer": 1,
       "explainCorrect": "Richtig! Nach der Bedingung kommt immer ein Doppelpunkt, dann der eingerückte Block.",
       "explainWrong": "Am Ende der if-Zeile steht ein Doppelpunkt `:`. Darunter folgt der eingerückte Codeblock."
@@ -23,7 +27,11 @@
     {
       "type": "quiz",
       "question": "Was gibt dieses Programm aus?\n\n```\nx = 2\nif x > 3:\n    print(\"groß\")\nprint(\"fertig\")\n```",
-      "choices": ["groß und fertig", "nur fertig", "nur groß"],
+      "choices": [
+        "groß und fertig",
+        "nur fertig",
+        "nur groß"
+      ],
       "answer": 1,
       "explainCorrect": "Genau! x > 3 ist False, also wird \"groß\" übersprungen. \"fertig\" steht außerhalb des if und läuft immer.",
       "explainWrong": "x ist 2, also ist `x > 3` False – „groß“ wird übersprungen. „fertig“ ist nicht eingerückt, gehört nicht zum if und läuft immer. Ausgabe: nur „fertig“."
@@ -38,7 +46,15 @@
         "temperatur = 30\nif temperatur > 25:\n    print(\"Es ist heiß!\")"
       ],
       "tests": [
-        { "type": "output", "expected": "Es ist heiß!" }
+        {
+          "type": "output",
+          "expected": "Es ist heiß!"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bif\\b",
+          "label": "Es wird eine if-Anweisung verwendet"
+        }
       ]
     }
   ]

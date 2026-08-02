@@ -20,7 +20,11 @@
     {
       "type": "quiz",
       "question": "Welcher Modus wird zum Lesen einer Datei verwendet?",
-      "choices": ["\"w\"", "\"r\"", "\"read\""],
+      "choices": [
+        "\"w\"",
+        "\"r\"",
+        "\"read\""
+      ],
       "answer": 1,
       "explainCorrect": "Richtig! \"r\" steht für read (lesen).",
       "explainWrong": "Zum Lesen nutzt man den Modus \"r\" (read)."
@@ -35,7 +39,15 @@
         "with open(\"text.txt\", \"w\") as datei:\n    datei.write(\"Python macht Spaß\")\n\nwith open(\"text.txt\", \"r\") as datei:\n    inhalt = datei.read()\nprint(inhalt)"
       ],
       "tests": [
-        { "type": "output", "expected": "Python macht Spaß" }
+        {
+          "type": "output",
+          "expected": "Python macht Spaß"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "open\\s*\\(",
+          "label": "Die Datei wird mit open() gelesen"
+        }
       ]
     }
   ]

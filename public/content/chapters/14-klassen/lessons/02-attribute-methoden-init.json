@@ -39,7 +39,20 @@
         "class Person:\n    def __init__(self, name, alter):\n        self.name = name\n        self.alter = alter\n\n    def vorstellen(self):\n        print(\"Ich heiße \" + self.name + \" und bin \" + str(self.alter) + \" Jahre alt.\")\n\np = Person(\"Mia\", 17)\np.vorstellen()"
       ],
       "tests": [
-        { "type": "output", "expected": "Ich heiße Mia und bin 17 Jahre alt." }
+        {
+          "type": "output",
+          "expected": "Ich heiße Mia und bin 17 Jahre alt."
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "(?:Ich\\ heiße\\ Mia\\ und\\ bin\\ 17\\ Jahre\\ alt\\.)",
+          "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bclass\\s+\\w+",
+          "label": "Es wird eine Klasse definiert"
+        }
       ]
     }
   ]
