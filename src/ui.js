@@ -29,6 +29,7 @@ export function renderHeader(active = "path") {
         </div>
         <span class="xp-count" data-value="${xp}">${xp} XP</span>
       </div>
+      <button class="intro-replay" title="Vorspann nochmal ansehen" aria-label="Vorspann nochmal ansehen">🎬</button>
       <button class="sound-toggle" title="${muted ? "Sound an" : "Sound aus"}" aria-label="${muted ? "Sound an" : "Sound aus"}">${muted ? "🔇" : "🔊"}</button>
       ${remoteMode ? `<button class="logout-btn" title="Abmelden" aria-label="Abmelden">🚪</button>` : ""}
       <nav class="topbar__nav">
@@ -50,6 +51,13 @@ export function wireHeader(root) {
       soundBtn.textContent = muted ? "🔇" : "🔊";
       soundBtn.title = muted ? "Sound an" : "Sound aus";
       soundBtn.setAttribute("aria-label", muted ? "Sound an" : "Sound aus");
+    };
+  }
+
+  const introBtn = root.querySelector(".intro-replay");
+  if (introBtn) {
+    introBtn.onclick = () => {
+      location.hash = "#/intro";
     };
   }
 

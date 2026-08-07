@@ -96,13 +96,13 @@ body {
 }
 .topbar__nav a.is-active { background: var(--green); color: #fff; }
 
-.sound-toggle {
+.sound-toggle, .intro-replay {
   border: 1px solid var(--border); background: var(--surface-2);
   width: 40px; height: 40px; border-radius: 50%; font-size: 1.1rem;
   cursor: pointer; display: grid; place-items: center; flex: none;
   transition: transform .1s;
 }
-.sound-toggle:active { transform: scale(.9); }
+.sound-toggle:active, .intro-replay:active { transform: scale(.9); }
 
 .logout-btn {
   border: 1px solid var(--border); background: var(--surface-2);
@@ -442,6 +442,26 @@ body {
   background: var(--surface); color: var(--fg); margin-top: .3rem;
 }
 .fill__input:focus { outline: none; border-color: var(--green); }
+
+/* ---------- Vorspann (Intro) ----------
+   Laeuft im iframe ueber die ganze Seite. Die Kopfleiste der App wird hier
+   bewusst weggelassen, damit der Vorspann wirkt. */
+.intro-page {
+  position: fixed; inset: 0; z-index: 50;
+  background: #07111d;
+}
+.intro-frame { width: 100%; height: 100%; border: 0; display: block; }
+.intro-exit {
+  position: absolute; top: .9rem; left: .9rem; z-index: 2;
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-family: var(--font); font-size: .85rem; font-weight: 800;
+  color: #e2e8f0; background: rgba(7, 17, 29, .72);
+  border: 1px solid rgba(226, 232, 240, .35); border-radius: 999px;
+  padding: .5rem .9rem; cursor: pointer;
+  backdrop-filter: blur(4px);
+}
+.intro-exit:hover { background: rgba(7, 17, 29, .92); }
+.intro-replay { font-size: 1rem; }
 
 /* Editor */
 .card--code .editor {

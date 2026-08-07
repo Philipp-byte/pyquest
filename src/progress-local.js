@@ -6,6 +6,7 @@ import { flattenLessons } from "./content.js";
 import { BADGES } from "./badges.js";
 import { levelForXp } from "./level-math.js";
 import { exportTestResults, importTestResults, resetTestResults } from "./test-results.js";
+import { exportIntroState, importIntroState } from "./intro-state.js";
 
 const KEY = "pyquest.progress.v1";
 
@@ -147,6 +148,8 @@ export function exportState() {
       // gehoeren aber in dieselbe Sicherungsdatei - sonst waere die
       // Rueckmeldung fuer die Lehrkraft nach einem Geraetewechsel weg.
       tests: exportTestResults(),
+      // Damit nach einem Geraetewechsel nicht wieder der Vorspann startet.
+      introGesehen: exportIntroState(),
     },
     null,
     2
@@ -177,5 +180,6 @@ export function importState(text) {
   // Testergebnisse mitnehmen, falls die Datei welche enthaelt (aeltere
   // Sicherungen ohne Tests bleiben gueltig).
   if (parsed && parsed.tests) importTestResults(parsed.tests);
+  if (parsed && "introGesehen" in parsed) importIntroState(parsed.introGesehen);
   return true;
 }

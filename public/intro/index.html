@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#07111d">
+    <meta name="description" content="Interaktiver PyQuest-Vorspann mit 31 manuell gesteuerten Szenen.">
+    <title>PyQuest – Interaktiver Vorspann</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="start-screen" id="startScreen" aria-label="PyQuest Intro starten">
+        <div class="start-backdrop" aria-hidden="true"></div>
+        <div class="start-vignette" aria-hidden="true"></div>
+        <div class="brand brand--start" aria-label="PyQuest">
+          <span class="brand-mark">Py</span>
+          <span class="brand-name">PyQuest</span>
+        </div>
+        <div class="start-action">
+          <button class="start-button" id="startButton" type="button">
+            <span class="start-button__icon" aria-hidden="true">▶</span>
+            <span>Intro starten</span>
+          </button>
+          <p>Ohne Stimmen · mit Musik und Soundeffekten</p>
+        </div>
+      </section>
+
+      <section class="player" id="player" hidden aria-label="PyQuest Vorspann">
+        <header class="topbar">
+          <div class="brand" aria-label="PyQuest">
+            <span class="brand-mark">Py</span>
+            <span class="brand-name">PyQuest</span>
+          </div>
+          <div class="act-indicator" aria-live="polite">
+            <span id="actLabel">AKT I</span>
+            <strong id="actTitle">Die Akademie</strong>
+          </div>
+          <div class="top-actions">
+            <button class="icon-button" id="soundButton" type="button" aria-label="Ton ausschalten" aria-pressed="false">
+              <span class="sound-icon" aria-hidden="true">◖))</span>
+            </button>
+            <button class="skip-button" id="skipButton" type="button">Intro überspringen <span aria-hidden="true">›</span></button>
+          </div>
+          <div class="progress-track" aria-hidden="true"><span id="topProgress"></span></div>
+        </header>
+
+        <div class="stage" id="stage">
+          <div class="backdrop backdrop--a is-active" id="backdropA" aria-hidden="true"></div>
+          <div class="backdrop backdrop--b" id="backdropB" aria-hidden="true"></div>
+          <div class="scene-overlay" id="sceneOverlay" aria-hidden="true"></div>
+          <div class="particles" id="particles" aria-hidden="true"></div>
+
+          <div class="scene-badge" id="sceneBadge" hidden>
+            <span id="badgeEyebrow"></span>
+            <strong id="badgeTitle"></strong>
+          </div>
+
+          <div class="character-layer" id="characterLayer" aria-hidden="true"></div>
+          <div class="world-map" id="worldMap" hidden aria-label="Die 16 Welten von PyQuest"></div>
+
+          <article class="speech-bubble" id="speechBubble" aria-live="polite">
+            <div class="speaker-row">
+              <span class="speaker-dot" aria-hidden="true"></span>
+              <span id="speakerName">ERZÄHLUNG</span>
+            </div>
+            <p id="dialogueText"></p>
+          </article>
+
+          <nav class="controls" aria-label="Szenensteuerung">
+            <button class="nav-button nav-button--back" id="backButton" type="button">
+              <span aria-hidden="true">‹</span> Zurück
+            </button>
+            <div class="scene-status">
+              <strong><span id="sceneNumber">1</span> <span aria-hidden="true">/</span> <span id="sceneTotal">31</span></strong>
+              <span>Lies in Ruhe – die Szene wechselt nicht automatisch.</span>
+            </div>
+            <button class="nav-button nav-button--next" id="nextButton" type="button">
+              Weiter <span aria-hidden="true">›</span>
+            </button>
+          </nav>
+        </div>
+      </section>
+
+      <section class="end-screen" id="endScreen" hidden>
+        <div class="end-card">
+          <span class="end-kicker">DIE REISE BEGINNT</span>
+          <h1>16 Welten. Ein gemeinsamer Code.</h1>
+          <p>Py und seine Verbündeten sind bereit. Jetzt beginnt dein Abenteuer.</p>
+          <div class="end-actions">
+            <button class="nav-button nav-button--next" id="adventureButton" type="button">Abenteuer beginnen <span aria-hidden="true">›</span></button>
+            <button class="text-button" id="replayButton" type="button">Intro noch einmal ansehen</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./intro.js"></script>
+  </body>
+</html>

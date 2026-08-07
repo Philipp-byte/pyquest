@@ -19,6 +19,7 @@ import { setBackendMode } from "./store.js";
 import { whoAmI, loadState } from "./progress-remote.js";
 import { api } from "./api.js";
 import { applyDefaultIfUnset } from "./sound.js";
+import { hasSeenIntro } from "./intro-state.js";
 
 const app = document.getElementById("app");
 let curriculum = null;
@@ -108,6 +109,11 @@ function startApp() {
     const { renderLesson } = await import("./views/lesson-view.js");
     renderLesson(app, curriculum, chapter, lesson);
   });
+  // Vorspann - wird nachgeladen, weil er nur selten gebraucht wird.
+  route("/intro", async () => {
+    const { renderIntro } = await import("./views/intro-view.js");
+    renderIntro(app);
+  });
   // Kapitel-Test (nach je zwei Kapiteln) - eigene Ansicht, ebenfalls
   // nachgeladen, weil sie den Editor mitbringt.
   route("/test/:testId", async ({ testId }) => {
@@ -125,6 +131,15 @@ function startApp() {
   });
 
   const resolve = startRouter(() => renderPath(app, curriculum));
+
+  // Beim allerersten Besuch laeuft zuerst der Vorspann - danach nie wieder
+  // von allein. Nur, wenn gerade keine bestimmte Seite aufgerufen wurde
+  // (ein geteilter Link auf eine Lektion soll nicht im Intro landen).
+  const ohneZiel = !location.hash || location.hash === "#/" || location.hash === "#";
+  if (ohneZiel && !hasSeenIntro()) {
+    location.hash = "#/intro";
+  }
+
   resolve();
 }
 
