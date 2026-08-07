@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "format": "png",
+  "background": "transparent",
+  "poseOrder": [
+    "neutral",
+    "funny",
+    "angry",
+    "clever",
+    "thoughtful",
+    "worried",
+    "surprised",
+    "victory"
+  ],
+  "poseLabels": {
+    "neutral": "Neutral",
+    "funny": "Lustig",
+    "angry": "Ärgerlich",
+    "clever": "Schlau",
+    "thoughtful": "Nachdenklich",
+    "worried": "Besorgt",
+    "surprised": "Überrascht",
+    "victory": "Siegreich"
+  },
+  "specialPoses": {
+    "null": [
+      {
+        "id": "defeated",
+        "label": "Besiegt"
+      }
+    ]
+  },
+  "characters": [
+    {
+      "id": "py",
+      "name": "Py",
+      "role": "Maskottchen und Held",
+      "folder": "py",
+      "canvas": [640, 640]
+    },
+    {
+      "id": "ada",
+      "name": "Wächterin Ada",
+      "role": "Mentorin und Beschützerin",
+      "folder": "ada",
+      "canvas": [512, 640]
+    },
+    {
+      "id": "null",
+      "name": "Professor Null",
+      "role": "Hauptgegner",
+      "folder": "professor-null",
+      "canvas": [512, 640]
+    },
+    {
+      "id": "apprentice",
+      "name": "Code-Lehrling",
+      "role": "Lernfigur und Stellvertretung der Spielenden",
+      "folder": "code-apprentice",
+      "canvas": [512, 640]
+    },
+    {
+      "id": "byte",
+      "name": "Byte",
+      "role": "Hilfs- und Debug-Drohne",
+      "folder": "byte",
+      "canvas": [640, 640]
+    },
+    {
+      "id": "glitch",
+      "name": "Glitch",
+      "role": "Charmantes Fehlerwesen",
+      "folder": "glitch",
+      "canvas": [640, 640]
+    },
+    {
+      "id": "nia",
+      "name": "Code-Scout Nia",
+      "role": "Mutige Verbündete auf Augenhöhe",
+      "folder": "nia",
+      "canvas": [512, 640]
+    },
+    {
+      "id": "memo",
+      "name": "Archivarin Memo",
+      "role": "Wissenshüterin der Speicherstadt",
+      "folder": "memo",
+      "canvas": [512, 640]
+    }
+  ],
+  "pathTemplate": "/assets/characters/{folder}/{pose}.png"
+}

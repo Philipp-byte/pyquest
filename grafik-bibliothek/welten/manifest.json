@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "format": "webp",
+  "stateOrder": ["intact", "corrupted", "destroyed", "restored"],
+  "stateLabels": {
+    "intact": "Intakt",
+    "corrupted": "Von Null korrumpiert",
+    "destroyed": "Nach dem Kampf zerstört",
+    "restored": "Wiederhergestellt"
+  },
+  "worlds": [
+    { "id": "neustart", "name": "Neustart", "folder": "01-neustart", "theme": "Ankunft, Grundlagen und der erste Portalplatz" },
+    { "id": "speicherstadt", "name": "Speicherstadt", "folder": "02-speicherstadt", "theme": "Kristalline Datenspeicher und Erinnerungsarchive" },
+    { "id": "typopolis", "name": "Typopolis", "folder": "03-typopolis", "theme": "Stadtviertel der unterschiedlichen Datentypen" },
+    { "id": "textoria", "name": "Textoria", "folder": "04-textoria", "theme": "Bibliotheken, Zeichenketten und Sprachbänder" },
+    { "id": "operatia", "name": "Operatia", "folder": "05-operatia", "theme": "Rechenmaschinen, Operatoren und Energiegetriebe" },
+    { "id": "dialoga", "name": "Dialoga", "folder": "06-dialoga", "theme": "Botschaften, Signaltürme und Kommunikation" },
+    { "id": "entscheidora", "name": "Entscheidora", "folder": "07-entscheidora", "theme": "Verzweigungen, Bedingungen und Wahlmöglichkeiten" },
+    { "id": "itera", "name": "Itera", "folder": "08-itera", "theme": "Schleifen, Kreisbahnen und Wiederholung" },
+    { "id": "listara", "name": "Listara", "folder": "09-listara", "theme": "Geordnete Module, Sammlungen und Listen" },
+    { "id": "forvania", "name": "Forvania", "folder": "10-forvania", "theme": "Sequenzpfade, Wiederholungswälder und for-Schleifen" },
+    { "id": "funktoria", "name": "Funktoria", "folder": "11-funktoria", "theme": "Werkstätten, Eingaben, Ausgaben und Funktionen" },
+    { "id": "matrixa", "name": "Matrixa", "folder": "12-matrixa", "theme": "Rasterstadt, Ebenen und mehrdimensionale Strukturen" },
+    { "id": "lexikona", "name": "Lexikona", "folder": "13-lexikona", "theme": "Schlüssel-Wert-Archive und geordnete Paare" },
+    { "id": "objektiva", "name": "Objektiva", "folder": "14-objektiva", "theme": "Baupläne, Klassen und lebendige Objekte" },
+    { "id": "archivia", "name": "Archivia", "folder": "15-archivia", "theme": "Dateien, Datenströme und sichere Archive" },
+    { "id": "finalia", "name": "Finalia", "folder": "16-finalia", "theme": "Die vereinte Hauptstadt aller Python-Kräfte" }
+  ],
+  "pathTemplate": "/assets/worlds/{folder}/{state}.webp"
+}
