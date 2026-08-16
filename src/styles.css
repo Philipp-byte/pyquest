@@ -346,11 +346,22 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
   width: min(70%, 460px); margin-left: auto; margin-right: auto;
   position: relative; z-index: 1;
 }
+/* Kapitel-Landkarte: derselbe Pfad-Stil innerhalb eines Kapitels - jede
+   Lektion ist eine Station an einem Schauplatz der Welt. */
+.kapitelkarte { padding: 1.6rem 1.2rem 1.8rem; margin-top: 0; }
+.kapitelkarte::before { top: 1.2rem; bottom: 1.2rem; }
+.welt--station { width: min(48%, 360px); }
+/* Die Ortsbilder sind Querformat-Szenen */
+.welt--station .welt__bild { aspect-ratio: 16 / 9; }
+.welt--station .welt__info { padding: .65rem .9rem .85rem; }
+.welt--station .welt__info h2 { font-size: 1.02rem; }
+.welt--station .node__stars { display: inline-block; margin-top: .15rem; }
 @media (max-width: 700px) {
   .weltenbaum::before { left: 14px; transform: none; }
   .welt, .weltenbaum .test-card { width: 100%; }
   .welt { margin-left: 0; margin-right: 0; }
   .welt--links::after, .welt--rechts::after { left: -8px; right: auto; display: none; }
+  .kapitelkarte { padding: 1.2rem .8rem 1.4rem; }
 }
 
 /* Weltbanner in der Kapitel-Detailansicht */

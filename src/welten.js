@@ -10,6 +10,8 @@
 // Bilder liegen unter public/welten/<ordner>/{corrupted,restored}.webp
 // (siehe arbeitsblaetter/welten_uebernehmen.py).
 
+import { ORTE } from "./orte-daten.js";
+
 const BASE = import.meta.env.BASE_URL;
 
 const WELTEN = {
@@ -41,5 +43,20 @@ export function weltFuerKapitel(chapterId) {
     name: welt.name,
     corrupted: `${BASE}welten/${welt.ordner}/corrupted.webp`,
     restored: `${BASE}welten/${welt.ordner}/restored.webp`,
+  };
+}
+
+// Schauplatz einer Lektion auf der Kapitel-Landkarte. Jede Welt hat drei
+// Orte; die Lektionen werden gleichmaessig darauf verteilt, sodass die
+// Reise durch das Kapitel nacheinander alle drei Gegenden besucht
+// (bei 7 Lektionen z. B. 3x Ort 1, 2x Ort 2, 2x Ort 3).
+export function ortFuerLektion(chapterId, index, gesamt) {
+  const welt = WELTEN[chapterId];
+  const orte = welt ? ORTE[welt.ordner] : null;
+  if (!orte || !orte.length || !gesamt) return null;
+  const ort = orte[Math.min(Math.floor((index * orte.length) / gesamt), orte.length - 1)];
+  return {
+    name: ort.name,
+    bild: `${BASE}welten/${welt.ordner}/orte/${ort.datei}`,
   };
 }

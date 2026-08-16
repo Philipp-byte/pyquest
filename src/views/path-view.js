@@ -7,7 +7,7 @@ import { renderHeader, starRow, wireHeader } from "../ui.js";
 import { getLesson, isDone, isUnlocked } from "../store.js";
 import { testAfterChapter } from "../content.js";
 import { getTestResult } from "../test-results.js";
-import { weltFuerKapitel } from "../welten.js";
+import { weltFuerKapitel, ortFuerLektion } from "../welten.js";
 
 const WORKSHEET_MIN_STARS = 2;
 const WORKSHEET_BASE = `${import.meta.env.BASE_URL}worksheets/`;
@@ -168,31 +168,60 @@ export function renderChapterDetail(app, curriculum, chapterId) {
   const pct = total ? Math.round((doneCount / total) * 100) : 0;
   const worksheetUnlocked = isWorksheetUnlocked(chapter);
 
+  // Kapitel-Landkarte: Jede Lektion ist eine Station an einem der drei
+  // Schauplaetze der Welt - im selben Stil wie der Weltenbaum. Fehlen die
+  // Ortsbilder (kuenftiges Kapitel ohne Welt), gibt es den schlichten Pfad.
   const nodes = chapter.lessons
     .map((lesson, i) => {
       const done = isDone(lesson.id);
       const unlocked = isUnlocked(curriculum, chapter.id, lesson.id);
       const stars = getLesson(lesson.id).stars ?? 0;
-      const state = done ? "done" : unlocked ? "open" : "locked";
-      const side = i % 2 === 0 ? "left" : "right";
-
-      const inner = done ? "✓" : unlocked ? (lesson.icon ?? "●") : "🔒";
       const href = unlocked ? `#/lesson/${chapter.id}/${lesson.id}` : null;
+      const ort = ortFuerLektion(chapter.id, i, total);
 
-      const node = `
-        <div class="node node--${state} node--${side}">
-          <div class="node__dot">${inner}</div>
-          <div class="node__label">
-            <span class="node__title">${lesson.title}</span>
-            ${done ? `<span class="node__stars">${starRow(stars)}</span>` : ""}
-          </div>
+      if (!ort) {
+        const state = done ? "done" : unlocked ? "open" : "locked";
+        const side = i % 2 === 0 ? "left" : "right";
+        const inner = done ? "✓" : unlocked ? (lesson.icon ?? "●") : "🔒";
+        const node = `
+          <div class="node node--${state} node--${side}">
+            <div class="node__dot">${inner}</div>
+            <div class="node__label">
+              <span class="node__title">${lesson.title}</span>
+              ${done ? `<span class="node__stars">${starRow(stars)}</span>` : ""}
+            </div>
+          </div>`;
+        return href
+          ? `<a class="node-link" href="${href}">${node}</a>`
+          : `<div class="node-link node-link--disabled">${node}</div>`;
+      }
+
+      const zustand = done ? "fertig" : unlocked ? "offen" : "gesperrt";
+      const seite = i % 2 === 0 ? "links" : "rechts";
+      const badge = done
+        ? `<span class="welt__zustand welt__zustand--fertig">✓ Geschafft</span>`
+        : unlocked
+          ? `<span class="welt__zustand welt__zustand--offen">${lesson.icon ?? "▶"} Bereit</span>`
+          : `<span class="welt__zustand welt__zustand--gesperrt">🔒 Versperrt</span>`;
+
+      const inner = `
+        <div class="welt__bild">
+          <img src="${ort.bild}" alt="Schauplatz ${escapeHtml(ort.name)}" loading="${i < 2 ? "eager" : "lazy"}">
+          ${badge}
+        </div>
+        <div class="welt__info">
+          <span class="welt__nummer">Station ${i + 1} · 📍 ${escapeHtml(ort.name)}</span>
+          <h2>${escapeHtml(lesson.title)}</h2>
+          ${done ? `<span class="node__stars">${starRow(stars)}</span>` : ""}
         </div>`;
 
+      const klassen = `welt welt--station welt--${seite} welt--${zustand}${!done && unlocked ? " welt--aktiv" : ""}`;
       return href
-        ? `<a class="node-link" href="${href}">${node}</a>`
-        : `<div class="node-link node-link--disabled">${node}</div>`;
+        ? `<a class="${klassen}" href="${href}">${inner}</a>`
+        : `<div class="${klassen}">${inner}</div>`;
     })
     .join("");
+  const hatKarte = Boolean(ortFuerLektion(chapter.id, 0, total));
 
   // Weltbanner: Das Kapitel spielt in einer Welt der Intro-Geschichte -
   // korrumpiert, solange es offen ist, wiederhergestellt danach.
@@ -223,7 +252,7 @@ export function renderChapterDetail(app, curriculum, chapterId) {
             <span class="chapter__count">${doneCount} / ${total} Lektionen</span>
           </div>
         </div>
-        <div class="chapter__nodes">${nodes}</div>
+        <div class="${hatKarte ? "weltenbaum kapitelkarte" : "chapter__nodes"}">${nodes}</div>
         ${renderWorksheetSection(chapter, worksheetUnlocked)}
       </section>
     </main>
