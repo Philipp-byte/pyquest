@@ -136,16 +136,110 @@ PATCHES_INTRO_JS = [
     position: '50% 48%',
     speaker: 'Code-Scout Nia',""",
     ),
-    # Szene 22 laut Szenenplan ein SICHTBARER Kampf - beide Figuren ins Bild.
+    # Szene 22: KEINE Figuren-Sprites ergaenzen - das Hintergrundbild zeigt
+    # den Kampf bereits selbst, Sprites wuerden die gemalten Figuren doppeln.
     (
         """    text: 'Nicht perfekt, Null. Frei. Und Freiheit findet immer einen neuen Weg.',
     characters: [],""",
         """    text: 'Nicht perfekt, Null. Frei. Und Freiheit findet immer einen neuen Weg.',
-    // Laut Szenenplan ein SICHTBARER Kampf - deshalb stehen beide im Bild.
+    // Keine Figuren-Sprites: Das Hintergrundbild zeigt den Kampf bereits
+    // selbst - zusaetzliche Sprites wuerden die gemalten Figuren ueberlagern.
+    characters: [],""",
+    ),
+    # Szene 20: Formulierung passend zum Bild (Tunnel ist tuerkis, kein
+    # violetter Sturm zu sehen).
+    (
+        "    text: 'Die Kapsel schießt in den Datentunnel. Hinter Py versinkt die Akademie im violetten Sturm.',",
+        """    // Formulierung passend zum Bild: Der Tunnel ist tuerkis, ein violetter
+    // Sturm ist nicht zu sehen - stattdessen bleibt die Akademie (und Ada)
+    // hinter Py zurueck.
+    text: 'Die Kapsel schießt durch den Datentunnel. Die Akademie bleibt zurück – und mit ihr Ada.',""",
+    ),
+    # Szene 21: Akt III spielt NACH dem Kernbruch - Null hoehnt in der
+    # zerstoerten Halle, nicht in der noch intakten aus der Angriffsphase.
+    (
+        """    background: sceneAsset('null-attacks.webp'),
+    position: '48% 43%',
+    speaker: 'Professor Null · Feind',
+    tone: 'null',
+    text: 'Du glaubst, eine kleine Schlange könne meinen perfekten Code besiegen?',
+    characters: [],""",
+        """    // Bildverlauf: Akt III spielt NACH dem Kernbruch - Null hoehnt in der
+    // zerstoerten Halle, nicht in der noch intakten aus der Angriffsphase.
+    background: sceneAsset('academy-destroyed.webp'),
+    position: '48% 43%',
+    speaker: 'Professor Null · Feind',
+    tone: 'null',
+    text: 'Du glaubst, eine kleine Schlange könne meinen perfekten Code besiegen?',
     characters: [
-      { id: 'ada', pose: 'angry', position: 'left' },
-      { id: 'null', pose: 'angry', position: 'right' },
+      { id: 'null', pose: 'victory', position: 'right' },
     ],""",
+    ),
+    # Szenen 23/24 vertauscht: erst die Systemwarnung (Portal kollabiert),
+    # dann Pys Kampf um die letzten Meter, dann der Aufprall.
+    (
+        """  {
+    act: 3,
+    background: sceneAsset('portal-flight.webp'),
+    position: '57% 48%',
+    speaker: 'Py',
+    tone: 'hero',
+    side: 'right',
+    text: 'Komm schon … nur noch ein kleines Stück!',
+    characters: [],
+    effect: 'portal',
+    sfx: 'portal',
+  },
+  {
+    act: 3,
+    background: sceneAsset('portal-flight.webp'),
+    position: '44% 50%',
+    speaker: 'Kapsel-System',
+    tone: 'danger',
+    text: 'Portal kollabiert. Steuerung ausgefallen. Aufprall in fünf Sekunden.',
+    badge: { eyebrow: 'KRITISCHER FEHLER', title: 'MANUELLE STEUERUNG AUSGEFALLEN' },
+    characters: [],
+    effect: 'glitch',
+    sfx: 'alarm',
+  },""",
+        """  {
+    act: 3,
+    background: sceneAsset('portal-flight.webp'),
+    position: '44% 50%',
+    speaker: 'Kapsel-System',
+    tone: 'danger',
+    text: 'Portal kollabiert. Steuerung ausgefallen. Aufprall in fünf Sekunden.',
+    badge: { eyebrow: 'KRITISCHER FEHLER', title: 'MANUELLE STEUERUNG AUSGEFALLEN' },
+    characters: [],
+    effect: 'glitch',
+    sfx: 'alarm',
+  },
+  {
+    act: 3,
+    background: sceneAsset('portal-flight.webp'),
+    position: '57% 48%',
+    speaker: 'Py',
+    tone: 'hero',
+    side: 'right',
+    text: 'Komm schon … nur noch ein kleines Stück!',
+    characters: [],
+    effect: 'portal',
+    sfx: 'portal',
+  },""",
+    ),
+    # Szene 28: Nia kuendigt die Neuankoemmlinge an, damit Byte und Glitch
+    # in der Folgeszene nicht unvermittelt auftauchen.
+    (
+        "    text: 'Dann stehst du nicht allein auf. Ich bin Nia – und Null hat auch meine Stadt angegriffen.',",
+        """    // Kuendigt die Neuankoemmlinge der naechsten Szene an, damit Byte und
+    // Glitch nicht unvermittelt auftauchen.
+    text: 'Dann stehst du nicht allein auf. Ich bin Nia – Null hat auch meine Stadt angegriffen. Und ich habe Verstärkung mitgebracht.',""",
+    ),
+    # Szene 29: Byte stellt sich und Glitch vor.
+    (
+        "    text: 'Analyse abgeschlossen: sechzehn Fragmente, sechzehn Städte – und eine sehr gute Chance, Nulls Plan zu debuggen.',",
+        """    // Byte stellt sich und Glitch vor - beide sind hier zum ersten Mal zu sehen.
+    text: 'Ich bin Byte, das ist Glitch. Analyse abgeschlossen: sechzehn Fragmente, sechzehn Städte – und eine sehr gute Chance, Nulls Plan zu debuggen.',""",
     ),
     # Startbildschirm-Knopf "Ohne Intro weiter" ausloesen wie den
     # Abschluss-Knopf am Ende.

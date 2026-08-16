@@ -282,7 +282,10 @@ const scenes = [
     position: '50% 50%',
     speaker: 'Erzählung',
     tone: 'narration',
-    text: 'Die Kapsel schießt in den Datentunnel. Hinter Py versinkt die Akademie im violetten Sturm.',
+    // Formulierung passend zum Bild: Der Tunnel ist tuerkis, ein violetter
+    // Sturm ist nicht zu sehen - stattdessen bleibt die Akademie (und Ada)
+    // hinter Py zurueck.
+    text: 'Die Kapsel schießt durch den Datentunnel. Die Akademie bleibt zurück – und mit ihr Ada.',
     badge: { eyebrow: 'KAPSEL 01', title: 'TRANSIT NACH NEUSTART' },
     characters: [],
     effect: 'portal',
@@ -290,12 +293,16 @@ const scenes = [
   },
   {
     act: 3,
-    background: sceneAsset('null-attacks.webp'),
+    // Bildverlauf: Akt III spielt NACH dem Kernbruch - Null hoehnt in der
+    // zerstoerten Halle, nicht in der noch intakten aus der Angriffsphase.
+    background: sceneAsset('academy-destroyed.webp'),
     position: '48% 43%',
     speaker: 'Professor Null · Feind',
     tone: 'null',
     text: 'Du glaubst, eine kleine Schlange könne meinen perfekten Code besiegen?',
-    characters: [],
+    characters: [
+      { id: 'null', pose: 'victory', position: 'right' },
+    ],
     effect: 'glitch',
     sfx: 'warning',
   },
@@ -306,26 +313,12 @@ const scenes = [
     speaker: 'Wächterin Ada',
     tone: 'danger',
     text: 'Nicht perfekt, Null. Frei. Und Freiheit findet immer einen neuen Weg.',
-    // Laut Szenenplan ein SICHTBARER Kampf - deshalb stehen beide im Bild.
-    characters: [
-      { id: 'ada', pose: 'angry', position: 'left' },
-      { id: 'null', pose: 'angry', position: 'right' },
-    ],
+    // Keine Figuren-Sprites: Das Hintergrundbild zeigt den Kampf bereits
+    // selbst - zusaetzliche Sprites wuerden die gemalten Figuren ueberlagern.
+    characters: [],
     effect: 'impact',
     impactWord: 'KRRAAAM!',
     sfx: 'impact',
-  },
-  {
-    act: 3,
-    background: sceneAsset('portal-flight.webp'),
-    position: '57% 48%',
-    speaker: 'Py',
-    tone: 'hero',
-    side: 'right',
-    text: 'Komm schon … nur noch ein kleines Stück!',
-    characters: [],
-    effect: 'portal',
-    sfx: 'portal',
   },
   {
     act: 3,
@@ -338,6 +331,18 @@ const scenes = [
     characters: [],
     effect: 'glitch',
     sfx: 'alarm',
+  },
+  {
+    act: 3,
+    background: sceneAsset('portal-flight.webp'),
+    position: '57% 48%',
+    speaker: 'Py',
+    tone: 'hero',
+    side: 'right',
+    text: 'Komm schon … nur noch ein kleines Stück!',
+    characters: [],
+    effect: 'portal',
+    sfx: 'portal',
   },
   {
     act: 3,
@@ -388,7 +393,9 @@ const scenes = [
     position: '50% 48%',
     speaker: 'Code-Scout Nia',
     tone: 'ally',
-    text: 'Dann stehst du nicht allein auf. Ich bin Nia – und Null hat auch meine Stadt angegriffen.',
+    // Kuendigt die Neuankoemmlinge der naechsten Szene an, damit Byte und
+    // Glitch nicht unvermittelt auftauchen.
+    text: 'Dann stehst du nicht allein auf. Ich bin Nia – Null hat auch meine Stadt angegriffen. Und ich habe Verstärkung mitgebracht.',
     characters: [
       { id: 'nia', pose: 'clever', position: 'left' },
       { id: 'py', pose: 'surprised', position: 'right', small: true },
@@ -402,7 +409,8 @@ const scenes = [
     position: '50% 50%',
     speaker: 'Byte',
     tone: 'ally',
-    text: 'Analyse abgeschlossen: sechzehn Fragmente, sechzehn Städte – und eine sehr gute Chance, Nulls Plan zu debuggen.',
+    // Byte stellt sich und Glitch vor - beide sind hier zum ersten Mal zu sehen.
+    text: 'Ich bin Byte, das ist Glitch. Analyse abgeschlossen: sechzehn Fragmente, sechzehn Städte – und eine sehr gute Chance, Nulls Plan zu debuggen.',
     characters: [
       { id: 'glitch', pose: 'funny', position: 'left', small: true },
       { id: 'byte', pose: 'clever', position: 'center', small: true },
