@@ -269,6 +269,103 @@ body {
 .test-summary__meta { display: block; color: var(--muted); font-size: .82rem; }
 .test-summary__missing { margin: .3rem 0 0; padding-left: 1.1rem; color: var(--fg-soft); font-size: .85rem; }
 
+/* ---------- Weltenbaum ----------
+   Die Kapiteluebersicht als Karte der sechzehn Welten: gewundener Pfad,
+   Welten wechseln links/rechts, Pruefportale liegen auf der Mittellinie. */
+.path--weltenbaum { max-width: 860px; }
+.weltenbaum__zaehler {
+  display: inline-block; margin-top: .6rem; font-weight: 800;
+  color: var(--green-dark); background: color-mix(in srgb, var(--green) 14%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--green) 35%, var(--border));
+  border-radius: 999px; padding: .35rem .9rem; font-size: .9rem;
+}
+.weltenbaum {
+  position: relative; margin-top: 1.6rem;
+  display: flex; flex-direction: column; gap: 1.4rem;
+}
+/* Mittellinie des Pfads */
+.weltenbaum::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 50%;
+  border-left: 3px dashed color-mix(in srgb, var(--green) 45%, var(--border));
+  transform: translateX(-50%);
+}
+.welt {
+  position: relative; z-index: 1;
+  width: min(48%, 400px);
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow);
+  overflow: hidden; text-decoration: none; color: inherit;
+  transition: transform .15s, box-shadow .15s;
+}
+.welt--links { margin-right: auto; }
+.welt--rechts { margin-left: auto; }
+/* Verbindungspunkt zur Mittellinie */
+.welt::after {
+  content: ""; position: absolute; top: 50%; width: 14px; height: 14px;
+  border-radius: 50%; background: var(--chapter-color, var(--green));
+  border: 3px solid var(--surface); transform: translateY(-50%);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--green) 45%, var(--border));
+}
+.welt--links::after { right: -8px; }
+.welt--rechts::after { left: -8px; }
+a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06), 0 14px 34px rgba(15,23,42,.16); }
+/* Die Weltbilder sind quadratisch - 4:3 zeigt die Schwebeinsel gut, ohne
+   die Karte zu lang zu machen. */
+.welt__bild { position: relative; aspect-ratio: 4 / 3; background: #0f172a; }
+.welt__bild img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.welt__zustand {
+  position: absolute; top: .6rem; left: .6rem;
+  font-size: .72rem; font-weight: 900; letter-spacing: .03em;
+  padding: .3rem .7rem; border-radius: 999px; backdrop-filter: blur(3px);
+}
+.welt__zustand--fertig { background: rgba(20, 83, 45, .82); color: #bbf7d0; }
+.welt__zustand--offen { background: rgba(76, 29, 149, .82); color: #ddd6fe; }
+.welt__zustand--gesperrt { background: rgba(15, 23, 42, .78); color: #cbd5e1; }
+.welt__info { padding: .8rem 1rem 1rem; }
+.welt__nummer {
+  font-size: .7rem; font-weight: 900; text-transform: uppercase;
+  letter-spacing: .06em; color: var(--muted);
+}
+.welt__info h2 { margin: .1rem 0 0; font-size: 1.15rem; }
+.welt__kapitel { margin: 0 0 .55rem; color: var(--fg-soft); font-size: .85rem; font-weight: 700; }
+/* Zustaende */
+.welt--gesperrt { cursor: default; }
+.welt--gesperrt .welt__bild img { filter: grayscale(.85) brightness(.55); }
+.welt--gesperrt .welt__info { opacity: .65; }
+.welt--fertig { border-color: color-mix(in srgb, var(--green) 55%, var(--border)); }
+.welt--aktiv {
+  border-color: var(--chapter-color, var(--green));
+  animation: welt-puls 2.2s ease-in-out infinite;
+}
+@keyframes welt-puls {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--green) 45%, transparent), var(--shadow); }
+  50% { box-shadow: 0 0 0 10px color-mix(in srgb, var(--green) 0%, transparent), var(--shadow); }
+}
+/* Pruefportale (Tests) liegen mittig auf dem Pfad */
+.weltenbaum .test-card {
+  width: min(70%, 460px); margin-left: auto; margin-right: auto;
+  position: relative; z-index: 1;
+}
+@media (max-width: 700px) {
+  .weltenbaum::before { left: 14px; transform: none; }
+  .welt, .weltenbaum .test-card { width: 100%; }
+  .welt { margin-left: 0; margin-right: 0; }
+  .welt--links::after, .welt--rechts::after { left: -8px; right: auto; display: none; }
+}
+
+/* Weltbanner in der Kapitel-Detailansicht */
+.chapter__welt { position: relative; }
+.chapter__welt img { width: 100%; height: clamp(140px, 26vw, 220px); object-fit: cover; display: block; }
+.chapter__welt-text {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  display: flex; justify-content: space-between; align-items: baseline; gap: .8rem;
+  padding: 1.6rem 1.4rem .7rem;
+  background: linear-gradient(transparent, rgba(2, 7, 17, .82));
+  color: #f1f5f9;
+}
+.chapter__welt-text strong { font-size: 1.05rem; letter-spacing: .02em; }
+.chapter__welt-text span { font-size: .82rem; font-weight: 700; }
+
 .chapter {
   margin-top: 2rem; background: var(--surface);
   border-radius: var(--radius-lg); box-shadow: var(--shadow);

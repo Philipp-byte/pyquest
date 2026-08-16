@@ -1,11 +1,13 @@
-// Kapitel-Uebersicht: Kacheln mit den Hauptueberschriften (Variablen,
-// Datentypen, ...). Klick auf eine Kachel oeffnet die Lektionen-Ansicht
-// dieses Kapitels (siehe renderChapterDetail).
+// Der Weltenbaum: Die Kapiteluebersicht als Karte der sechzehn Welten aus
+// der Intro-Geschichte. Jede Welt ist korrumpiert, bis ihr Kapitel
+// abgeschlossen ist - dann erscheint sie wiederhergestellt. Klick auf eine
+// Welt oeffnet die Lektionen-Ansicht (siehe renderChapterDetail).
 
 import { renderHeader, starRow, wireHeader } from "../ui.js";
 import { getLesson, isDone, isUnlocked } from "../store.js";
 import { testAfterChapter } from "../content.js";
 import { getTestResult } from "../test-results.js";
+import { weltFuerKapitel } from "../welten.js";
 
 const WORKSHEET_MIN_STARS = 2;
 const WORKSHEET_BASE = `${import.meta.env.BASE_URL}worksheets/`;
@@ -20,27 +22,83 @@ function isWorksheetUnlocked(chapter) {
 }
 
 export function renderPath(app, curriculum) {
-  // Nach jedem Kapitel, auf das ein Test folgt, wird zusaetzlich eine
-  // Test-Kachel eingeschoben.
-  const cards = curriculum.chapters
-    .map((chapter) => {
-      const card = renderChapterCard(curriculum, chapter);
+  // Der Baum ist ein gewundener Pfad: Welten wechseln links/rechts, nach
+  // jedem zweiten Kapitel liegt ein Pruefportal (Test) auf der Mittellinie.
+  let aktivGesetzt = false;
+  const knoten = curriculum.chapters
+    .map((chapter, i) => {
+      const welt = weltFuerKapitel(chapter.id);
+      let node;
+      if (welt) {
+        const fertig = chapter.lessons.every((l) => isDone(l.id));
+        const frei = isUnlocked(curriculum, chapter.id, chapter.lessons[0].id);
+        // Genau die erste freie, noch nicht fertige Welt pulsiert als
+        // "hier geht es weiter".
+        const aktiv = frei && !fertig && !aktivGesetzt;
+        if (aktiv) aktivGesetzt = true;
+        node = renderWelt(chapter, welt, i, { fertig, frei, aktiv });
+      } else {
+        // Sicherheitsnetz fuer Kapitel ohne Welt: schlichte Karte.
+        node = renderChapterCard(curriculum, chapter);
+      }
       const test = testAfterChapter(curriculum, chapter.id);
-      return test ? card + renderTestCard(curriculum, test) : card;
+      return test ? node + renderTestCard(curriculum, test) : node;
     })
     .join("");
 
+  const gerettet = curriculum.chapters.filter((c) => c.lessons.every((l) => isDone(l.id))).length;
+
   app.innerHTML = `
     ${renderHeader("path")}
-    <main class="path path--overview">
+    <main class="path path--weltenbaum">
       <div class="path__intro">
-        <h1>${curriculum.title}</h1>
-        <p>Wähle ein Kapitel aus, um seine Lektionen zu sehen.</p>
+        <h1>Der Weltenbaum</h1>
+        <p>Professor Null hat alle sechzehn Welten korrumpiert. Stelle sie wieder her – Kapitel für Kapitel.</p>
+        <span class="weltenbaum__zaehler">🌍 ${gerettet} von ${curriculum.chapters.length} Welten wiederhergestellt</span>
       </div>
-      <div class="chapter-overview">${cards}</div>
+      <div class="weltenbaum">${knoten}</div>
     </main>
   `;
   wireHeader(app);
+}
+
+// Eine Welt im Baum. Zustaende:
+//   gesperrt  - korrumpiert, abgedunkelt, kein Link
+//   offen     - korrumpiert, klickbar (die erste davon pulsiert als "aktiv")
+//   fertig    - wiederhergestellt
+function renderWelt(chapter, welt, index, { fertig, frei, aktiv }) {
+  const total = chapter.lessons.length;
+  const doneCount = chapter.lessons.filter((l) => isDone(l.id)).length;
+  const pct = total ? Math.round((doneCount / total) * 100) : 0;
+  const seite = index % 2 === 0 ? "links" : "rechts";
+  const zustand = fertig ? "fertig" : frei ? "offen" : "gesperrt";
+
+  const badge = fertig
+    ? `<span class="welt__zustand welt__zustand--fertig">✓ Wiederhergestellt</span>`
+    : frei
+      ? `<span class="welt__zustand welt__zustand--offen">⚡ Korrumpiert</span>`
+      : `<span class="welt__zustand welt__zustand--gesperrt">🔒 Versiegelt</span>`;
+
+  // Die ersten beiden Welten sind beim Seitenaufbau sichtbar und laden
+  // sofort - der Rest laedt beim Scrollen nach.
+  const laden = index < 2 ? "eager" : "lazy";
+  const inner = `
+    <div class="welt__bild">
+      <img src="${fertig ? welt.restored : welt.corrupted}" alt="Welt ${escapeHtml(welt.name)} – ${fertig ? "wiederhergestellt" : "korrumpiert"}" loading="${laden}">
+      ${badge}
+    </div>
+    <div class="welt__info">
+      <span class="welt__nummer">Welt ${index + 1}</span>
+      <h2>${escapeHtml(welt.name)}</h2>
+      <p class="welt__kapitel">${escapeHtml(chapter.title)}</p>
+      <div class="chapter__bar"><div style="width:${pct}%"></div></div>
+      <span class="chapter__count">${doneCount} / ${total} Lektionen</span>
+    </div>`;
+
+  const klassen = `welt welt--${seite} welt--${zustand}${aktiv ? " welt--aktiv" : ""}`;
+  return frei
+    ? `<a class="${klassen}" style="--chapter-color:${chapter.color || "#22c55e"}" href="#/chapter/${chapter.id}">${inner}</a>`
+    : `<div class="${klassen}">${inner}</div>`;
 }
 
 function renderChapterCard(curriculum, chapter) {
@@ -136,11 +194,26 @@ export function renderChapterDetail(app, curriculum, chapterId) {
     })
     .join("");
 
+  // Weltbanner: Das Kapitel spielt in einer Welt der Intro-Geschichte -
+  // korrumpiert, solange es offen ist, wiederhergestellt danach.
+  const welt = weltFuerKapitel(chapter.id);
+  const kapitelFertig = chapter.lessons.every((l) => isDone(l.id));
+  const banner = welt
+    ? `<div class="chapter__welt">
+         <img src="${kapitelFertig ? welt.restored : welt.corrupted}" alt="Welt ${escapeHtml(welt.name)}" loading="lazy">
+         <div class="chapter__welt-text">
+           <strong>${escapeHtml(welt.name)}</strong>
+           <span>${kapitelFertig ? "✓ Diese Welt ist wiederhergestellt!" : "⚡ Diese Welt wartet auf ihre Rettung."}</span>
+         </div>
+       </div>`
+    : "";
+
   app.innerHTML = `
     ${renderHeader("path")}
     <main class="path">
-      <a class="back-link" href="#/">← Zurück zur Übersicht</a>
+      <a class="back-link" href="#/">← Zurück zum Weltenbaum</a>
       <section class="chapter" style="--chapter-color:${chapter.color || "#22c55e"}">
+        ${banner}
         <div class="chapter__header">
           <div class="chapter__icon">${chapter.icon || "📘"}</div>
           <div class="chapter__meta">
