@@ -50,9 +50,10 @@ export function renderPath(app, curriculum) {
 
   app.innerHTML = `
     ${renderHeader("path")}
-    <main class="path path--weltenbaum">
+    <main class="path path--weltenbaum path--kosmos">
+      ${kosmosHintergrund()}
       <div class="path__intro">
-        <h1>Der Weltenbaum</h1>
+        <h1>Der Datenkosmos</h1>
         <p>Professor Null hat alle sechzehn Welten korrumpiert. Stelle sie wieder her – Kapitel für Kapitel.</p>
         <span class="weltenbaum__zaehler">🌍 ${gerettet} von ${curriculum.chapters.length} Welten wiederhergestellt</span>
       </div>
@@ -153,6 +154,15 @@ function escapeHtml(s = "") {
   return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
+// Animierter Weltraum-Hintergrund fuer die Kosmos-Ansichten: zwei driftende
+// Sternschichten (CSS-Pseudoelemente) plus zwei treibende Nebelwolken.
+function kosmosHintergrund() {
+  return `<div class="kosmos-bg" aria-hidden="true">
+    <div class="kosmos-nebel kosmos-nebel--a"></div>
+    <div class="kosmos-nebel kosmos-nebel--b"></div>
+  </div>`;
+}
+
 // Lektionen-Pfad eines einzelnen Kapitels (Knoten, wie zuvor auf der
 // Gesamtuebersicht, jetzt aber pro Kapitel).
 export function renderChapterDetail(app, curriculum, chapterId) {
@@ -239,8 +249,9 @@ export function renderChapterDetail(app, curriculum, chapterId) {
 
   app.innerHTML = `
     ${renderHeader("path")}
-    <main class="path">
-      <a class="back-link" href="#/">← Zurück zum Weltenbaum</a>
+    <main class="path path--kosmos">
+      ${kosmosHintergrund()}
+      <a class="back-link" href="#/">← Zurück zum Datenkosmos</a>
       <section class="chapter" style="--chapter-color:${chapter.color || "#22c55e"}">
         ${banner}
         <div class="chapter__header">
