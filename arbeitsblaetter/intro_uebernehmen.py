@@ -66,31 +66,164 @@ def kopiere_welten():
     return n
 
 
+def patche(text, ersetzungen, datei):
+    """Wendet alle Ersetzungen an und bricht ab, wenn eine nicht greift -
+    so faellt sofort auf, wenn sich die Quelle geaendert hat."""
+    for alt, neu in ersetzungen:
+        if alt not in text:
+            raise SystemExit(f"FEHLER: Muster nicht gefunden in {datei}:\n{alt[:120]}")
+        text = text.replace(alt, neu)
+    return text
+
+
+# In der App vorgenommene Korrekturen am gelieferten Intro. Sie werden beim
+# Uebernehmen automatisch wieder angewendet - ein erneuter Lauf dieses
+# Skripts darf sie nicht stillschweigend zurueckdrehen.
+PATCHES_INDEX_HTML = [
+    # Der Hinweistext unter dem Start-Knopf entfaellt; stattdessen ein gut
+    # sichtbarer zweiter Weg direkt zum Lernpfad.
+    (
+        """          <p>Ohne Stimmen · mit Musik und Soundeffekten</p>""",
+        """          <button class="start-exit" id="startExitButton" type="button">
+            Ohne Intro weiter zum Lernpfad <span aria-hidden="true">›</span>
+          </button>""",
+    ),
+]
+
+PATCHES_INTRO_JS = [
+    # Bibliothek liegt in der App unter ./lib/
+    ("'../../assets/library/pyquest-assets.js'", "'./lib/pyquest-assets.js'"),
+    # Textfehler: Einen Fehler LOEST man gemeinsam, man liest ihn nicht.
+    (
+        "text: 'Dann lesen wir ihn gemeinsam.",
+        "text: 'Dann lösen wir ihn gemeinsam.",
+    ),
+    # Bildverlauf Szene 5: Bei der Warnung ist die Akademie noch nicht
+    # zerstoert - die Korruption beginnt gerade erst.
+    (
+        """    background: sceneAsset('academy-destroyed.webp'),
+    position: '50% 45%',
+    speaker: 'Akademie-System',""",
+        """    // Bildverlauf: Bei der Warnung ist die Akademie noch nicht zerstoert -
+    // die Korruption beginnt gerade erst (zerstoert wird sie erst ab dem
+    // zweiten Schlag auf den Kern).
+    background: worldAsset('neustart', 'corrupted'),
+    position: '50% 45%',
+    speaker: 'Akademie-System',""",
+    ),
+    # Bildverlauf Szene 8: Der Kern ist hier noch heil ("Er WILL ihn
+    # zerbrechen") - laufende Attacke statt zerstoerter Halle.
+    (
+        """    background: sceneAsset('academy-destroyed.webp'),
+    position: '50% 50%',
+    speaker: 'Wächterin Ada',""",
+        """    // Bildverlauf: Der Kern ist hier noch heil ("Er WILL ihn zerbrechen") -
+    // deshalb die laufende Attacke zeigen, nicht die schon zerstoerte Halle.
+    background: sceneAsset('null-attacks.webp'),
+    position: '50% 50%',
+    speaker: 'Wächterin Ada',""",
+    ),
+    # Bildverlauf Szene 28: Folgeszene zeigt dieselbe Stadt als corrupted,
+    # und Nulls Plan ist Korrumpierung - kein Rueckwaerts-Erholen der Stadt.
+    (
+        """    background: worldAsset('neustart', 'destroyed'),
+    position: '50% 48%',
+    speaker: 'Code-Scout Nia',""",
+        """    // Bildverlauf: Die Folgeszene zeigt dieselbe Stadt als "corrupted" -
+    // und Nulls Plan ist Korrumpierung, nicht Totalzerstoerung. Deshalb
+    // hier derselbe Zustand, sonst "erholt" sich die Stadt rueckwaerts.
+    background: worldAsset('neustart', 'corrupted'),
+    position: '50% 48%',
+    speaker: 'Code-Scout Nia',""",
+    ),
+    # Szene 22 laut Szenenplan ein SICHTBARER Kampf - beide Figuren ins Bild.
+    (
+        """    text: 'Nicht perfekt, Null. Frei. Und Freiheit findet immer einen neuen Weg.',
+    characters: [],""",
+        """    text: 'Nicht perfekt, Null. Frei. Und Freiheit findet immer einen neuen Weg.',
+    // Laut Szenenplan ein SICHTBARER Kampf - deshalb stehen beide im Bild.
+    characters: [
+      { id: 'ada', pose: 'angry', position: 'left' },
+      { id: 'null', pose: 'angry', position: 'right' },
+    ],""",
+    ),
+    # Startbildschirm-Knopf "Ohne Intro weiter" ausloesen wie den
+    # Abschluss-Knopf am Ende.
+    (
+        "elements.startButton.addEventListener('click', startIntro);",
+        """elements.startButton.addEventListener('click', startIntro);
+// "Ohne Intro weiter zum Lernpfad" auf dem Startbildschirm: nutzt dasselbe
+// Abschluss-Ereignis wie "Abenteuer beginnen" - die Lern-App hoert darauf
+// und merkt sich den Vorspann als gesehen.
+document.getElementById('startExitButton')?.addEventListener('click', () => {
+  window.dispatchEvent(new CustomEvent('pyquest:intro-complete'));
+});""",
+    ),
+]
+
+PATCHES_STYLES_CSS = [
+    # Stil des entfernten Hinweistexts durch den neuen Knopf ersetzen.
+    (
+        """.start-action p {
+  margin: 0;
+  color: #d1e0e5;
+  font-size: clamp(.8rem, 1.6vw, 1rem);
+  text-align: center;
+  text-shadow: 0 2px 14px #000;
+}""",
+        """/* Zweiter Weg unter dem Start-Knopf: direkt zum Lernpfad, ohne Intro.
+   Bewusst deutlich sichtbar, aber dem gruenen Hauptknopf untergeordnet. */
+.start-exit {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  padding: .8rem 1.6rem;
+  border: 1px solid #7ce8c455;
+  border-radius: 999px;
+  color: #d8fff0;
+  background: #07111dcc;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: clamp(.95rem, 2vw, 1.1rem);
+  font-weight: 800;
+  text-shadow: 0 2px 14px #000;
+  backdrop-filter: blur(4px);
+  transition: transform .2s ease, background .2s ease, border-color .2s ease;
+}
+
+.start-exit:hover {
+  transform: translateY(-2px);
+  border-color: #7ce8c4aa;
+  background: #0b1b2ce6;
+}
+
+.start-exit:active {
+  transform: translateY(1px);
+}""",
+    ),
+]
+
+
 def kopiere_code():
     src = QUELLE / "prototypes" / "current-intro"
     ZIEL.mkdir(parents=True, exist_ok=True)
 
-    # styles.css unveraendert
-    shutil.copyfile(src / "styles.css", ZIEL / "styles.css")
+    # newline="\n": feste LF-Zeilenenden, sonst schreibt Windows CRLF und
+    # jede Neuerzeugung saehe wie eine Komplettaenderung aus.
+    css = (src / "styles.css").read_text(encoding="utf-8")
+    (ZIEL / "styles.css").write_text(patche(css, PATCHES_STYLES_CSS, "styles.css"), encoding="utf-8", newline="\n")
 
-    # index.html unveraendert
-    shutil.copyfile(src / "index.html", ZIEL / "index.html")
+    html = (src / "index.html").read_text(encoding="utf-8")
+    (ZIEL / "index.html").write_text(patche(html, PATCHES_INDEX_HTML, "index.html"), encoding="utf-8", newline="\n")
 
-    # intro.js: Der Import zeigt im Paket auf ../../assets/library/. In der App
-    # liegt die Bibliothek daneben unter ./lib/ - deshalb ein Pfad angepasst.
     js = (src / "intro.js").read_text(encoding="utf-8")
-    neu = js.replace("'../../assets/library/pyquest-assets.js'", "'./lib/pyquest-assets.js'")
-    if neu == js:
-        raise SystemExit("FEHLER: Import-Pfad in intro.js nicht gefunden - bitte pruefen.")
-    (ZIEL / "intro.js").write_text(neu, encoding="utf-8")
+    (ZIEL / "intro.js").write_text(patche(js, PATCHES_INTRO_JS, "intro.js"), encoding="utf-8", newline="\n")
 
     # Der Helfer baut Figurenpfade mit .png - wir liefern WebP aus.
     helfer = (QUELLE / "assets" / "library" / "pyquest-assets.js").read_text(encoding="utf-8")
-    helfer_neu = helfer.replace("${pose}.png", "${pose}.webp")
-    if helfer_neu == helfer:
-        raise SystemExit("FEHLER: Endung .png im Assethelfer nicht gefunden - bitte pruefen.")
+    helfer_neu = patche(helfer, [("${pose}.png", "${pose}.webp")], "pyquest-assets.js")
     (ZIEL / "lib").mkdir(parents=True, exist_ok=True)
-    (ZIEL / "lib" / "pyquest-assets.js").write_text(helfer_neu, encoding="utf-8")
+    (ZIEL / "lib" / "pyquest-assets.js").write_text(helfer_neu, encoding="utf-8", newline="\n")
 
 
 def main():

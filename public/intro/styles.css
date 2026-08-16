@@ -137,12 +137,34 @@ button:focus-visible {
   padding: 2rem;
 }
 
-.start-action p {
-  margin: 0;
-  color: #d1e0e5;
-  font-size: clamp(.8rem, 1.6vw, 1rem);
-  text-align: center;
+/* Zweiter Weg unter dem Start-Knopf: direkt zum Lernpfad, ohne Intro.
+   Bewusst deutlich sichtbar, aber dem gruenen Hauptknopf untergeordnet. */
+.start-exit {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  padding: .8rem 1.6rem;
+  border: 1px solid #7ce8c455;
+  border-radius: 999px;
+  color: #d8fff0;
+  background: #07111dcc;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: clamp(.95rem, 2vw, 1.1rem);
+  font-weight: 800;
   text-shadow: 0 2px 14px #000;
+  backdrop-filter: blur(4px);
+  transition: transform .2s ease, background .2s ease, border-color .2s ease;
+}
+
+.start-exit:hover {
+  transform: translateY(-2px);
+  border-color: #7ce8c4aa;
+  background: #0b1b2ce6;
+}
+
+.start-exit:active {
+  transform: translateY(1px);
 }
 
 .start-button {

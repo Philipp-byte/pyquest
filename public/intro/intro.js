@@ -65,7 +65,7 @@ const scenes = [
     position: '44% 44%',
     speaker: 'Wächterin Ada',
     tone: 'hero',
-    text: 'Dann lesen wir ihn gemeinsam. Mut heißt nicht, fehlerfrei zu sein. Mut heißt, weiterzusuchen.',
+    text: 'Dann lösen wir ihn gemeinsam. Mut heißt nicht, fehlerfrei zu sein. Mut heißt, weiterzusuchen.',
     characters: [
       { id: 'ada', pose: 'thoughtful', position: 'left' },
       { id: 'py', pose: 'clever', position: 'right', small: true },
@@ -75,7 +75,10 @@ const scenes = [
   },
   {
     act: 1,
-    background: sceneAsset('academy-destroyed.webp'),
+    // Bildverlauf: Bei der Warnung ist die Akademie noch nicht zerstoert -
+    // die Korruption beginnt gerade erst (zerstoert wird sie erst ab dem
+    // zweiten Schlag auf den Kern).
+    background: worldAsset('neustart', 'corrupted'),
     position: '50% 45%',
     speaker: 'Akademie-System',
     tone: 'danger',
@@ -114,7 +117,9 @@ const scenes = [
   },
   {
     act: 1,
-    background: sceneAsset('academy-destroyed.webp'),
+    // Bildverlauf: Der Kern ist hier noch heil ("Er WILL ihn zerbrechen") -
+    // deshalb die laufende Attacke zeigen, nicht die schon zerstoerte Halle.
+    background: sceneAsset('null-attacks.webp'),
     position: '50% 50%',
     speaker: 'Wächterin Ada',
     tone: 'danger',
@@ -301,7 +306,11 @@ const scenes = [
     speaker: 'Wächterin Ada',
     tone: 'danger',
     text: 'Nicht perfekt, Null. Frei. Und Freiheit findet immer einen neuen Weg.',
-    characters: [],
+    // Laut Szenenplan ein SICHTBARER Kampf - deshalb stehen beide im Bild.
+    characters: [
+      { id: 'ada', pose: 'angry', position: 'left' },
+      { id: 'null', pose: 'angry', position: 'right' },
+    ],
     effect: 'impact',
     impactWord: 'KRRAAAM!',
     sfx: 'impact',
@@ -372,7 +381,10 @@ const scenes = [
   },
   {
     act: 3,
-    background: worldAsset('neustart', 'destroyed'),
+    // Bildverlauf: Die Folgeszene zeigt dieselbe Stadt als "corrupted" -
+    // und Nulls Plan ist Korrumpierung, nicht Totalzerstoerung. Deshalb
+    // hier derselbe Zustand, sonst "erholt" sich die Stadt rueckwaerts.
+    background: worldAsset('neustart', 'corrupted'),
     position: '50% 48%',
     speaker: 'Code-Scout Nia',
     tone: 'ally',
@@ -807,6 +819,12 @@ function replayIntro() {
 }
 
 elements.startButton.addEventListener('click', startIntro);
+// "Ohne Intro weiter zum Lernpfad" auf dem Startbildschirm: nutzt dasselbe
+// Abschluss-Ereignis wie "Abenteuer beginnen" - die Lern-App hoert darauf
+// und merkt sich den Vorspann als gesehen.
+document.getElementById('startExitButton')?.addEventListener('click', () => {
+  window.dispatchEvent(new CustomEvent('pyquest:intro-complete'));
+});
 elements.nextButton.addEventListener('click', nextScene);
 elements.backButton.addEventListener('click', previousScene);
 elements.skipButton.addEventListener('click', finishIntro);

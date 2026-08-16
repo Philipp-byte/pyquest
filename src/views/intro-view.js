@@ -17,14 +17,10 @@ export function renderIntro(app, { onDone } = {}) {
   app.innerHTML = `
     <main class="intro-page">
       <iframe class="intro-frame" src="${INTRO_URL}" title="PyQuest Vorspann"></iframe>
-      <button class="intro-exit" type="button" title="Vorspann verlassen">
-        ✕ <span>Zum Lernpfad</span>
-      </button>
     </main>
   `;
 
   const frame = app.querySelector(".intro-frame");
-  const exit = app.querySelector(".intro-exit");
 
   let fertig = false;
   const beenden = () => {
@@ -35,15 +31,19 @@ export function renderIntro(app, { onDone } = {}) {
     else location.hash = "#/";
   };
 
-  exit.onclick = beenden;
-
-  // Sobald der Vorspann geladen ist, auf sein Abschluss-Ereignis hoeren.
+  // Verlassen geht ueber die Knoepfe IM Vorspann selbst ("Ohne Intro weiter
+  // zum Lernpfad" auf dem Startbildschirm, "Intro ueberspringen" waehrend der
+  // Wiedergabe, "Abenteuer beginnen" am Ende) - alle enden im selben
+  // Abschluss-Ereignis. Ein eigener Knopf ueber dem iframe lag frueher
+  // ueber dem PyQuest-Schriftzug des Vorspanns und ist deshalb weg.
   frame.addEventListener("load", () => {
     try {
       frame.contentWindow.addEventListener("pyquest:intro-complete", beenden);
     } catch {
-      // Sollte der Zugriff wider Erwarten scheitern, bleibt der
-      // Verlassen-Knopf als Ausweg - niemand sitzt fest.
+      // Gleiche Herkunft - der Zugriff funktioniert. Als letztes Netz, falls
+      // doch etwas schiefgeht: Zurueck-Navigation des Browsers bleibt immer
+      // moeglich, und der Router zeigt dann wieder den Lernpfad.
+      markIntroSeen();
     }
   });
 }
