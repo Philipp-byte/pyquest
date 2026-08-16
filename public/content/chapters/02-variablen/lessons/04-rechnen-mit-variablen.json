@@ -128,6 +128,11 @@
           "name": "preis_pro_gramm",
           "expected": 0.0028285714285714286,
           "label": "Die Variable preis_pro_gramm enthält den richtigen Wert"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "/",
+          "label": "Der Preis pro Gramm wird mit einer Division berechnet"
         }
       ]
     }

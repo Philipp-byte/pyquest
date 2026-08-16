@@ -58,6 +58,11 @@
             "20"
           ],
           "expected": "Stunden: 90\nStundenlohn: 20\nUngültige Eingabe!"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bfloat\\s*\\(",
+          "label": "Es wird float() verwendet"
         }
       ],
       "tips": [

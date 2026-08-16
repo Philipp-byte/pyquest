@@ -36,6 +36,11 @@
           "type": "source_not_matches",
           "pattern": "(?:\\b20\\.5\\b|\\b40\\.5\\b)",
           "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bkassieren\\s*\\(",
+          "label": "Es wird kassieren() verwendet"
         }
       ]
     },
@@ -61,6 +66,11 @@
           "type": "source_matches",
           "pattern": "\\bdef\\s+lesung_anmelden\\s*\\(",
           "label": "Es gibt eine Funktion namens lesung_anmelden"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\blesung_anmelden\\s*\\(",
+          "label": "Es wird lesung_anmelden() verwendet"
         }
       ]
     }

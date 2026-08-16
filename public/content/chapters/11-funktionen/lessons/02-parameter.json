@@ -52,6 +52,11 @@
           "type": "source_not_matches",
           "pattern": "(?:\\b7\\b|\\b15\\b)",
           "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\baddiere\\s*\\(",
+          "label": "Es wird addiere() verwendet"
         }
       ]
     },
@@ -82,6 +87,11 @@
           "type": "source_not_matches",
           "pattern": "(?:Titel:\\ Moby\\ Dick,\\ Autor:\\ Herman\\ Melville,\\ Preis:\\ 14\\.99\\ Euro)",
           "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bbuch_info\\s*\\(",
+          "label": "Es wird buch_info() verwendet"
         }
       ]
     }

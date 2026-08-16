@@ -52,6 +52,16 @@
           "type": "source_matches",
           "pattern": "\\bclass\\s+\\w+",
           "label": "Es wird eine Klasse definiert"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\b__init__\\s*\\(",
+          "label": "Es wird __init__() verwendet"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bvorstellen\\s*\\(",
+          "label": "Es wird vorstellen() verwendet"
         }
       ]
     }

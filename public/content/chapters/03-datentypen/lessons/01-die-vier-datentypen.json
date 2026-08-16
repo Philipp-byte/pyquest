@@ -15,7 +15,11 @@
     {
       "type": "quiz",
       "question": "Welchen Datentyp hat der Wert `3.14`?",
-      "choices": ["int", "float", "str"],
+      "choices": [
+        "int",
+        "float",
+        "str"
+      ],
       "answer": 1,
       "explainCorrect": "Richtig! 3.14 hat einen Nachkommateil – das ist ein float.",
       "explainWrong": "3.14 ist eine Kommazahl, also vom Typ float. (int wäre eine ganze Zahl ohne Komma.)"
@@ -23,7 +27,11 @@
     {
       "type": "quiz",
       "question": "Und welchen Datentyp hat `True`?",
-      "choices": ["str", "int", "bool"],
+      "choices": [
+        "str",
+        "int",
+        "bool"
+      ],
       "answer": 2,
       "explainCorrect": "Genau! True und False sind die beiden Werte des Typs bool.",
       "explainWrong": "True ist ein Wahrheitswert – der Typ dafür heißt bool. Er kann nur True oder False sein."
@@ -41,7 +49,15 @@
         "print(type(4.5))"
       ],
       "tests": [
-        { "type": "output_contains", "expected": "float" }
+        {
+          "type": "output_contains",
+          "expected": "float"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\btype\\s*\\(",
+          "label": "Es wird type() verwendet"
+        }
       ]
     }
   ]

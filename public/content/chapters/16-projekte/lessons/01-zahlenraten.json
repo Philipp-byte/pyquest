@@ -37,13 +37,24 @@
       "tests": [
         {
           "type": "input_output",
-          "inputs": ["3", "10", "7"],
+          "inputs": [
+            "3",
+            "10",
+            "7"
+          ],
           "expected": "Rate die Zahl: 3\nZu niedrig!\nRate die Zahl: 10\nZu hoch!\nRate die Zahl: 7\nRichtig!"
         },
         {
           "type": "input_output",
-          "inputs": ["7"],
+          "inputs": [
+            "7"
+          ],
           "expected": "Rate die Zahl: 7\nRichtig!"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\binput\\s*\\(",
+          "label": "Es wird input() verwendet"
         }
       ]
     }

@@ -52,6 +52,11 @@
           "type": "source_not_matches",
           "pattern": "(?:\\bTrue\\b|\\b3\\b)",
           "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\.find\\s*\\(",
+          "label": "Es wird .find() verwendet"
         }
       ]
     }

@@ -47,6 +47,11 @@
           "type": "var",
           "name": "zahl",
           "expected": 4.23
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bfloat\\s*\\(",
+          "label": "Es wird float() verwendet"
         }
       ]
     },
@@ -80,6 +85,11 @@
           "type": "source_not_matches",
           "pattern": "(?:\\b1\\b)",
           "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bint\\s*\\(",
+          "label": "Es wird int() verwendet"
         }
       ]
     }

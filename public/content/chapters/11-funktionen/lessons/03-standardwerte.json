@@ -52,6 +52,11 @@
           "type": "source_not_matches",
           "pattern": "(?:Name:\\ Anna,\\ Alter:\\ 28|Name:\\ Max,\\ Alter:\\ 30,\\ Gekauftes\\ Buch:\\ Harry\\ Potter)",
           "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bkunden_info\\s*\\(",
+          "label": "Es wird kunden_info() verwendet"
         }
       ]
     }

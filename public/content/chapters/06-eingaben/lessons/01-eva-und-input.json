@@ -47,8 +47,25 @@
         "name = input(\"Wie heißt du? \")\nprint(\"Hallo \" + name + \"!\")"
       ],
       "tests": [
-        { "type": "input_output", "inputs": ["Ada"], "expected": "Wie heißt du? Ada\nHallo Ada!" },
-        { "type": "input_output", "inputs": ["Max"], "expected": "Wie heißt du? Max\nHallo Max!" }
+        {
+          "type": "input_output",
+          "inputs": [
+            "Ada"
+          ],
+          "expected": "Wie heißt du? Ada\nHallo Ada!"
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "Max"
+          ],
+          "expected": "Wie heißt du? Max\nHallo Max!"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\binput\\s*\\(",
+          "label": "Es wird input() verwendet"
+        }
       ]
     }
   ]

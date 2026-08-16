@@ -53,6 +53,11 @@
           "type": "func",
           "call": "verdopple(0)",
           "expected": 0
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bverdopple\\s*\\(",
+          "label": "Es wird verdopple() verwendet"
         }
       ]
     },
@@ -88,6 +93,11 @@
           "type": "source_not_matches",
           "pattern": "(?:\\b11\\.5\\b)",
           "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bdurchschnitt\\s*\\(",
+          "label": "Es wird durchschnitt() verwendet"
         }
       ]
     }

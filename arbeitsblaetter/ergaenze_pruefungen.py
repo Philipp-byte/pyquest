@@ -141,6 +141,31 @@ TECHNIKEN = [
     ("fstring", r"f-String", r"f[\"']", "Die Ausgabe entsteht mit einem f-String"),
 ]
 
+# print-Pflicht bringt nichts (wird fast immer benutzt) und range ist bei
+# for-Aufgaben schon ueber die Schleifen-Pruefung abgedeckt.
+FUNKTIONEN_OHNE_AUSSAGE = {"print", "range"}
+
+
+def geforderte_funktionsaufrufe(task):
+    """Alle Funktionen, welche die Aufgabenstellung ausdruecklich nennt -
+    als `name(...)`, `.name(...)` oder "mit `name`".
+
+    So wird aus "Wandle ihn mit `float()` um" die Pflicht, dass float( im
+    Quelltext vorkommt - sonst gilt auch zahl = 4.23 als Loesung, obwohl
+    gar nichts umgewandelt wurde.
+    """
+    funktionen = {}
+    # `float()` / `.upper()` / `.split("|")` in Backticks
+    for m in re.finditer(r"`(\.?)([a-zA-Z_]\w*)\s*\([^`]*\)`", task):
+        punkt, name = m.group(1), m.group(2)
+        if name in FUNKTIONEN_OHNE_AUSSAGE:
+            continue
+        funktionen[(punkt, name)] = True
+    # "mit `float`" (ohne Klammern geschrieben)
+    for m in re.finditer(r"mit\s+\*{0,2}`(float|int|str|bool)`", task):
+        funktionen[("", m.group(1))] = True
+    return list(funktionen)
+
 
 def main():
     curriculum = json.loads((CONTENT / "curriculum.json").read_text(encoding="utf-8"))
@@ -234,6 +259,25 @@ def main():
                         uebersprungen += 1
                         continue
                     neue.append({"type": "source_matches", "pattern": code_pat, "label": label})
+
+                # --- Funktionen, welche die Aufgabenstellung nennt ---
+                # "mit float() umwandeln", ".upper() benutzen", ... - die
+                # Funktion muss dann auch wirklich im Quelltext stehen.
+                # Das Musterloesungs-Tor unten sortiert Negativ-Nennungen
+                # ("ohne sum()", "nicht mit print!") automatisch aus, denn
+                # dort benutzt die Musterloesung die Funktion ja nicht.
+                for punkt, name in geforderte_funktionsaufrufe(task):
+                    code_pat = (r"\." if punkt else r"\b") + name + r"\s*\("
+                    if code_pat in quellmuster:
+                        continue
+                    if not re.search(code_pat, code_ohne_kommentar):
+                        uebersprungen += 1
+                        continue
+                    anzeige = (punkt + name) if punkt else name
+                    neue.append({
+                        "type": "source_matches", "pattern": code_pat,
+                        "label": f"Es wird {anzeige}() verwendet",
+                    })
 
                 if neue:
                     step["tests"] = tests + neue

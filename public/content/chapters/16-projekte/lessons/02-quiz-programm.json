@@ -60,6 +60,16 @@
           "type": "source_matches",
           "pattern": "\\bdef\\s+frage_stellen\\s*\\(",
           "label": "Es gibt eine Funktion namens frage_stellen"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bfrage_stellen\\s*\\(",
+          "label": "Es wird frage_stellen() verwendet"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\binput\\s*\\(",
+          "label": "Es wird input() verwendet"
         }
       ]
     },

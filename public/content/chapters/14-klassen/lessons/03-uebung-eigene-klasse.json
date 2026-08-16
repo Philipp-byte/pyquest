@@ -47,6 +47,16 @@
           "type": "source_not_matches",
           "pattern": "(?:\\b170\\b)",
           "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\b__init__\\s*\\(",
+          "label": "Es wird __init__() verwendet"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\babheben\\s*\\(",
+          "label": "Es wird abheben() verwendet"
         }
       ]
     }

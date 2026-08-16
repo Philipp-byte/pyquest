@@ -32,6 +32,11 @@
             "80"
           ],
           "expected": "Geschwindigkeit: 80\nMindestabstand: 40.0 Meter"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\binput\\s*\\(",
+          "label": "Es wird input() verwendet"
         }
       ],
       "tips": [

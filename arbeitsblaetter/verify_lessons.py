@@ -117,12 +117,21 @@ AUSNAHMEN = {
 }
 
 
-def schummel_loesungen(step):
+def py_literal(wert):
+    """JSON-Wert als Python-Literal (True/False/None statt true/false/null)."""
+    if isinstance(wert, bool):
+        return "True" if wert else "False"
+    if wert is None:
+        return "None"
+    return json.dumps(wert, ensure_ascii=False)
+
+
+def schummel_loesungen(step, solution):
     """Baut Abgaben, welche die Aufgabe NICHT loesen, aber die richtige
-    Ausgabe erzeugen - z. B. print(False) statt eines echten Vergleichs.
+    Ausgabe erzeugen - z. B. print(False) statt eines echten Vergleichs
+    oder zahl = 4.23 statt einer Umwandlung mit float().
 
     Besteht eine Aufgabe damit, prueft sie nur das Ergebnis und nicht den Weg.
-    Genau so rutschte print("Ich wohne in Weingarten") und print(False) durch.
     """
     varianten = []
     for check in step["tests"]:
@@ -136,6 +145,26 @@ def schummel_loesungen(step):
         if "\n" in erwartet:
             zeilen = "\n".join(f"print({json.dumps(z)})" for z in erwartet.split("\n"))
             varianten.append(("Zeile für Zeile hingeschrieben", zeilen))
+
+    # Erwartete Variablenwerte direkt als Literal zuweisen (zahl = 4.23),
+    # dazu die erwartete Ausgabe hinschreiben. AUSGENOMMEN sind Aufgaben,
+    # deren Musterloesung genau das tut - "Lege anzahl = 0 an" IST dort die
+    # richtige Loesung.
+    var_checks = [t for t in step["tests"] if t["type"] == "var"]
+    if var_checks:
+        zeilen = []
+        alle_legitim = True
+        for t in var_checks:
+            lit = py_literal(t["expected"])
+            zeilen.append(f"{t['name']} = {lit}")
+            muster = re.escape(t["name"]) + r"\s*=\s*" + re.escape(lit)
+            if not re.search(muster, solution):
+                alle_legitim = False
+        for check in step["tests"]:
+            if check["type"] == "output" and not check.get("inputs"):
+                zeilen += [f"print({json.dumps(z)})" for z in check["expected"].split("\n")]
+        if not alle_legitim:
+            varianten.append(("Wert als Literal zugewiesen", "\n".join(zeilen)))
     return varianten
 
 
@@ -154,7 +183,7 @@ def negative_pass(curriculum):
                 starter = step.get("starterCode") or ""
                 abgaben = [("leer", starter), ("nur pass", starter + "\npass\n")]
                 if (cid, lid, si) not in AUSNAHMEN:
-                    abgaben += [(name, starter + code) for name, code in schummel_loesungen(step)]
+                    abgaben += [(name, starter + code) for name, code in schummel_loesungen(step, step["hints"][-1])]
                 for name, code in abgaben:
                     geprueft += 1
                     if task_passes(step, code):
