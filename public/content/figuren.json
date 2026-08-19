@@ -130,7 +130,7 @@
       },
       "spott": [
         { "pose": "action", "text": "Hihi! Ein Zeichen falsch – und schon geht gar nichts mehr." },
-        { "pose": "action", "text": "Schon wieder! Zähl deine Anführungszeichen nach." },
+        { "pose": "action", "text": "Schon wieder! Schau dir jedes Zeichen einzeln an – auch die Anführungszeichen." },
         { "pose": "action", "text": "Und noch einmal. Lies deinen Text Buchstabe für Buchstabe." },
         { "pose": "action", "text": "Langweilig. Nimm endlich den Tipp!" }
       ],
@@ -333,6 +333,36 @@
         "figur": "memo",
         "pose": "victory",
         "text": "In **Textoria** stehen die Wörter wieder richtig herum. Danke dir!"
+      }
+    },
+
+    "05-operatoren": {
+      "verbuendete": ["vero", "py", "byte", "nia"],
+      "handlanger": ["null-bug", "null-typo"],
+      "abschluss": {
+        "figur": "vero",
+        "pose": "victory",
+        "text": "**Operatia** rechnet und vergleicht wieder richtig. Jedes Zeichen sitzt an seinem Platz."
+      }
+    },
+
+    "06-eingaben": {
+      "verbuendete": ["memo", "byte", "py", "nia"],
+      "handlanger": ["null-typo", "null-bug"],
+      "abschluss": {
+        "figur": "py",
+        "pose": "victory",
+        "text": "**Dialoga** hört wieder zu! Eingabe, Verarbeitung, Ausgabe – alles läuft."
+      }
+    },
+
+    "07-bedingungen": {
+      "verbuendete": ["vero", "ada", "glitch", "py"],
+      "handlanger": ["null-bug", "null-nullbit"],
+      "abschluss": {
+        "figur": "vero",
+        "pose": "victory",
+        "text": "**Entscheidora** kann wieder wählen! Jeder Weg führt dahin, wo er hingehört."
       }
     }
   }

@@ -11,15 +11,15 @@ Aus den Original-PNGs hier werden die App-Bilder mit
 
 | Figur | Ordner | Posen | Kommt vor in | Rolle |
 |---|---|---|---|---|
-| Py | `py` | 8 | Kapitel 1–4 | Maskottchen, die Python-Schlange |
-| Ada | `ada` | 8 | Kapitel 1 | Wächterin der Akademie, Mentorin |
-| Nia | `nia` | 8 | Kapitel 1–4 | Code-Scout, kennt alle Welten |
-| Byte | `byte` | 8 | Kapitel 1–3 | freundliche Debug-Drohne |
-| Glitch | `glitch` | 8 | Kapitel 3–4 | Fehlerwesen, das zu uns gehört |
-| Memo | `memo` | 8 | Kapitel 2, 4 | Archivarin der Speicherstadt |
+| Py | `py` | 8 | Kapitel 1–7 | Maskottchen, die Python-Schlange |
+| Ada | `ada` | 8 | Kapitel 1, 7 | Wächterin der Akademie, Mentorin |
+| Nia | `nia` | 8 | Kapitel 1–6 | Code-Scout, kennt alle Welten |
+| Byte | `byte` | 8 | Kapitel 1–3, 5–6 | freundliche Debug-Drohne |
+| Glitch | `glitch` | 8 | Kapitel 3–4, 7 | Fehlerwesen, das zu uns gehört |
+| Memo | `memo` | 8 | Kapitel 2, 4, 6 | Archivarin der Speicherstadt |
 | **Iva** | `iva` | 3 | noch frei | Baumeisterin – **Funktionen, Klassen** |
 | **Tick** | `tick` | 3 | noch frei | Zähl-Drohne – **Schleifen, Listen** |
-| **Vero** | `vero` | 3 | noch frei | Wahrheits-Wesen – **Bedingungen, Vergleiche** |
+| **Vero** | `vero` | 3 | Kapitel 5, 7 | Wahrheits-Wesen – **Bedingungen, Vergleiche** |
 
 Alle sechs oberen Figuren stammen aus dem Intro und stellen sich in den
 Lektionen deshalb **nicht** noch einmal vor. Iva, Tick und Vero sind neu und
@@ -30,12 +30,12 @@ haben einen Vorstellungstext.
 | Figur | Ordner | Posen | Kommt vor in | Stört bei |
 |---|---|---|---|---|
 | Professor Null | `professor-null` | 9 | noch frei | der Hauptgegner |
-| Nullbit | `null-nullbit` | 2 | Kapitel 1–4 | Späherdrohne, überall |
+| Nullbit | `null-nullbit` | 2 | Kapitel 1–4, 7 | Späherdrohne, überall |
 | Nibble | `null-nibble` | 2 | Kapitel 1–4 | stiehlt Werte – Variablen, Datentypen |
-| Bug | `null-bug` | 2 | ab Kapitel 5 geplant | baut Fehler ein – Operatoren, Bedingungen |
+| Bug | `null-bug` | 2 | Kapitel 5–7 | baut Fehler ein – Operatoren, Bedingungen |
 | Loop | `null-loop` | 2 | ab Kapitel 8 geplant | Endlosschleifen – while, for |
 | Ciphera | `null-ciphera` | 2 | ab Kapitel 13 geplant | Schlüssel und Baupläne – Dictionaries, Klassen |
-| **Typo** | `null-typo` | 3 | noch frei | Tippfehler – **Strings, Datentypen** |
+| **Typo** | `null-typo` | 3 | Kapitel 5–6 | Tippfehler – **Strings, Datentypen** |
 | **Indexa** | `null-indexa` | 3 | noch frei | verschiebt Positionen – **Listen, Slicing, Matrix** |
 | **Krasch** | `null-krasch` | 3 | noch frei | Abstürze – **Dateien, Projekte, Fehlermeldungen** |
 
