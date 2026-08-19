@@ -364,6 +364,70 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
   .kapitelkarte { padding: 1.2rem .8rem 1.4rem; }
 }
 
+/* ---------- Begleitfiguren ----------
+   Auftritt einer Figur nach einer Antwort: Bild links, Sprechblase rechts.
+   Verbuendete in Gruen, Handlanger von Professor Null in Violett - die
+   Farben aus der Intro-Geschichte. */
+.figur {
+  display: flex; align-items: flex-end; gap: .7rem;
+  margin-top: 1rem; animation: figur-auftritt .38s cubic-bezier(.22,1,.36,1);
+}
+.figur__bild {
+  width: clamp(64px, 17vw, 96px); flex: none; display: block;
+  filter: drop-shadow(0 6px 12px rgba(15, 23, 42, .28));
+}
+.figur__blase {
+  position: relative; flex: 1; min-width: 0;
+  padding: .7rem .9rem; border-radius: 16px;
+  border: 2px solid var(--figur-rand); background: var(--figur-flaeche);
+}
+/* Sprechblasen-Zipfel zur Figur hin */
+.figur__blase::before {
+  content: ""; position: absolute; left: -9px; bottom: 16px;
+  width: 14px; height: 14px; transform: rotate(45deg);
+  border-left: 2px solid var(--figur-rand); border-bottom: 2px solid var(--figur-rand);
+  background: var(--figur-flaeche);
+}
+.figur__name {
+  display: block; font-size: .74rem; font-weight: 900;
+  text-transform: uppercase; letter-spacing: .05em; color: var(--figur-name);
+}
+.figur__text { font-size: .93rem; }
+.figur__text p { margin: .2rem 0; }
+.figur__text p:first-child { margin-top: .1rem; }
+.figur__text p:last-child { margin-bottom: 0; }
+
+.figur--verbuendet {
+  --figur-rand: color-mix(in srgb, var(--green) 55%, var(--border));
+  --figur-flaeche: color-mix(in srgb, var(--green) 10%, var(--surface));
+  --figur-name: var(--green-dark);
+}
+.figur--handlanger {
+  --figur-rand: color-mix(in srgb, var(--purple) 60%, var(--border));
+  --figur-flaeche: color-mix(in srgb, var(--purple) 12%, var(--surface));
+  --figur-name: color-mix(in srgb, var(--purple) 75%, var(--fg));
+}
+/* Beim ersten Auftritt stellt sich die Figur vor - dieser Moment bekommt
+   mehr Gewicht: groesseres Bild und ein leichtes Leuchten. */
+.figur--vorstellung .figur__bild { width: clamp(84px, 22vw, 124px); }
+.figur--vorstellung .figur__blase { box-shadow: 0 0 0 4px color-mix(in srgb, var(--figur-rand) 22%, transparent); }
+.figur--vorstellung.figur--handlanger .figur__bild {
+  animation: figur-stoerung 2.6s steps(1) infinite;
+}
+@keyframes figur-auftritt {
+  from { opacity: 0; transform: translateY(10px) scale(.96); }
+  to { opacity: 1; transform: none; }
+}
+/* Kurzes Flackern - Nulls Figuren sind aus korrumpiertem Code gemacht. */
+@keyframes figur-stoerung {
+  0%, 92%, 100% { filter: drop-shadow(0 6px 12px rgba(15,23,42,.28)); }
+  94% { filter: drop-shadow(0 6px 12px rgba(15,23,42,.28)) hue-rotate(35deg) brightness(1.25); }
+  96% { filter: drop-shadow(0 6px 12px rgba(15,23,42,.28)) brightness(.85); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .figur, .figur--vorstellung.figur--handlanger .figur__bild { animation: none; }
+}
+
 /* ---------- Datenkosmos ----------
    Weltraum-Look fuer den Weltenbaum und die Kapitelkarten: animierter
    Sternenhimmel mit Nebeln, die Welten schweben als Inseln im Raum,

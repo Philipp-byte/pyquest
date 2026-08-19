@@ -22,7 +22,12 @@ let cache = null;
 export async function loadCurriculum() {
   if (cache) return cache;
 
-  const curriculum = await loadJson("curriculum.json");
+  // Begleitfiguren gleich mit der ersten Welle laden - eine eigene Welle
+  // waere reine Wartezeit. Fehlt die Datei, laeuft alles ohne Figuren weiter.
+  const [curriculum, figuren] = await Promise.all([
+    loadJson("curriculum.json"),
+    loadJson("figuren.json").catch(() => null),
+  ]);
 
   const chapters = await Promise.all(
     curriculum.chapters.map(async (chapterId) => {
@@ -44,7 +49,7 @@ export async function loadCurriculum() {
     (curriculum.tests ?? []).map((testId) => loadJson(`tests/${testId}.json`))
   );
 
-  cache = { title: curriculum.title, chapters, tests };
+  cache = { title: curriculum.title, chapters, tests, figuren };
   return cache;
 }
 

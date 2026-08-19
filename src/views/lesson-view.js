@@ -11,6 +11,7 @@ import { burstSmall, burstBig } from "../celebrate.js";
 import { playCorrect, playWrong, playFinish, playLevelUp, playBadge } from "../sound.js";
 import { findLesson, flattenLessons } from "../content.js";
 import { renderDiff } from "./diff-view.js";
+import { createRegie } from "../figuren.js";
 
 export function renderLesson(app, curriculum, chapterId, lessonId) {
   const found = findLesson(curriculum, chapterId, lessonId);
@@ -37,6 +38,25 @@ class LessonPlayer {
     this.mistakes = 0; // fuer Sterne-Berechnung
     this.hintsUsed = 0;
     this.editor = null;
+    // Begleitfiguren des Kapitels (null, wenn dieses Kapitel keine hat).
+    this.regie = createRegie(curriculum.figuren, lesson.chapterId);
+    this.fehlerImSchritt = false;
+  }
+
+  // Laesst eine Figur zu Wort kommen: Sprechblase mit Bild unter der Aufgabe.
+  // Eine aeltere Blase im selben Schritt wird ersetzt, damit sich nichts
+  // stapelt.
+  zeigeFigur(auftritt, card) {
+    if (!auftritt) return;
+    card.querySelector(".figur")?.remove();
+    const blase = html(`<div class="figur figur--${auftritt.rolle}${auftritt.vorstellung ? " figur--vorstellung" : ""}">
+      <img class="figur__bild" src="${auftritt.bild}" alt="${escape(auftritt.name)}" loading="lazy">
+      <div class="figur__blase">
+        <span class="figur__name">${escape(auftritt.name)}</span>
+        <div class="figur__text">${renderMarkdown(auftritt.text)}</div>
+      </div>
+    </div>`);
+    card.append(blase);
   }
 
   start() {
@@ -79,6 +99,7 @@ class LessonPlayer {
     this.stage.innerHTML = "";
     this.footer.innerHTML = "";
     this.stage.scrollTop = 0;
+    this.fehlerImSchritt = false;
 
     switch (step.type) {
       case "explain": return this.renderExplain(step);
@@ -166,15 +187,18 @@ class LessonPlayer {
           feedback.innerHTML = renderMarkdown(step.explainCorrect || "Richtig! ✅");
           playCorrect();
           burstSmall();
+          this.zeigeFigur(this.regie?.erfolg({ nachFehler: this.fehlerImSchritt }), card);
           this.continueButton();
         } else {
           this.mistakes++;
+          this.fehlerImSchritt = true;
           b.classList.add("choice--wrong");
           b.disabled = true;
           feedback.hidden = false;
           feedback.className = "feedback feedback--no";
           feedback.innerHTML = renderMarkdown(step.explainWrong || "Das war nicht richtig. Versuch es nochmal!");
           playWrong();
+          this.zeigeFigur(this.regie?.fehler(), card);
         }
       };
       choicesEl.append(b);
@@ -225,14 +249,17 @@ class LessonPlayer {
         feedback.textContent = "Richtig! ✅";
         playCorrect();
         burstSmall();
+        this.zeigeFigur(this.regie?.erfolg({ nachFehler: this.fehlerImSchritt }), card);
         this.footer.innerHTML = "";
         this.continueButton();
       } else {
         this.mistakes++;
+        this.fehlerImSchritt = true;
         feedback.hidden = false;
         feedback.className = "feedback feedback--no";
         feedback.textContent = "Noch nicht ganz. Versuch es nochmal!";
         playWrong();
+        this.zeigeFigur(this.regie?.fehler(), card);
       }
     };
   }
@@ -331,10 +358,12 @@ class LessonPlayer {
           card.append(box);
         }
 
+        this.zeigeFigur(this.regie?.erfolg({ nachFehler: this.fehlerImSchritt }), card);
         this.footer.innerHTML = "";
         this.continueButton();
       } else {
         this.mistakes++;
+        this.fehlerImSchritt = true;
         feedback.hidden = false;
         feedback.className = "feedback feedback--no";
         if (result.error) {
@@ -351,6 +380,7 @@ class LessonPlayer {
             (step.hints?.length ? "Tipp: Nutze den 💡-Button." : "");
         }
         playWrong();
+        this.zeigeFigur(this.regie?.fehler(), card);
         checkBtn.disabled = false;
       }
     };
@@ -405,6 +435,12 @@ class LessonPlayer {
         ` : ""}
       </div>
     `;
+
+    // Zum Schluss meldet sich eine Figur des Kapitels und ordnet die Lektion
+    // in die Geschichte ein.
+    const abschluss = this.regie?.abschluss();
+    if (abschluss) this.zeigeFigur(abschluss, this.stage.querySelector(".card--finish"));
+
     this.footer.innerHTML = "";
     const back = html(`<a class="btn btn--ghost" href="#/chapter/${this.lesson.chapterId}">Zum Kapitel</a>`);
     this.footer.append(back);

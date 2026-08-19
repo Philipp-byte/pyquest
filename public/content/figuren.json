@@ -1,0 +1,148 @@
+{
+  "_hinweis": "Begleitfiguren waehrend der Lektionen. Verbuendete melden sich bei einer richtigen Loesung, Handlanger von Professor Null bei einem Fehler. Beim ersten Auftritt stellt sich eine Figur vor. Texte duerfen frei bearbeitet werden - die Bilder liegen unter public/figuren/<ordner>/<pose>.webp.",
+
+  "figuren": {
+    "py": {
+      "name": "Py",
+      "rolle": "verbuendet",
+      "ordner": "py",
+      "vorstellung": {
+        "pose": "funny",
+        "text": "Ssschön, dich zu sehen! Ich bin **Py** – die Schlange, nach der diese ganze Sprache benannt ist. Professor Null hat die sechzehn Welten zerbrochen. Aber weißt du was? Jede Zeile Code, die du schreibst, setzt ein Stück davon wieder zusammen. Und du hast gerade angefangen."
+      },
+      "lob": [
+        { "pose": "victory", "text": "Genau so! Das war fehlerfrei." },
+        { "pose": "victory", "text": "Sitzt. Ein Stück Neustart leuchtet wieder." },
+        { "pose": "clever", "text": "Sauber geschrieben – genau das meinte ich." },
+        { "pose": "funny", "text": "Ssstark! Weiter so." }
+      ]
+    },
+
+    "nia": {
+      "name": "Code-Scout Nia",
+      "rolle": "verbuendet",
+      "ordner": "nia",
+      "vorstellung": {
+        "pose": "clever",
+        "text": "Ich bin **Nia**, Code-Scout. Ich war schon in allen sechzehn Welten unterwegs – und ich sage dir: **Neustart** ist die wichtigste. Wer hier sauber anfängt, kommt überall durch. Ich hab dich im Blick."
+      },
+      "lob": [
+        { "pose": "victory", "text": "Notiert: funktioniert. Auf meiner Karte leuchtet wieder ein Punkt." },
+        { "pose": "clever", "text": "Genau der Weg, den ich auch genommen hätte." },
+        { "pose": "victory", "text": "Sauber. So kommt man durch diese Welt." }
+      ]
+    },
+
+    "byte": {
+      "name": "Byte",
+      "rolle": "verbuendet",
+      "ordner": "byte",
+      "vorstellung": {
+        "pose": "neutral",
+        "text": "**Byte** hier. Debug-Drohne, Baureihe 7. Mein Auftrag: Fehler finden, bevor sie dich finden. Ich schwebe einfach mit und schaue dir über die Schulter. Bis jetzt: **keine Beanstandung.**"
+      },
+      "lob": [
+        { "pose": "victory", "text": "Prüfung abgeschlossen: alles grün. Keine Fehler im Protokoll." },
+        { "pose": "neutral", "text": "Analyse: korrekt. Ich hab nichts zu meckern – und das kommt selten vor." },
+        { "pose": "surprised", "text": "Beim ersten Versuch? Das notiere ich als vorbildlich." }
+      ]
+    },
+
+    "glitch": {
+      "name": "Glitch",
+      "rolle": "verbuendet",
+      "ordner": "glitch",
+      "vorstellung": {
+        "pose": "funny",
+        "text": "Hihi! Ich bin **Glitch**. Ich *bin* ein Fehler – ein entlaufener. Früher hab ich Programme durcheinandergebracht, jetzt helfe ich lieber mit. Und weil ich es wissen muss: **Fehler sind nicht schlimm.** Ohne sie lernt niemand etwas."
+      },
+      "lob": [
+        { "pose": "funny", "text": "Nichts kaputt! Schade eigentlich. Aber gut gemacht." },
+        { "pose": "funny", "text": "Ich hab nach einem Fehler gesucht und keinen gefunden. Das ärgert mich ein bisschen." },
+        { "pose": "neutral", "text": "Läuft rund. Da kann selbst ich nichts durcheinanderbringen." }
+      ]
+    },
+
+    "ada": {
+      "name": "Wächterin Ada",
+      "rolle": "verbuendet",
+      "ordner": "ada",
+      "vorstellung": {
+        "pose": "neutral",
+        "text": "Ich bin **Ada**, Wächterin der Akademie. Ich habe dich durch das Portal geschickt, als Null angriff – und ich sehe von hier aus jeden Schritt, den du gehst. Du machst das gut, Lehrling."
+      },
+      "lob": [
+        { "pose": "victory", "text": "Ich habe zugesehen. Genau so löst man das." },
+        { "pose": "thoughtful", "text": "Ruhig und richtig. Das ist mehr wert als schnell." }
+      ]
+    },
+
+    "syntaxa": {
+      "name": "Syntaxa",
+      "rolle": "handlanger",
+      "ordner": "syntaxa",
+      "vorstellung": {
+        "pose": "neutral",
+        "text": "**Syntaxa.** Syntax-Wächterin im Dienst von Professor Null. Ich achte darauf, dass jedes Zeichen sitzt: jede Klammer, jedes Anführungszeichen, jeder Punkt. Du hast gerade eines übersehen. Das notiere ich."
+      },
+      "spott": [
+        { "pose": "angry", "text": "Ein Zeichen daneben – und schon läuft gar nichts. Professor Null hat recht: Diese Welt ist zu unordentlich." },
+        { "pose": "angry", "text": "„Fast richtig“ gibt es nicht. Es gibt richtig, und es gibt das hier." },
+        { "pose": "neutral", "text": "Der Professor sagt: Ein perfektes Programm stellt keine Fragen. Deines stellt gerade sehr viele." },
+        { "pose": "angry", "text": "Ich habe es aufgeschrieben. Lies deine Zeile noch einmal – Zeichen für Zeichen." }
+      ],
+      "rueckzug": [
+        { "pose": "defeated", "text": "…korrekt. Jedes Zeichen sitzt. Ich – ich muss das leider so melden." },
+        { "pose": "defeated", "text": "Du hast es geändert. Und jetzt stimmt es. Das war nicht der Plan." }
+      ]
+    },
+
+    "kontrollor": {
+      "name": "Kontrollor",
+      "rolle": "handlanger",
+      "ordner": "kontrollor",
+      "vorstellung": {
+        "pose": "neutral",
+        "text": "SCAN LÄUFT. Einheit **K-0 „Kontrollor“**, Aufklärungsdrohne von Professor Null. Auftrag: Abweichungen melden. — Abweichung erkannt. Du gehörst nicht in diese Welt, Lehrling."
+      },
+      "spott": [
+        { "pose": "angry", "text": "ABWEICHUNG PROTOKOLLIERT. Deine Ausgabe stimmt nicht mit dem Soll überein." },
+        { "pose": "angry", "text": "Fehlerquote steigt. Empfehlung an die Einheit: aufgeben." },
+        { "pose": "neutral", "text": "Prüfung nicht bestanden. Ich melde das weiter. Immer." }
+      ],
+      "rueckzug": [
+        { "pose": "defeated", "text": "…Soll erreicht. Das war nicht vorgesehen. RÜCKZUG!" },
+        { "pose": "defeated", "text": "Fehler behoben. Berechnung war falsch – meine, nicht deine. Ich ziehe ab." }
+      ]
+    },
+
+    "professor-null": {
+      "name": "Professor Null",
+      "rolle": "handlanger",
+      "ordner": "professor-null",
+      "vorstellung": {
+        "pose": "clever",
+        "text": "So, so. Der Lehrling schreibt seine ersten Zeilen. — Ich bin **Professor Null**. Ich habe diese Welten nicht zerstört, ich habe sie *geordnet*. Fehler, Fragen, eigene Einfälle: All das brauchst du nicht. Gib einfach auf, dann muss ich dich nicht korrigieren."
+      },
+      "spott": [
+        { "pose": "angry", "text": "Ihr nennt es Kreativität. Ich nenne es unkontrollierbares Chaos." },
+        { "pose": "clever", "text": "Siehst du? Ein Fehler. Genau deshalb gehört diese Welt mir." }
+      ],
+      "rueckzug": [
+        { "pose": "defeated", "text": "Du hast deinen Fehler selbst gefunden und behoben. Das … war nicht eingeplant." }
+      ]
+    }
+  },
+
+  "kapitel": {
+    "01-erste-schritte": {
+      "verbuendete": ["py", "nia", "byte", "glitch"],
+      "handlanger": ["syntaxa", "kontrollor"],
+      "abschluss": {
+        "figur": "ada",
+        "pose": "victory",
+        "text": "Eine Lektion weiter. Ich spüre, wie **Neustart** wieder Kraft bekommt. Genau so holen wir uns die Welten zurück."
+      }
+    }
+  }
+}

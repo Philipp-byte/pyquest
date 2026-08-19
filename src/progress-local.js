@@ -7,6 +7,7 @@ import { BADGES } from "./badges.js";
 import { levelForXp } from "./level-math.js";
 import { exportTestResults, importTestResults, resetTestResults } from "./test-results.js";
 import { exportIntroState, importIntroState } from "./intro-state.js";
+import { exportFiguren, importFiguren, resetFiguren } from "./figuren.js";
 
 const KEY = "pyquest.progress.v1";
 
@@ -129,6 +130,9 @@ export function resetProgress() {
   state = { ...DEFAULT, lessons: {}, badges: {} };
   save(state);
   resetTestResults();
+  // Auch die Figuren stellen sich danach wieder neu vor - sonst faengt man
+  // von vorne an, kennt aber schon alle.
+  resetFiguren();
 }
 
 // ---------------------------------------------------------------- Export/Import
@@ -150,6 +154,8 @@ export function exportState() {
       tests: exportTestResults(),
       // Damit nach einem Geraetewechsel nicht wieder der Vorspann startet.
       introGesehen: exportIntroState(),
+      // Welche Begleitfiguren sich schon vorgestellt haben.
+      figuren: exportFiguren(),
     },
     null,
     2
@@ -181,5 +187,6 @@ export function importState(text) {
   // Sicherungen ohne Tests bleiben gueltig).
   if (parsed && parsed.tests) importTestResults(parsed.tests);
   if (parsed && "introGesehen" in parsed) importIntroState(parsed.introGesehen);
+  if (parsed && parsed.figuren) importFiguren(parsed.figuren);
   return true;
 }
