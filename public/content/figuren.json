@@ -120,6 +120,76 @@
       ]
     },
 
+    "kora": {
+      "name": "Kora",
+      "rolle": "verbuendet",
+      "ordner": "kora",
+      "vorstellung": {
+        "pose": "neutral",
+        "text": "Hallo! Ich bin **Kora**. Ich sammle alles, was mir begegnet, und lege es ordentlich in meinen Korb. Genau das macht eine Liste: viele Dinge, ein Name."
+      },
+      "lob": [
+        { "pose": "victory", "text": "Alles im Korb, alles an seinem Platz!" },
+        { "pose": "clever", "text": "Ordentlich sortiert. So findet man alles wieder." },
+        { "pose": "victory", "text": "Passt! Das kommt zu meiner Sammlung." }
+      ]
+    },
+
+    "signa": {
+      "name": "Signa",
+      "rolle": "verbuendet",
+      "ordner": "signa",
+      "vorstellung": {
+        "pose": "neutral",
+        "text": "Ich bin **Signa**. Ich halte das Signal. Eine Schleife muss wissen, wann sie aufhört – sonst läuft sie ewig weiter. Ich zeige dir, wann Schluss ist."
+      },
+      "lob": [
+        { "pose": "victory", "text": "Die Schleife hat gestoppt. Genau richtig!" },
+        { "pose": "clever", "text": "Deine Bedingung greift. So bleibt kein Programm hängen." },
+        { "pose": "victory", "text": "Signal steht auf Grün. Sauber gelöst!" }
+      ]
+    },
+
+    "null-rangor": {
+      "name": "Rangor",
+      "rolle": "handlanger",
+      "ordner": "null-rangor",
+      "vorstellung": {
+        "pose": "neutral",
+        "text": "Ich bin **Rangor**, der Grenzwächter. Ich verschiebe Anfang und Ende. Sag mal: Bis wohin läuft `range(1, 5)` eigentlich wirklich?"
+      },
+      "spott": [
+        { "pose": "action", "text": "Zu weit gelaufen. Oder zu kurz. Meine Grenzen, meine Regeln." },
+        { "pose": "action", "text": "Schon wieder daneben. Zähl nach, wo deine Schleife anfängt und wo sie aufhört!" },
+        { "pose": "action", "text": "Und noch einmal. Denk dran: Das Ende von range() gehört nicht mehr dazu." },
+        { "pose": "action", "text": "Schluss. Nimm den Tipp, bevor ich die Grenzen noch enger stelle." }
+      ],
+      "rueckzug": [
+        { "pose": "defeated", "text": "Die Grenzen stehen wieder richtig. Ärgerlich." },
+        { "pose": "defeated", "text": "Du hast bis genau dahin gezählt. Keinen Schritt weiter." }
+      ]
+    },
+
+    "null-void": {
+      "name": "Void",
+      "rolle": "handlanger",
+      "ordner": "null-void",
+      "vorstellung": {
+        "pose": "neutral",
+        "text": "…ich bin **Void**. Die Leere. Ich nehme das, was deine Funktion zurückgeben soll. Und dann gibt sie nichts zurück. Gar nichts."
+      },
+      "spott": [
+        { "pose": "action", "text": "Nichts kommt zurück. Nichts." },
+        { "pose": "action", "text": "Wieder leer. Gibt deine Funktion überhaupt etwas zurück?" },
+        { "pose": "action", "text": "Und wieder nichts. Such das Wort return in deinem Code." },
+        { "pose": "action", "text": "Leere bleibt Leere. Nimm den Tipp." }
+      ],
+      "rueckzug": [
+        { "pose": "defeated", "text": "Etwas kommt zurück. Das gehört mir nicht mehr." },
+        { "pose": "defeated", "text": "Deine Funktion gibt einen Wert zurück. Meine Leere schrumpft." }
+      ]
+    },
+
     "null-typo": {
       "name": "Typo",
       "rolle": "handlanger",
@@ -363,6 +433,46 @@
         "figur": "vero",
         "pose": "victory",
         "text": "**Entscheidora** kann wieder wählen! Jeder Weg führt dahin, wo er hingehört."
+      }
+    },
+
+    "08-while-schleifen": {
+      "verbuendete": ["signa", "tick", "py", "byte"],
+      "handlanger": ["null-loop", "null-nullbit"],
+      "abschluss": {
+        "figur": "signa",
+        "pose": "victory",
+        "text": "**Itera** dreht sich nicht mehr endlos. Jede Schleife weiß jetzt, wann sie aufhört."
+      }
+    },
+
+    "09-listen": {
+      "verbuendete": ["kora", "memo", "tick", "nia"],
+      "handlanger": ["null-indexa", "null-loop"],
+      "abschluss": {
+        "figur": "kora",
+        "pose": "victory",
+        "text": "In **Listara** liegt wieder alles der Reihe nach. Jedes Element an seinem Platz!"
+      }
+    },
+
+    "10-for-schleifen": {
+      "verbuendete": ["tick", "kora", "py", "nia"],
+      "handlanger": ["null-rangor", "null-loop"],
+      "abschluss": {
+        "figur": "tick",
+        "pose": "victory",
+        "text": "Piep! **Forvania** läuft wieder rund – jeder Durchgang genau so oft, wie er soll."
+      }
+    },
+
+    "11-funktionen": {
+      "verbuendete": ["iva", "py", "byte", "nia"],
+      "handlanger": ["null-void", "null-bug"],
+      "abschluss": {
+        "figur": "iva",
+        "pose": "victory",
+        "text": "**Funktoria** baut wieder! Deine Bausteine kannst du ab jetzt immer wieder benutzen."
       }
     }
   }

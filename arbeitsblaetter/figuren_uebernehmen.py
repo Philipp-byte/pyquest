@@ -38,6 +38,8 @@ BENOETIGT = {
     "iva": ["neutral", "victory", "clever"],
     "tick": ["neutral", "victory", "clever"],
     "vero": ["neutral", "victory", "clever"],
+    "kora": ["neutral", "victory", "clever"],
+    "signa": ["neutral", "victory", "clever"],
     "professor-null": ["angry", "clever", "defeated"],
     # Professor Nulls Gefolge (aus dem Intro-Repo, siehe NULL-CREW.md).
     # Diese Figuren haben nur zwei Posen: ruhig und in Aktion.
@@ -53,6 +55,8 @@ BENOETIGT = {
     "null-typo": ["neutral", "action", "defeated"],
     "null-indexa": ["neutral", "action", "defeated"],
     "null-krasch": ["neutral", "action", "defeated"],
+    "null-rangor": ["neutral", "action", "defeated"],
+    "null-void": ["neutral", "action", "defeated"],
     # Eigenentwuerfe, aktuell nicht im Einsatz - das offizielle Gefolge
     # aus dem Intro-Repo hat sie abgeloest. Bleiben als Reserve erzeugt.
     "syntaxa": ["neutral", "angry", "defeated"],
