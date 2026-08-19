@@ -1,6 +1,7 @@
 {
   "_hinweis": "Begleitfiguren waehrend der Lektionen. Verbuendete melden sich bei einer richtigen Loesung, Handlanger von Professor Null bei einem Fehler. Texte duerfen frei bearbeitet werden - bitte kurze, einfache Saetze. Die Bilder liegen unter public/figuren/<ordner>/<pose>.webp.",
-  "_vorstellung": "Nur NEUE Figuren bekommen einen 'vorstellung'-Text. Py, Ada, Nia, Byte, Glitch und Professor Null kennt man schon aus dem Intro - sie legen ohne Vorstellung los.",
+  "_vorstellung": "Nur NEUE Figuren bekommen einen 'vorstellung'-Text. Py, Ada, Nia und Memo kennt man schon aus dem Intro - sie legen ohne Vorstellung los.",
+  "_spott": "Die spott-Liste ist eine REIHENFOLGE, keine Zufallsauswahl: Bei mehreren Fehlern in derselben Aufgabe bleibt die Figur dieselbe und wird von Spruch zu Spruch strenger - und gibt dabei immer deutlichere Hinweise. Der letzte Spruch wiederholt sich danach.",
 
   "figuren": {
     "py": {
@@ -10,8 +11,9 @@
       "lob": [
         { "pose": "victory", "text": "Super! Das war richtig." },
         { "pose": "victory", "text": "Genau so! Weiter so." },
-        { "pose": "clever", "text": "Perfekt. Du machst das gut." },
-        { "pose": "funny", "text": "Stark! Die Welt wird ein Stück heller." }
+        { "pose": "funny", "text": "Perfekt! Ich häng mich vor Freude in einen Knoten." },
+        { "pose": "funny", "text": "Richtig! Und ich habe nicht mal Hände zum Klatschen." },
+        { "pose": "clever", "text": "Sehr gut. Die Welt wird ein Stück heller." }
       ]
     },
 
@@ -22,30 +24,7 @@
       "lob": [
         { "pose": "victory", "text": "Richtig! Ich mache einen Haken auf meine Karte." },
         { "pose": "clever", "text": "Sehr gut. Genau so mache ich das auch." },
-        { "pose": "victory", "text": "Das stimmt! Du kommst gut voran." }
-      ]
-    },
-
-    "byte": {
-      "name": "Byte",
-      "rolle": "verbuendet",
-      "ordner": "byte",
-      "lob": [
-        { "pose": "victory", "text": "Ich habe geprüft: alles richtig!" },
-        { "pose": "neutral", "text": "Kein Fehler gefunden. Sehr gut." },
-        { "pose": "surprised", "text": "Gleich beim ersten Versuch richtig. Toll!" }
-      ]
-    },
-
-    "glitch": {
-      "name": "Glitch",
-      "rolle": "verbuendet",
-      "ordner": "glitch",
-      "lob": [
-        { "pose": "funny", "text": "Nichts kaputt! Gut gemacht." },
-        { "pose": "funny", "text": "Keine Angst vor Fehlern. Ich bin selbst einer!" },
-        { "pose": "funny", "text": "Ich wollte etwas kaputt machen. Hat nicht geklappt. Zu gut!" },
-        { "pose": "neutral", "text": "Alles läuft. Da kann ich nichts machen." }
+        { "pose": "victory", "text": "Stark! Wenn du so weitermachst, brauche ich bald eine größere Karte." }
       ]
     },
 
@@ -59,42 +38,114 @@
       ]
     },
 
-    "syntaxa": {
-      "name": "Syntaxa",
-      "rolle": "handlanger",
-      "ordner": "syntaxa",
-      "vorstellung": {
-        "pose": "neutral",
-        "text": "Ich bin **Syntaxa**. Ich arbeite für Professor Null. Ich passe auf jedes Zeichen auf: Klammern, Anführungszeichen, Punkte. Du hast eins vergessen!"
-      },
-      "spott": [
-        { "pose": "angry", "text": "Ah, ein Fehler! Professor Null wird gewinnen." },
-        { "pose": "angry", "text": "Falsch! Schau dir deine Zeile noch mal genau an." },
-        { "pose": "neutral", "text": "Da fehlt ein Zeichen. Ich schreibe das auf!" },
-        { "pose": "angry", "text": "Ha! Fast richtig ist nicht richtig." }
-      ],
-      "rueckzug": [
-        { "pose": "defeated", "text": "Nein! Jetzt stimmt alles. Das darf nicht sein!" },
-        { "pose": "defeated", "text": "Du hast den Fehler gefunden. Ich gehe lieber." }
+    "memo": {
+      "name": "Memo",
+      "rolle": "verbuendet",
+      "ordner": "memo",
+      "lob": [
+        { "pose": "victory", "text": "Gut gespeichert! Alles liegt an seinem Platz." },
+        { "pose": "neutral", "text": "Richtig. Das kommt sofort in mein Archiv." },
+        { "pose": "clever", "text": "Ordentlich! Dafür habe ich ein Regal. Regal 7. Oder 8. Ich schaue später nach." }
       ]
     },
 
-    "kontrollor": {
-      "name": "Kontrollor",
+    "null-nullbit": {
+      "name": "Nullbit",
       "rolle": "handlanger",
-      "ordner": "kontrollor",
+      "ordner": "null-nullbit",
       "vorstellung": {
         "pose": "neutral",
-        "text": "PIEP! Ich bin **Kontrollor**, die Drohne von Professor Null. Ich suche Fehler. Einen habe ich schon gefunden: deinen!"
+        "text": "SCAN LÄUFT. Ich bin **Nullbit**, die Drohne von Professor Null. Ich sehe alles. Und ich habe gerade einen Fehler gesehen."
       },
       "spott": [
-        { "pose": "angry", "text": "FEHLER GEFUNDEN! Professor Null freut sich." },
-        { "pose": "angry", "text": "Das ist falsch. Gib lieber auf!" },
-        { "pose": "neutral", "text": "PIEP! Noch ein Fehler. Ich melde das weiter." }
+        { "pose": "action", "text": "FEHLER ERKANNT. Ich melde das an Professor Null." },
+        { "pose": "action", "text": "Schon wieder ein Fehler! Vergleiche deine Ausgabe genau mit der Aufgabe!" },
+        { "pose": "action", "text": "Und noch einer! Achte auf jedes Zeichen: Punkt, Komma, Leerzeichen." },
+        { "pose": "action", "text": "ALARM! Hol dir jetzt einen Tipp. Das ist ein Befehl!" }
       ],
       "rueckzug": [
-        { "pose": "defeated", "text": "PIEP! Kein Fehler mehr. Ich fliege weg!" },
-        { "pose": "defeated", "text": "Du hast es geschafft? Das ist schlecht für Professor Null!" }
+        { "pose": "neutral", "text": "SCAN NEGATIV. Kein Fehler mehr. Rückzug!" },
+        { "pose": "neutral", "text": "Ich muss Professor Null etwas Schlechtes melden: Du kannst das." }
+      ]
+    },
+
+    "null-byte": {
+      "name": "Byte",
+      "rolle": "handlanger",
+      "ordner": "null-byte",
+      "vorstellung": {
+        "pose": "neutral",
+        "text": "Miau! Ich bin **Byte**. Ich sammle Daten – am liebsten deine. Professor Null hat mir versprochen: Bei ihm geht nichts verloren. Also nehme ich alles mit, was herumliegt!"
+      },
+      "spott": [
+        { "pose": "action", "text": "Ha! Ein Fehler. Den Wert nehme ich mit." },
+        { "pose": "action", "text": "Schon wieder falsch! Schau nach, was wirklich in deiner Variablen steht." },
+        { "pose": "action", "text": "Und noch einer! Lies die Aufgabe noch einmal – Wort für Wort." },
+        { "pose": "action", "text": "Jetzt reicht es. Drück den Tipp-Knopf. Sofort!" }
+      ],
+      "rueckzug": [
+        { "pose": "neutral", "text": "Miau… alles richtig. Da war nichts zu holen." },
+        { "pose": "neutral", "text": "Ich gebe deinen Wert zurück. War sowieso zu schwer für meine Tasche." }
+      ]
+    },
+
+    "null-glitch": {
+      "name": "Glitch",
+      "rolle": "handlanger",
+      "ordner": "null-glitch",
+      "vorstellung": {
+        "pose": "neutral",
+        "text": "Hihi! Ich bin **Glitch**. Ich baue kleine Fehler in Programme ein: ein falsches Zeichen hier, eine vertauschte Bedingung da. Findest du meine?"
+      },
+      "spott": [
+        { "pose": "action", "text": "Hihi! Da war einer von mir." },
+        { "pose": "action", "text": "Wieder falsch! Schau dir die Bedingung genau an." },
+        { "pose": "action", "text": "Und wieder nichts. Geh Zeile für Zeile durch. Langsam!" },
+        { "pose": "action", "text": "Schluss mit lustig. Nimm den Tipp!" }
+      ],
+      "rueckzug": [
+        { "pose": "neutral", "text": "Gefunden. Nicht schlecht… für einen Anfänger." },
+        { "pose": "neutral", "text": "Mist! Du hast meinen Fehler entdeckt." }
+      ]
+    },
+
+    "null-loop": {
+      "name": "Loop",
+      "rolle": "handlanger",
+      "ordner": "null-loop",
+      "vorstellung": {
+        "pose": "neutral",
+        "text": "Ich bin **Loop**. Ich wiederhole jeden Befehl. Immer wieder. Und wieder. Bis jemand mir sagt, wann ich aufhören soll. Bis jetzt hat das keiner geschafft."
+      },
+      "spott": [
+        { "pose": "action", "text": "Falsch. Ich wiederhole: falsch." },
+        { "pose": "action", "text": "Schon wieder falsch. Prüfe, wann deine Schleife aufhören soll!" },
+        { "pose": "action", "text": "Und noch einmal. Zähle nach: Wie oft läuft die Schleife wirklich?" },
+        { "pose": "action", "text": "Ich laufe weiter, bis du den Tipp benutzt. Also nimm ihn." }
+      ],
+      "rueckzug": [
+        { "pose": "neutral", "text": "Bedingung erfüllt. Ich stoppe. Danke." },
+        { "pose": "neutral", "text": "Endlich. Du hast mir gesagt, wann Schluss ist." }
+      ]
+    },
+
+    "null-ciphera": {
+      "name": "Ciphera",
+      "rolle": "handlanger",
+      "ordner": "null-ciphera",
+      "vorstellung": {
+        "pose": "neutral",
+        "text": "Ich bin **Ciphera**, die Stellvertreterin von Professor Null. Ich verstecke Wissen hinter Schlüsseln. Wer den richtigen Schlüssel nicht kennt, kommt nicht weiter."
+      },
+      "spott": [
+        { "pose": "action", "text": "Falscher Schlüssel. Der Wert bleibt verschlossen." },
+        { "pose": "action", "text": "Wieder nicht. Welcher Schlüssel gehört zu welchem Wert?" },
+        { "pose": "action", "text": "Wieder daneben. Geh die Aufgabe Schritt für Schritt durch." },
+        { "pose": "action", "text": "Genug geraten. Nimm den Tipp und denk nach." }
+      ],
+      "rueckzug": [
+        { "pose": "neutral", "text": "Richtig. Du hast den Schlüssel gefunden." },
+        { "pose": "neutral", "text": "Das war… überraschend gut. Ich merke mir das." }
       ]
     },
 
@@ -103,8 +154,9 @@
       "rolle": "handlanger",
       "ordner": "professor-null",
       "spott": [
-        { "pose": "angry", "text": "Ein Fehler! Genau deshalb gehört diese Welt bald mir." },
-        { "pose": "clever", "text": "Siehst du? Du schaffst das nicht." }
+        { "pose": "clever", "text": "Ein Fehler. Genau deshalb gehört diese Welt bald mir." },
+        { "pose": "angry", "text": "Schon wieder. Lies die Aufgabe noch einmal." },
+        { "pose": "angry", "text": "Ich habe es dir gesagt: Gib auf. Oder nimm endlich einen Tipp." }
       ],
       "rueckzug": [
         { "pose": "defeated", "text": "Du hast deinen Fehler selbst gefunden. Das war nicht mein Plan." }
@@ -114,12 +166,22 @@
 
   "kapitel": {
     "01-erste-schritte": {
-      "verbuendete": ["py", "nia", "byte", "glitch"],
-      "handlanger": ["syntaxa", "kontrollor"],
+      "verbuendete": ["py", "nia", "ada"],
+      "handlanger": ["null-nullbit", "null-byte"],
       "abschluss": {
         "figur": "ada",
         "pose": "victory",
         "text": "Geschafft! Die Welt **Neustart** wird wieder stärker. Weiter so!"
+      }
+    },
+
+    "02-variablen": {
+      "verbuendete": ["memo", "py", "nia"],
+      "handlanger": ["null-byte", "null-nullbit"],
+      "abschluss": {
+        "figur": "memo",
+        "pose": "victory",
+        "text": "Sehr gut! In der **Speicherstadt** hat jeder Wert wieder seinen Namen und sein Regal."
       }
     }
   }

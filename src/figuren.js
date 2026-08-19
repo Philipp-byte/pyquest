@@ -83,7 +83,7 @@ function stelltSichVor(figuren, id) {
 
 // Baut den Auftritt einer Figur: beim ersten Mal ggf. die Vorstellung,
 // sonst einen zufaelligen Spruch aus der passenden Liste.
-function auftritt(figuren, id, feld) {
+function auftritt(figuren, id, feld, index = null) {
   const figur = figuren?.[id];
   if (!figur) return null;
 
@@ -100,8 +100,12 @@ function auftritt(figuren, id, feld) {
     };
   }
 
-  const spruch = zufall(figur[feld] ?? []);
-  if (!spruch) return null;
+  const liste = figur[feld] ?? [];
+  if (!liste.length) return null;
+  // Ohne Index (Lob, Rueckzug) einfach abwechseln. MIT Index (Spott) wird
+  // die Liste der Reihe nach abgearbeitet - sie ist nach Strenge sortiert.
+  // Der letzte Eintrag bleibt danach stehen.
+  const spruch = index === null ? zufall(liste) : liste[Math.min(index, liste.length - 1)];
   return {
     id,
     name: figur.name,
@@ -121,26 +125,42 @@ export function createRegie(figurenDaten, chapterId) {
   const figuren = figurenDaten.figuren ?? {};
   const verbuendete = kapitel.verbuendete ?? [];
   const handlanger = kapitel.handlanger ?? [];
-  let letzterHandlanger = null;
+  // Innerhalb EINER Aufgabe bleibt derselbe Handlanger - es soll sich
+  // anfuehlen, als haette man es mit einem Gegenueber zu tun, das immer
+  // ungehaltener wird. Der Zaehler waehlt den naechsten, strengeren Spruch.
+  let handlangerImSchritt = null;
+  let spottIndex = 0;
 
   return {
+    // Neue Aufgabe: Der naechste Fehler darf wieder von vorne anfangen.
+    neuerSchritt() {
+      handlangerImSchritt = null;
+      spottIndex = 0;
+    },
+
     // Falsche Antwort: ein Handlanger von Professor Null taucht auf.
     fehler() {
       if (!handlanger.length) return null;
-      // Neue Handlanger zuerst - so lernt man sie nacheinander kennen,
-      // statt gleich alle auf einmal.
-      const neue = handlanger.filter((id) => stelltSichVor(figuren, id));
-      const id = neue.length ? neue[0] : zufall(handlanger);
-      letzterHandlanger = id;
-      return auftritt(figuren, id, "spott");
+      if (!handlangerImSchritt) {
+        // Neue Handlanger zuerst - so lernt man sie nacheinander kennen,
+        // statt gleich alle auf einmal.
+        const neue = handlanger.filter((id) => stelltSichVor(figuren, id));
+        handlangerImSchritt = neue.length ? neue[0] : zufall(handlanger);
+      }
+      const a = auftritt(figuren, handlangerImSchritt, "spott", spottIndex);
+      // Die Vorstellung verbraucht noch keinen Spott-Spruch - der erste
+      // richtige Spruch kommt beim naechsten Fehler.
+      if (a && !a.vorstellung) spottIndex++;
+      return a;
     },
 
     // Richtige Loesung. Kam vorher ein Fehler, zieht sich der Handlanger
     // zurueck, der gerade noch gestichelt hat - sonst lobt ein Verbuendeter.
     erfolg({ nachFehler = false } = {}) {
-      if (nachFehler && letzterHandlanger) {
-        const id = letzterHandlanger;
-        letzterHandlanger = null;
+      if (nachFehler && handlangerImSchritt) {
+        const id = handlangerImSchritt;
+        handlangerImSchritt = null;
+        spottIndex = 0;
         const rueckzug = auftritt(figuren, id, "rueckzug");
         if (rueckzug) return rueckzug;
       }

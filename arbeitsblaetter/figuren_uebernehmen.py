@@ -32,8 +32,17 @@ BENOETIGT = {
     "byte": ["neutral", "victory", "surprised"],
     "glitch": ["funny", "worried", "neutral"],
     "ada": ["neutral", "victory", "thoughtful"],
-    "memo": ["neutral"],
+    "memo": ["neutral", "victory", "clever"],
     "professor-null": ["angry", "clever", "defeated"],
+    # Professor Nulls Gefolge (aus dem Intro-Repo, siehe NULL-CREW.md).
+    # Diese Figuren haben nur zwei Posen: ruhig und in Aktion.
+    "null-byte": ["neutral", "action"],
+    "null-nullbit": ["neutral", "action"],
+    "null-glitch": ["neutral", "action"],
+    "null-loop": ["neutral", "action"],
+    "null-ciphera": ["neutral", "action"],
+    # Eigenentwuerfe, aktuell nicht im Einsatz - das offizielle Gefolge
+    # aus dem Intro-Repo hat sie abgeloest. Bleiben als Reserve erzeugt.
     "syntaxa": ["neutral", "angry", "defeated"],
     "kontrollor": ["neutral", "angry", "defeated"],
 }
@@ -55,6 +64,11 @@ def main():
                 fehlend.append(f"{ordner}/{pose}")
                 continue
             im = Image.open(f).convert("RGBA")
+            # Leeren Rand abschneiden - sonst schwebt die Figur klein in der
+            # Mitte eines grossen, durchsichtigen Quadrats.
+            rand = im.getbbox()
+            if rand:
+                im = im.crop(rand)
             breite = round(im.width * HOEHE / im.height)
             im = im.resize((breite, HOEHE), Image.LANCZOS)
             im.save(ZIEL / ordner / f"{pose}.webp", quality=88, method=6)

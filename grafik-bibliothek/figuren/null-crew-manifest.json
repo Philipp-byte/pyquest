@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "generatedAt": "2026-08-19",
+  "generator": "OpenAI image generation",
+  "group": "Professor Nulls Gefolge",
+  "canvas": {
+    "individualWidth": 900,
+    "individualHeight": 900,
+    "transparent": true
+  },
+  "sheets": {
+    "neutral": "null-crew-lineup.png",
+    "action": "null-crew-actions.png"
+  },
+  "characters": [
+    {
+      "id": "ciphera",
+      "role": "tactical-deputy",
+      "neutral": "ciphera-neutral.png",
+      "action": "ciphera-action.png",
+      "motion": "cipher hologram rotates slowly; hands remain readable"
+    },
+    {
+      "id": "glitch",
+      "role": "code-saboteur",
+      "neutral": "glitch-neutral.png",
+      "action": "glitch-action.png",
+      "motion": "brief offset pixel blocks; no rapid flashing"
+    },
+    {
+      "id": "loop",
+      "role": "recursion-automaton",
+      "neutral": "loop-neutral.png",
+      "action": "loop-action.png",
+      "motion": "torso rings rotate and stop when a condition is solved"
+    },
+    {
+      "id": "byte",
+      "role": "data-thief",
+      "neutral": "byte-neutral.png",
+      "action": "byte-action.png",
+      "motion": "short dash with bouncing data cubes"
+    },
+    {
+      "id": "nullbit",
+      "role": "scout-drone",
+      "neutral": "nullbit-neutral.png",
+      "action": "nullbit-action.png",
+      "motion": "gentle hover and slow scan cone"
+    }
+  ]
+}

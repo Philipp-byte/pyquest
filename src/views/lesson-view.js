@@ -100,6 +100,7 @@ class LessonPlayer {
     this.footer.innerHTML = "";
     this.stage.scrollTop = 0;
     this.fehlerImSchritt = false;
+    this.regie?.neuerSchritt();
 
     switch (step.type) {
       case "explain": return this.renderExplain(step);
