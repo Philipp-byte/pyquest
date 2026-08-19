@@ -3,6 +3,7 @@
   "_vorstellung": "Nur NEUE Figuren bekommen einen 'vorstellung'-Text. Py, Ada, Nia, Byte, Glitch und Memo kennt man schon aus dem Intro - sie legen ohne Vorstellung los.",
   "_spott": "Die spott-Liste ist eine REIHENFOLGE, keine Zufallsauswahl: Bei mehreren Fehlern in derselben Aufgabe bleibt die Figur dieselbe und wird von Spruch zu Spruch strenger - und gibt dabei immer deutlichere Hinweise. Der letzte Spruch wiederholt sich danach.",
   "_umbenannt": "Zwei Figuren aus Professor Nulls Gefolge hiessen urspruenglich 'Byte' und 'Glitch' wie unsere Verbuendeten. Sie heissen hier Nibble (Datendieb, Bilder in null-nibble/) und Bug (Fehlerkuenstler, Bilder in null-bug/). Beide Namen sind echte Fachbegriffe: Ein Nibble ist ein halbes Byte, ein Bug ist ein Programmfehler.",
+  "_einsatz": "Noch keinem Kapitel zugeordnet - einfach in die passende Kapitel-Liste unten eintragen. Verbuendete: Iva (Funktionen, Klassen - sie baut wiederverwendbare Bausteine), Tick (Schleifen, Listen - zaehlt Durchgaenge mit), Vero (Bedingungen, Vergleiche - Wahr oder Falsch). Gegner: Typo (Strings, Datentypen - dreht Zeichen um), Indexa (Listen, Matrix, Slicing - verschiebt Positionen), Krasch (Dateien, Projekte - bringt Programme zum Absturz).",
 
   "figuren": {
     "py": {
@@ -71,6 +72,111 @@
         { "pose": "funny", "text": "Keine Angst vor Fehlern. Ich bin selbst einer!" },
         { "pose": "funny", "text": "Ich wollte etwas kaputt machen. Hat nicht geklappt. Zu gut!" },
         { "pose": "neutral", "text": "Alles läuft rund. Da kann selbst ich nichts durcheinanderbringen." }
+      ]
+    },
+
+    "iva": {
+      "name": "Iva",
+      "rolle": "verbuendet",
+      "ordner": "iva",
+      "vorstellung": {
+        "pose": "neutral",
+        "text": "Hallo! Ich bin **Iva**, Baumeisterin. Ich baue Bausteine, die man immer wieder benutzen kann – dann muss man Arbeit nur einmal machen. Genau das lernst du hier auch."
+      },
+      "lob": [
+        { "pose": "victory", "text": "Läuft! Diesen Baustein kannst du immer wieder benutzen." },
+        { "pose": "clever", "text": "Gut gebaut. Genau so macht man das." },
+        { "pose": "victory", "text": "Fertig und stabil! Das kommt an meinen Werkzeuggürtel." }
+      ]
+    },
+
+    "tick": {
+      "name": "Tick",
+      "rolle": "verbuendet",
+      "ordner": "tick",
+      "vorstellung": {
+        "pose": "neutral",
+        "text": "Piep! Ich bin **Tick**. Ich zähle mit – jeden Durchgang, jeden Schritt. Wenn eine Schleife zu oft läuft, merke ich das als Erster."
+      },
+      "lob": [
+        { "pose": "victory", "text": "Ich habe mitgezählt: alles richtig!" },
+        { "pose": "clever", "text": "Jeder Durchgang hat gepasst. Sauber." },
+        { "pose": "victory", "text": "Piep! Mein Zähler sagt: null Fehler." }
+      ]
+    },
+
+    "vero": {
+      "name": "Vero",
+      "rolle": "verbuendet",
+      "ordner": "vero",
+      "vorstellung": {
+        "pose": "neutral",
+        "text": "Ich bin **Vero**. Ich kenne nur zwei Antworten: **wahr** oder **falsch**. Klingt wenig – aber damit trifft ein Programm jede Entscheidung."
+      },
+      "lob": [
+        { "pose": "victory", "text": "Wahr! Deine Bedingung stimmt." },
+        { "pose": "clever", "text": "Richtig gedacht. Häkchen von mir." },
+        { "pose": "victory", "text": "Genau richtig entschieden." }
+      ]
+    },
+
+    "null-typo": {
+      "name": "Typo",
+      "rolle": "handlanger",
+      "ordner": "null-typo",
+      "vorstellung": {
+        "pose": "neutral",
+        "text": "Hihihi! Ich bin **Typo**. So heißt ein Tippfehler. Ich drehe Buchstaben um, klaue Anführungszeichen und tausche Zeichen aus. Meistens merkt es keiner!"
+      },
+      "spott": [
+        { "pose": "action", "text": "Hihi! Ein Zeichen falsch – und schon geht gar nichts mehr." },
+        { "pose": "action", "text": "Schon wieder! Zähl deine Anführungszeichen nach." },
+        { "pose": "action", "text": "Und noch einmal. Lies deinen Text Buchstabe für Buchstabe." },
+        { "pose": "action", "text": "Langweilig. Nimm endlich den Tipp!" }
+      ],
+      "rueckzug": [
+        { "pose": "defeated", "text": "Nein! Jeder Buchstabe sitzt. Ekelhaft ordentlich." },
+        { "pose": "defeated", "text": "Du hast meinen Tippfehler gefunden. Das hasse ich." }
+      ]
+    },
+
+    "null-indexa": {
+      "name": "Indexa",
+      "rolle": "handlanger",
+      "ordner": "null-indexa",
+      "vorstellung": {
+        "pose": "neutral",
+        "text": "Ich bin **Indexa**. Ich verschiebe Positionen. Einen Platz nach rechts, einen nach links – und schon greifst du das falsche Element. Zählst du eigentlich ab null?"
+      },
+      "spott": [
+        { "pose": "action", "text": "Falsche Position. Ich habe sie verschoben." },
+        { "pose": "action", "text": "Schon wieder daneben. Denk dran: Das erste Element hat Index 0!" },
+        { "pose": "action", "text": "Und wieder nichts. Zähl die Plätze langsam ab." },
+        { "pose": "action", "text": "Genug. Nimm den Tipp, bevor ich mich langweile." }
+      ],
+      "rueckzug": [
+        { "pose": "defeated", "text": "Richtig gezählt. Alle Plätze stimmen wieder." },
+        { "pose": "defeated", "text": "Du hast bei null angefangen. Das war… korrekt." }
+      ]
+    },
+
+    "null-krasch": {
+      "name": "Krasch",
+      "rolle": "handlanger",
+      "ordner": "null-krasch",
+      "vorstellung": {
+        "pose": "neutral",
+        "text": "KRASCH! Ich bin **Krasch**. Ich bringe Programme zum Absturz. Ein kaputter Wert hier, eine fehlende Datei da – und alles fällt zusammen."
+      },
+      "spott": [
+        { "pose": "action", "text": "KRASCH! Dein Programm ist abgestürzt." },
+        { "pose": "action", "text": "Wieder kaputt. Lies die Fehlermeldung – sie sagt dir, wo es knallt." },
+        { "pose": "action", "text": "Und noch mal. Schau dir die Zeile aus der Fehlermeldung genau an." },
+        { "pose": "action", "text": "Ich hau weiter drauf, bis du den Tipp nimmst." }
+      ],
+      "rueckzug": [
+        { "pose": "defeated", "text": "Es läuft?! Nichts ist kaputt. Mist!" },
+        { "pose": "defeated", "text": "Kein Absturz. Dann gehe ich woandershin." }
       ]
     },
 
