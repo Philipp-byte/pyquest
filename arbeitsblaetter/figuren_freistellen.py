@@ -8,8 +8,13 @@ Der Hintergrund wird per Flood-Fill VOM RAND entfernt, nicht ueber einen
 Farbwert. Sonst verschwinden helle Stellen INNERHALB der Figur - weisse Haare,
 Lichter, Glanzpunkte.
 
+Die Posen werden automatisch getrennt. Ragen Hologramme oder schwebende
+Objekte einer Pose weit in die naechste hinein, findet die Automatik die
+falschen Grenzen - dann die Trennspalten von Hand angeben:
+
 Aufruf:
     python figuren_freistellen.py <bogen.png> <zielordner> pose1 pose2 pose3
+    python figuren_freistellen.py <bogen.png> <zielordner> pose1 pose2 pose3 --schnitte 530,971
 """
 
 import sys
@@ -96,12 +101,24 @@ def bloecke_finden(im, anzahl, mindestbreite=40):
 
 
 def main():
-    if len(sys.argv) < 4:
+    argumente = sys.argv[1:]
+    schnitte = None
+    if "--schnitte" in argumente:
+        i = argumente.index("--schnitte")
+        schnitte = [int(x) for x in argumente[i + 1].split(",")]
+        argumente = argumente[:i] + argumente[i + 2 :]
+    if len(argumente) < 3:
         raise SystemExit(__doc__)
-    bogen, ziel, posen = sys.argv[1], Path(sys.argv[2]), sys.argv[3:]
+    bogen, ziel, posen = argumente[0], Path(argumente[1]), argumente[2:]
 
     im = freistellen(bogen)
-    bloecke = bloecke_finden(im, len(posen))
+    if schnitte:
+        if len(schnitte) != len(posen) - 1:
+            raise SystemExit(f"{len(posen)} Posen brauchen {len(posen) - 1} Trennspalten.")
+        grenzen = [0, *schnitte, im.width]
+        bloecke = list(zip(grenzen, grenzen[1:]))
+    else:
+        bloecke = bloecke_finden(im, len(posen))
     ziel.mkdir(parents=True, exist_ok=True)
     for pose, (x0, x1) in zip(posen, bloecke):
         teil = im.crop((x0, 0, x1, im.height))

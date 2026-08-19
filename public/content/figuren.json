@@ -150,6 +150,76 @@
       ]
     },
 
+    "tessa": {
+      "name": "Tessa",
+      "rolle": "verbuendet",
+      "ordner": "tessa",
+      "vorstellung": {
+        "pose": "neutral",
+        "text": "Ich bin **Tessa**. Ich lege Mosaike – Zeile für Zeile, Spalte für Spalte. Eine verschachtelte Liste ist genau das: eine Tabelle aus Zeilen, und in jeder Zeile stehen die einzelnen Felder."
+      },
+      "lob": [
+        { "pose": "victory", "text": "Das Muster stimmt! Zeilen und Spalten passen." },
+        { "pose": "clever", "text": "Sauber gelegt. Jedes Feld sitzt an seinem Platz." },
+        { "pose": "victory", "text": "Perfektes Raster. Besser hätte ich es nicht gelegt." }
+      ]
+    },
+
+    "lexi": {
+      "name": "Lexi",
+      "rolle": "verbuendet",
+      "ordner": "lexi",
+      "vorstellung": {
+        "pose": "neutral",
+        "text": "Hallo! Ich bin **Lexi**. Ich verwalte Schlüssel. Zu jedem Schlüssel gehört genau ein Wert – wie im Wörterbuch: ein Wort, eine Bedeutung. Genau so funktioniert ein Dictionary."
+      },
+      "lob": [
+        { "pose": "victory", "text": "Schlüssel passt zum Wert. Klick!" },
+        { "pose": "clever", "text": "Richtig nachgeschlagen. So findet man alles sofort." },
+        { "pose": "victory", "text": "Sehr gut! Meine Karten sind wieder sortiert." }
+      ]
+    },
+
+    "null-wirr": {
+      "name": "Wirr",
+      "rolle": "handlanger",
+      "ordner": "null-wirr",
+      "vorstellung": {
+        "pose": "neutral",
+        "text": "Hihi… ich bin **Wirr**. Ich verheddere Zeilen und Spalten. Du greifst nach Zeile 2 und bekommst Zeile 0. Merkst du das überhaupt?"
+      },
+      "spott": [
+        { "pose": "action", "text": "Schön verheddert! Da stimmt gar nichts mehr." },
+        { "pose": "action", "text": "Schon wieder daneben. Erst die Zeile, dann die Spalte – in dieser Reihenfolge!" },
+        { "pose": "action", "text": "Und noch einmal. Mal dir die Tabelle auf Papier auf, dann siehst du es." },
+        { "pose": "action", "text": "Genug gezappelt. Nimm den Tipp!" }
+      ],
+      "rueckzug": [
+        { "pose": "defeated", "text": "Nein! Alle Zeilen liegen wieder gerade. Ekelhaft." },
+        { "pose": "defeated", "text": "Du hast meinen Knoten aufgelöst. Wie ärgerlich." }
+      ]
+    },
+
+    "null-klon": {
+      "name": "Klon",
+      "rolle": "handlanger",
+      "ordner": "null-klon",
+      "vorstellung": {
+        "pose": "neutral",
+        "text": "Ich bin **Klon**. Ich kopiere. Aus einem Bauplan mache ich viele Objekte – aber meine Kopien sind falsch. Findest du den Unterschied?"
+      },
+      "spott": [
+        { "pose": "action", "text": "Kopie erstellt. Fehlerhaft. Genau wie geplant." },
+        { "pose": "action", "text": "Schon wieder falsch. Prüfe, was in `__init__` wirklich gesetzt wird." },
+        { "pose": "action", "text": "Und noch einmal. Gehört das zum Objekt oder zur Klasse? Denk nach." },
+        { "pose": "action", "text": "Meine Kopien werden nicht besser. Deine schon – wenn du den Tipp nimmst." }
+      ],
+      "rueckzug": [
+        { "pose": "defeated", "text": "Dein Objekt stimmt. Meine Kopien nicht. Ärgerlich." },
+        { "pose": "defeated", "text": "Ein sauberer Bauplan. Davon kann ich nichts abschauen." }
+      ]
+    },
+
     "null-rangor": {
       "name": "Rangor",
       "rolle": "handlanger",
@@ -356,11 +426,13 @@
       "ordner": "professor-null",
       "spott": [
         { "pose": "clever", "text": "Ein Fehler. Genau deshalb gehört diese Welt bald mir." },
-        { "pose": "angry", "text": "Schon wieder. Lies die Aufgabe noch einmal." },
-        { "pose": "angry", "text": "Ich habe es dir gesagt: Gib auf. Oder nimm endlich einen Tipp." }
+        { "pose": "angry", "text": "Schon wieder. Lies die Aufgabe noch einmal – ganz genau." },
+        { "pose": "angry", "text": "Hier kommst du nicht durch. Geh dein Programm Schritt für Schritt durch." },
+        { "pose": "angry", "text": "Genug! Nimm den Tipp. Auch das werde ich mir merken." }
       ],
       "rueckzug": [
-        { "pose": "defeated", "text": "Du hast deinen Fehler selbst gefunden. Das war nicht mein Plan." }
+        { "pose": "defeated", "text": "Du hast deinen Fehler selbst gefunden. Das war nicht mein Plan." },
+        { "pose": "defeated", "text": "Selbst korrigiert. Genau das kann ich nicht kontrollieren." }
       ]
     }
   },
@@ -473,6 +545,56 @@
         "figur": "iva",
         "pose": "victory",
         "text": "**Funktoria** baut wieder! Deine Bausteine kannst du ab jetzt immer wieder benutzen."
+      }
+    },
+
+    "12-verschachtelte-listen": {
+      "verbuendete": ["tessa", "tick", "kora", "py"],
+      "handlanger": ["null-wirr", "null-indexa"],
+      "abschluss": {
+        "figur": "tessa",
+        "pose": "victory",
+        "text": "**Matrixa** liegt wieder im Raster. Jede Zeile, jede Spalte – alles an seinem Platz."
+      }
+    },
+
+    "13-dictionaries": {
+      "verbuendete": ["lexi", "memo", "nia", "py"],
+      "handlanger": ["null-ciphera", "null-nullbit"],
+      "abschluss": {
+        "figur": "lexi",
+        "pose": "victory",
+        "text": "**Lexikona** ist wieder aufgeschlossen! Jeder Schlüssel führt zu seinem Wert."
+      }
+    },
+
+    "14-klassen": {
+      "verbuendete": ["iva", "tessa", "byte", "ada"],
+      "handlanger": ["null-klon", "null-ciphera"],
+      "abschluss": {
+        "figur": "iva",
+        "pose": "victory",
+        "text": "**Objektiva** baut wieder nach Plan! Aus einer Klasse entstehen so viele Objekte, wie du willst."
+      }
+    },
+
+    "15-dateien": {
+      "verbuendete": ["memo", "kora", "byte", "nia"],
+      "handlanger": ["null-krasch", "null-ciphera"],
+      "abschluss": {
+        "figur": "memo",
+        "pose": "victory",
+        "text": "**Archivia** ist gerettet! Was du speicherst, ist auch morgen noch da."
+      }
+    },
+
+    "16-projekte": {
+      "verbuendete": ["ada", "py"],
+      "handlanger": ["professor-null"],
+      "abschluss": {
+        "figur": "ada",
+        "pose": "victory",
+        "text": "Du hast es geschafft. Alle sechzehn Welten stehen wieder – und du hast sie nicht durch Kontrolle gerettet, sondern weil du dazugelernt hast. Genau das hat Professor Null nie verstanden."
       }
     }
   }
