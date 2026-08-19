@@ -1,7 +1,8 @@
 {
   "_hinweis": "Begleitfiguren waehrend der Lektionen. Verbuendete melden sich bei einer richtigen Loesung, Handlanger von Professor Null bei einem Fehler. Texte duerfen frei bearbeitet werden - bitte kurze, einfache Saetze. Die Bilder liegen unter public/figuren/<ordner>/<pose>.webp.",
-  "_vorstellung": "Nur NEUE Figuren bekommen einen 'vorstellung'-Text. Py, Ada, Nia und Memo kennt man schon aus dem Intro - sie legen ohne Vorstellung los.",
+  "_vorstellung": "Nur NEUE Figuren bekommen einen 'vorstellung'-Text. Py, Ada, Nia, Byte, Glitch und Memo kennt man schon aus dem Intro - sie legen ohne Vorstellung los.",
   "_spott": "Die spott-Liste ist eine REIHENFOLGE, keine Zufallsauswahl: Bei mehreren Fehlern in derselben Aufgabe bleibt die Figur dieselbe und wird von Spruch zu Spruch strenger - und gibt dabei immer deutlichere Hinweise. Der letzte Spruch wiederholt sich danach.",
+  "_umbenannt": "Zwei Figuren aus Professor Nulls Gefolge hiessen urspruenglich 'Byte' und 'Glitch' wie unsere Verbuendeten. Sie heissen hier Nibble (Datendieb, Bilder in null-nibble/) und Bug (Fehlerkuenstler, Bilder in null-bug/). Beide Namen sind echte Fachbegriffe: Ein Nibble ist ein halbes Byte, ein Bug ist ein Programmfehler.",
 
   "figuren": {
     "py": {
@@ -49,6 +50,30 @@
       ]
     },
 
+    "byte": {
+      "name": "Byte",
+      "rolle": "verbuendet",
+      "ordner": "byte",
+      "lob": [
+        { "pose": "victory", "text": "Ich habe geprüft: alles richtig!" },
+        { "pose": "neutral", "text": "Kein Fehler gefunden. Sehr gut." },
+        { "pose": "surprised", "text": "Gleich beim ersten Versuch richtig. Toll!" },
+        { "pose": "neutral", "text": "Fehler-Scan negativ. Ich muss mir wohl eine neue Aufgabe suchen." }
+      ]
+    },
+
+    "glitch": {
+      "name": "Glitch",
+      "rolle": "verbuendet",
+      "ordner": "glitch",
+      "lob": [
+        { "pose": "funny", "text": "Nichts kaputt! Gut gemacht." },
+        { "pose": "funny", "text": "Keine Angst vor Fehlern. Ich bin selbst einer!" },
+        { "pose": "funny", "text": "Ich wollte etwas kaputt machen. Hat nicht geklappt. Zu gut!" },
+        { "pose": "neutral", "text": "Alles läuft rund. Da kann selbst ich nichts durcheinanderbringen." }
+      ]
+    },
+
     "null-nullbit": {
       "name": "Nullbit",
       "rolle": "handlanger",
@@ -69,17 +94,17 @@
       ]
     },
 
-    "null-byte": {
-      "name": "Byte",
+    "null-nibble": {
+      "name": "Nibble",
       "rolle": "handlanger",
-      "ordner": "null-byte",
+      "ordner": "null-nibble",
       "vorstellung": {
         "pose": "neutral",
-        "text": "Miau! Ich bin **Byte**. Ich sammle Daten – am liebsten deine. Professor Null hat mir versprochen: Bei ihm geht nichts verloren. Also nehme ich alles mit, was herumliegt!"
+        "text": "Miau! Ich bin **Nibble**. Ein Nibble ist ein halbes Byte – aber ich klaue doppelt so gern. Und nein, ich bin nicht euer Byte. Ich arbeite für Professor Null!"
       },
       "spott": [
         { "pose": "action", "text": "Ha! Ein Fehler. Den Wert nehme ich mit." },
-        { "pose": "action", "text": "Schon wieder falsch! Schau nach, was wirklich in deiner Variablen steht." },
+        { "pose": "action", "text": "Schon wieder falsch! Schau genau nach, was da wirklich steht." },
         { "pose": "action", "text": "Und noch einer! Lies die Aufgabe noch einmal – Wort für Wort." },
         { "pose": "action", "text": "Jetzt reicht es. Drück den Tipp-Knopf. Sofort!" }
       ],
@@ -89,13 +114,13 @@
       ]
     },
 
-    "null-glitch": {
-      "name": "Glitch",
+    "null-bug": {
+      "name": "Bug",
       "rolle": "handlanger",
-      "ordner": "null-glitch",
+      "ordner": "null-bug",
       "vorstellung": {
         "pose": "neutral",
-        "text": "Hihi! Ich bin **Glitch**. Ich baue kleine Fehler in Programme ein: ein falsches Zeichen hier, eine vertauschte Bedingung da. Findest du meine?"
+        "text": "Hihi! Ich bin **Bug**. So heißt ein Fehler im Programm – und genau die baue ich ein: ein falsches Zeichen hier, eine vertauschte Bedingung da. Findest du meine?"
       },
       "spott": [
         { "pose": "action", "text": "Hihi! Da war einer von mir." },
@@ -166,8 +191,8 @@
 
   "kapitel": {
     "01-erste-schritte": {
-      "verbuendete": ["py", "nia", "ada"],
-      "handlanger": ["null-nullbit", "null-byte"],
+      "verbuendete": ["py", "nia", "byte", "ada"],
+      "handlanger": ["null-nullbit", "null-nibble"],
       "abschluss": {
         "figur": "ada",
         "pose": "victory",
@@ -176,12 +201,32 @@
     },
 
     "02-variablen": {
-      "verbuendete": ["memo", "py", "nia"],
-      "handlanger": ["null-byte", "null-nullbit"],
+      "verbuendete": ["memo", "py", "nia", "byte"],
+      "handlanger": ["null-nibble", "null-nullbit"],
       "abschluss": {
         "figur": "memo",
         "pose": "victory",
         "text": "Sehr gut! In der **Speicherstadt** hat jeder Wert wieder seinen Namen und sein Regal."
+      }
+    },
+
+    "03-datentypen": {
+      "verbuendete": ["py", "byte", "glitch", "nia"],
+      "handlanger": ["null-nibble", "null-nullbit"],
+      "abschluss": {
+        "figur": "py",
+        "pose": "victory",
+        "text": "**Typopolis** sortiert sich wieder! Zahlen, Texte und Wahrheitswerte finden zurück an ihren Platz."
+      }
+    },
+
+    "04-string-funktionen": {
+      "verbuendete": ["memo", "glitch", "py", "nia"],
+      "handlanger": ["null-nibble", "null-nullbit"],
+      "abschluss": {
+        "figur": "memo",
+        "pose": "victory",
+        "text": "In **Textoria** stehen die Wörter wieder richtig herum. Danke dir!"
       }
     }
   }

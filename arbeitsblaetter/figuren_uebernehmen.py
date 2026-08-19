@@ -36,9 +36,11 @@ BENOETIGT = {
     "professor-null": ["angry", "clever", "defeated"],
     # Professor Nulls Gefolge (aus dem Intro-Repo, siehe NULL-CREW.md).
     # Diese Figuren haben nur zwei Posen: ruhig und in Aktion.
-    "null-byte": ["neutral", "action"],
+    # Zwei davon hiessen dort "byte" und "glitch" wie unsere Verbuendeten -
+    # sie heissen hier Nibble (halbes Byte) und Bug (Programmfehler).
+    "null-nibble": ["neutral", "action"],
+    "null-bug": ["neutral", "action"],
     "null-nullbit": ["neutral", "action"],
-    "null-glitch": ["neutral", "action"],
     "null-loop": ["neutral", "action"],
     "null-ciphera": ["neutral", "action"],
     # Eigenentwuerfe, aktuell nicht im Einsatz - das offizielle Gefolge

@@ -1,3 +1,12 @@
+> **Hinweis fuer PyQuest (Lern-App):** Zwei Figuren dieses Gefolges heissen
+> im Original "Byte" und "Glitch" - genauso wie zwei VERBUENDETE aus dem Intro.
+> In der App tragen die Gegenspieler deshalb andere Namen:
+> **Byte (Datendieb) -> Nibble** (Ordner `null-nibble`) und
+> **Glitch (Fehlerkuenstler) -> Bug** (Ordner `null-bug`).
+> Beides sind echte Fachbegriffe: Ein Nibble ist ein halbes Byte, ein Bug ist
+> ein Programmfehler. Die Zuordnung der Texte steht in
+> `public/content/figuren.json`.
+
 # Professor Nulls Gefolge
 
 Die fünf Figuren erweitern Professor Null um wiederkehrende Gegenspieler für
