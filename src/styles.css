@@ -376,6 +376,14 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
   width: clamp(64px, 17vw, 96px); flex: none; display: block;
   filter: drop-shadow(0 6px 12px rgba(15, 23, 42, .28));
 }
+/* Ab genug Platz tritt die Figur AUS der Karte heraus in den grauen Rand
+   und ueberlappt deren Kante - sie steht dann neben der Aufgabe, nicht
+   darunter. Unterhalb dieser Breite gibt es keinen Rand, dort bleibt sie
+   innerhalb der Karte. */
+@media (min-width: 1000px) {
+  .figur { margin-left: -108px; margin-bottom: -1.7rem; }
+  .figur__bild { width: 136px; position: relative; z-index: 1; }
+}
 .figur__blase {
   position: relative; flex: 1; min-width: 0;
   padding: .7rem .9rem; border-radius: 16px;
@@ -410,6 +418,12 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
 /* Beim ersten Auftritt stellt sich die Figur vor - dieser Moment bekommt
    mehr Gewicht: groesseres Bild und ein leichtes Leuchten. */
 .figur--vorstellung .figur__bild { width: clamp(84px, 22vw, 124px); }
+/* Der Vorstellungs-Auftritt darf groesser sein - dafuer braucht es aber
+   auch mehr Rand, sonst schiebt die Figur die Seite seitlich auf. */
+@media (min-width: 1120px) {
+  .figur--vorstellung .figur__bild { width: 168px; }
+  .figur--vorstellung { margin-left: -140px; }
+}
 .figur--vorstellung .figur__blase { box-shadow: 0 0 0 4px color-mix(in srgb, var(--figur-rand) 22%, transparent); }
 .figur--vorstellung.figur--handlanger .figur__bild {
   animation: figur-stoerung 2.6s steps(1) infinite;

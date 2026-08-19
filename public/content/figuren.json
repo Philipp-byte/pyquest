@@ -1,35 +1,28 @@
 {
-  "_hinweis": "Begleitfiguren waehrend der Lektionen. Verbuendete melden sich bei einer richtigen Loesung, Handlanger von Professor Null bei einem Fehler. Beim ersten Auftritt stellt sich eine Figur vor. Texte duerfen frei bearbeitet werden - die Bilder liegen unter public/figuren/<ordner>/<pose>.webp.",
+  "_hinweis": "Begleitfiguren waehrend der Lektionen. Verbuendete melden sich bei einer richtigen Loesung, Handlanger von Professor Null bei einem Fehler. Texte duerfen frei bearbeitet werden - bitte kurze, einfache Saetze. Die Bilder liegen unter public/figuren/<ordner>/<pose>.webp.",
+  "_vorstellung": "Nur NEUE Figuren bekommen einen 'vorstellung'-Text. Py, Ada, Nia, Byte, Glitch und Professor Null kennt man schon aus dem Intro - sie legen ohne Vorstellung los.",
 
   "figuren": {
     "py": {
       "name": "Py",
       "rolle": "verbuendet",
       "ordner": "py",
-      "vorstellung": {
-        "pose": "funny",
-        "text": "Ssschön, dich zu sehen! Ich bin **Py** – die Schlange, nach der diese ganze Sprache benannt ist. Professor Null hat die sechzehn Welten zerbrochen. Aber weißt du was? Jede Zeile Code, die du schreibst, setzt ein Stück davon wieder zusammen. Und du hast gerade angefangen."
-      },
       "lob": [
-        { "pose": "victory", "text": "Genau so! Das war fehlerfrei." },
-        { "pose": "victory", "text": "Sitzt. Ein Stück Neustart leuchtet wieder." },
-        { "pose": "clever", "text": "Sauber geschrieben – genau das meinte ich." },
-        { "pose": "funny", "text": "Ssstark! Weiter so." }
+        { "pose": "victory", "text": "Super! Das war richtig." },
+        { "pose": "victory", "text": "Genau so! Weiter so." },
+        { "pose": "clever", "text": "Perfekt. Du machst das gut." },
+        { "pose": "funny", "text": "Stark! Die Welt wird ein Stück heller." }
       ]
     },
 
     "nia": {
-      "name": "Code-Scout Nia",
+      "name": "Nia",
       "rolle": "verbuendet",
       "ordner": "nia",
-      "vorstellung": {
-        "pose": "clever",
-        "text": "Ich bin **Nia**, Code-Scout. Ich war schon in allen sechzehn Welten unterwegs – und ich sage dir: **Neustart** ist die wichtigste. Wer hier sauber anfängt, kommt überall durch. Ich hab dich im Blick."
-      },
       "lob": [
-        { "pose": "victory", "text": "Notiert: funktioniert. Auf meiner Karte leuchtet wieder ein Punkt." },
-        { "pose": "clever", "text": "Genau der Weg, den ich auch genommen hätte." },
-        { "pose": "victory", "text": "Sauber. So kommt man durch diese Welt." }
+        { "pose": "victory", "text": "Richtig! Ich mache einen Haken auf meine Karte." },
+        { "pose": "clever", "text": "Sehr gut. Genau so mache ich das auch." },
+        { "pose": "victory", "text": "Das stimmt! Du kommst gut voran." }
       ]
     },
 
@@ -37,14 +30,10 @@
       "name": "Byte",
       "rolle": "verbuendet",
       "ordner": "byte",
-      "vorstellung": {
-        "pose": "neutral",
-        "text": "**Byte** hier. Debug-Drohne, Baureihe 7. Mein Auftrag: Fehler finden, bevor sie dich finden. Ich schwebe einfach mit und schaue dir über die Schulter. Bis jetzt: **keine Beanstandung.**"
-      },
       "lob": [
-        { "pose": "victory", "text": "Prüfung abgeschlossen: alles grün. Keine Fehler im Protokoll." },
-        { "pose": "neutral", "text": "Analyse: korrekt. Ich hab nichts zu meckern – und das kommt selten vor." },
-        { "pose": "surprised", "text": "Beim ersten Versuch? Das notiere ich als vorbildlich." }
+        { "pose": "victory", "text": "Ich habe geprüft: alles richtig!" },
+        { "pose": "neutral", "text": "Kein Fehler gefunden. Sehr gut." },
+        { "pose": "surprised", "text": "Gleich beim ersten Versuch richtig. Toll!" }
       ]
     },
 
@@ -52,28 +41,21 @@
       "name": "Glitch",
       "rolle": "verbuendet",
       "ordner": "glitch",
-      "vorstellung": {
-        "pose": "funny",
-        "text": "Hihi! Ich bin **Glitch**. Ich *bin* ein Fehler – ein entlaufener. Früher hab ich Programme durcheinandergebracht, jetzt helfe ich lieber mit. Und weil ich es wissen muss: **Fehler sind nicht schlimm.** Ohne sie lernt niemand etwas."
-      },
       "lob": [
-        { "pose": "funny", "text": "Nichts kaputt! Schade eigentlich. Aber gut gemacht." },
-        { "pose": "funny", "text": "Ich hab nach einem Fehler gesucht und keinen gefunden. Das ärgert mich ein bisschen." },
-        { "pose": "neutral", "text": "Läuft rund. Da kann selbst ich nichts durcheinanderbringen." }
+        { "pose": "funny", "text": "Nichts kaputt! Gut gemacht." },
+        { "pose": "funny", "text": "Keine Angst vor Fehlern. Ich bin selbst einer!" },
+        { "pose": "funny", "text": "Ich wollte etwas kaputt machen. Hat nicht geklappt. Zu gut!" },
+        { "pose": "neutral", "text": "Alles läuft. Da kann ich nichts machen." }
       ]
     },
 
     "ada": {
-      "name": "Wächterin Ada",
+      "name": "Ada",
       "rolle": "verbuendet",
       "ordner": "ada",
-      "vorstellung": {
-        "pose": "neutral",
-        "text": "Ich bin **Ada**, Wächterin der Akademie. Ich habe dich durch das Portal geschickt, als Null angriff – und ich sehe von hier aus jeden Schritt, den du gehst. Du machst das gut, Lehrling."
-      },
       "lob": [
-        { "pose": "victory", "text": "Ich habe zugesehen. Genau so löst man das." },
-        { "pose": "thoughtful", "text": "Ruhig und richtig. Das ist mehr wert als schnell." }
+        { "pose": "victory", "text": "Ich habe zugeschaut. Sehr gut gemacht!" },
+        { "pose": "thoughtful", "text": "Ruhig und richtig. Genau so ist es gut." }
       ]
     },
 
@@ -83,17 +65,17 @@
       "ordner": "syntaxa",
       "vorstellung": {
         "pose": "neutral",
-        "text": "**Syntaxa.** Syntax-Wächterin im Dienst von Professor Null. Ich achte darauf, dass jedes Zeichen sitzt: jede Klammer, jedes Anführungszeichen, jeder Punkt. Du hast gerade eines übersehen. Das notiere ich."
+        "text": "Ich bin **Syntaxa**. Ich arbeite für Professor Null. Ich passe auf jedes Zeichen auf: Klammern, Anführungszeichen, Punkte. Du hast eins vergessen!"
       },
       "spott": [
-        { "pose": "angry", "text": "Ein Zeichen daneben – und schon läuft gar nichts. Professor Null hat recht: Diese Welt ist zu unordentlich." },
-        { "pose": "angry", "text": "„Fast richtig“ gibt es nicht. Es gibt richtig, und es gibt das hier." },
-        { "pose": "neutral", "text": "Der Professor sagt: Ein perfektes Programm stellt keine Fragen. Deines stellt gerade sehr viele." },
-        { "pose": "angry", "text": "Ich habe es aufgeschrieben. Lies deine Zeile noch einmal – Zeichen für Zeichen." }
+        { "pose": "angry", "text": "Ah, ein Fehler! Professor Null wird gewinnen." },
+        { "pose": "angry", "text": "Falsch! Schau dir deine Zeile noch mal genau an." },
+        { "pose": "neutral", "text": "Da fehlt ein Zeichen. Ich schreibe das auf!" },
+        { "pose": "angry", "text": "Ha! Fast richtig ist nicht richtig." }
       ],
       "rueckzug": [
-        { "pose": "defeated", "text": "…korrekt. Jedes Zeichen sitzt. Ich – ich muss das leider so melden." },
-        { "pose": "defeated", "text": "Du hast es geändert. Und jetzt stimmt es. Das war nicht der Plan." }
+        { "pose": "defeated", "text": "Nein! Jetzt stimmt alles. Das darf nicht sein!" },
+        { "pose": "defeated", "text": "Du hast den Fehler gefunden. Ich gehe lieber." }
       ]
     },
 
@@ -103,16 +85,16 @@
       "ordner": "kontrollor",
       "vorstellung": {
         "pose": "neutral",
-        "text": "SCAN LÄUFT. Einheit **K-0 „Kontrollor“**, Aufklärungsdrohne von Professor Null. Auftrag: Abweichungen melden. — Abweichung erkannt. Du gehörst nicht in diese Welt, Lehrling."
+        "text": "PIEP! Ich bin **Kontrollor**, die Drohne von Professor Null. Ich suche Fehler. Einen habe ich schon gefunden: deinen!"
       },
       "spott": [
-        { "pose": "angry", "text": "ABWEICHUNG PROTOKOLLIERT. Deine Ausgabe stimmt nicht mit dem Soll überein." },
-        { "pose": "angry", "text": "Fehlerquote steigt. Empfehlung an die Einheit: aufgeben." },
-        { "pose": "neutral", "text": "Prüfung nicht bestanden. Ich melde das weiter. Immer." }
+        { "pose": "angry", "text": "FEHLER GEFUNDEN! Professor Null freut sich." },
+        { "pose": "angry", "text": "Das ist falsch. Gib lieber auf!" },
+        { "pose": "neutral", "text": "PIEP! Noch ein Fehler. Ich melde das weiter." }
       ],
       "rueckzug": [
-        { "pose": "defeated", "text": "…Soll erreicht. Das war nicht vorgesehen. RÜCKZUG!" },
-        { "pose": "defeated", "text": "Fehler behoben. Berechnung war falsch – meine, nicht deine. Ich ziehe ab." }
+        { "pose": "defeated", "text": "PIEP! Kein Fehler mehr. Ich fliege weg!" },
+        { "pose": "defeated", "text": "Du hast es geschafft? Das ist schlecht für Professor Null!" }
       ]
     },
 
@@ -120,16 +102,12 @@
       "name": "Professor Null",
       "rolle": "handlanger",
       "ordner": "professor-null",
-      "vorstellung": {
-        "pose": "clever",
-        "text": "So, so. Der Lehrling schreibt seine ersten Zeilen. — Ich bin **Professor Null**. Ich habe diese Welten nicht zerstört, ich habe sie *geordnet*. Fehler, Fragen, eigene Einfälle: All das brauchst du nicht. Gib einfach auf, dann muss ich dich nicht korrigieren."
-      },
       "spott": [
-        { "pose": "angry", "text": "Ihr nennt es Kreativität. Ich nenne es unkontrollierbares Chaos." },
-        { "pose": "clever", "text": "Siehst du? Ein Fehler. Genau deshalb gehört diese Welt mir." }
+        { "pose": "angry", "text": "Ein Fehler! Genau deshalb gehört diese Welt bald mir." },
+        { "pose": "clever", "text": "Siehst du? Du schaffst das nicht." }
       ],
       "rueckzug": [
-        { "pose": "defeated", "text": "Du hast deinen Fehler selbst gefunden und behoben. Das … war nicht eingeplant." }
+        { "pose": "defeated", "text": "Du hast deinen Fehler selbst gefunden. Das war nicht mein Plan." }
       ]
     }
   },
@@ -141,7 +119,7 @@
       "abschluss": {
         "figur": "ada",
         "pose": "victory",
-        "text": "Eine Lektion weiter. Ich spüre, wie **Neustart** wieder Kraft bekommt. Genau so holen wir uns die Welten zurück."
+        "text": "Geschafft! Die Welt **Neustart** wird wieder stärker. Weiter so!"
       }
     }
   }

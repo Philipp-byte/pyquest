@@ -74,25 +74,30 @@ function zufall(liste) {
   return liste[Math.floor(Math.random() * liste.length)];
 }
 
-// Baut den Auftritt einer Figur: beim ersten Mal die Vorstellung, danach
-// einen zufaelligen Spruch aus der passenden Liste.
+// Wer stellt sich ueberhaupt vor? Nur NEUE Figuren bekommen in
+// figuren.json einen "vorstellung"-Text. Py, Ada, Nia, Byte, Glitch und
+// Professor Null kennt man schon aus dem Intro - die legen direkt los.
+function stelltSichVor(figuren, id) {
+  return Boolean(figuren?.[id]?.vorstellung) && !istBekannt(id);
+}
+
+// Baut den Auftritt einer Figur: beim ersten Mal ggf. die Vorstellung,
+// sonst einen zufaelligen Spruch aus der passenden Liste.
 function auftritt(figuren, id, feld) {
   const figur = figuren?.[id];
   if (!figur) return null;
 
-  if (!istBekannt(id)) {
+  if (stelltSichVor(figuren, id)) {
     merkeBekannt(id);
     const v = figur.vorstellung;
-    if (v) {
-      return {
-        id,
-        name: figur.name,
-        rolle: figur.rolle,
-        bild: figurBild(figur.ordner, v.pose),
-        text: v.text,
-        vorstellung: true,
-      };
-    }
+    return {
+      id,
+      name: figur.name,
+      rolle: figur.rolle,
+      bild: figurBild(figur.ordner, v.pose),
+      text: v.text,
+      vorstellung: true,
+    };
   }
 
   const spruch = zufall(figur[feld] ?? []);
@@ -122,9 +127,9 @@ export function createRegie(figurenDaten, chapterId) {
     // Falsche Antwort: ein Handlanger von Professor Null taucht auf.
     fehler() {
       if (!handlanger.length) return null;
-      // Noch nicht vorgestellte Handlanger zuerst - so lernt man sie
-      // nacheinander kennen, statt gleich alle auf einmal.
-      const neue = handlanger.filter((id) => !istBekannt(id));
+      // Neue Handlanger zuerst - so lernt man sie nacheinander kennen,
+      // statt gleich alle auf einmal.
+      const neue = handlanger.filter((id) => stelltSichVor(figuren, id));
       const id = neue.length ? neue[0] : zufall(handlanger);
       letzterHandlanger = id;
       return auftritt(figuren, id, "spott");
@@ -140,7 +145,7 @@ export function createRegie(figurenDaten, chapterId) {
         if (rueckzug) return rueckzug;
       }
       if (!verbuendete.length) return null;
-      const neue = verbuendete.filter((id) => !istBekannt(id));
+      const neue = verbuendete.filter((id) => stelltSichVor(figuren, id));
       const id = neue.length ? neue[0] : zufall(verbuendete);
       return auftritt(figuren, id, "lob");
     },
