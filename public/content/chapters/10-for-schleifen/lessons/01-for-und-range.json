@@ -6,7 +6,7 @@
   "steps": [
     {
       "type": "explain",
-      "text": "Eine **`for`-Schleife** wiederholt Code **für jedes Element einer Reihe** – zum Beispiel für jedes Element einer **Liste** (die kennst du schon aus dem letzten Kapitel) oder für jede Zahl einer Zahlenreihe.\n\nEine Zahlenreihe erzeugst du mit **`range()`**: **`range(n)`** liefert die Zahlen von `0` bis `n - 1`. Der große Vorteil gegenüber `while`: Du musst **nichts selbst hochzählen** – die Laufvariable bekommt bei jedem Durchlauf automatisch den nächsten Wert.\n\nIn der nächsten Lektion lässt du `for` dann direkt über deine **Listen** laufen."
+      "text": "Die **`for`-Schleife** heißt auch **Zählschleife**: Sie läuft eine vorher bekannte Anzahl von **Iterationen**. Eine Reihe von Elementen, die sie durchläuft, nennt man **Sequenz** – zum Beispiel eine Liste oder einen String.\n\nEine **`for`-Schleife** wiederholt Code **für jedes Element einer Reihe** – zum Beispiel für jedes Element einer **Liste** (die kennst du schon aus dem letzten Kapitel) oder für jede Zahl einer Zahlenreihe.\n\nEine Zahlenreihe erzeugst du mit **`range()`**: **`range(n)`** liefert die Zahlen von `0` bis `n - 1`. Der große Vorteil gegenüber `while`: Du musst **nichts selbst hochzählen** – die Laufvariable bekommt bei jedem Durchlauf automatisch den nächsten Wert.\n\nIn der nächsten Lektion lässt du `for` dann direkt über deine **Listen** laufen."
     },
     {
       "type": "example",

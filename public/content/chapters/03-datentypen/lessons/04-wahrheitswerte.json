@@ -6,7 +6,7 @@
   "steps": [
     {
       "type": "explain",
-      "text": "Ein **Wahrheitswert** (`bool`) kennt nur zwei Zustände: **`True`** (wahr) oder **`False`** (falsch).\n\nWichtig: `True` und `False` schreibt man **groß** und **ohne** Anführungszeichen – sie sind keine Texte, sondern eigene Werte."
+      "text": "Ein **Wahrheitswert** (`bool`, englisch **Boolean**) kennt nur zwei Zustände: **`True`** (wahr) oder **`False`** (falsch).\n\nWichtig: `True` und `False` schreibt man **groß** und **ohne** Anführungszeichen – sie sind keine Texte, sondern eigene Werte."
     },
     {
       "type": "explain",

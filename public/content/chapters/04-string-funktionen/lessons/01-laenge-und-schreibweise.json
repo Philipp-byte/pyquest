@@ -6,7 +6,7 @@
   "steps": [
     {
       "type": "explain",
-      "text": "Strings gehören zu den am häufigsten benutzten Datentypen – Python bringt viele eingebaute **Funktionen und Methoden** mit, um Text zu untersuchen und zu verändern. Los geht's mit den einfachsten: Länge messen und Groß-/Kleinschreibung ändern.\n\nMit **`len(text)`** erfährst du, aus wie vielen Zeichen ein String besteht (Leerzeichen zählen mit!)."
+      "text": "Ein **String** heißt auf Deutsch **Zeichenkette** – eine Kette aus einzelnen Zeichen. Strings gehören zu den am häufigsten benutzten Datentypen – Python bringt viele eingebaute **Funktionen und Methoden** mit, um Text zu untersuchen und zu verändern. Los geht's mit den einfachsten: Länge messen und Groß-/Kleinschreibung ändern.\n\nMit **`len(text)`** erfährst du, aus wie vielen Zeichen ein String besteht (Leerzeichen zählen mit!)."
     },
     {
       "type": "example",

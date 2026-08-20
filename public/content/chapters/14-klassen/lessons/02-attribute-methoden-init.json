@@ -6,7 +6,7 @@
   "steps": [
     {
       "type": "explain",
-      "text": "**`__init__`** ist eine besondere Methode, die automatisch aufgerufen wird, wenn ein neues Objekt erstellt wird. Damit legst du die **Startwerte** (Attribute) fest, statt sie wie in der letzten Lektion einzeln zuzuweisen."
+      "text": "**`__init__`** ist eine besondere Methode, die automatisch aufgerufen wird, wenn ein neues Objekt erstellt wird. Ihr Fachbegriff ist **Konstruktor**, weil sie das Objekt aufbaut. Damit legst du die **Startwerte** (Attribute) fest, statt sie wie in der letzten Lektion einzeln zuzuweisen."
     },
     {
       "type": "example",

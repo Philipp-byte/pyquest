@@ -6,7 +6,7 @@
   "steps": [
     {
       "type": "explain",
-      "text": "Nicht jeder Name ist als Variablenname erlaubt – und ein guter Name macht dein Programm viel verständlicher. In Python gelten diese **Regeln**:\n\n1. **Beginnt mit Buchstabe oder Unterstrich** – nie mit einer Zahl.\n2. **Keine Leerzeichen und keine Sonderzeichen** (außer dem Unterstrich `_`).\n3. **Keine reservierten Wörter** (wie `print`, `if`, `for` – die gehören Python selbst)."
+      "text": "Nicht jeder Name ist als Variablenname erlaubt – und ein guter Name macht dein Programm viel verständlicher. Der Fachbegriff für den Namen einer Variable ist **Bezeichner** (englisch *identifier*). In Python gelten dafür diese **Regeln**:\n\n1. **Beginnt mit Buchstabe oder Unterstrich** – nie mit einer Zahl.\n2. **Keine Leerzeichen und keine Sonderzeichen** (außer dem Unterstrich `_`).\n3. **Keine reservierten Wörter** (wie `print`, `if`, `for` – die gehören Python selbst)."
     },
     {
       "type": "quiz",

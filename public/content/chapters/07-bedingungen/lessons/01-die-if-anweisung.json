@@ -6,7 +6,7 @@
   "steps": [
     {
       "type": "explain",
-      "text": "Mit einer **If-Verzweigung** kann ein Programm **Entscheidungen** treffen: Ein Codeblock wird nur dann ausgeführt, wenn eine **Bedingung** wahr (`True`) ist.\n\nSo reagiert dein Programm flexibel auf verschiedene Situationen – statt immer stur dasselbe zu tun."
+      "text": "Mit einer **If-Verzweigung** kann ein Programm **Entscheidungen** treffen. Man nennt sie auch **bedingte Anweisung**, weil sie nur unter einer Bedingung ausgeführt wird: Ein Codeblock wird nur dann ausgeführt, wenn eine **Bedingung** wahr (`True`) ist.\n\nSo reagiert dein Programm flexibel auf verschiedene Situationen – statt immer stur dasselbe zu tun."
     },
     {
       "type": "explain",

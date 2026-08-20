@@ -6,7 +6,7 @@
   "steps": [
     {
       "type": "explain",
-      "text": "**Python** ist eine Programmiersprache. Damit sagst du dem Computer ganz genau, was er tun soll.\n\nDas Tolle: Python liest sich fast wie Englisch und ist perfekt zum Einsteigen. Du wirst gleich dein erstes Programm schreiben!"
+      "text": "**Python** ist eine Programmiersprache. Damit sagst du dem Computer ganz genau, was er tun soll.\n\nDas Tolle: Python liest sich fast wie Englisch und ist perfekt zum Einsteigen. Du wirst gleich dein erstes Programm schreiben!\n\nJede Programmiersprache hat feste Schreibregeln. Sie heißen **Syntax**. Hältst du dich nicht daran, versteht Python dich nicht und meldet einen **Syntaxfehler**."
     },
     {
       "type": "explain",

@@ -6,7 +6,7 @@
   "steps": [
     {
       "type": "explain",
-      "text": "Oft soll ein Programm **ähnliche Anweisungen mehrfach hintereinander** ausführen. Genau dafür gibt es **Schleifen**. Sie sparen Zeit, vermeiden Tippfehler und machen den Code besser lesbar.\n\nEine **`while`-Schleife** wiederholt einen Codeblock, **solange** eine Bedingung wahr ist. Sobald die Bedingung `False` wird, hört die Schleife auf und das Programm läuft normal weiter."
+      "text": "Oft soll ein Programm **ähnliche Anweisungen mehrfach hintereinander** ausführen. Genau dafür gibt es **Schleifen**. Ein einzelner Durchlauf heißt **Iteration**, der wiederholte Codeblock heißt **Schleifenrumpf**. Die Bedingung, die das Ende festlegt, heißt **Abbruchbedingung** – ohne sie läuft die Schleife ewig weiter (**Endlosschleife**). Sie sparen Zeit, vermeiden Tippfehler und machen den Code besser lesbar.\n\nEine **`while`-Schleife** wiederholt einen Codeblock, **solange** eine Bedingung wahr ist. Sobald die Bedingung `False` wird, hört die Schleife auf und das Programm läuft normal weiter."
     },
     {
       "type": "example",

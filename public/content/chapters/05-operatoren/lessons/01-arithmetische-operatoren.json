@@ -6,7 +6,7 @@
   "steps": [
     {
       "type": "explain",
-      "text": "**Operatoren** sind spezielle Symbole, mit denen du Werte verrechnest oder vergleichst. Die bekanntesten sind die **arithmetischen** Operatoren für die Grundrechenarten:\n\n- **`+`** Addition · **`-`** Subtraktion · **`*`** Multiplikation · **`/`** Division"
+      "text": "**Operatoren** sind spezielle Symbole, mit denen du Werte verrechnest oder vergleichst. Die Werte, mit denen ein Operator arbeitet, heißen **Operanden**: Bei `7 + 3` sind `7` und `3` die Operanden und `+` der Operator. Die bekanntesten sind die **arithmetischen** Operatoren für die Grundrechenarten:\n\n- **`+`** Addition · **`-`** Subtraktion · **`*`** Multiplikation · **`/`** Division"
     },
     {
       "type": "example",
@@ -18,28 +18,21 @@
       "text": "Zwei besondere Operatoren solltest du kennen:\n\n- **`%`** (Modulo) liefert den **Rest** einer Division: `7 % 4` → `3` (7 = 1·4 + **3**)\n- **`//`** (Ganzzahldivision) liefert das ganzzahlige Ergebnis ohne Rest: `7 // 4` → `1`\n\nModulo ist überraschend nützlich – z. B. um zu prüfen, ob eine Zahl **gerade** ist: `zahl % 2 == 0`."
     },
     {
-      "type": "quiz",
-      "question": "Was ergibt `144 % 7`?",
-      "choices": [
-        "20",
-        "3",
-        "7"
-      ],
-      "answer": 1,
-      "explainCorrect": "Richtig! 144 = 20·7 + 3, also ist der Rest 3.",
-      "explainWrong": "% liefert den Rest: 144 geteilt durch 7 ist 20 Rest 3 – also 3."
+      "type": "example",
+      "text": "Rechne das **nicht im Kopf** aus – dafür hast du ja Python. Drücke auf „Ausführen“ und schau dir an, was Modulo macht:",
+      "code": "print(144 % 7)        # Rest bei 144 geteilt durch 7\nprint(123456 % 100)   # die letzten beiden Ziffern\nprint(7 % 2)          # 1 -> ungerade\nprint(8 % 2)          # 0 -> gerade"
     },
     {
       "type": "quiz",
-      "question": "Und was ergibt `123456 % 100`?",
+      "question": "Du hast es gerade gesehen: Woran erkennst du mit `%`, ob eine Zahl **gerade** ist?",
       "choices": [
-        "1234",
-        "56",
-        "100"
+        "`zahl % 2` ergibt `0`",
+        "`zahl % 2` ergibt `1`",
+        "`zahl % 0` ergibt `2`"
       ],
-      "answer": 1,
-      "explainCorrect": "Genau! Modulo 100 liefert immer die letzten zwei Ziffern – hier 56.",
-      "explainWrong": "% 100 liefert den Rest bei Division durch 100 – das sind die letzten beiden Ziffern: 56."
+      "answer": 0,
+      "explainCorrect": "Richtig! Gerade Zahlen lassen bei der Division durch 2 keinen Rest – deshalb `zahl % 2 == 0`.",
+      "explainWrong": "Schau nochmal auf die Ausgabe oben: `8 % 2` war `0` (gerade), `7 % 2` war `1` (ungerade). Gerade heißt also: Rest `0`."
     },
     {
       "type": "code",

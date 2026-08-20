@@ -6,7 +6,7 @@
   "steps": [
     {
       "type": "explain",
-      "text": "Python kennt zwei Arten von Zahlen:\n\n- **`int`** (Ganzzahlen): `5`, `-3`, `100`\n- **`float`** (Kommazahlen): `3.14`, `-0.5`, `2.0`\n\nIm Deutschen schreibt man ein Komma (3,14) – in Python **immer einen Punkt**: `3.14`."
+      "text": "Python kennt zwei Arten von Zahlen:\n\n- **`int`** (Ganzzahlen, englisch **Integer**): `5`, `-3`, `100`\n- **`float`** (Kommazahlen, englisch **Float** oder Gleitkommazahl): `3.14`, `-0.5`, `2.0`\n\nIm Deutschen schreibt man ein Komma (3,14) – in Python **immer einen Punkt**: `3.14`."
     },
     {
       "type": "example",

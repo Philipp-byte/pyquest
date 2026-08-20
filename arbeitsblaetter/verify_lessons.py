@@ -111,8 +111,10 @@ def task_passes(step, code):
 # Uebung zu Escape-Sequenzen. Dort waere ein Literal-Verbot unsinnig.
 AUSNAHMEN = {
     ("01-erste-schritte", "02-hallo-welt", 3),
-    ("01-erste-schritte", "03-print-uebung", 2),
+    # Hinweis: In 03-print-uebung wurde vorne ein Erklaerschritt zu
+    # Kommentaren ergaenzt - die Aufgaben liegen seitdem bei #3 und #4.
     ("01-erste-schritte", "03-print-uebung", 3),
+    ("01-erste-schritte", "03-print-uebung", 4),
     ("06-eingaben", "04-escape-sequenzen", 4),
 }
 

@@ -6,7 +6,7 @@
   "steps": [
     {
       "type": "explain",
-      "text": "Zeit für dein erstes richtiges Projekt! Du baust ein **Zahlenraten-Spiel**: Das Programm denkt sich eine Zahl aus (die wir hier fest vorgeben) und die spielende Person muss sie erraten. Nach jedem Versuch bekommt sie einen Hinweis: zu hoch oder zu niedrig."
+      "text": "Zeit für dein erstes richtiges Projekt! Ein Programm folgt immer einer festen Abfolge von Schritten, die zu einem Ziel führt – so eine Abfolge nennt man **Algorithmus**. Du baust ein **Zahlenraten-Spiel**: Das Programm denkt sich eine Zahl aus (die wir hier fest vorgeben) und die spielende Person muss sie erraten. Nach jedem Versuch bekommt sie einen Hinweis: zu hoch oder zu niedrig."
     },
     {
       "type": "explain",
