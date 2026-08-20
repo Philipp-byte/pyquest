@@ -364,6 +364,41 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
   .kapitelkarte { padding: 1.2rem .8rem 1.4rem; }
 }
 
+/* ---------- Sterne-Erklaerung ----------
+   Die Wertung soll fuer die Lernenden nachvollziehbar sein: einmal direkt
+   nach der Lektion, einmal dauerhaft im Profil. */
+.finish__sterne-grund {
+  margin: .2rem 0 .8rem; font-weight: 800; color: var(--fg-soft); font-size: .9rem;
+}
+.sterne-info {
+  text-align: left; margin: 0 auto; max-width: 420px;
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: .5rem .9rem;
+}
+.sterne-info--profil { max-width: none; margin: 1.2rem 0 0; }
+.sterne-info > summary {
+  cursor: pointer; font-weight: 800; font-size: .9rem; padding: .25rem 0;
+  color: var(--fg-soft); list-style-position: inside;
+}
+.sterne-info > summary:hover { color: var(--fg); }
+.sterne-info__liste { margin: .5rem 0; padding-left: 0; list-style: none; }
+.sterne-info__liste li {
+  display: flex; gap: .6rem; align-items: baseline;
+  padding: .25rem 0; font-size: .9rem;
+}
+.sterne-info__stars {
+  flex: none; min-width: 3.4rem; color: var(--yellow);
+  letter-spacing: .05em; text-shadow: 0 1px 0 rgba(0,0,0,.15);
+}
+.sterne-info__hinweis {
+  margin: .6rem 0 .3rem; font-size: .84rem; color: var(--fg-soft); line-height: 1.6;
+}
+/* Hinweis im Feedback, wenn es nur an der Schreibweise lag */
+.feedback__gnade {
+  margin: .6rem 0 0; font-size: .88rem;
+  color: color-mix(in srgb, var(--green-dark) 85%, var(--fg));
+}
+
 /* ---------- Lehrer-Modus ---------- */
 .lehrer-btn {
   border: 1px solid var(--border); background: var(--surface-2);

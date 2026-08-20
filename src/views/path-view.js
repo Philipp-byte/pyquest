@@ -1,6 +1,6 @@
 // Der Weltenbaum: Die Kapiteluebersicht als Karte der sechzehn Welten aus
-// der Intro-Geschichte. Jede Welt ist korrumpiert, bis ihr Kapitel
-// abgeschlossen ist - dann erscheint sie wiederhergestellt. Klick auf eine
+// der Intro-Geschichte. Jede Welt ist zerstoert, bis ihr Kapitel
+// abgeschlossen ist - dann erscheint sie gerettet. Klick auf eine
 // Welt oeffnet die Lektionen-Ansicht (siehe renderChapterDetail).
 
 import { renderHeader, starRow, wireHeader } from "../ui.js";
@@ -56,8 +56,8 @@ export function renderPath(app, curriculum) {
       ${kosmosHintergrund()}
       <div class="path__intro">
         <h1>Der Datenkosmos</h1>
-        <p>Professor Null hat alle sechzehn Welten korrumpiert. Stelle sie wieder her – Kapitel für Kapitel.</p>
-        <span class="weltenbaum__zaehler">🌍 ${gerettet} von ${curriculum.chapters.length} Welten wiederhergestellt</span>
+        <p>Professor Null hat alle sechzehn Welten zerstört. Rette sie – eine nach der anderen.</p>
+        <span class="weltenbaum__zaehler">🌍 ${gerettet} von ${curriculum.chapters.length} Welten gerettet</span>
       </div>
       <div class="weltenbaum">${knoten}</div>
     </main>
@@ -66,9 +66,9 @@ export function renderPath(app, curriculum) {
 }
 
 // Eine Welt im Baum. Zustaende:
-//   gesperrt  - korrumpiert, abgedunkelt, kein Link
-//   offen     - korrumpiert, klickbar (die erste davon pulsiert als "aktiv")
-//   fertig    - wiederhergestellt
+//   gesperrt  - zerstoert, abgedunkelt, kein Link
+//   offen     - zerstoert, klickbar (die erste davon pulsiert als "aktiv")
+//   fertig    - gerettet
 function renderWelt(chapter, welt, index, { fertig, frei, aktiv }) {
   const total = chapter.lessons.length;
   const doneCount = chapter.lessons.filter((l) => isDone(l.id)).length;
@@ -77,17 +77,17 @@ function renderWelt(chapter, welt, index, { fertig, frei, aktiv }) {
   const zustand = fertig ? "fertig" : frei ? "offen" : "gesperrt";
 
   const badge = fertig
-    ? `<span class="welt__zustand welt__zustand--fertig">✓ Wiederhergestellt</span>`
+    ? `<span class="welt__zustand welt__zustand--fertig">✓ Gerettet</span>`
     : frei
-      ? `<span class="welt__zustand welt__zustand--offen">⚡ Korrumpiert</span>`
-      : `<span class="welt__zustand welt__zustand--gesperrt">🔒 Versiegelt</span>`;
+      ? `<span class="welt__zustand welt__zustand--offen">⚡ Zerstört</span>`
+      : `<span class="welt__zustand welt__zustand--gesperrt">🔒 Gesperrt</span>`;
 
   // Die ersten beiden Welten sind beim Seitenaufbau sichtbar und laden
   // sofort - der Rest laedt beim Scrollen nach.
   const laden = index < 2 ? "eager" : "lazy";
   const inner = `
     <div class="welt__bild">
-      <img src="${fertig ? welt.restored : welt.corrupted}" alt="Welt ${escapeHtml(welt.name)} – ${fertig ? "wiederhergestellt" : "korrumpiert"}" loading="${laden}">
+      <img src="${fertig ? welt.restored : welt.corrupted}" alt="Welt ${escapeHtml(welt.name)} – ${fertig ? "gerettet" : "zerstört"}" loading="${laden}">
       ${badge}
     </div>
     <div class="welt__info">
@@ -236,7 +236,7 @@ export function renderChapterDetail(app, curriculum, chapterId) {
   const hatKarte = Boolean(ortFuerLektion(chapter.id, 0, total));
 
   // Weltbanner: Das Kapitel spielt in einer Welt der Intro-Geschichte -
-  // korrumpiert, solange es offen ist, wiederhergestellt danach.
+  // zerstoert, solange es offen ist, gerettet danach.
   const welt = weltFuerKapitel(chapter.id);
   const kapitelFertig = chapter.lessons.every((l) => isDone(l.id));
   const banner = welt
@@ -244,7 +244,7 @@ export function renderChapterDetail(app, curriculum, chapterId) {
          <img src="${kapitelFertig ? welt.restored : welt.corrupted}" alt="Welt ${escapeHtml(welt.name)}" loading="lazy">
          <div class="chapter__welt-text">
            <strong>${escapeHtml(welt.name)}</strong>
-           <span>${kapitelFertig ? "✓ Diese Welt ist wiederhergestellt!" : "⚡ Diese Welt wartet auf ihre Rettung."}</span>
+           <span>${kapitelFertig ? "✓ Diese Welt ist gerettet!" : "⚡ Diese Welt wartet auf dich."}</span>
          </div>
        </div>`
     : "";

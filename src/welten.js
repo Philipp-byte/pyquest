@@ -1,6 +1,6 @@
 // Der Weltenbaum: Jedes Kapitel ist eine Welt aus der Intro-Geschichte.
 //
-// Professor Null hat alle sechzehn Welten korrumpiert. Wer ein Kapitel
+// Professor Null hat alle sechzehn Welten zerstoert. Wer ein Kapitel
 // abschliesst, stellt seine Welt wieder her - genau das erzaehlt das Intro
 // als Auftrag ("Findet die Fragmente und bringt die Welten wieder zusammen").
 //

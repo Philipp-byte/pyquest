@@ -13,6 +13,19 @@ import { findLesson, flattenLessons } from "../content.js";
 import { renderDiff } from "./diff-view.js";
 import { createRegie } from "../figuren.js";
 
+// Abweichungen, die nur die Schreibweise der Ausgabe betreffen: ein
+// fehlender Punkt, ein Leerzeichen zu viel, ein grosser statt kleiner
+// Anfangsbuchstabe. Die Aufgabe ist damit noch nicht geloest - aber es ist
+// kein Denkfehler, also zieht es auch keinen Stern ab.
+const SCHREIBFEHLER_ARTEN = new Set(["satzzeichen", "leerzeichen", "grossschreibung"]);
+
+function istNurSchreibfehler(offeneChecks) {
+  return (
+    offeneChecks.length > 0 &&
+    offeneChecks.every((r) => r.diff && SCHREIBFEHLER_ARTEN.has(r.diff.art))
+  );
+}
+
 export function renderLesson(app, curriculum, chapterId, lessonId) {
   const found = findLesson(curriculum, chapterId, lessonId);
   if (!found) {
@@ -363,14 +376,18 @@ class LessonPlayer {
         this.footer.innerHTML = "";
         this.continueButton();
       } else {
-        this.mistakes++;
+        const offen = result.error ? [] : result.results.filter((r) => !r.ok);
+        // Ein vergessener Punkt oder ein Leerzeichen ist ein Schreibfehler,
+        // kein Denkfehler - der kostet keinen Stern. Die Aufgabe gilt
+        // trotzdem erst als geloest, wenn die Ausgabe exakt stimmt.
+        const schreibfehler = istNurSchreibfehler(offen);
+        if (!schreibfehler) this.mistakes++;
         this.fehlerImSchritt = true;
         feedback.hidden = false;
         feedback.className = "feedback feedback--no";
         if (result.error) {
           feedback.innerHTML = `<span class="err-detail">${escape(result.error.original)}</span><br>→ ${escape(result.error.explanation)}`;
         } else {
-          const offen = result.results.filter((r) => !r.ok);
           const failed = offen.map((r) => `<li>${r.label}</li>`).join("");
           // Wenn nur die Ausgabe abweicht, zeigen wir die genaue Stelle -
           // ein vergessener Punkt ist sonst kaum zu finden.
@@ -378,7 +395,9 @@ class LessonPlayer {
           feedback.innerHTML =
             `Noch nicht ganz. Diese Prüfung fehlt noch:<ul>${failed}</ul>` +
             (diff ? renderDiff(diff) : "") +
-            (step.hints?.length ? "Tipp: Nutze den 💡-Button." : "");
+            (schreibfehler
+              ? `<p class="feedback__gnade">✏️ Das ist nur ein Schreibfehler – er kostet <strong>keinen Stern</strong>. Verbessere ihn einfach.</p>`
+              : step.hints?.length ? "Tipp: Nutze den 💡-Button." : "");
         }
         playWrong();
         this.zeigeFigur(this.regie?.fehler(), card);
@@ -417,6 +436,7 @@ class LessonPlayer {
         <div class="finish__stars">
           ${[0,1,2].map(i => `<span class="star star--big ${i < stars ? "star--on" : ""}">★</span>`).join("")}
         </div>
+        ${this.renderSterneErklaerung(stars)}
         <p class="finish__xp">${result.firstTime ? `+${result.gainedXp} XP` : "Wiederholt – kein neues XP"}</p>
 
         ${result.leveledUp ? `<p class="finish__levelup">🎉 Level ${result.level} erreicht!</p>` : ""}
@@ -449,6 +469,37 @@ class LessonPlayer {
       const nextBtn = html(`<a class="btn btn--primary" href="${nextHref}">Nächste Lektion →</a>`);
       this.footer.append(nextBtn);
     }
+  }
+
+  // Erklaert, WIE die gerade vergebenen Sterne zustande kamen - und was
+  // gefehlt hat. Ohne das bleibt die Wertung fuer die Lernenden Zufall.
+  renderSterneErklaerung(stars) {
+    const gruende = [];
+    if (this.mistakes === 1) gruende.push("1 Fehler");
+    else if (this.mistakes > 1) gruende.push(`${this.mistakes} Fehler`);
+    if (this.hintsUsed > 0) gruende.push("Tipp benutzt");
+
+    const text = gruende.length
+      ? `${gruende.join(" · ")} – deshalb ${stars} von 3 Sternen.`
+      : "Ohne Fehler und ohne Tipp – volle Punktzahl!";
+
+    return `
+      <p class="finish__sterne-grund">${text}</p>
+      <details class="sterne-info">
+        <summary>Wie bekomme ich 3 Sterne?</summary>
+        <ul class="sterne-info__liste">
+          <li><span class="sterne-info__stars">★★★</span> kein Fehler und kein Tipp</li>
+          <li><span class="sterne-info__stars">★★</span> 1 Fehler <em>oder</em> Tipp benutzt</li>
+          <li><span class="sterne-info__stars">★</span> mehr als das – weniger als 1 Stern gibt es nie</li>
+        </ul>
+        <p class="sterne-info__hinweis">
+          ✏️ <strong>Schreibfehler zählen nicht:</strong> Ein vergessener Punkt, ein Leerzeichen
+          zu viel oder ein großer statt kleiner Buchstabe kostet keinen Stern.<br>
+          🔁 <strong>Wiederholen lohnt sich:</strong> Es zählt immer dein bestes Ergebnis.
+          XP gibt es aber nur beim ersten Mal.
+        </p>
+      </details>
+    `;
   }
 
   // Aktualisiert Level/XP-Balken/Zahl im (bereits gerenderten) Header live,

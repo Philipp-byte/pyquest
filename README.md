@@ -63,6 +63,63 @@ Danach im Browser öffnen: **http://localhost:5000**. Als Admin einloggen,
 Lehrkräfte anlegen – Lehrkräfte generieren danach ihre Klassen und
 Schüler-Accounts selbst über das Dashboard.
 
+## Lehrer-Modus
+
+Oben in der Kopfzeile gibt es den Knopf **„Lehrer"**. Nach Eingabe des
+Passworts sind **alle Lektionen, Tests und Arbeitsblätter freigeschaltet** –
+praktisch, um im Unterricht direkt an eine beliebige Stelle zu springen.
+
+**Standard-Passwort: `PyQuest-Lehrer-2026`**
+
+> ⚠️ **Dieses Repository ist öffentlich.** Das Passwort steht damit hier für
+> alle lesbar – auch für Schülerinnen und Schüler, die das Repo finden. Wer
+> das nicht will, setzt ein eigenes Passwort und schreibt es **nicht** in die
+> Dokumentation:
+>
+> ```bash
+> python arbeitsblaetter/lehrer_passwort.py "eigenes Passwort"
+> npm run build && git add -A && git commit -m "Neues Lehrer-Passwort" && git push
+> ```
+
+Gespeichert wird nur die SHA-256-Prüfsumme in `public/content/lehrer.json`,
+das Passwort selbst steht nirgends im Code.
+
+Wichtig zur Einordnung: Das ist ein **Sichtschutz, keine echte Sicherheit**.
+PyQuest läuft im Demo-Modus ohne Server komplett im Browser der Lernenden –
+wer sich auskennt, kann den Modus auch über die Entwicklerwerkzeuge
+einschalten. Das ist vertretbar, weil dabei nichts Schützenswertes sichtbar
+wird, sondern nur Lektionen, die ohnehin für alle gedacht sind. Für echte
+Zugangskontrolle gibt es den Schulmodus mit Server.
+
+Der Lernstand bleibt unangetastet: keine XP, keine Sterne, nichts wird als
+erledigt markiert. Solange der Modus läuft, zeigt der Knopf gelb
+**„🔓 Lehrer"** – ein weiterer Klick beendet ihn.
+
+## Wie Sterne vergeben werden
+
+Sterne gibt es pro Lektion, gezählt über alle Schritte:
+
+| Sterne | Bedingung |
+|:---:|---|
+| ★★★ | kein Fehler und kein Tipp |
+| ★★ | 1 Fehler **oder** Tipp benutzt |
+| ★ | mehr als das – weniger als 1 Stern gibt es nie |
+
+Formel: `3 − Fehler − (Tipps benutzt ? 1 : 0)`, mindestens 1.
+
+- **Als Fehler zählt** jede falsche Quiz-Antwort, jede falsche
+  Lückentext-Eingabe und jedes „Prüfen", das nicht besteht.
+- **Schreibfehler zählen nicht.** Weicht die Ausgabe nur bei Satzzeichen,
+  Leerzeichen oder Groß-/Kleinschreibung ab, gilt die Aufgabe weiterhin als
+  nicht gelöst – sie kostet aber keinen Stern (siehe `SCHREIBFEHLER_ARTEN`
+  in `src/views/lesson-view.js`).
+- **Tipps** kosten zusammen nur einen Stern, egal wie viele benutzt wurden.
+- **Wiederholen** behält das bessere Ergebnis; XP gibt es nur beim ersten
+  Abschluss.
+
+Die Lernenden sehen die Regeln in der App: direkt nach jeder Lektion
+(aufklappbar unter den Sternen) und dauerhaft im Profil.
+
 ## Projektstruktur
 
 ```

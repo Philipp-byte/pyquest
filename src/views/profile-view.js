@@ -50,6 +50,24 @@ export function renderProfile(app, curriculum) {
         <div class="stat"><span class="stat__num">⭐ ${stars}/${maxStars}</span><span class="stat__label">Sterne</span></div>
       </div>
 
+      <details class="sterne-info sterne-info--profil">
+        <summary>Wie bekomme ich Sterne?</summary>
+        <ul class="sterne-info__liste">
+          <li><span class="sterne-info__stars">★★★</span> kein Fehler und kein Tipp</li>
+          <li><span class="sterne-info__stars">★★</span> 1 Fehler <em>oder</em> Tipp benutzt</li>
+          <li><span class="sterne-info__stars">★</span> mehr als das – weniger als 1 Stern gibt es nie</li>
+        </ul>
+        <p class="sterne-info__hinweis">
+          Gezählt wird über die ganze Lektion. Als Fehler zählt jede falsche Antwort und
+          jedes „Prüfen“, das nicht besteht.<br>
+          ✏️ <strong>Schreibfehler zählen nicht:</strong> Ein vergessener Punkt, ein Leerzeichen
+          zu viel oder ein großer statt kleiner Buchstabe kostet keinen Stern.<br>
+          💡 <strong>Tipps:</strong> Egal ob einer oder alle – zusammen kosten sie nur einen Stern.<br>
+          🔁 <strong>Wiederholen lohnt sich:</strong> Es zählt immer dein bestes Ergebnis.
+          XP gibt es aber nur beim ersten Abschluss.
+        </p>
+      </details>
+
       <section class="badges-section">
         <h2>Abzeichen <span class="badges-section__count">${badgesEarnedCount}/${BADGES.length}</span></h2>
         <div class="badges-grid">
