@@ -59,6 +59,16 @@
           "type": "source_matches",
           "pattern": "\\bwhile\\b",
           "label": "Es wird eine while-Schleife verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*7\\s*\\)",
+          "label": "Die Zeile „7“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*9\\s*\\)",
+          "label": "Die Zeile „9“ wird berechnet, nicht hingeschrieben"
         }
       ]
     },

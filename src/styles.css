@@ -473,7 +473,10 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
    innerhalb der Karte. */
 @media (min-width: 1000px) {
   .figur { margin-left: -108px; margin-bottom: -1.7rem; }
-  .figur__bild { height: 190px; position: relative; z-index: 1; }
+  /* Negatives margin-top: Die Figur darf hoch sein, ohne die Zeile so hoch
+     zu machen. Sonst klafft neben ihr eine grosse weisse Flaeche, weil die
+     Sprechblase unten sitzt. Sie ragt stattdessen nach oben heraus. */
+  .figur__bild { height: 190px; margin-top: -70px; position: relative; z-index: 1; }
 }
 .figur__blase {
   position: relative; flex: 1; min-width: 0;
@@ -512,7 +515,7 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
 /* Der Vorstellungs-Auftritt darf groesser sein - dafuer braucht es aber
    auch mehr Rand, sonst schiebt die Figur die Seite seitlich auf. */
 @media (min-width: 1120px) {
-  .figur--vorstellung .figur__bild { height: 240px; }
+  .figur--vorstellung .figur__bild { height: 240px; margin-top: -120px; }
   .figur--vorstellung { margin-left: -140px; }
 }
 .figur--vorstellung .figur__blase { box-shadow: 0 0 0 4px color-mix(in srgb, var(--figur-rand) 22%, transparent); }

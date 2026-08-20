@@ -47,6 +47,11 @@
           "type": "source_matches",
           "pattern": "\\bclass\\s+\\w+",
           "label": "Es wird eine Klasse definiert"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']Minka[\\\"']\\s*\\)",
+          "label": "Die Zeile „Minka“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

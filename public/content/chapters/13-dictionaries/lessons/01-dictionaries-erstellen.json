@@ -47,6 +47,11 @@
           "type": "source_matches",
           "pattern": "\\w\\s*\\[",
           "label": "Auf den Wert wird über seinen Schlüssel zugegriffen"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']BK1[\\\"']\\s*\\)",
+          "label": "Die Zeile „BK1“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

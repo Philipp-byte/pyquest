@@ -50,6 +50,11 @@
           "type": "source_not_matches",
           "pattern": "(?:\\bFalse\\b)",
           "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*False\\s*\\)",
+          "label": "Die Zeile „False“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

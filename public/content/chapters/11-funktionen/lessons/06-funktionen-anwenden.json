@@ -41,6 +41,21 @@
           "type": "source_matches",
           "pattern": "\\bkassieren\\s*\\(",
           "label": "Es wird kassieren() verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*12\\.5\\s*\\)",
+          "label": "Die Zeile „12.5“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*20\\.5\\s*\\)",
+          "label": "Die Zeile „20.5“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*40\\.5\\s*\\)",
+          "label": "Die Zeile „40.5“ wird berechnet, nicht hingeschrieben"
         }
       ]
     },
@@ -71,6 +86,16 @@
           "type": "source_matches",
           "pattern": "\\blesung_anmelden\\s*\\(",
           "label": "Es wird lesung_anmelden() verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']Angemeldet![\\\"']\\s*\\)",
+          "label": "Die Zeile „Angemeldet!“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']Warteliste![\\\"']\\s*\\)",
+          "label": "Die Zeile „Warteliste!“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

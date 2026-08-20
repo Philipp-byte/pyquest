@@ -58,6 +58,11 @@
           "type": "source_matches",
           "pattern": "[\\w)]\\s*[*/%+-]\\s*[\\w(]",
           "label": "Das Ergebnis wird gerechnet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*1\\s*\\)",
+          "label": "Die Zeile „1“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

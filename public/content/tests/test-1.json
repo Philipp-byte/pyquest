@@ -11,10 +11,33 @@
       "prompt": "Lege eine Variable **`name`** mit dem Wert **`\"Ada\"`** und eine Variable **`alter`** mit dem Wert **`36`** an.\n\nGib damit genau diese Zeile aus:\n```\nAda ist 36 Jahre alt.\n```\nBenutze dafür die **Variablen** – schreibe den Satz nicht komplett als einen Text hin.",
       "starterCode": "",
       "checks": [
-        { "type": "var", "name": "name", "expected": "Ada", "label": "Die Variable name enthält \"Ada\"" },
-        { "type": "var", "name": "alter", "expected": 36, "label": "Die Variable alter enthält 36" },
-        { "type": "output", "expected": "Ada ist 36 Jahre alt.", "label": "Die Ausgabe lautet genau „Ada ist 36 Jahre alt.“" },
-        { "type": "source_not_matches", "pattern": "print\\s*\\(\\s*[\"']Ada ist 36", "label": "Der Satz wird aus den Variablen gebaut, nicht fest hingeschrieben" }
+        {
+          "type": "var",
+          "name": "name",
+          "expected": "Ada",
+          "label": "Die Variable name enthält \"Ada\""
+        },
+        {
+          "type": "var",
+          "name": "alter",
+          "expected": 36,
+          "label": "Die Variable alter enthält 36"
+        },
+        {
+          "type": "output",
+          "expected": "Ada ist 36 Jahre alt.",
+          "label": "Die Ausgabe lautet genau „Ada ist 36 Jahre alt.“"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\"']Ada ist 36",
+          "label": "Der Satz wird aus den Variablen gebaut, nicht fest hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']Ada\\ ist\\ 36\\ Jahre\\ alt\\.[\\\"']\\s*\\)",
+          "label": "Die Zeile „Ada ist 36 Jahre alt.“ wird berechnet, nicht hingeschrieben"
+        }
       ]
     },
     {
@@ -23,9 +46,27 @@
       "prompt": "Ein Fahrrad kostet **249** Euro, ein Helm **39** Euro.\n\n1. Lege die Variablen **`fahrrad`** und **`helm`** mit diesen Preisen an.\n2. Berechne die Summe in einer Variable **`gesamt`**.\n3. Gib **nur die Zahl** aus.\n\nDie Summe muss **berechnet** werden – schreibe das Ergebnis nicht selbst hin.",
       "starterCode": "",
       "checks": [
-        { "type": "var", "name": "gesamt", "expected": 288, "label": "Die Variable gesamt enthält 288" },
-        { "type": "output", "expected": "288", "label": "Die Ausgabe ist 288" },
-        { "type": "source_not_matches", "pattern": "gesamt\\s*=\\s*288\\b", "label": "gesamt wird berechnet, nicht direkt auf 288 gesetzt" }
+        {
+          "type": "var",
+          "name": "gesamt",
+          "expected": 288,
+          "label": "Die Variable gesamt enthält 288"
+        },
+        {
+          "type": "output",
+          "expected": "288",
+          "label": "Die Ausgabe ist 288"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "gesamt\\s*=\\s*288\\b",
+          "label": "gesamt wird berechnet, nicht direkt auf 288 gesetzt"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*288\\s*\\)",
+          "label": "Die Zeile „288“ wird berechnet, nicht hingeschrieben"
+        }
       ]
     },
     {
@@ -34,11 +75,43 @@
       "prompt": "Ein Rechteck ist **12** cm lang und **5** cm breit.\n\n1. Lege die Variablen **`laenge`** und **`breite`** an.\n2. Berechne die **Fläche** (Länge · Breite) in der Variable **`flaeche`**.\n3. Berechne den **Umfang** (2 · Länge + 2 · Breite) in der Variable **`umfang`**.\n4. Gib zuerst die Fläche und dann den Umfang aus – jeweils in einer eigenen Zeile, nur die Zahlen.",
       "starterCode": "",
       "checks": [
-        { "type": "var", "name": "flaeche", "expected": 60, "label": "flaeche enthält 60" },
-        { "type": "var", "name": "umfang", "expected": 34, "label": "umfang enthält 34" },
-        { "type": "output", "expected": "60\n34", "label": "Die Ausgabe ist 60, darunter 34" },
-        { "type": "source_not_matches", "pattern": "flaeche\\s*=\\s*60\\b", "label": "Die Fläche wird gerechnet, nicht hingeschrieben" },
-        { "type": "source_not_matches", "pattern": "umfang\\s*=\\s*34\\b", "label": "Der Umfang wird gerechnet, nicht hingeschrieben" }
+        {
+          "type": "var",
+          "name": "flaeche",
+          "expected": 60,
+          "label": "flaeche enthält 60"
+        },
+        {
+          "type": "var",
+          "name": "umfang",
+          "expected": 34,
+          "label": "umfang enthält 34"
+        },
+        {
+          "type": "output",
+          "expected": "60\n34",
+          "label": "Die Ausgabe ist 60, darunter 34"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "flaeche\\s*=\\s*60\\b",
+          "label": "Die Fläche wird gerechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "umfang\\s*=\\s*34\\b",
+          "label": "Der Umfang wird gerechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*60\\s*\\)",
+          "label": "Die Zeile „60“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*34\\s*\\)",
+          "label": "Die Zeile „34“ wird berechnet, nicht hingeschrieben"
+        }
       ]
     },
     {
@@ -47,10 +120,32 @@
       "prompt": "Du startest mit **10** Punkten. Lege dazu die Variable **`punkte`** an.\n\nDann passiert Folgendes – verändere die Variable **`punkte`** jeweils:\n1. Die Punkte werden **verdreifacht**.\n2. Danach werden **5 Punkte abgezogen**.\n\nGib zum Schluss `punkte` aus (nur die Zahl).",
       "starterCode": "",
       "checks": [
-        { "type": "var", "name": "punkte", "expected": 25, "label": "punkte enthält am Ende 25" },
-        { "type": "output", "expected": "25", "label": "Die Ausgabe ist 25" },
-        { "type": "source_matches", "pattern": "punkte\\s*=\\s*10\\b", "label": "Der Startwert 10 steht in der Variable punkte" },
-        { "type": "source_not_matches", "pattern": "punkte\\s*=\\s*25\\b", "label": "Das Ergebnis wird berechnet, nicht direkt gesetzt" }
+        {
+          "type": "var",
+          "name": "punkte",
+          "expected": 25,
+          "label": "punkte enthält am Ende 25"
+        },
+        {
+          "type": "output",
+          "expected": "25",
+          "label": "Die Ausgabe ist 25"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "punkte\\s*=\\s*10\\b",
+          "label": "Der Startwert 10 steht in der Variable punkte"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "punkte\\s*=\\s*25\\b",
+          "label": "Das Ergebnis wird berechnet, nicht direkt gesetzt"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*25\\s*\\)",
+          "label": "Die Zeile „25“ wird berechnet, nicht hingeschrieben"
+        }
       ]
     }
   ]

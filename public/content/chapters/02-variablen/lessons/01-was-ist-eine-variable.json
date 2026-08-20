@@ -38,7 +38,9 @@
       "text": "Speichere die Zahl **50** in einer Variable namens `anzahl_buecher`.",
       "template": "anzahl_buecher = ___",
       "solution": "50",
-      "accept": ["50"],
+      "accept": [
+        "50"
+      ],
       "hint": "Einfach die Zahl 50 einsetzen – ohne Anführungszeichen, das ist keine Textvariable."
     },
     {
@@ -55,8 +57,20 @@
         "vorname = \"Ada\"\nprint(vorname)"
       ],
       "tests": [
-        { "type": "output", "expected": "Ada" },
-        { "type": "var", "name": "vorname", "expected": "Ada" }
+        {
+          "type": "output",
+          "expected": "Ada"
+        },
+        {
+          "type": "var",
+          "name": "vorname",
+          "expected": "Ada"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']Ada[\\\"']\\s*\\)",
+          "label": "Die Zeile „Ada“ wird berechnet, nicht hingeschrieben"
+        }
       ]
     }
   ]

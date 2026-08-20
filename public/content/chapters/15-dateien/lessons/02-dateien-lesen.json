@@ -47,6 +47,11 @@
           "type": "source_matches",
           "pattern": "open\\s*\\(",
           "label": "Die Datei wird mit open() gelesen"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']Python\\ macht\\ Spaß[\\\"']\\s*\\)",
+          "label": "Die Zeile „Python macht Spaß“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

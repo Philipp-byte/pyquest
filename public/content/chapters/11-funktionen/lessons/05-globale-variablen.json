@@ -57,6 +57,21 @@
           "type": "source_matches",
           "pattern": "\\bverkaufen\\s*\\(",
           "label": "Es wird verkaufen() verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*23\\s*\\)",
+          "label": "Die Zeile „23“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*22\\s*\\)",
+          "label": "Die Zeile „22“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*21\\s*\\)",
+          "label": "Die Zeile „21“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

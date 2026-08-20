@@ -57,6 +57,11 @@
           "type": "source_matches",
           "pattern": "\\b(?:and|or|not)\\b",
           "label": "Es wird ein logischer Operator verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*True\\s*\\)",
+          "label": "Die Zeile „True“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

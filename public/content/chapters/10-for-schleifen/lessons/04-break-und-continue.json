@@ -69,6 +69,26 @@
           "type": "source_not_matches",
           "pattern": "(?:\\b3\\b|\\b5\\b)",
           "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*1\\s*\\)",
+          "label": "Die Zeile „1“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*3\\s*\\)",
+          "label": "Die Zeile „3“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*5\\s*\\)",
+          "label": "Die Zeile „5“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*7\\s*\\)",
+          "label": "Die Zeile „7“ wird berechnet, nicht hingeschrieben"
         }
       ]
     },

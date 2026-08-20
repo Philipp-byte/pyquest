@@ -47,6 +47,21 @@
           "type": "source_not_matches",
           "pattern": "(?:7\\ 8\\ 9|1\\ 2\\ 3|4\\ 5\\ 6)",
           "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']7\\ 8\\ 9[\\\"']\\s*\\)",
+          "label": "Die Zeile „7 8 9“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']1\\ 2\\ 3[\\\"']\\s*\\)",
+          "label": "Die Zeile „1 2 3“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']4\\ 5\\ 6[\\\"']\\s*\\)",
+          "label": "Die Zeile „4 5 6“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

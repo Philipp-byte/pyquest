@@ -52,6 +52,11 @@
           "type": "source_not_matches",
           "pattern": "(?:\\[12,\\ 9,\\ 24\\])",
           "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']\\[12,\\ 9,\\ 24\\][\\\"']\\s*\\)",
+          "label": "Die Zeile „[12, 9, 24]“ wird berechnet, nicht hingeschrieben"
         }
       ]
     },
@@ -73,6 +78,11 @@
           "type": "source_not_matches",
           "pattern": "(?:\\b15\\b)",
           "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*15\\s*\\)",
+          "label": "Die Zeile „15“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

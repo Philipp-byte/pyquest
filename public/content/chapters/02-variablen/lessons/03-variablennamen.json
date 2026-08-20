@@ -66,6 +66,11 @@
           "type": "source_matches",
           "pattern": "\\w+\\s*=",
           "label": "Der Wert wird in einer Variable gespeichert"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*4\\.5\\s*\\)",
+          "label": "Die Zeile „4.5“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

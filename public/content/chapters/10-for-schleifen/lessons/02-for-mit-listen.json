@@ -43,6 +43,21 @@
           "type": "source_matches",
           "pattern": "\\bfor\\s+\\w+\\s+in\\b",
           "label": "Es wird eine for-Schleife verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']rot[\\\"']\\s*\\)",
+          "label": "Die Zeile „rot“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']gelb[\\\"']\\s*\\)",
+          "label": "Die Zeile „gelb“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']grün[\\\"']\\s*\\)",
+          "label": "Die Zeile „grün“ wird berechnet, nicht hingeschrieben"
         }
       ]
     },
@@ -73,6 +88,11 @@
           "type": "source_not_matches",
           "pattern": "(?:\\b108\\b)",
           "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*108\\s*\\)",
+          "label": "Die Zeile „108“ wird berechnet, nicht hingeschrieben"
         }
       ]
     },
@@ -98,6 +118,11 @@
           "type": "source_matches",
           "pattern": "\\bfor\\s+\\w+\\s+in\\b",
           "label": "Es wird eine for-Schleife verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*19\\s*\\)",
+          "label": "Die Zeile „19“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

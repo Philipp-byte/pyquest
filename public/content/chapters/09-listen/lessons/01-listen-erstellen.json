@@ -47,6 +47,11 @@
           "type": "source_matches",
           "pattern": "\\w\\s*\\[",
           "label": "Auf das Element wird über seinen Index zugegriffen"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']Katze[\\\"']\\s*\\)",
+          "label": "Die Zeile „Katze“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

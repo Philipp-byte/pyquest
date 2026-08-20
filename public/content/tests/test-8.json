@@ -11,12 +11,41 @@
       "prompt": "1. Schreibe den Text **`Ada;90`** in die Datei **`punkte.txt`**.\n2. Lies die Datei danach wieder ein.\n3. Zerlege den Inhalt am Semikolon.\n4. Gib den Namen und die Punktzahl **plus 10 Bonuspunkte** aus:\n```\nAda 100\n```\nNutze dafür `with open(...)` zum Schreiben und zum Lesen.",
       "starterCode": "",
       "checks": [
-        { "type": "output", "expected": "Ada 100", "label": "Name und die um 10 erhöhte Punktzahl werden ausgegeben" },
-        { "type": "source_matches", "pattern": "open\\s*\\(", "label": "Es wird mit open() auf eine Datei zugegriffen" },
-        { "type": "source_matches", "pattern": "[\"']w[\"']", "label": "Die Datei wird zum Schreiben geöffnet (Modus \"w\")" },
-        { "type": "source_matches", "pattern": "[\"']r[\"']", "label": "Die Datei wird zum Lesen geöffnet (Modus \"r\")" },
-        { "type": "source_matches", "pattern": "\\.split\\s*\\(", "label": "Der Inhalt wird mit .split() zerlegt" },
-        { "type": "source_not_matches", "pattern": "print\\s*\\(\\s*[\"']Ada 100", "label": "Das Ergebnis wird berechnet, nicht hingeschrieben" }
+        {
+          "type": "output",
+          "expected": "Ada 100",
+          "label": "Name und die um 10 erhöhte Punktzahl werden ausgegeben"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "open\\s*\\(",
+          "label": "Es wird mit open() auf eine Datei zugegriffen"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "[\"']w[\"']",
+          "label": "Die Datei wird zum Schreiben geöffnet (Modus \"w\")"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "[\"']r[\"']",
+          "label": "Die Datei wird zum Lesen geöffnet (Modus \"r\")"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\.split\\s*\\(",
+          "label": "Der Inhalt wird mit .split() zerlegt"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\"']Ada 100",
+          "label": "Das Ergebnis wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']Ada\\ 100[\\\"']\\s*\\)",
+          "label": "Die Zeile „Ada 100“ wird berechnet, nicht hingeschrieben"
+        }
       ]
     },
     {
@@ -25,11 +54,35 @@
       "prompt": "Schreibe eine Funktion **`bestanden(noten)`**, die eine Liste von Noten bekommt.\n\nSie soll **`True`** zurückgeben, wenn der Durchschnitt **kleiner oder gleich 4** ist, sonst **`False`**.\n\nBei einer **leeren Liste** soll `False` herauskommen (kein Absturz!).",
       "starterCode": "",
       "checks": [
-        { "type": "func", "call": "bestanden([1, 2, 3])", "expected": true, "label": "bestanden([1, 2, 3]) ergibt True" },
-        { "type": "func", "call": "bestanden([5, 5, 6])", "expected": false, "label": "bestanden([5, 5, 6]) ergibt False" },
-        { "type": "func", "call": "bestanden([4, 4, 4])", "expected": true, "label": "Genau Durchschnitt 4 gilt noch als bestanden (Grenzfall)" },
-        { "type": "func", "call": "bestanden([])", "expected": false, "label": "Eine leere Liste ergibt False, ohne Fehler (Grenzfall)" },
-        { "type": "source_matches", "pattern": "\\bdef\\s+bestanden\\s*\\(", "label": "Die Funktion heißt bestanden" }
+        {
+          "type": "func",
+          "call": "bestanden([1, 2, 3])",
+          "expected": true,
+          "label": "bestanden([1, 2, 3]) ergibt True"
+        },
+        {
+          "type": "func",
+          "call": "bestanden([5, 5, 6])",
+          "expected": false,
+          "label": "bestanden([5, 5, 6]) ergibt False"
+        },
+        {
+          "type": "func",
+          "call": "bestanden([4, 4, 4])",
+          "expected": true,
+          "label": "Genau Durchschnitt 4 gilt noch als bestanden (Grenzfall)"
+        },
+        {
+          "type": "func",
+          "call": "bestanden([])",
+          "expected": false,
+          "label": "Eine leere Liste ergibt False, ohne Fehler (Grenzfall)"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bdef\\s+bestanden\\s*\\(",
+          "label": "Die Funktion heißt bestanden"
+        }
       ]
     },
     {
@@ -38,10 +91,33 @@
       "prompt": "Schreibe eine Funktion **`durchschnitte(matrix)`**, die für jede Zeile einer verschachtelten Liste den **Durchschnitt** berechnet und alle Durchschnitte als **Liste zurückgibt**.\n\nBeispiel: aus `[[2, 4], [1, 3]]` wird `[3.0, 2.0]`.",
       "starterCode": "",
       "checks": [
-        { "type": "func", "call": "durchschnitte([[2, 4], [1, 3]])", "expected": [3.0, 2.0], "label": "durchschnitte([[2, 4], [1, 3]]) ergibt [3.0, 2.0]" },
-        { "type": "func", "call": "durchschnitte([[10, 20, 30]])", "expected": [20.0], "label": "Auch eine einzelne Zeile wird richtig berechnet" },
-        { "type": "source_matches", "pattern": "\\bdef\\s+durchschnitte\\s*\\(", "label": "Die Funktion heißt durchschnitte" },
-        { "type": "source_matches", "pattern": "\\breturn\\b", "label": "Die Liste wird mit return zurückgegeben" }
+        {
+          "type": "func",
+          "call": "durchschnitte([[2, 4], [1, 3]])",
+          "expected": [
+            3.0,
+            2.0
+          ],
+          "label": "durchschnitte([[2, 4], [1, 3]]) ergibt [3.0, 2.0]"
+        },
+        {
+          "type": "func",
+          "call": "durchschnitte([[10, 20, 30]])",
+          "expected": [
+            20.0
+          ],
+          "label": "Auch eine einzelne Zeile wird richtig berechnet"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bdef\\s+durchschnitte\\s*\\(",
+          "label": "Die Funktion heißt durchschnitte"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\breturn\\b",
+          "label": "Die Liste wird mit return zurückgegeben"
+        }
       ]
     },
     {
@@ -51,10 +127,41 @@
       "starterCode": "loesungen = [\"4\", \"8\", \"6\"]\n",
       "needsInput": true,
       "checks": [
-        { "type": "input_output", "inputs": ["4", "0", "6"], "expected": "Antwort: 4\nAntwort: 0\nAntwort: 6\n2", "label": "Bei zwei richtigen Antworten wird 2 ausgegeben" },
-        { "type": "input_output", "inputs": ["4", "8", "6"], "expected": "Antwort: 4\nAntwort: 8\nAntwort: 6\n3", "label": "Bei allen richtigen Antworten wird 3 ausgegeben" },
-        { "type": "input_output", "inputs": ["1", "2", "3"], "expected": "Antwort: 1\nAntwort: 2\nAntwort: 3\n0", "label": "Bei keiner richtigen Antwort wird 0 ausgegeben (Grenzfall)" },
-        { "type": "source_matches", "pattern": "\\bfor\\b|\\bwhile\\b", "label": "Die Fragen werden in einer Schleife abgefragt" }
+        {
+          "type": "input_output",
+          "inputs": [
+            "4",
+            "0",
+            "6"
+          ],
+          "expected": "Antwort: 4\nAntwort: 0\nAntwort: 6\n2",
+          "label": "Bei zwei richtigen Antworten wird 2 ausgegeben"
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "4",
+            "8",
+            "6"
+          ],
+          "expected": "Antwort: 4\nAntwort: 8\nAntwort: 6\n3",
+          "label": "Bei allen richtigen Antworten wird 3 ausgegeben"
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "1",
+            "2",
+            "3"
+          ],
+          "expected": "Antwort: 1\nAntwort: 2\nAntwort: 3\n0",
+          "label": "Bei keiner richtigen Antwort wird 0 ausgegeben (Grenzfall)"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bfor\\b|\\bwhile\\b",
+          "label": "Die Fragen werden in einer Schleife abgefragt"
+        }
       ]
     }
   ]

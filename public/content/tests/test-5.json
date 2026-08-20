@@ -11,10 +11,41 @@
       "prompt": "In `zahlen` steht eine Liste von Zahlen. Gib **drei Zeilen** aus:\n\n1. die **Summe** aller Zahlen\n2. die **größte** Zahl\n3. den **Durchschnitt** (Summe geteilt durch Anzahl)\n\nBerechne alles selbst mit einer `for`-Schleife – **ohne** `sum()`, `max()` oder `min()`.",
       "starterCode": "zahlen = [12, 7, 25, 3, 18]\n",
       "checks": [
-        { "type": "output", "expected": "65\n25\n13.0", "label": "Summe 65, größte Zahl 25 und Durchschnitt 13.0 stimmen" },
-        { "type": "source_matches", "pattern": "\\bfor\\s+\\w+\\s+in\\b", "label": "Die Liste wird mit einer for-Schleife durchlaufen" },
-        { "type": "source_not_matches", "pattern": "\\bsum\\s*\\(", "label": "Die Summe wird selbst gebildet (kein sum())" },
-        { "type": "source_not_matches", "pattern": "\\bmax\\s*\\(", "label": "Die größte Zahl wird selbst gesucht (kein max())" }
+        {
+          "type": "output",
+          "expected": "65\n25\n13.0",
+          "label": "Summe 65, größte Zahl 25 und Durchschnitt 13.0 stimmen"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bfor\\s+\\w+\\s+in\\b",
+          "label": "Die Liste wird mit einer for-Schleife durchlaufen"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "\\bsum\\s*\\(",
+          "label": "Die Summe wird selbst gebildet (kein sum())"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "\\bmax\\s*\\(",
+          "label": "Die größte Zahl wird selbst gesucht (kein max())"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*65\\s*\\)",
+          "label": "Die Zeile „65“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*25\\s*\\)",
+          "label": "Die Zeile „25“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*13\\.0\\s*\\)",
+          "label": "Die Zeile „13.0“ wird berechnet, nicht hingeschrieben"
+        }
       ]
     },
     {
@@ -23,10 +54,36 @@
       "prompt": "Gehe die Liste `zahlen` durch und sammle alle **geraden** Zahlen in einer **neuen Liste** namens `gerade`.\n\nGib die neue Liste am Ende aus. Erwartet:\n```\n[4, 10, 16]\n```",
       "starterCode": "zahlen = [4, 7, 10, 13, 16, 21]\n",
       "checks": [
-        { "type": "var", "name": "gerade", "expected": [4, 10, 16], "label": "Die Liste gerade enthält [4, 10, 16]" },
-        { "type": "output", "expected": "[4, 10, 16]", "label": "Die Ausgabe ist [4, 10, 16]" },
-        { "type": "source_matches", "pattern": "\\.append\\s*\\(", "label": "Die neue Liste wird mit .append() gefüllt" },
-        { "type": "source_matches", "pattern": "%", "label": "Gerade Zahlen werden mit dem Rest-Operator % erkannt" }
+        {
+          "type": "var",
+          "name": "gerade",
+          "expected": [
+            4,
+            10,
+            16
+          ],
+          "label": "Die Liste gerade enthält [4, 10, 16]"
+        },
+        {
+          "type": "output",
+          "expected": "[4, 10, 16]",
+          "label": "Die Ausgabe ist [4, 10, 16]"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\.append\\s*\\(",
+          "label": "Die neue Liste wird mit .append() gefüllt"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "%",
+          "label": "Gerade Zahlen werden mit dem Rest-Operator % erkannt"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']\\[4,\\ 10,\\ 16\\][\\\"']\\s*\\)",
+          "label": "Die Zeile „[4, 10, 16]“ wird berechnet, nicht hingeschrieben"
+        }
       ]
     },
     {
@@ -35,11 +92,36 @@
       "prompt": "Finde in der Liste `woerter` das **längste** Wort und gib es aus.\n\nSuche es selbst mit einer Schleife – **ohne** `max()`.",
       "starterCode": "woerter = [\"Haus\", \"Fahrrad\", \"Auto\", \"Computer\", \"Baum\"]\n",
       "checks": [
-        { "type": "output", "expected": "Computer", "label": "Das längste Wort Computer wird ausgegeben" },
-        { "type": "source_matches", "pattern": "\\bfor\\s+\\w+\\s+in\\b", "label": "Die Liste wird mit einer for-Schleife durchlaufen" },
-        { "type": "source_matches", "pattern": "\\blen\\s*\\(", "label": "Die Wortlänge wird mit len() bestimmt" },
-        { "type": "source_not_matches", "pattern": "\\bmax\\s*\\(", "label": "Es wird kein max() benutzt" },
-        { "type": "source_not_matches", "pattern": "print\\s*\\(\\s*[\"']Computer", "label": "Das Wort wird gesucht, nicht direkt ausgegeben" }
+        {
+          "type": "output",
+          "expected": "Computer",
+          "label": "Das längste Wort Computer wird ausgegeben"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bfor\\s+\\w+\\s+in\\b",
+          "label": "Die Liste wird mit einer for-Schleife durchlaufen"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\blen\\s*\\(",
+          "label": "Die Wortlänge wird mit len() bestimmt"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "\\bmax\\s*\\(",
+          "label": "Es wird kein max() benutzt"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\"']Computer",
+          "label": "Das Wort wird gesucht, nicht direkt ausgegeben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']Computer[\\\"']\\s*\\)",
+          "label": "Die Zeile „Computer“ wird berechnet, nicht hingeschrieben"
+        }
       ]
     },
     {
@@ -48,10 +130,31 @@
       "prompt": "In `noten` stehen die Noten eines Halbjahres.\n\n1. Berechne den **Durchschnitt** mit einer Schleife.\n2. Gib ihn in der ersten Zeile aus.\n3. Gib in der zweiten Zeile **`bestanden`** aus, wenn der Durchschnitt **kleiner oder gleich 4** ist, sonst **`nicht bestanden`**.\n\nErwartet:\n```\n3.0\nbestanden\n```",
       "starterCode": "noten = [2, 5, 3, 1, 4]\n",
       "checks": [
-        { "type": "output", "expected": "3.0\nbestanden", "label": "Durchschnitt 3.0 und die Bewertung bestanden stimmen" },
-        { "type": "source_matches", "pattern": "\\bfor\\s+\\w+\\s+in\\b", "label": "Die Noten werden mit einer for-Schleife durchlaufen" },
-        { "type": "source_matches", "pattern": "\\bif\\b", "label": "Die Bewertung entsteht mit einer if-Bedingung" },
-        { "type": "source_not_matches", "pattern": "\\bsum\\s*\\(", "label": "Die Summe wird selbst gebildet (kein sum())" }
+        {
+          "type": "output",
+          "expected": "3.0\nbestanden",
+          "label": "Durchschnitt 3.0 und die Bewertung bestanden stimmen"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bfor\\s+\\w+\\s+in\\b",
+          "label": "Die Noten werden mit einer for-Schleife durchlaufen"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bif\\b",
+          "label": "Die Bewertung entsteht mit einer if-Bedingung"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "\\bsum\\s*\\(",
+          "label": "Die Summe wird selbst gebildet (kein sum())"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*3\\.0\\s*\\)",
+          "label": "Die Zeile „3.0“ wird berechnet, nicht hingeschrieben"
+        }
       ]
     }
   ]

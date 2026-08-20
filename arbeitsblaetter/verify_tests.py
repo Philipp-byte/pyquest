@@ -17,9 +17,20 @@ import sys
 from contextlib import redirect_stdout
 from pathlib import Path
 
+from verify_lessons import schummel_loesungen
+
 ROOT = Path(__file__).resolve().parent.parent
 TESTS = ROOT / "public" / "content" / "tests"
 LOESUNGEN = Path(__file__).resolve().parent / "test_loesungen.json"
+
+# Aufgaben, bei denen das woertliche Hinschreiben die RICHTIGE Loesung ist.
+AUSNAHMEN = {
+    # "Tabelle mit Escape-Sequenzen": Hier IST der Text die Aufgabe - er soll
+    # mit \t und \" geschrieben werden. Ob das in drei prints steht oder in
+    # einem mit \n, ist egal; beides ist richtig. Dass die Escape-Sequenzen
+    # wirklich benutzt werden, sichert die vorhandene source_matches-Pruefung.
+    ("test-3", "a4"),
+}
 
 
 def normalize(text):
@@ -123,21 +134,33 @@ def task_passes(task, code):
     return True
 
 
-def negative_pass():
+def negative_pass(solutions):
     """Gegenprobe: Eine Aufgabe darf NICHT bestanden werden, wenn gar nichts
-    (bzw. nur der vorgegebene Startcode) abgegeben wird. Sonst waere die
-    Aufgabe wirkungslos."""
+    abgegeben wird - und auch nicht, wenn das Ergebnis bloss hingeschrieben
+    statt berechnet wird. Sonst prueft sie das Ergebnis statt der Aufgabe.
+
+    Dieselben Schummel-Abgaben wie bei den Lektionen (siehe
+    verify_lessons.schummel_loesungen), damit beide gleich streng sind -
+    genau hier klaffte vorher eine Luecke."""
     leaks = 0
     checked = 0
     for path in sorted(TESTS.glob("test-*.json")):
         test = json.loads(path.read_text(encoding="utf-8"))
+        sols = solutions.get(test["id"], {})
         for task in test["tasks"]:
             starter = task.get("starterCode") or ""
-            for name, code in (("leer", starter), ("nur pass", starter + "\npass\n")):
+            loesung = sols.get(task["id"], "")
+            abgaben = [("leer", starter), ("nur pass", starter + "\npass\n")]
+            if (test["id"], task["id"]) not in AUSNAHMEN:
+                # schummel_loesungen erwartet die Lektions-Form ("tests").
+                schummel = schummel_loesungen({"tests": task["checks"]}, loesung)
+                abgaben += [(name, starter + code) for name, code in schummel]
+            for name, code in abgaben:
                 checked += 1
                 if task_passes(task, code):
                     leaks += 1
                     print(f'LUECKE {test["id"]}/{task["id"]}: besteht schon mit "{name}"')
+                    print(f'    Aufgabe: {task["prompt"][:95]}')
     return checked, leaks
 
 
@@ -176,7 +199,7 @@ def main():
         print("Ohne Musterloesung:", ", ".join(missing))
     print(f"--- Musterloesungen: {total} Pruefungen, {fails} Fehler, {len(missing)} ohne Loesung ---")
 
-    checked, leaks = negative_pass()
+    checked, leaks = negative_pass(solutions)
     print(f"--- Gegenprobe: {checked} Leer-Abgaben geprueft, {leaks} Aufgaben ohne Wirkung ---")
 
     return 1 if (fails or missing or leaks) else 0

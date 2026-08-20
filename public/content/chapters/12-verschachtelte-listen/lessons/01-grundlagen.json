@@ -61,6 +61,16 @@
           "type": "source_matches",
           "pattern": "\\blen\\s*\\(",
           "label": "Es wird len() verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']Katie[\\\"']\\s*\\)",
+          "label": "Die Zeile „Katie“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*2\\s*\\)",
+          "label": "Die Zeile „2“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

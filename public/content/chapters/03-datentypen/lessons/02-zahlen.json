@@ -62,6 +62,11 @@
           "type": "source_not_matches",
           "pattern": "(?:\\b1024\\b)",
           "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*1024\\s*\\)",
+          "label": "Die Zeile „1024“ wird berechnet, nicht hingeschrieben"
         }
       ]
     },

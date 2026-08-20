@@ -57,6 +57,16 @@
           "type": "source_matches",
           "pattern": "\\baddiere\\s*\\(",
           "label": "Es wird addiere() verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*7\\s*\\)",
+          "label": "Die Zeile „7“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*15\\s*\\)",
+          "label": "Die Zeile „15“ wird berechnet, nicht hingeschrieben"
         }
       ]
     },
@@ -92,6 +102,11 @@
           "type": "source_matches",
           "pattern": "\\bbuch_info\\s*\\(",
           "label": "Es wird buch_info() verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']Titel:\\ Moby\\ Dick,\\ Autor:\\ Herman\\ Melville,\\ Preis:\\ 14\\.99\\ Euro[\\\"']\\s*\\)",
+          "label": "Die Zeile „Titel: Moby Dick, Autor: Herman Melville, Preis: 14.99 Euro“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

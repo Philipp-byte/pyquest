@@ -67,6 +67,56 @@
           "type": "source_matches",
           "pattern": "\\bfor\\s+\\w+\\s+in\\b",
           "label": "Es wird eine for-Schleife verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*1\\s*\\)",
+          "label": "Die Zeile „1“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*2\\s*\\)",
+          "label": "Die Zeile „2“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*4\\s*\\)",
+          "label": "Die Zeile „4“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*5\\s*\\)",
+          "label": "Die Zeile „5“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*7\\s*\\)",
+          "label": "Die Zeile „7“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*8\\s*\\)",
+          "label": "Die Zeile „8“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*10\\s*\\)",
+          "label": "Die Zeile „10“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*11\\s*\\)",
+          "label": "Die Zeile „11“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*13\\s*\\)",
+          "label": "Die Zeile „13“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*14\\s*\\)",
+          "label": "Die Zeile „14“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

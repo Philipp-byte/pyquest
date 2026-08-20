@@ -98,6 +98,11 @@
           "type": "source_matches",
           "pattern": "\\bdurchschnitt\\s*\\(",
           "label": "Es wird durchschnitt() verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*11\\.5\\s*\\)",
+          "label": "Die Zeile „11.5“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

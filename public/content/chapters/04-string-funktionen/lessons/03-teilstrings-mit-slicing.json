@@ -47,6 +47,16 @@
           "type": "source_matches",
           "pattern": "\\[\\s*-?\\d*\\s*:",
           "label": "Der Teilstring entsteht durch Slicing"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']SE[\\\"']\\s*\\)",
+          "label": "Die Zeile „SE“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*713313185\\s*\\)",
+          "label": "Die Zeile „713313185“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

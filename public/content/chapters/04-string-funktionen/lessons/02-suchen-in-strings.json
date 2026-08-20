@@ -57,6 +57,16 @@
           "type": "source_matches",
           "pattern": "\\.find\\s*\\(",
           "label": "Es wird .find() verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*True\\s*\\)",
+          "label": "Die Zeile „True“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*3\\s*\\)",
+          "label": "Die Zeile „3“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

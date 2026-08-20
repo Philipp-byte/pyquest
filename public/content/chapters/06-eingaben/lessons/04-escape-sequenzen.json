@@ -16,7 +16,11 @@
     {
       "type": "quiz",
       "question": "Wie viele Zeilen gibt `print(\"A\\nB\\nC\")` aus?",
-      "choices": ["1 Zeile", "3 Zeilen", "Gar keine"],
+      "choices": [
+        "1 Zeile",
+        "3 Zeilen",
+        "Gar keine"
+      ],
       "answer": 1,
       "explainCorrect": "Richtig! Jedes \\n erzeugt einen Zeilenumbruch – A, B und C stehen untereinander.",
       "explainWrong": "Jedes \\n bewirkt einen Zeilenumbruch. `A\\nB\\nC` gibt A, B, C in drei Zeilen aus."
@@ -34,7 +38,20 @@
         "print(\"Python\\nist toll\")"
       ],
       "tests": [
-        { "type": "output", "expected": "Python\nist toll" }
+        {
+          "type": "output",
+          "expected": "Python\nist toll"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']Python[\\\"']\\s*\\)",
+          "label": "Die Zeile „Python“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']ist\\ toll[\\\"']\\s*\\)",
+          "label": "Die Zeile „ist toll“ wird berechnet, nicht hingeschrieben"
+        }
       ]
     }
   ]

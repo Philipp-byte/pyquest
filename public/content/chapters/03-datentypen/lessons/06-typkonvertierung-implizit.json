@@ -63,6 +63,11 @@
           "type": "source_not_matches",
           "pattern": "(?:\\b9\\.5\\b)",
           "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*9\\.5\\s*\\)",
+          "label": "Die Zeile „9.5“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

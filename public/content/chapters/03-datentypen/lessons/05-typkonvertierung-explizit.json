@@ -52,6 +52,11 @@
           "type": "source_matches",
           "pattern": "\\bfloat\\s*\\(",
           "label": "Es wird float() verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*4\\.23\\s*\\)",
+          "label": "Die Zeile „4.23“ wird berechnet, nicht hingeschrieben"
         }
       ]
     },
@@ -90,6 +95,11 @@
           "type": "source_matches",
           "pattern": "\\bint\\s*\\(",
           "label": "Es wird int() verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*1\\s*\\)",
+          "label": "Die Zeile „1“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

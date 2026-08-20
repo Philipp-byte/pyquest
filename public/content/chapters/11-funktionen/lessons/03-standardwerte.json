@@ -57,6 +57,16 @@
           "type": "source_matches",
           "pattern": "\\bkunden_info\\s*\\(",
           "label": "Es wird kunden_info() verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']Name:\\ Anna,\\ Alter:\\ 28[\\\"']\\s*\\)",
+          "label": "Die Zeile „Name: Anna, Alter: 28“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']Name:\\ Max,\\ Alter:\\ 30,\\ Gekauftes\\ Buch:\\ Harry\\ Potter[\\\"']\\s*\\)",
+          "label": "Die Zeile „Name: Max, Alter: 30, Gekauftes Buch: Harry Potter“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

@@ -50,6 +50,26 @@
           "name": "vorname",
           "expected": "Unbekannt",
           "label": "Die Variable vorname enthält den richtigen Wert"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*0\\s*\\)",
+          "label": "Die Zeile „0“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*0\\.0\\s*\\)",
+          "label": "Die Zeile „0.0“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*False\\s*\\)",
+          "label": "Die Zeile „False“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']Unbekannt[\\\"']\\s*\\)",
+          "label": "Die Zeile „Unbekannt“ wird berechnet, nicht hingeschrieben"
         }
       ]
     },

@@ -57,6 +57,11 @@
           "type": "source_matches",
           "pattern": "\\babheben\\s*\\(",
           "label": "Es wird abheben() verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*170\\s*\\)",
+          "label": "Die Zeile „170“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

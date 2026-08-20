@@ -43,6 +43,16 @@
           "type": "source_not_matches",
           "pattern": "(?:1\\ 0)",
           "label": "Das Ergebnis wird berechnet, nicht als Text hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*9\\s*\\)",
+          "label": "Die Zeile „9“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']1\\ 0[\\\"']\\s*\\)",
+          "label": "Die Zeile „1 0“ wird berechnet, nicht hingeschrieben"
         }
       ]
     },
@@ -73,6 +83,21 @@
           "type": "source_matches",
           "pattern": "\\bround\\s*\\(",
           "label": "Es wird round() verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*2\\.0\\s*\\)",
+          "label": "Die Zeile „2.0“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*3\\.0\\s*\\)",
+          "label": "Die Zeile „3.0“ wird berechnet, nicht hingeschrieben"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*1\\.33\\s*\\)",
+          "label": "Die Zeile „1.33“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }

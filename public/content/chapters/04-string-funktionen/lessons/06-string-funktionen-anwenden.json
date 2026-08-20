@@ -81,6 +81,11 @@
           "type": "source_matches",
           "pattern": "\\.split\\s*\\(",
           "label": "Es wird .split() verwendet"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']XZ_1234\\|Klein\\|Max\\|Berlin[\\\"']\\s*\\)",
+          "label": "Die Zeile „XZ_1234|Klein|Max|Berlin“ wird berechnet, nicht hingeschrieben"
         }
       ]
     }
