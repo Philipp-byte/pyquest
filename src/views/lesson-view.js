@@ -145,9 +145,18 @@ class LessonPlayer {
 
   // ---- Schritt: Beispiel mit Ausfuehren ----
   renderExample(step) {
+    // Fragt das Beispiel per input() nach etwas, braucht es auch ein Feld
+    // dafuer - sonst laeuft es ins Leere und meldet einen Fehler.
+    const brauchtEingabe = step.needsInput || /\binput\s*\(/.test(step.code || "");
     const card = html(`<div class="card">
       ${step.text ? `<div class="prose">${renderMarkdown(step.text)}</div>` : ""}
       <pre class="codeblock"><code>${escape(step.code)}</code></pre>
+      ${brauchtEingabe ? `
+        <label class="sim-input-label">
+          ⌨️ Das Beispiel fragt dich etwas – schreibe deine Antwort hier hinein (eine pro Zeile)
+          <textarea class="sim-input" rows="2" placeholder="z. B.\n7"></textarea>
+        </label>
+      ` : ""}
       <div class="run-row">
         <button class="btn btn--run">▶ Ausführen</button>
         <span class="run-status"></span>
@@ -159,10 +168,12 @@ class LessonPlayer {
     const runBtn = card.querySelector(".btn--run");
     const status = card.querySelector(".run-status");
     const output = card.querySelector(".output");
+    const simInput = card.querySelector(".sim-input");
 
     runBtn.onclick = async () => {
       runBtn.disabled = true;
       const res = await runPython(step.code, {
+        inputs: simInput ? simInput.value.split("\n") : [],
         onStatus: (s) => (status.textContent = s),
       });
       status.textContent = "";
