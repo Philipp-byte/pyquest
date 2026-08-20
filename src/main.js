@@ -102,6 +102,12 @@ function startApp() {
   route("/chapter/:chapterId", ({ chapterId }) =>
     renderChapterDetail(app, curriculum, chapterId)
   );
+  // Das ausgefuellte Arbeitsblatt - wird nur beim Abgeben gebraucht und
+  // deshalb erst dann geladen.
+  route("/arbeitsblatt/:chapterId", async ({ chapterId }) => {
+    const { renderWorksheet } = await import("./views/worksheet-view.js");
+    renderWorksheet(app, curriculum, chapterId);
+  });
   // Die Lektionsansicht bringt den CodeMirror-Editor mit (der groesste
   // Brocken im Bundle). Sie wird erst geladen, wenn wirklich eine Lektion
   // geoeffnet wird - die Startseite bleibt dadurch deutlich schneller.

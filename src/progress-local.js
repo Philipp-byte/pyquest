@@ -8,6 +8,7 @@ import { levelForXp } from "./level-math.js";
 import { exportTestResults, importTestResults, resetTestResults } from "./test-results.js";
 import { exportIntroState, importIntroState } from "./intro-state.js";
 import { exportFiguren, importFiguren, resetFiguren } from "./figuren.js";
+import { exportLoesungen, importLoesungen, resetLoesungen } from "./loesungen.js";
 
 const KEY = "pyquest.progress.v1";
 
@@ -133,6 +134,9 @@ export function resetProgress() {
   // Auch die Figuren stellen sich danach wieder neu vor - sonst faengt man
   // von vorne an, kennt aber schon alle.
   resetFiguren();
+  // Auch die eigenen Loesungen - sonst stuenden im Arbeitsblatt noch
+  // Antworten zu Aufgaben, die wieder als offen gelten.
+  resetLoesungen();
 }
 
 // ---------------------------------------------------------------- Export/Import
@@ -156,6 +160,8 @@ export function exportState() {
       introGesehen: exportIntroState(),
       // Welche Begleitfiguren sich schon vorgestellt haben.
       figuren: exportFiguren(),
+      // Die selbst geschriebenen Loesungen fuer das Arbeitsblatt.
+      loesungen: exportLoesungen(),
     },
     null,
     2
@@ -188,5 +194,6 @@ export function importState(text) {
   if (parsed && parsed.tests) importTestResults(parsed.tests);
   if (parsed && "introGesehen" in parsed) importIntroState(parsed.introGesehen);
   if (parsed && parsed.figuren) importFiguren(parsed.figuren);
+  if (parsed && parsed.loesungen) importLoesungen(parsed.loesungen);
   return true;
 }

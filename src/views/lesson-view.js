@@ -12,6 +12,7 @@ import { playCorrect, playWrong, playFinish, playLevelUp, playBadge } from "../s
 import { findLesson, flattenLessons } from "../content.js";
 import { renderDiff } from "./diff-view.js";
 import { createRegie } from "../figuren.js";
+import { merkeLoesung } from "../loesungen.js";
 
 // Abweichungen, die nur die Schreibweise der Ausgabe betreffen: ein
 // fehlender Punkt, ein Leerzeichen zu viel, ein grosser statt kleiner
@@ -363,6 +364,9 @@ class LessonPlayer {
       }
 
       if (result.passed) {
+        // Die eigene Loesung merken - sie erscheint spaeter im
+        // ausgefuellten Arbeitsblatt.
+        merkeLoesung(this.lesson.id, this.stepIndex, this.editor.getCode());
         feedback.hidden = false;
         feedback.className = "feedback feedback--ok";
         feedback.innerHTML = "🎉 Super, das ist richtig!";

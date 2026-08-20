@@ -364,6 +364,102 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
   .kapitelkarte { padding: 1.2rem .8rem 1.4rem; }
 }
 
+/* ---------- Ausgefuelltes Arbeitsblatt ----------
+   Bewusst nuechtern und hell: Das Blatt soll auf Papier gut aussehen,
+   nicht auf dem Bildschirm glaenzen. */
+.arbeitsblatt-seite { max-width: 900px; }
+.worksheet-cta--zweit {
+  border-style: dashed; font-weight: 700;
+  background: var(--surface-2); color: var(--fg-soft);
+  margin-top: -.8rem;
+}
+
+.ab__leiste {
+  background: color-mix(in srgb, var(--blue) 12%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--blue) 40%, var(--border));
+  border-radius: var(--radius); padding: 1rem 1.2rem; margin-bottom: 1.4rem;
+}
+.ab__leiste p { margin: 0 0 .6rem; }
+.ab__hinweis { font-size: .85rem; color: var(--fg-soft); margin: .6rem 0 0 !important; }
+
+.ab {
+  background: #fff; color: #111827;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 2rem 2.2rem 2.4rem;
+}
+.ab__kopf {
+  display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+  border-bottom: 3px solid #00344d; padding-bottom: .9rem; margin-bottom: 1.4rem;
+}
+.ab__fach { margin: 0; font-size: .78rem; font-weight: 800; letter-spacing: .08em;
+  text-transform: uppercase; color: #009fe3; }
+.ab__kopf h1 { margin: .15rem 0; font-size: 1.5rem; color: #00344d; }
+.ab__kapitel { margin: 0; font-weight: 700; color: #334155; }
+.ab__namensfeld { font-size: .9rem; color: #334155; min-width: 230px; }
+.ab__namensfeld p { margin: .2rem 0; }
+.ab__linie {
+  display: inline-block; width: 150px; border-bottom: 1px solid #94a3b8;
+}
+.ab__linie--kurz { width: 60px; }
+
+.ab__lektion { margin-top: 1.8rem; break-inside: avoid; }
+.ab__lektion h2 {
+  font-size: 1.12rem; color: #00344d; margin: 0 0 .6rem;
+  border-left: 4px solid #009fe3; padding-left: .6rem;
+}
+.ab__sterne { font-size: .8rem; margin-left: .4rem; }
+.ab__info { font-size: .93rem; line-height: 1.6; }
+.ab__info p { margin: .4rem 0; }
+.ab__beispiel, .ab__loesung {
+  font-family: var(--mono); font-size: .86rem; white-space: pre-wrap;
+  border-radius: 8px; padding: .7rem .85rem; margin: .5rem 0; overflow-x: auto;
+}
+.ab__beispiel { background: #f1f5f9; border: 1px solid #cbd5e1; color: #0f172a; }
+
+.ab__aufgabe {
+  border: 1.5px solid #009fe3; border-radius: 10px;
+  padding: .9rem 1rem; margin: 1rem 0; break-inside: avoid;
+  background: #f8fdff;
+}
+.ab__nr {
+  display: inline-block; background: #00344d; color: #fff;
+  font-size: .74rem; font-weight: 800; padding: .15rem .5rem;
+  border-radius: 5px; margin-right: .5rem;
+}
+.ab__frage { margin: 0 0 .5rem; font-weight: 700; }
+.ab__frage p { display: inline; margin: 0; }
+.ab__stellung { font-size: .93rem; }
+.ab__stellung p { margin: .3rem 0; }
+.ab__wahl { margin: .3rem 0 .5rem; padding-left: 1.3rem; font-size: .92rem; }
+.ab__wahl p { display: inline; margin: 0; }
+.ab__antwort { margin: .5rem 0 0; font-weight: 700; color: #15803d; }
+.ab__antwort p { display: inline; margin: 0; }
+.ab__label {
+  display: inline-block; font-size: .72rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .05em; color: #64748b;
+  margin-right: .4rem;
+}
+.ab__label--unten { display: block; margin: -.2rem 0 0; text-align: right; }
+/* Die eigene Loesung - deutlich als solche erkennbar */
+.ab__loesung {
+  background: #f0fdf4; border: 1.5px solid #22c55e; color: #052e16;
+}
+.ab__leer {
+  border: 1.5px dashed #94a3b8; border-radius: 8px; color: #64748b;
+  padding: 1.6rem .85rem; font-size: .88rem; margin: .5rem 0;
+}
+.ab__offen { margin: .4rem 0 0; color: #64748b; font-size: .88rem; font-style: italic; }
+
+/* Beim Drucken bleibt nur das Blatt uebrig. */
+@media print {
+  .topbar, .no-print, .kosmos-bg { display: none !important; }
+  body { background: #fff; }
+  .path, .arbeitsblatt-seite { padding: 0; max-width: none; }
+  .ab { border: none; border-radius: 0; padding: 0; }
+  .ab__aufgabe, .ab__lektion { break-inside: avoid; }
+  a[href]::after { content: none !important; }
+}
+
 /* ---------- Sterne-Erklaerung ----------
    Die Wertung soll fuer die Lernenden nachvollziehbar sein: einmal direkt
    nach der Lektion, einmal dauerhaft im Profil. */

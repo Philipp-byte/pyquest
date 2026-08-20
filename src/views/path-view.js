@@ -275,9 +275,14 @@ export function renderChapterDetail(app, curriculum, chapterId) {
 
 function renderWorksheetSection(chapter, unlocked) {
   if (unlocked) {
+    // Zwei Wege: das eigene, mit den selbst geschriebenen Loesungen
+    // ausgefuellte Blatt (zum Abgeben) und das leere zum Ausdrucken.
     return `
-      <a class="worksheet-cta" href="${WORKSHEET_BASE}${chapter.id}.pdf" target="_blank" rel="noopener">
-        📄 Informations- &amp; Aufgabenblatt herunterladen
+      <a class="worksheet-cta" href="#/arbeitsblatt/${chapter.id}">
+        📝 Mein ausgefülltes Aufgabenblatt (mit deinen Lösungen)
+      </a>
+      <a class="worksheet-cta worksheet-cta--zweit" href="${WORKSHEET_BASE}${chapter.id}.pdf" target="_blank" rel="noopener">
+        📄 Leeres Blatt als PDF herunterladen
       </a>
     `;
   }
