@@ -364,6 +364,59 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
   .kapitelkarte { padding: 1.2rem .8rem 1.4rem; }
 }
 
+/* ---------- Lehrer-Modus ---------- */
+.lehrer-btn {
+  border: 1px solid var(--border); background: var(--surface-2);
+  color: var(--fg-soft); font-family: inherit; font-weight: 800;
+  font-size: .82rem; padding: .45rem .8rem; border-radius: 999px;
+  cursor: pointer; flex: none; white-space: nowrap;
+  transition: transform .1s, background .15s, color .15s;
+}
+.lehrer-btn:hover { background: color-mix(in srgb, var(--blue) 16%, var(--surface-2)); color: var(--fg); }
+.lehrer-btn:active { transform: scale(.94); }
+/* Ist der Modus an, sieht man das dauerhaft - sonst vergisst man ihn
+   und wundert sich, warum bei den Lernenden alles offen ist. */
+.lehrer-btn--an {
+  background: color-mix(in srgb, var(--yellow) 35%, var(--surface));
+  border-color: color-mix(in srgb, var(--yellow) 70%, var(--border));
+  color: var(--fg);
+}
+
+.lehrer-dialog {
+  position: fixed; inset: 0; z-index: 100;
+  display: grid; place-items: center; padding: 1rem;
+  background: rgba(2, 6, 23, .6); backdrop-filter: blur(3px);
+  animation: figur-auftritt .2s ease;
+}
+.lehrer-dialog__box {
+  width: min(420px, 100%); background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius-lg);
+  box-shadow: 0 20px 60px rgba(2, 6, 23, .45); padding: 1.4rem;
+}
+.lehrer-dialog__box h2 { margin: 0 0 .4rem; font-size: 1.25rem; }
+.lehrer-dialog__box p { margin: 0 0 1rem; color: var(--fg-soft); font-size: .9rem; }
+.lehrer-dialog__label {
+  display: block; font-weight: 800; font-size: .82rem; color: var(--fg-soft);
+}
+.lehrer-dialog__input {
+  display: block; width: 100%; margin-top: .3rem; padding: .7rem .8rem;
+  font-family: inherit; font-size: 1rem;
+  border: 2px solid var(--border); border-radius: var(--radius);
+  background: var(--surface-2); color: var(--fg);
+}
+.lehrer-dialog__input:focus {
+  outline: none; border-color: var(--green);
+}
+.lehrer-dialog__fehler {
+  margin: .6rem 0 0 !important; color: #e11d48; font-weight: 700; font-size: .86rem;
+}
+.lehrer-dialog__knoepfe {
+  display: flex; gap: .6rem; justify-content: flex-end; margin-top: 1.2rem;
+}
+@media (max-width: 520px) {
+  .lehrer-btn { font-size: .78rem; padding: .4rem .65rem; }
+}
+
 /* ---------- Begleitfiguren ----------
    Auftritt einer Figur nach einer Antwort: Bild links, Sprechblase rechts.
    Verbuendete in Gruen, Handlanger von Professor Null in Violett - die

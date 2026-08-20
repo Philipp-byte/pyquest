@@ -8,6 +8,7 @@ import { getLesson, isDone, isUnlocked } from "../store.js";
 import { testAfterChapter } from "../content.js";
 import { getTestResult } from "../test-results.js";
 import { weltFuerKapitel, ortFuerLektion } from "../welten.js";
+import { istLehrerModus } from "../lehrer.js";
 
 const WORKSHEET_MIN_STARS = 2;
 const WORKSHEET_BASE = `${import.meta.env.BASE_URL}worksheets/`;
@@ -16,6 +17,7 @@ const WORKSHEET_BASE = `${import.meta.env.BASE_URL}worksheets/`;
 // Lektionen abgeschlossen sind UND jede davon mindestens WORKSHEET_MIN_STARS
 // Sterne hat (nicht nur irgendwann "done" mit wenig Muehe).
 function isWorksheetUnlocked(chapter) {
+  if (istLehrerModus()) return true;
   return chapter.lessons.every(
     (l) => isDone(l.id) && (getLesson(l.id).stars ?? 0) >= WORKSHEET_MIN_STARS
   );
@@ -128,7 +130,7 @@ function renderChapterCard(curriculum, chapter) {
 // soll ja gerade zeigen, was wirklich sitzt.
 function renderTestCard(curriculum, test) {
   const chapter = curriculum.chapters.find((c) => c.id === test.afterChapter);
-  const unlocked = chapter ? chapter.lessons.every((l) => isDone(l.id)) : false;
+  const unlocked = istLehrerModus() || (chapter ? chapter.lessons.every((l) => isDone(l.id)) : false);
   const result = getTestResult(test.id);
 
   const status = result
