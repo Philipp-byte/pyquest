@@ -91,7 +91,14 @@ def main():
                 im = im.crop(rand)
             breite = round(im.width * HOEHE / im.height)
             im = im.resize((breite, HOEHE), Image.LANCZOS)
-            im.save(ZIEL / ordner / f"{pose}.webp", quality=88, method=6)
+            # Erst vollstaendig in eine Nebendatei schreiben, dann umbenennen.
+            # Sonst liegt waehrend des Speicherns eine halbfertige (im
+            # schlimmsten Fall 0 Byte grosse) Datei am Zielort - und wer in
+            # dem Moment "git add" ausfuehrt, committet genau die.
+            ziel = ZIEL / ordner / f"{pose}.webp"
+            temp = ziel.with_suffix(".webp.tmp")
+            im.save(temp, quality=88, method=6)
+            temp.replace(ziel)
             n += 1
     gesamt = sum(f.stat().st_size for f in ZIEL.rglob("*.webp"))
     print(f"{n} Figuren-Bilder erzeugt, {gesamt // 1024} KB in public/figuren/")
