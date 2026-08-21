@@ -101,9 +101,26 @@ function renderWelt(chapter, welt, index, { fertig, frei, aktiv }) {
     </div>`;
 
   const klassen = `welt welt--${seite} welt--${zustand}${aktiv ? " welt--aktiv" : ""}`;
-  return frei
+  const karte = frei
     ? `<a class="${klassen}" style="--chapter-color:${chapter.color || "#22c55e"}" href="#/chapter/${chapter.id}">${inner}</a>`
     : `<div class="${klassen}">${inner}</div>`;
+
+  // Ist die Welt gerettet, steht der Flug zur naechsten Welt daneben -
+  // auf der freien Seite, auf Hoehe der Weltkarte. Der Flug gehoert
+  // zwischen zwei Welten, deshalb liegt er auch dort und nicht in der
+  // Kapitelansicht.
+  if (!fertig) return karte;
+  return `
+    <div class="welt-reihe welt-reihe--${seite}">
+      ${karte}
+      <a class="welt-flug" href="#/flug/${chapter.id}">
+        <span class="welt-flug__rakete">🚀</span>
+        <span class="welt-flug__text">
+          <strong>Flug zur nächsten Welt</strong>
+          <small>Wiederholungsspiel</small>
+        </span>
+      </a>
+    </div>`;
 }
 
 function renderChapterCard(curriculum, chapter) {
@@ -375,10 +392,6 @@ export function renderChapterDetail(app, curriculum, chapterId) {
           </div>
         </div>
         <div class="${hatKarte ? "weltenbaum kapitelkarte" : "chapter__nodes"}">${nodes}</div>
-        ${kapitelFertig ? `
-          <a class="worksheet-cta flug-cta" href="#/flug/${chapter.id}">
-            🚀 Flug zur nächsten Welt (Wiederholungsspiel)
-          </a>` : ""}
         ${renderWorksheetSection(chapter, worksheetUnlocked)}
       </section>
     </main>

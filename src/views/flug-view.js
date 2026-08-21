@@ -44,6 +44,7 @@ export function renderFlug(app, curriculum, chapterId) {
       <a class="back-link" href="#/chapter/${chapterId}">← Zurück zum Kapitel</a>
       <div class="flug__buehne">
         <canvas class="flug__leinwand"></canvas>
+        <button class="flug__beenden" title="Flug beenden" aria-label="Flug beenden" hidden>✕</button>
 
         <div class="flug__kopf">
           <span class="flug__leben" title="Leben"></span>
@@ -156,6 +157,43 @@ class Flugspiel {
     bild.src = `${BASE}figuren/py/clever.webp`;
   }
 
+  // Das Spiel fuellt waehrend des Flugs den Bildschirm. Der echte
+  // Vollbildmodus wird zusaetzlich versucht; scheitert er, sorgt die
+  // Klasse allein schon fuer dieselbe Darstellung.
+  vollbildAn() {
+    const buehne = this.app.querySelector(".flug__buehne");
+    if (!buehne) return;
+    buehne.classList.add("flug__buehne--voll");
+    const schliessen = this.app.querySelector(".flug__beenden");
+    if (schliessen) {
+      schliessen.hidden = false;
+      schliessen.onclick = () => {
+        this.beenden();
+        location.hash = `#/chapter/${this.chapterId}`;
+      };
+    }
+    try { buehne.requestFullscreen?.().catch(() => {}); } catch { /* egal */ }
+    // Nach dem Wechsel hat die Buehne eine andere Groesse.
+    requestAnimationFrame(() => this.passeGroesseAn());
+    this.aufVollbild = () => this.passeGroesseAn();
+    document.addEventListener("fullscreenchange", this.aufVollbild);
+  }
+
+  vollbildAus() {
+    const buehne = this.app.querySelector(".flug__buehne");
+    buehne?.classList.remove("flug__buehne--voll");
+    const schliessen = this.app.querySelector(".flug__beenden");
+    if (schliessen) schliessen.hidden = true;
+    if (this.aufVollbild) {
+      document.removeEventListener("fullscreenchange", this.aufVollbild);
+      this.aufVollbild = null;
+    }
+    if (document.fullscreenElement) {
+      try { document.exitFullscreen?.().catch(() => {}); } catch { /* egal */ }
+    }
+    this.passeGroesseAn();
+  }
+
   passeGroesseAn() {
     const buehne = this.app.querySelector(".flug__buehne");
     if (!buehne) return;
@@ -178,6 +216,7 @@ class Flugspiel {
 
   starten() {
     this.tafel.hidden = true;
+    this.vollbildAn();
     this.laeuft = true;
     this.zeit = 0;
     this.letzterMeteor = 0;
@@ -214,6 +253,7 @@ class Flugspiel {
 
   beenden() {
     if (laufendesSpiel === this) laufendesSpiel = null;
+    this.vollbildAus();
     this.laeuft = false;
     cancelAnimationFrame(this.anforderung);
     window.removeEventListener("keydown", this.aufTaste);
@@ -419,6 +459,9 @@ class Flugspiel {
   }
 
   zeigeTafel(titel, text, mitNeustart) {
+    // Der Flug ist vorbei - zurueck aus dem Vollbild, damit Kopfzeile und
+    // Navigation wieder erreichbar sind.
+    this.vollbildAus();
     this.frageFeld.hidden = true;
     this.tafel.hidden = false;
     this.tafel.querySelector(".flug__titel").innerHTML = titel;
