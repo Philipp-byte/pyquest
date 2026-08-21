@@ -381,6 +381,19 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
 }
 .ab__leiste p { margin: 0 0 .6rem; }
 .ab__hinweis { font-size: .85rem; color: var(--fg-soft); margin: .6rem 0 0 !important; }
+.ab__namenseingabe {
+  display: block; font-size: .82rem; font-weight: 800; color: var(--fg-soft);
+  margin-bottom: .8rem;
+}
+.ab__name {
+  display: block; width: min(320px, 100%); margin-top: .25rem;
+  padding: .55rem .7rem; font-family: inherit; font-size: .95rem;
+  border: 2px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); color: var(--fg);
+}
+.ab__name:focus { outline: none; border-color: var(--green); }
+.ab__knoepfe { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; }
+.ab__status { font-size: .88rem; font-weight: 700; color: var(--fg-soft); }
 
 .ab {
   background: #fff; color: #111827;

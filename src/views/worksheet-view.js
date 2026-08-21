@@ -89,10 +89,15 @@ export function renderWorksheet(app, curriculum, chapterId) {
 
       <div class="ab__leiste no-print">
         <p><strong>${beantwortet} von ${gesamt} Aufgaben</strong> sind mit deiner eigenen Lösung eingetragen.</p>
+        <label class="ab__namenseingabe">
+          Dein Name (kommt oben auf das Blatt)
+          <input type="text" class="ab__name" placeholder="Vorname Nachname" autocomplete="name">
+        </label>
         <div class="ab__knoepfe">
-          <button class="btn btn--primary btn--drucken">🖨️ Drucken / als PDF speichern</button>
+          <button class="btn btn--primary btn--pdf">📥 Als PDF herunterladen</button>
+          <span class="ab__status"></span>
         </div>
-        <p class="ab__hinweis">Wähle im Druckfenster „Als PDF speichern“. So gibst du dein Blatt ab.</p>
+        <p class="ab__hinweis">Die PDF-Datei landet in deinem Download-Ordner. Diese Datei gibst du ab.</p>
       </div>
 
       <article class="ab">
@@ -112,7 +117,33 @@ export function renderWorksheet(app, curriculum, chapterId) {
     </main>
   `;
   wireHeader(app);
-  app.querySelector(".btn--drucken").onclick = () => window.print();
+
+  const pdfBtn = app.querySelector(".btn--pdf");
+  const status = app.querySelector(".ab__status");
+  const nameFeld = app.querySelector(".ab__name");
+  // Der Name bleibt gespeichert - beim naechsten Kapitel muss ihn niemand
+  // erneut eintippen.
+  try {
+    nameFeld.value = localStorage.getItem("pyquest.name") || "";
+  } catch { /* ohne Speicher eben leer */ }
+
+  pdfBtn.onclick = async () => {
+    pdfBtn.disabled = true;
+    status.textContent = "PDF wird erstellt…";
+    try {
+      localStorage.setItem("pyquest.name", nameFeld.value.trim());
+    } catch { /* nicht schlimm */ }
+    try {
+      const { ladeArbeitsblattHerunter } = await import("../pdf-arbeitsblatt.js");
+      const { datei, seiten } = await ladeArbeitsblattHerunter(curriculum, chapterId, {
+        name: nameFeld.value.trim(),
+      });
+      status.textContent = `✅ ${datei} (${seiten} Seiten) wurde heruntergeladen.`;
+    } catch (err) {
+      status.textContent = `Das hat nicht geklappt: ${err.message}`;
+    }
+    pdfBtn.disabled = false;
+  };
 }
 
 function escape(s = "") {

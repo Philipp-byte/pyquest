@@ -279,10 +279,10 @@ function renderWorksheetSection(chapter, unlocked) {
     // ausgefuellte Blatt (zum Abgeben) und das leere zum Ausdrucken.
     return `
       <a class="worksheet-cta" href="#/arbeitsblatt/${chapter.id}">
-        📝 Mein ausgefülltes Aufgabenblatt (mit deinen Lösungen)
+        📝 Ausgefülltes Aufgabenblatt (mit deinen Lösungen)
       </a>
       <a class="worksheet-cta worksheet-cta--zweit" href="${WORKSHEET_BASE}${chapter.id}.pdf" target="_blank" rel="noopener">
-        📄 Leeres Blatt als PDF herunterladen
+        📄 Nicht ausgefülltes Aufgabenblatt
       </a>
     `;
   }
