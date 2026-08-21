@@ -712,166 +712,148 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
   background: radial-gradient(circle, rgba(45,212,191,.42), transparent 68%);
   animation: nebel-treiben 60s ease-in-out infinite reverse;
 }
-/* ---------- Belebter Weltraum ----------
-   Sonne, Planeten, Asteroiden, Ufos, Rakete und Meteore. Alles bewegt
-   sich ueber transform/opacity, damit es auch auf Schulrechnern fluessig
-   bleibt. Die Szenen laufen ohne JavaScript: Ufo-Flug, Laser und der
-   Treffer am Asteroiden teilen sich dieselbe Zykluslaenge, deshalb
-   passen sie zeitlich zusammen. */
-.kosmos-sonne {
-  position: absolute; top: -60px; left: -70px;
-  width: 260px; height: 260px; border-radius: 50%;
-  background: radial-gradient(circle at 40% 40%, #fff7cc, #fbbf24 45%, rgba(251,146,60,0) 70%);
-  animation: sonne-puls 9s ease-in-out infinite;
+/* ---------- Weltraum-Kulisse ----------
+   Cineastisch statt comichaft: gedeckte Farben, kleine Objekte, langsame
+   Bewegungen. Distanz und Ruhe lassen es echt wirken - alles, was gross
+   und schnell ist, wirkt sofort wie ein Zeichentrickfilm.
+   Weiterhin nur SVG und CSS, bewegt wird ueber transform und opacity. */
+.kosmos-stern {
+  position: absolute; top: -90px; left: -90px;
+  width: 320px; height: 320px; border-radius: 50%;
+  background: radial-gradient(circle at 42% 42%,
+      rgba(255,246,214,.95) 0%, rgba(255,214,140,.55) 18%,
+      rgba(255,170,90,.18) 38%, rgba(255,150,80,0) 68%);
+  animation: stern-atmen 14s ease-in-out infinite;
 }
-@keyframes sonne-puls {
-  0%, 100% { opacity: .55; transform: scale(1); }
-  50% { opacity: .8; transform: scale(1.06); }
-}
-
-.kosmos-planet { position: absolute; opacity: .85; }
-.kosmos-planet--ringe {
-  width: 190px; height: 190px; top: 8%; right: 4%;
-  animation: planet-schweben 26s ease-in-out infinite;
-}
-.kosmos-planet--ringe .kosmos-ring { transform-origin: 50px 50px; animation: ring-neigen 30s ease-in-out infinite; }
-.kosmos-planet--gruen {
-  width: 130px; height: 130px; top: 62%; left: 10%;
-  animation: planet-schweben 34s ease-in-out infinite reverse;
-}
-.kosmos-planet--rot {
-  width: 84px; height: 84px; top: 36%; left: 3%;
-  animation: planet-schweben 22s ease-in-out infinite;
-}
-@keyframes planet-schweben {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-16px) rotate(6deg); }
-}
-@keyframes ring-neigen {
-  0%, 100% { transform: rotate(-12deg); }
-  50% { transform: rotate(10deg); }
+@keyframes stern-atmen {
+  0%, 100% { opacity: .5; transform: scale(1); }
+  50% { opacity: .68; transform: scale(1.03); }
 }
 
-/* Asteroidenfeld - liegt dort, wo das Jaeger-Ufo vorbeifliegt */
-.kosmos-asteroiden { position: absolute; top: 26%; left: 66%; width: 130px; height: 90px; }
-.kosmos-fels { position: absolute; animation: fels-taumeln 18s linear infinite; }
-.kosmos-fels--1 { top: 20px; left: 0; animation-duration: 21s; }
-.kosmos-fels--2 { top: 0; left: 44px; animation-duration: 15s; animation-direction: reverse; }
-.kosmos-fels--3 { top: 42px; left: 66px; animation-duration: 25s; }
-.kosmos-fels--4 { top: 8px; left: 96px; animation-duration: 13s; animation-direction: reverse; }
-@keyframes fels-taumeln {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.kosmos-planet { position: absolute; }
+.kosmos-planet--gasriese {
+  width: 300px; height: 300px; top: 4%; right: -60px; opacity: .55;
+  animation: planet-driften 90s linear infinite;
 }
-/* Der Treffer: kurz aufleuchten und zurueckzucken - zeitgleich zum Laser */
-.kosmos-fels--1 { animation-name: fels-taumeln, fels-treffer; animation-duration: 21s, 26s; }
-@keyframes fels-treffer {
-  0%, 55%, 100% { filter: none; }
-  57% { filter: brightness(3) drop-shadow(0 0 12px #fca5a5); }
-  59% { filter: brightness(2.2) drop-shadow(0 0 8px #fca5a5); }
-  64% { filter: brightness(1.3); }
+.kosmos-planet--eis {
+  width: 132px; height: 132px; top: 58%; left: 6%; opacity: .6;
+  animation: planet-driften 120s linear infinite reverse;
+}
+/* Kaum wahrnehmbares Wandern - vermittelt Bewegung im Raum, ohne
+   abzulenken. */
+@keyframes planet-driften {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-14px, 22px); }
 }
 
-/* Ufos */
-.kosmos-ufo { position: absolute; width: 120px; }
-.kosmos-ufo__bild { width: 100%; display: block; }
-.kosmos-ufo__licht { animation: ufo-blinken 1.2s steps(1) infinite; }
-.kosmos-ufo__licht--b { animation-delay: .4s; }
-.kosmos-ufo__licht--c { animation-delay: .8s; }
-@keyframes ufo-blinken { 0%, 49% { opacity: 1; } 50%, 100% { opacity: .15; } }
+.kosmos-asteroiden { position: absolute; top: 24%; left: 62%; width: 170px; height: 110px; opacity: .8; }
+.kosmos-fels { position: absolute; animation: fels-taumeln 60s linear infinite; }
+.kosmos-fels--1 { top: 24px; left: 0; animation-duration: 74s; }
+.kosmos-fels--2 { top: 0; left: 52px; animation-duration: 52s; animation-direction: reverse; }
+.kosmos-fels--3 { top: 52px; left: 82px; animation-duration: 88s; }
+.kosmos-fels--4 { top: 12px; left: 124px; animation-duration: 46s; animation-direction: reverse; }
+.kosmos-fels--5 { top: 74px; left: 42px; animation-duration: 64s; }
+@keyframes fels-taumeln { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-/* Szene 1: fliegt quer durchs Bild und schiesst dabei einmal */
-.kosmos-ufo--jaeger { top: 19%; left: 0; animation: ufo-flug 26s linear infinite; }
-@keyframes ufo-flug {
-  0% { transform: translate(-22vw, 0) rotate(-4deg); }
-  25% { transform: translate(22vw, 18px) rotate(3deg); }
-  50% { transform: translate(52vw, -10px) rotate(-3deg); }
-  75% { transform: translate(84vw, 12px) rotate(4deg); }
-  100% { transform: translate(118vw, 0) rotate(-4deg); }
+/* Szene 1: Frachter zieht durchs Bild und schneidet einen Brocken an.
+   Der Treffer ist ein kurzer Lichtblitz mit Funken, kein Comic-Knall. */
+.kosmos-schiff { position: absolute; }
+.kosmos-schiff__bild { width: 100%; display: block; }
+.kosmos-schiff__pos { animation: pos-licht 3.4s steps(1) infinite; }
+.kosmos-schiff__pos--gruen { animation-delay: 1.7s; }
+@keyframes pos-licht { 0%, 82% { opacity: .95; } 83%, 100% { opacity: .15; } }
+.kosmos-schiff__glut { animation: glut-pulsen 2.6s ease-in-out infinite; transform-origin: 40px 31px; }
+@keyframes glut-pulsen { 0%, 100% { opacity: .75; transform: scaleX(1); } 50% { opacity: 1; transform: scaleX(1.14); } }
+
+.kosmos-schiff--frachter {
+  top: 17%; left: 0; width: 190px; opacity: .85;
+  animation: frachter-flug 78s linear infinite;
 }
+@keyframes frachter-flug {
+  0% { transform: translate(-24vw, 0); }
+  50% { transform: translate(48vw, -18px); }
+  100% { transform: translate(120vw, 6px); }
+}
+/* Bergbaulaser: duenner Kern mit weichem Schein, nur kurz sichtbar. */
 .kosmos-laser {
-  position: absolute; top: 52px; left: 58px;
-  width: 4px; height: 80px; transform-origin: top center;
-  background: linear-gradient(#fca5a5, rgba(248,113,113,0));
-  border-radius: 2px; opacity: 0;
-  animation: laser-schuss 26s linear infinite;
+  position: absolute; top: 34px; left: 96px;
+  width: 2px; height: 96px; transform-origin: top center;
+  background: linear-gradient(rgba(186,230,253,.95), rgba(56,189,248,.15));
+  box-shadow: 0 0 7px 1.5px rgba(125,211,252,.55);
+  opacity: 0; animation: laser-schnitt 78s linear infinite;
 }
-@keyframes laser-schuss {
-  /* Der Zeitpunkt ist nachgemessen: Bei 55 % steht das Ufo links neben
-     dem Asteroidenfeld, der nach rechts unten geneigte Strahl trifft
-     also genau hin. */
-  0%, 54% { opacity: 0; transform: rotate(28deg) scaleY(.2); }
-  55.5% { opacity: 1; transform: rotate(28deg) scaleY(1); }
-  58% { opacity: 1; transform: rotate(28deg) scaleY(1); }
-  60%, 100% { opacity: 0; transform: rotate(28deg) scaleY(.2); }
+@keyframes laser-schnitt {
+  0%, 55.6% { opacity: 0; transform: rotate(26deg) scaleY(.15); }
+  56.4% { opacity: .95; transform: rotate(26deg) scaleY(1); }
+  59% { opacity: .95; transform: rotate(26deg) scaleY(1); }
+  59.8%, 100% { opacity: 0; transform: rotate(26deg) scaleY(.15); }
 }
-
-/* Szene 2: kommt von rechts, sinkt zum gruenen Planeten, saugt etwas
-   hoch und fliegt wieder weg */
-.kosmos-ufo--lander { top: 40%; left: 0; width: 92px; animation: ufo-landung 44s ease-in-out infinite; }
-@keyframes ufo-landung {
-  0%, 6% { transform: translate(112vw, -40px) scale(.9); opacity: 0; }
-  12% { transform: translate(72vw, -10px) scale(.9); opacity: 1; }
-  30% { transform: translate(14vw, 90px) scale(1); opacity: 1; }
-  38%, 52% { transform: translate(11vw, 128px) scale(1); opacity: 1; }
-  70% { transform: translate(-6vw, 40px) scale(.9); opacity: 1; }
-  80%, 100% { transform: translate(-30vw, -20px) scale(.85); opacity: 0; }
+/* Aufschlagfunken am getroffenen Brocken */
+.kosmos-funken {
+  /* Nachgemessen: Hier endet der Laserstrahl im Moment des Schnitts. */
+  position: absolute; top: 28.1%; left: 66%;
+  width: 12px; height: 12px; border-radius: 50%; opacity: 0;
+  background: radial-gradient(circle, rgba(255,255,255,.95), rgba(125,211,252,.45) 45%, rgba(56,189,248,0) 70%);
+  animation: funken-blitz 78s linear infinite;
 }
-.kosmos-strahl {
-  position: absolute; top: 40px; left: 50%; margin-left: -22px;
-  width: 44px; height: 90px; opacity: 0;
-  background: linear-gradient(rgba(165,243,252,.85), rgba(165,243,252,0));
-  clip-path: polygon(38% 0, 62% 0, 100% 100%, 0 100%);
-  animation: strahl-an 44s ease-in-out infinite;
-}
-@keyframes strahl-an {
-  0%, 37% { opacity: 0; }
-  40%, 50% { opacity: .85; }
-  53%, 100% { opacity: 0; }
+@keyframes funken-blitz {
+  0%, 56.4% { opacity: 0; transform: scale(.4); }
+  57.2% { opacity: 1; transform: scale(1.7); }
+  59.5% { opacity: .55; transform: scale(1.1); }
+  61%, 100% { opacity: 0; transform: scale(.4); }
 }
 
-/* Rakete: fliegt schraeg nach oben durchs Bild */
-.kosmos-rakete {
-  position: absolute; bottom: -120px; left: 12%; width: 40px;
-  animation: rakete-flug 38s ease-in-out infinite;
+/* Szene 2: Sonde faellt am Eisplaneten in den Orbit ein und zieht weiter */
+.kosmos-schiff--sonde {
+  top: 46%; left: 0; width: 96px; opacity: .8;
+  animation: sonde-bahn 110s ease-in-out infinite;
 }
-.kosmos-rakete svg { width: 100%; display: block; }
-.kosmos-flamme { animation: flamme-flackern .18s steps(2) infinite; transform-origin: 20px 66px; }
-.kosmos-flamme--innen { animation-duration: .12s; }
-@keyframes flamme-flackern {
-  0% { transform: scaleY(1); opacity: 1; }
-  100% { transform: scaleY(.7); opacity: .8; }
-}
-@keyframes rakete-flug {
-  0%, 4% { transform: translate(0, 0) rotate(28deg); opacity: 0; }
-  8% { opacity: 1; }
-  60% { transform: translate(70vw, -125vh) rotate(28deg); opacity: 1; }
-  70%, 100% { transform: translate(84vw, -150vh) rotate(28deg); opacity: 0; }
+@keyframes sonde-bahn {
+  0%, 3% { transform: translate(108vw, -60px) rotate(6deg); opacity: 0; }
+  10% { transform: translate(78vw, -20px) rotate(6deg); opacity: .8; }
+  40% { transform: translate(26vw, 70px) rotate(-4deg); opacity: .8; }
+  55% { transform: translate(11vw, 122px) rotate(-10deg); opacity: .8; }
+  70% { transform: translate(2vw, 168px) rotate(-16deg); opacity: .8; }
+  85% { transform: translate(-14vw, 210px) rotate(-20deg); opacity: 0; }
+  100% { transform: translate(-24vw, 240px) rotate(-20deg); opacity: 0; }
 }
 
-/* Meteore: kurze Streifen, die schraeg durchs Bild schiessen */
+/* Ferne Raumstation, langsam rotierend */
+.kosmos-station {
+  position: absolute; top: 68%; right: 12%; width: 92px; opacity: .35;
+  animation: station-driften 140s linear infinite;
+}
+.kosmos-station svg { width: 100%; display: block; }
+.kosmos-station__ring { transform-origin: 60px 60px; animation: station-rotieren 60s linear infinite; }
+@keyframes station-rotieren { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes station-driften {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-18px, -12px); }
+}
+
+/* Meteore: duenn, schnell, selten - wie echte Sternschnuppen */
 .kosmos-meteor {
-  position: absolute; width: 120px; height: 2px; border-radius: 2px;
-  background: linear-gradient(90deg, rgba(255,255,255,0), #fff, rgba(255,255,255,0));
-  opacity: 0; animation: meteor-fall 14s linear infinite;
+  position: absolute; width: 90px; height: 1.5px; border-radius: 2px;
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.9));
+  opacity: 0; animation: meteor-fall 22s linear infinite;
 }
-.kosmos-meteor--1 { top: 12%; left: 30%; animation-delay: 2s; }
-.kosmos-meteor--2 { top: 46%; left: 55%; animation-delay: 7s; animation-duration: 19s; }
-.kosmos-meteor--3 { top: 70%; left: 20%; animation-delay: 12s; animation-duration: 16s; }
+.kosmos-meteor--1 { top: 10%; left: 34%; animation-delay: 4s; }
+.kosmos-meteor--2 { top: 44%; left: 58%; animation-delay: 13s; animation-duration: 31s; }
+.kosmos-meteor--3 { top: 66%; left: 24%; animation-delay: 23s; animation-duration: 27s; }
 @keyframes meteor-fall {
-  0% { opacity: 0; transform: translate(0, 0) rotate(24deg) scaleX(.3); }
-  3% { opacity: 1; }
-  10% { opacity: 1; transform: translate(46vw, 22vh) rotate(24deg) scaleX(1); }
-  14%, 100% { opacity: 0; transform: translate(60vw, 28vh) rotate(24deg) scaleX(.3); }
+  0% { opacity: 0; transform: translate(0, 0) rotate(22deg) scaleX(.2); }
+  1.5% { opacity: .9; }
+  5% { opacity: .9; transform: translate(30vw, 12vh) rotate(22deg) scaleX(1); }
+  7%, 100% { opacity: 0; transform: translate(40vw, 16vh) rotate(22deg) scaleX(.2); }
 }
 
-/* Auf schmalen Bildschirmen bleibt es ruhiger - dort ist wenig Platz und
-   der Lernpfad soll im Vordergrund stehen. */
+/* Auf schmalen Bildschirmen bleibt nur die ruhige Kulisse. */
 @media (max-width: 700px) {
-  .kosmos-planet--rot, .kosmos-asteroiden, .kosmos-ufo--lander,
-  .kosmos-meteor--2, .kosmos-meteor--3 { display: none; }
-  .kosmos-planet--ringe { width: 120px; height: 120px; }
-  .kosmos-planet--gruen { width: 90px; height: 90px; }
+  .kosmos-asteroiden, .kosmos-schiff--sonde, .kosmos-station,
+  .kosmos-funken, .kosmos-meteor--2, .kosmos-meteor--3 { display: none; }
+  .kosmos-planet--gasriese { width: 190px; height: 190px; }
+  .kosmos-planet--eis { width: 92px; height: 92px; }
+  .kosmos-schiff--frachter { width: 130px; }
 }
 
 @keyframes sterne-drift { from { transform: translateY(0); } to { transform: translateY(-50%); } }
@@ -971,11 +953,13 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
   .kosmos-bg::before, .kosmos-bg::after, .kosmos-nebel,
   .path--kosmos .weltenbaum::before,
   .path--kosmos .welt, .path--kosmos .test-card,
-  .kosmos-sonne, .kosmos-planet, .kosmos-ring, .kosmos-fels,
-  .kosmos-ufo, .kosmos-ufo__licht, .kosmos-laser, .kosmos-strahl,
-  .kosmos-rakete, .kosmos-flamme, .kosmos-meteor { animation: none !important; }
-  /* Die Flieger stehen sonst irgendwo am Rand fest - dann lieber weg. */
-  .kosmos-ufo, .kosmos-rakete, .kosmos-meteor, .kosmos-laser, .kosmos-strahl { display: none !important; }
+  .kosmos-stern, .kosmos-planet, .kosmos-fels, .kosmos-station,
+  .kosmos-station__ring, .kosmos-schiff, .kosmos-schiff__pos,
+  .kosmos-schiff__glut, .kosmos-laser, .kosmos-funken,
+  .kosmos-meteor { animation: none !important; }
+  /* Die Schiffe stuenden sonst irgendwo am Rand fest - dann lieber weg.
+     Planeten und Station bleiben, die sind auch unbewegt stimmig. */
+  .kosmos-schiff, .kosmos-meteor, .kosmos-laser, .kosmos-funken { display: none !important; }
 }
 
 /* Weltbanner in der Kapitel-Detailansicht */

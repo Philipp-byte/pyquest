@@ -171,32 +171,31 @@ function kosmosHintergrund() {
     <div class="kosmos-nebel kosmos-nebel--a"></div>
     <div class="kosmos-nebel kosmos-nebel--b"></div>
 
-    <div class="kosmos-sonne"></div>
+    <div class="kosmos-stern"></div>
 
-    ${planet("kosmos-planet--ringe", "#8b5cf6", "#5b21b6", true)}
-    ${planet("kosmos-planet--gruen", "#34d399", "#065f46", false)}
-    ${planet("kosmos-planet--rot", "#fb7185", "#9f1239", false)}
+    ${gasriese()}
+    ${eisplanet()}
 
     <div class="kosmos-asteroiden">
-      ${asteroid("kosmos-fels--1", 26)}
-      ${asteroid("kosmos-fels--2", 16)}
-      ${asteroid("kosmos-fels--3", 20)}
-      ${asteroid("kosmos-fels--4", 12)}
+      ${brocken("kosmos-fels--1", 34)}
+      ${brocken("kosmos-fels--2", 19)}
+      ${brocken("kosmos-fels--3", 25)}
+      ${brocken("kosmos-fels--4", 13)}
+      ${brocken("kosmos-fels--5", 9)}
     </div>
 
-    <!-- Szene 1: Das Ufo fliegt vorbei und schiesst auf den Asteroiden -->
-    <div class="kosmos-ufo kosmos-ufo--jaeger">
-      ${ufo()}
+    <!-- Szene 1: Ein Frachter zieht vorbei und schneidet mit dem
+         Bergbaulaser einen Brocken an - kurzer Blitz, Funken, weiter. -->
+    <div class="kosmos-schiff kosmos-schiff--frachter">
+      ${frachter()}
       <div class="kosmos-laser"></div>
     </div>
+    <div class="kosmos-funken"></div>
 
-    <!-- Szene 2: Ein zweites Ufo landet auf dem gruenen Planeten -->
-    <div class="kosmos-ufo kosmos-ufo--lander">
-      ${ufo()}
-      <div class="kosmos-strahl"></div>
-    </div>
+    <!-- Szene 2: Eine Sonde faellt am Eisplaneten in den Orbit ein -->
+    <div class="kosmos-schiff kosmos-schiff--sonde">${sonde()}</div>
 
-    <div class="kosmos-rakete">${rakete()}</div>
+    <div class="kosmos-station">${station()}</div>
 
     <div class="kosmos-meteor kosmos-meteor--1"></div>
     <div class="kosmos-meteor kosmos-meteor--2"></div>
@@ -204,52 +203,121 @@ function kosmosHintergrund() {
   </div>`;
 }
 
-function planet(klasse, hell, dunkel, mitRing) {
-  return `<svg class="kosmos-planet ${klasse}" viewBox="0 0 100 100">
-    ${mitRing ? `<ellipse class="kosmos-ring" cx="50" cy="50" rx="46" ry="14"
-        fill="none" stroke="#c4b5fd" stroke-width="3" opacity=".75"/>` : ""}
-    <circle cx="50" cy="50" r="28" fill="${hell}"/>
-    <path d="M50 22a28 28 0 0 1 0 56 28 28 0 0 0 0-56z" fill="${dunkel}" opacity=".55"/>
-    <circle cx="40" cy="40" r="6" fill="${dunkel}" opacity=".45"/>
-    <circle cx="58" cy="58" r="4" fill="${dunkel}" opacity=".35"/>
+// Gasriese mit Baendern, Schattengrenze und geneigtem Ring. Die Baender
+// sind halbtransparente Ellipsen, der Ring liegt einmal hinter und einmal
+// vor dem Planeten - das erzeugt die Tiefe.
+function gasriese() {
+  return `<svg class="kosmos-planet kosmos-planet--gasriese" viewBox="0 0 200 200">
+    <defs>
+      <radialGradient id="kg-kugel" cx="34%" cy="30%" r="78%">
+        <stop offset="0%" stop-color="#b9a4d6"/>
+        <stop offset="45%" stop-color="#7c6aa8"/>
+        <stop offset="100%" stop-color="#241a3d"/>
+      </radialGradient>
+      <linearGradient id="kg-ring" x1="0" x2="1">
+        <stop offset="0%" stop-color="#cfc3e8" stop-opacity=".05"/>
+        <stop offset="45%" stop-color="#cfc3e8" stop-opacity=".55"/>
+        <stop offset="100%" stop-color="#cfc3e8" stop-opacity=".05"/>
+      </linearGradient>
+      <clipPath id="kg-clip"><circle cx="100" cy="100" r="58"/></clipPath>
+    </defs>
+    <g transform="rotate(-18 100 100)">
+      <ellipse cx="100" cy="100" rx="96" ry="26" fill="none" stroke="url(#kg-ring)" stroke-width="7"/>
+      <circle cx="100" cy="100" r="58" fill="url(#kg-kugel)"/>
+      <g clip-path="url(#kg-clip)" opacity=".5">
+        <ellipse cx="100" cy="74" rx="60" ry="7" fill="#d7c9ee" opacity=".35"/>
+        <ellipse cx="100" cy="92" rx="60" ry="4" fill="#2a1f45" opacity=".5"/>
+        <ellipse cx="100" cy="108" rx="60" ry="9" fill="#e2d6f5" opacity=".22"/>
+        <ellipse cx="100" cy="126" rx="60" ry="5" fill="#2a1f45" opacity=".45"/>
+      </g>
+      <circle cx="100" cy="100" r="58" fill="url(#kg-schatten)"/>
+      <path d="M100 42a58 58 0 0 1 0 116 46 58 0 0 0 0-116z" fill="#0b0718" opacity=".55"/>
+      <path d="M4 100a96 26 0 0 0 192 0" fill="none" stroke="url(#kg-ring)" stroke-width="7"/>
+    </g>
   </svg>`;
 }
 
-function asteroid(klasse, groesse) {
-  return `<svg class="kosmos-fels ${klasse}" width="${groesse}" height="${groesse}" viewBox="0 0 40 40">
-    <path d="M8 16 14 6l12-2 10 8-2 14-10 10-12-2-4-10z" fill="#6b7280"/>
-    <path d="M14 6l12-2 10 8-6 4-10-4z" fill="#9ca3af" opacity=".7"/>
-    <circle cx="18" cy="22" r="3" fill="#4b5563"/>
-    <circle cx="28" cy="26" r="2" fill="#4b5563"/>
+// Kleiner, kalter Gesteinsplanet - dient der Sonde als Ziel.
+function eisplanet() {
+  return `<svg class="kosmos-planet kosmos-planet--eis" viewBox="0 0 120 120">
+    <defs>
+      <radialGradient id="ke-kugel" cx="32%" cy="28%" r="76%">
+        <stop offset="0%" stop-color="#cfe6f2"/>
+        <stop offset="50%" stop-color="#6b8ea6"/>
+        <stop offset="100%" stop-color="#16232e"/>
+      </radialGradient>
+    </defs>
+    <circle cx="60" cy="60" r="40" fill="url(#ke-kugel)"/>
+    <ellipse cx="48" cy="46" rx="12" ry="8" fill="#e8f4fa" opacity=".18"/>
+    <ellipse cx="72" cy="76" rx="16" ry="10" fill="#0d1720" opacity=".25"/>
+    <path d="M60 20a40 40 0 0 1 0 80 30 40 0 0 0 0-80z" fill="#050a10" opacity=".5"/>
   </svg>`;
 }
 
-// Freundliches Ufo mit kleinem Alien darin - das Gesicht macht den
-// Unterschied zwischen "bedrohlich" und "lustig".
-function ufo() {
-  return `<svg class="kosmos-ufo__bild" viewBox="0 0 120 70">
-    <ellipse cx="60" cy="46" rx="46" ry="13" fill="#22d3ee" opacity=".25"/>
-    <path d="M22 44a38 12 0 0 1 76 0z" fill="#94a3b8"/>
-    <ellipse cx="60" cy="44" rx="38" ry="9" fill="#cbd5e1"/>
-    <path d="M38 36a22 20 0 0 1 44 0z" fill="#a5f3fc" opacity=".9"/>
-    <circle cx="52" cy="30" r="3.4" fill="#0f172a"/>
-    <circle cx="68" cy="30" r="3.4" fill="#0f172a"/>
-    <path d="M53 36q7 5 14 0" stroke="#0f172a" stroke-width="2" fill="none" stroke-linecap="round"/>
-    <circle class="kosmos-ufo__licht kosmos-ufo__licht--a" cx="34" cy="48" r="3" fill="#fde047"/>
-    <circle class="kosmos-ufo__licht kosmos-ufo__licht--b" cx="60" cy="50" r="3" fill="#fde047"/>
-    <circle class="kosmos-ufo__licht kosmos-ufo__licht--c" cx="86" cy="48" r="3" fill="#fde047"/>
+// Unregelmaessiger, dunkler Brocken - kein Comic-Krater, nur Kanten
+// und ein schmaler Lichtsaum auf der Sonnenseite.
+function brocken(klasse, groesse) {
+  return `<svg class="kosmos-fels ${klasse}" width="${groesse}" height="${groesse}" viewBox="0 0 48 48">
+    <path d="M6 20 12 9l11-5 13 4 6 12-3 13-12 9-13-3-6-11z" fill="#3b4250"/>
+    <path d="M12 9l11-5 13 4 6 12-8 2-10-8z" fill="#6b7484" opacity=".55"/>
+    <path d="M15 30l9 4 10-5-3 9-10 7-8-5z" fill="#232833" opacity=".8"/>
   </svg>`;
 }
 
-function rakete() {
-  return `<svg viewBox="0 0 40 90">
-    <path class="kosmos-flamme" d="M20 66q6 12 0 22-6-10 0-22z" fill="#fbbf24"/>
-    <path class="kosmos-flamme kosmos-flamme--innen" d="M20 68q3 8 0 14-3-6 0-14z" fill="#fef08a"/>
-    <path d="M20 4q14 16 14 40v22H6V44Q6 20 20 4z" fill="#e2e8f0"/>
-    <path d="M20 4q14 16 14 40v22h-14z" fill="#94a3b8" opacity=".5"/>
-    <circle cx="20" cy="34" r="7" fill="#38bdf8"/>
-    <circle cx="20" cy="34" r="4" fill="#0ea5e9"/>
-    <path d="M6 52 0 68l6-4zM34 52l6 16-6-4z" fill="#f43f5e"/>
+// Frachter: kantige Silhouette, schmale Lichtkante, Triebwerksglut.
+function frachter() {
+  return `<svg class="kosmos-schiff__bild" viewBox="0 0 240 62">
+    <defs>
+      <linearGradient id="kf-glut" x1="1" x2="0">
+        <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0"/>
+        <stop offset="60%" stop-color="#38bdf8" stop-opacity=".55"/>
+        <stop offset="100%" stop-color="#e0f2fe" stop-opacity=".9"/>
+      </linearGradient>
+    </defs>
+    <path class="kosmos-schiff__glut" d="M6 31 40 24v14z" fill="url(#kf-glut)"/>
+    <path d="M40 22h34l10-8h56l14 8h52l30 9-30 9h-52l-14 8H84l-10-8H40z" fill="#1e2836"/>
+    <path d="M40 22h34l10-8h56l14 8h52l30 9H40z" fill="#38455a"/>
+    <path d="M74 22h150l22 9H74z" fill="#4b5b73" opacity=".7"/>
+    <path d="M120 16h46l10 6h-56z" fill="#8aa0bd" opacity=".55"/>
+    <rect x="150" y="26" width="26" height="2.4" fill="#93c5fd" opacity=".85"/>
+    <rect x="196" y="27" width="14" height="2" fill="#93c5fd" opacity=".6"/>
+    <circle class="kosmos-schiff__pos" cx="236" cy="31" r="1.9" fill="#f87171"/>
+    <circle class="kosmos-schiff__pos kosmos-schiff__pos--gruen" cx="44" cy="31" r="1.9" fill="#4ade80"/>
+  </svg>`;
+}
+
+// Sonde: kompakter Koerper mit zwei Solarflaechen und Antenne.
+function sonde() {
+  return `<svg class="kosmos-schiff__bild" viewBox="0 0 120 46">
+    <path d="M6 20h32v6H6zM82 20h32v6H82z" fill="#243044"/>
+    <rect x="8" y="14" width="28" height="18" rx="1" fill="#1e3a8a" opacity=".85"/>
+    <rect x="84" y="14" width="28" height="18" rx="1" fill="#1e3a8a" opacity=".85"/>
+    <g stroke="#60a5fa" stroke-width=".7" opacity=".5">
+      <path d="M8 20h28M8 26h28M84 20h28M84 26h28"/>
+    </g>
+    <rect x="44" y="13" width="32" height="20" rx="3" fill="#4b5b73"/>
+    <rect x="44" y="13" width="32" height="8" rx="3" fill="#7d8ea8" opacity=".6"/>
+    <circle cx="60" cy="23" r="3.4" fill="#0f172a"/>
+    <circle cx="60" cy="23" r="1.6" fill="#7dd3fc"/>
+    <path d="M60 13V4" stroke="#8aa0bd" stroke-width="1.4"/>
+    <circle class="kosmos-schiff__pos" cx="60" cy="3" r="1.6" fill="#f87171"/>
+  </svg>`;
+}
+
+// Ferne Raumstation: Ringmodul, das sich langsam dreht.
+function station() {
+  return `<svg viewBox="0 0 120 120">
+    <g class="kosmos-station__ring">
+      <circle cx="60" cy="60" r="40" fill="none" stroke="#54637d" stroke-width="7"/>
+      <circle cx="60" cy="60" r="40" fill="none" stroke="#93a4bf" stroke-width="2" opacity=".6"/>
+      <g fill="#7dd3fc" opacity=".75">
+        <circle cx="60" cy="20" r="2"/><circle cx="100" cy="60" r="2"/>
+        <circle cx="60" cy="100" r="2"/><circle cx="20" cy="60" r="2"/>
+      </g>
+      <path d="M60 24v72M24 60h72" stroke="#54637d" stroke-width="4"/>
+    </g>
+    <circle cx="60" cy="60" r="10" fill="#3b4a61"/>
+    <circle cx="60" cy="60" r="5" fill="#93c5fd" opacity=".55"/>
   </svg>`;
 }
 
