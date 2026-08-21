@@ -128,16 +128,30 @@ export async function erzeugeArbeitsblattPdf(curriculum, chapterId, { name = "" 
   function platzPruefen(hoehe) {
     if (y + hoehe > SEITE_H - RAND - 8) neueSeite();
   }
+  // Jede zu breite Zeile wird gesammelt. So faellt sofort auf, wenn Text
+  // aus einem Kasten herauslaeuft - genau das ist schon passiert, weil an
+  // einer Stelle mit einer anderen Breite umbrochen als gezeichnet wurde.
+  const ueberlaeufe = [];
+  function pruefeBreite(zeile, breite, wo) {
+    if (doc.getTextWidth(zeile) > breite + 0.5) {
+      ueberlaeufe.push({ wo, zeile: zeile.slice(0, 40), breite: doc.getTextWidth(zeile).toFixed(1), erlaubt: breite.toFixed(1) });
+    }
+  }
   function zeilen(inhalt, size, breite) {
     doc.setFontSize(size);
     return doc.splitTextToSize(pdfSicher(inhalt), breite);
   }
-  function text(inhalt, { size = 9.5, style = "normal", farbe = TEXT, x = RAND, breite = BREITE } = {}) {
+  // Die Umbruchbreite wird IMMER aus Startpunkt und rechtem Rand
+  // berechnet - so kann sie gar nicht mehr von der gezeichneten
+  // abweichen.
+  function text(inhalt, { size = 9.5, style = "normal", farbe = TEXT, x = RAND, rechts = SEITE_B - RAND, wo = "Text" } = {}) {
     if (!inhalt) return;
+    const breite = rechts - x;
     doc.setFont("helvetica", style);
     doc.setTextColor(...farbe);
     for (const zeile of zeilen(inhalt, size, breite)) {
       platzPruefen(6);
+      pruefeBreite(zeile, breite, wo);
       doc.text(zeile, x, y);
       y += size * 0.42 + 1.3;
     }
@@ -145,7 +159,11 @@ export async function erzeugeArbeitsblattPdf(curriculum, chapterId, { name = "" 
 
   // Infotext klar als solcher: heller Kasten mit Markenblau-Kante.
   function infoKasten(inhalt) {
-    const innen = BREITE - 8;
+    // Der Text beginnt bei RAND+16 (Platz fuer die INFO-Marke) und endet
+    // 4 mm vor der rechten Kastenkante - genau damit wird umbrochen.
+    const textX = RAND + 16;
+    const textRechts = RAND + BREITE - 4;
+    const innen = textRechts - textX;
     const zs = zeilen(inhalt, 9.5, innen);
     const hoehe = zs.length * 5 + 8;
     platzPruefen(hoehe + 2);
@@ -164,7 +182,8 @@ export async function erzeugeArbeitsblattPdf(curriculum, chapterId, { name = "" 
     doc.setTextColor(...TEXT);
     let ty = y + 1;
     for (const z of zs) {
-      doc.text(z, RAND + 16, ty);
+      pruefeBreite(z, innen, "Infokasten");
+      doc.text(z, textX, ty);
       ty += 5;
     }
     y += hoehe + 2.5;
@@ -173,7 +192,8 @@ export async function erzeugeArbeitsblattPdf(curriculum, chapterId, { name = "" 
   function codeKasten(code, { rahmen = [203, 213, 225], fuellung = [246, 248, 250] } = {}) {
     doc.setFont("courier", "normal");
     doc.setFontSize(8.5);
-    const zs = pdfSicher(code).split("\n").flatMap((z) => doc.splitTextToSize(z, BREITE - 8));
+    const innen = BREITE - 8;
+    const zs = pdfSicher(code).split("\n").flatMap((z) => doc.splitTextToSize(z, innen));
     const hoehe = zs.length * 4 + 5;
     platzPruefen(hoehe + 2);
     doc.setFillColor(...fuellung);
@@ -182,6 +202,7 @@ export async function erzeugeArbeitsblattPdf(curriculum, chapterId, { name = "" 
     doc.setTextColor(15, 23, 42);
     let cy = y + 1;
     for (const z of zs) {
+      pruefeBreite(z, innen, "Codekasten");
       doc.text(z, RAND + 4, cy);
       cy += 4;
     }
@@ -277,7 +298,7 @@ export async function erzeugeArbeitsblattPdf(curriculum, chapterId, { name = "" 
         if (erledigt) beantwortet++;
         aufgabenKopf(aufgabenNr);
         text(nurText(step.question), { size: 9.5, style: "bold", farbe: NAVY });
-        (step.choices || []).forEach((c) => text("[  ]  " + nurText(c), { size: 9.5, x: RAND + 4, breite: BREITE - 4 }));
+        (step.choices || []).forEach((c) => text("[  ]  " + nurText(c), { size: 9.5, x: RAND + 4, wo: "Antwort" }));
         text(
           erledigt ? "Deine Antwort: " + nurText(step.choices[step.answer]) : "Noch nicht bearbeitet.",
           { size: 9, style: erledigt ? "bold" : "italic", farbe: erledigt ? GRUEN : GRAU }
@@ -333,12 +354,17 @@ export async function erzeugeArbeitsblattPdf(curriculum, chapterId, { name = "" 
     doc.setFont("helvetica", "italic");
     doc.setFontSize(9);
     doc.setTextColor(...GRAU);
-    doc.text(
-      pdfSicher(`${gegner.name} hat es in diesem Kapitel versucht - und du hast trotzdem`),
-      RAND + b + 4, y + 8
-    );
-    doc.text(`${beantwortet} von ${gesamt} Aufgaben geloest.`, RAND + b + 4, y + 13);
-    y += h + 4;
+    const bilanzBreite = SEITE_B - RAND - (RAND + b + 4);
+    const bilanz = doc.splitTextToSize(pdfSicher(
+      `${gegner.name} hat es in diesem Kapitel versucht - und du hast trotzdem `
+      + `${beantwortet} von ${gesamt} Aufgaben geloest.`), bilanzBreite);
+    let by = y + 7;
+    for (const zeile of bilanz) {
+      pruefeBreite(zeile, bilanzBreite, "Bilanz");
+      doc.text(zeile, RAND + b + 4, by);
+      by += 4.6;
+    }
+    y += Math.max(h, by - y) + 4;
   }
 
   // ---- Fusszeilen -------------------------------------------------------
@@ -357,7 +383,7 @@ export async function erzeugeArbeitsblattPdf(curriculum, chapterId, { name = "" 
 
   const sauber = (name || "").trim().replace(/[^\wäöüÄÖÜß -]/g, "").replace(/\s+/g, "-");
   const datei = `PyQuest-Kapitel-${String(nummer).padStart(2, "0")}${sauber ? "-" + sauber : ""}.pdf`;
-  return { doc, datei, beantwortet, gesamt, seiten };
+  return { doc, datei, beantwortet, gesamt, seiten, ueberlaeufe };
 }
 
 // Erzeugt das PDF und stoesst den Download an.
