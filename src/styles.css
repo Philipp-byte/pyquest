@@ -371,7 +371,7 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
 .worksheet-cta--zweit {
   border-style: dashed; font-weight: 700;
   background: var(--surface-2); color: var(--fg-soft);
-  margin-top: -.8rem;
+  margin-top: -.6rem;   /* rueckt naeher an den Hauptknopf heran */
 }
 
 .ab__leiste {
@@ -402,7 +402,11 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
 }
 .ab__linie--kurz { width: 60px; }
 
-.ab__lektion { margin-top: 1.8rem; break-inside: avoid; }
+/* WICHTIG: hier KEIN break-inside: avoid. Ein Lektionsabschnitt ist
+   laenger als eine Druckseite - der Browser schiebt so einen Block dann
+   immer weiter nach vorn und druckt lauter leere Seiten. Nur die kleinen
+   Aufgabenkaesten duerfen zusammengehalten werden. */
+.ab__lektion { margin-top: 1.8rem; break-inside: auto; }
 .ab__lektion h2 {
   font-size: 1.12rem; color: #00344d; margin: 0 0 .6rem;
   border-left: 4px solid #009fe3; padding-left: .6rem;
@@ -453,10 +457,19 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
 /* Beim Drucken bleibt nur das Blatt uebrig. */
 @media print {
   .topbar, .no-print, .kosmos-bg { display: none !important; }
-  body { background: #fff; }
+  html, body { background: #fff !important; height: auto !important; overflow: visible !important; }
   .path, .arbeitsblatt-seite { padding: 0; max-width: none; }
   .ab { border: none; border-radius: 0; padding: 0; }
-  .ab__aufgabe, .ab__lektion { break-inside: avoid; }
+  /* Nur die kurzen Aufgabenkaesten zusammenhalten - der Lektionsabschnitt
+     ist zu lang dafuer (siehe Hinweis oben). */
+  .ab__aufgabe { break-inside: avoid; }
+  .ab__lektion { break-inside: auto; }
+  .ab__lektion h2 { break-after: avoid; }
+  /* Rahmen und Fuellungen sollen mitgedruckt werden - sonst ist die
+     eigene Loesung nicht mehr vom Rest zu unterscheiden. */
+  .ab__aufgabe, .ab__loesung, .ab__beispiel, .ab__nr {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
   a[href]::after { content: none !important; }
 }
 
@@ -826,7 +839,9 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
 
 .worksheet-cta {
   display: flex; align-items: center; justify-content: center; gap: .5rem;
-  margin: 0 1rem 1.5rem; padding: 1rem 1.2rem;
+  /* Abstand nach oben: Sonst klebt der Knopf direkt an der Lektionsliste
+     bzw. am dunklen Kapitel-Kosmos darueber. */
+  margin: 1.4rem 1rem 1.5rem; padding: 1rem 1.2rem;
   border-radius: var(--radius); font-weight: 800; text-align: center;
   text-decoration: none; border: 2px solid var(--chapter-color, var(--green));
   color: var(--fg); background: color-mix(in srgb, var(--chapter-color, var(--green)) 14%, var(--surface));
