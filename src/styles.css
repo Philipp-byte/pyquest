@@ -759,63 +759,29 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
    Der Treffer ist ein kurzer Lichtblitz mit Funken, kein Comic-Knall. */
 .kosmos-schiff { position: absolute; }
 .kosmos-schiff__bild { width: 100%; display: block; }
+/* Beim Sprung zieht das Schiff einen Lichtstreifen hinter sich her. */
+.kosmos-schiff--sprung { filter: drop-shadow(0 0 6px rgba(125,211,252,.5)); }
 .kosmos-schiff__pos { animation: pos-licht 3.4s steps(1) infinite; }
 .kosmos-schiff__pos--gruen { animation-delay: 1.7s; }
 @keyframes pos-licht { 0%, 82% { opacity: .95; } 83%, 100% { opacity: .15; } }
 .kosmos-schiff__glut { animation: glut-pulsen 2.6s ease-in-out infinite; transform-origin: 40px 31px; }
 @keyframes glut-pulsen { 0%, 100% { opacity: .75; transform: scaleX(1); } 50% { opacity: 1; transform: scaleX(1.14); } }
 
-.kosmos-schiff--frachter {
-  top: 17%; left: 0; width: 190px; opacity: .85;
-  animation: frachter-flug 78s linear infinite;
-}
-@keyframes frachter-flug {
-  0% { transform: translate(-24vw, 0); }
-  50% { transform: translate(48vw, -18px); }
-  100% { transform: translate(120vw, 6px); }
-}
 /* Bergbaulaser: duenner Kern mit weichem Schein, nur kurz sichtbar. */
 .kosmos-laser {
-  position: absolute; top: 34px; left: 96px;
-  width: 2px; height: 96px; transform-origin: top center;
+  /* Position, Laenge und Winkel setzt kosmos.js aus der Geometrie -
+     so trifft der Strahl in jeder Fenstergroesse. */
+  position: absolute; width: 2px; transform-origin: top center;
   background: linear-gradient(rgba(186,230,253,.95), rgba(56,189,248,.15));
   box-shadow: 0 0 7px 1.5px rgba(125,211,252,.55);
-  opacity: 0; animation: laser-schnitt 78s linear infinite;
-}
-@keyframes laser-schnitt {
-  0%, 55.6% { opacity: 0; transform: rotate(26deg) scaleY(.15); }
-  56.4% { opacity: .95; transform: rotate(26deg) scaleY(1); }
-  59% { opacity: .95; transform: rotate(26deg) scaleY(1); }
-  59.8%, 100% { opacity: 0; transform: rotate(26deg) scaleY(.15); }
+  opacity: 0;
 }
 /* Aufschlagfunken am getroffenen Brocken */
 .kosmos-funken {
-  /* Nachgemessen: Hier endet der Laserstrahl im Moment des Schnitts. */
-  position: absolute; top: 28.1%; left: 66%;
+  /* Sitzt genau am Strahlende - die Stelle berechnet kosmos.js. */
+  position: absolute; margin: -6px 0 0 -6px;
   width: 12px; height: 12px; border-radius: 50%; opacity: 0;
   background: radial-gradient(circle, rgba(255,255,255,.95), rgba(125,211,252,.45) 45%, rgba(56,189,248,0) 70%);
-  animation: funken-blitz 78s linear infinite;
-}
-@keyframes funken-blitz {
-  0%, 56.4% { opacity: 0; transform: scale(.4); }
-  57.2% { opacity: 1; transform: scale(1.7); }
-  59.5% { opacity: .55; transform: scale(1.1); }
-  61%, 100% { opacity: 0; transform: scale(.4); }
-}
-
-/* Szene 2: Sonde faellt am Eisplaneten in den Orbit ein und zieht weiter */
-.kosmos-schiff--sonde {
-  top: 46%; left: 0; width: 96px; opacity: .8;
-  animation: sonde-bahn 110s ease-in-out infinite;
-}
-@keyframes sonde-bahn {
-  0%, 3% { transform: translate(108vw, -60px) rotate(6deg); opacity: 0; }
-  10% { transform: translate(78vw, -20px) rotate(6deg); opacity: .8; }
-  40% { transform: translate(26vw, 70px) rotate(-4deg); opacity: .8; }
-  55% { transform: translate(11vw, 122px) rotate(-10deg); opacity: .8; }
-  70% { transform: translate(2vw, 168px) rotate(-16deg); opacity: .8; }
-  85% { transform: translate(-14vw, 210px) rotate(-20deg); opacity: 0; }
-  100% { transform: translate(-24vw, 240px) rotate(-20deg); opacity: 0; }
 }
 
 /* Ferne Raumstation, langsam rotierend */

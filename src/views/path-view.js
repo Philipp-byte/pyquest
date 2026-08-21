@@ -9,6 +9,7 @@ import { testAfterChapter } from "../content.js";
 import { getTestResult } from "../test-results.js";
 import { weltFuerKapitel, ortFuerLektion } from "../welten.js";
 import { istLehrerModus } from "../lehrer.js";
+import { starteVerkehr } from "../kosmos.js";
 
 const WORKSHEET_MIN_STARS = 2;
 const WORKSHEET_BASE = `${import.meta.env.BASE_URL}worksheets/`;
@@ -63,6 +64,7 @@ export function renderPath(app, curriculum) {
     </main>
   `;
   wireHeader(app);
+  starteVerkehr(app.querySelector(".kosmos-bg"));
 }
 
 // Eine Welt im Baum. Zustaende:
@@ -156,16 +158,15 @@ function escapeHtml(s = "") {
   return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-// Animierter Weltraum-Hintergrund fuer die Kosmos-Ansichten.
+// Weltraum-Hintergrund fuer die Kosmos-Ansichten.
 //
-// Alles ist SVG und CSS - keine zusaetzlichen Bilddateien, nichts wird
-// nachgeladen. Bewegt wird ausschliesslich ueber transform und opacity,
-// damit auch aeltere Schulrechner ruckelfrei bleiben.
+// Hier steht nur die FESTE Kulisse: Stern, Planeten, Asteroidenfeld,
+// Station und Meteore - alles SVG und CSS, keine zusaetzlichen
+// Bilddateien, bewegt ueber transform und opacity.
 //
-// Die kleinen Szenen laufen ohne JavaScript ab: Sie teilen sich dieselbe
-// Zykluslaenge, und die Zeitpunkte in den Keyframes sind so gesetzt, dass
-// sie zusammenpassen - der Laserstrahl blitzt genau dann auf, wenn das
-// Ufo am Asteroiden vorbeikommt.
+// Der Raumverkehr kommt aus src/kosmos.js. Die Schiffe entstehen zur
+// Laufzeit mit zufaelligem Typ, Route, Groesse und Aktion, damit sich
+// nichts wiederholt.
 function kosmosHintergrund() {
   return `<div class="kosmos-bg" aria-hidden="true">
     <div class="kosmos-nebel kosmos-nebel--a"></div>
@@ -184,16 +185,8 @@ function kosmosHintergrund() {
       ${brocken("kosmos-fels--5", 9)}
     </div>
 
-    <!-- Szene 1: Ein Frachter zieht vorbei und schneidet mit dem
-         Bergbaulaser einen Brocken an - kurzer Blitz, Funken, weiter. -->
-    <div class="kosmos-schiff kosmos-schiff--frachter">
-      ${frachter()}
-      <div class="kosmos-laser"></div>
-    </div>
-    <div class="kosmos-funken"></div>
-
-    <!-- Szene 2: Eine Sonde faellt am Eisplaneten in den Orbit ein -->
-    <div class="kosmos-schiff kosmos-schiff--sonde">${sonde()}</div>
+    <!-- Die Schiffe kommen aus src/kosmos.js: zufaelliger Typ, Route,
+         Groesse und Aktion, damit sich nichts wiederholt. -->
 
     <div class="kosmos-station">${station()}</div>
 
@@ -261,46 +254,6 @@ function brocken(klasse, groesse) {
     <path d="M6 20 12 9l11-5 13 4 6 12-3 13-12 9-13-3-6-11z" fill="#3b4250"/>
     <path d="M12 9l11-5 13 4 6 12-8 2-10-8z" fill="#6b7484" opacity=".55"/>
     <path d="M15 30l9 4 10-5-3 9-10 7-8-5z" fill="#232833" opacity=".8"/>
-  </svg>`;
-}
-
-// Frachter: kantige Silhouette, schmale Lichtkante, Triebwerksglut.
-function frachter() {
-  return `<svg class="kosmos-schiff__bild" viewBox="0 0 240 62">
-    <defs>
-      <linearGradient id="kf-glut" x1="1" x2="0">
-        <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0"/>
-        <stop offset="60%" stop-color="#38bdf8" stop-opacity=".55"/>
-        <stop offset="100%" stop-color="#e0f2fe" stop-opacity=".9"/>
-      </linearGradient>
-    </defs>
-    <path class="kosmos-schiff__glut" d="M6 31 40 24v14z" fill="url(#kf-glut)"/>
-    <path d="M40 22h34l10-8h56l14 8h52l30 9-30 9h-52l-14 8H84l-10-8H40z" fill="#1e2836"/>
-    <path d="M40 22h34l10-8h56l14 8h52l30 9H40z" fill="#38455a"/>
-    <path d="M74 22h150l22 9H74z" fill="#4b5b73" opacity=".7"/>
-    <path d="M120 16h46l10 6h-56z" fill="#8aa0bd" opacity=".55"/>
-    <rect x="150" y="26" width="26" height="2.4" fill="#93c5fd" opacity=".85"/>
-    <rect x="196" y="27" width="14" height="2" fill="#93c5fd" opacity=".6"/>
-    <circle class="kosmos-schiff__pos" cx="236" cy="31" r="1.9" fill="#f87171"/>
-    <circle class="kosmos-schiff__pos kosmos-schiff__pos--gruen" cx="44" cy="31" r="1.9" fill="#4ade80"/>
-  </svg>`;
-}
-
-// Sonde: kompakter Koerper mit zwei Solarflaechen und Antenne.
-function sonde() {
-  return `<svg class="kosmos-schiff__bild" viewBox="0 0 120 46">
-    <path d="M6 20h32v6H6zM82 20h32v6H82z" fill="#243044"/>
-    <rect x="8" y="14" width="28" height="18" rx="1" fill="#1e3a8a" opacity=".85"/>
-    <rect x="84" y="14" width="28" height="18" rx="1" fill="#1e3a8a" opacity=".85"/>
-    <g stroke="#60a5fa" stroke-width=".7" opacity=".5">
-      <path d="M8 20h28M8 26h28M84 20h28M84 26h28"/>
-    </g>
-    <rect x="44" y="13" width="32" height="20" rx="3" fill="#4b5b73"/>
-    <rect x="44" y="13" width="32" height="8" rx="3" fill="#7d8ea8" opacity=".6"/>
-    <circle cx="60" cy="23" r="3.4" fill="#0f172a"/>
-    <circle cx="60" cy="23" r="1.6" fill="#7dd3fc"/>
-    <path d="M60 13V4" stroke="#8aa0bd" stroke-width="1.4"/>
-    <circle class="kosmos-schiff__pos" cx="60" cy="3" r="1.6" fill="#f87171"/>
   </svg>`;
 }
 
@@ -427,6 +380,7 @@ export function renderChapterDetail(app, curriculum, chapterId) {
     </main>
   `;
   wireHeader(app);
+  starteVerkehr(app.querySelector(".kosmos-bg"));
 }
 
 function renderWorksheetSection(chapter, unlocked) {
