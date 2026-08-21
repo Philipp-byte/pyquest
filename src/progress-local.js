@@ -9,6 +9,7 @@ import { exportTestResults, importTestResults, resetTestResults } from "./test-r
 import { exportIntroState, importIntroState } from "./intro-state.js";
 import { exportFiguren, importFiguren, resetFiguren } from "./figuren.js";
 import { exportLoesungen, importLoesungen, resetLoesungen } from "./loesungen.js";
+import { exportLeben, importLeben, lebenZuruecksetzen } from "./leben.js";
 
 const KEY = "pyquest.progress.v1";
 
@@ -137,6 +138,7 @@ export function resetProgress() {
   // Auch die eigenen Loesungen - sonst stuenden im Arbeitsblatt noch
   // Antworten zu Aufgaben, die wieder als offen gelten.
   resetLoesungen();
+  lebenZuruecksetzen();
 }
 
 // ---------------------------------------------------------------- Export/Import
@@ -162,6 +164,8 @@ export function exportState() {
       figuren: exportFiguren(),
       // Die selbst geschriebenen Loesungen fuer das Arbeitsblatt.
       loesungen: exportLoesungen(),
+      // Leben aus den Flug-Zwischenspielen.
+      leben: exportLeben(),
     },
     null,
     2
@@ -195,5 +199,6 @@ export function importState(text) {
   if (parsed && "introGesehen" in parsed) importIntroState(parsed.introGesehen);
   if (parsed && parsed.figuren) importFiguren(parsed.figuren);
   if (parsed && parsed.loesungen) importLoesungen(parsed.loesungen);
+  if (parsed && typeof parsed.leben === "number") importLeben(parsed.leben);
   return true;
 }

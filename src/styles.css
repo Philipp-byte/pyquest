@@ -364,6 +364,65 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
   .kapitelkarte { padding: 1.2rem .8rem 1.4rem; }
 }
 
+/* ---------- Flug zwischen den Welten (Wiederholungsspiel) ---------- */
+.flug { max-width: 940px; }
+.flug__buehne {
+  position: relative; width: 100%;
+  height: clamp(340px, 58vh, 520px);
+  border-radius: var(--radius-lg); overflow: hidden;
+  border: 2px solid color-mix(in srgb, var(--blue) 45%, var(--border));
+  box-shadow: 0 18px 40px rgba(2, 6, 23, .45);
+  background: #070b1c;
+}
+.flug__leinwand { display: block; width: 100%; height: 100%; }
+
+.flug__kopf {
+  position: absolute; top: 0; left: 0; right: 0;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 1rem; padding: .6rem .9rem; pointer-events: none;
+  font-weight: 800; color: #e2e8f0; text-shadow: 0 2px 6px rgba(0,0,0,.8);
+}
+.flug__leben { font-size: 1.05rem; letter-spacing: -.08em; }
+.flug__leben-zahl { margin-left: .5rem; font-size: .8rem; letter-spacing: normal; color: #94a3b8; }
+.flug__ziel { font-size: .82rem; font-weight: 700; color: #94a3b8; }
+.flug__ziel strong { color: #7dd3fc; }
+
+/* Frageleiste - liegt ueber dem Spielfeld, nimmt aber keine Klicks weg */
+.flug__frage {
+  position: absolute; top: 44px; left: 50%; transform: translateX(-50%);
+  width: min(96%, 700px); pointer-events: none;
+  background: rgba(8, 14, 33, .92); border: 1px solid rgba(125, 211, 252, .5);
+  border-radius: var(--radius); padding: .6rem .9rem; color: #e2e8f0;
+  animation: figur-auftritt .25s ease;
+}
+.flug__frage-text { margin: 0 0 .35rem; font-weight: 800; font-size: .95rem; }
+.flug__antworten {
+  display: flex; flex-wrap: wrap; gap: .3rem 1.1rem;
+  margin: 0; padding: 0; list-style: none; font-size: .86rem; color: #cbd5e1;
+}
+.flug__antworten b {
+  display: inline-block; min-width: 1.2rem; color: #7dd3fc;
+}
+
+/* Start-, Ende- und Absturztafel */
+.flug__tafel {
+  position: absolute; inset: 0; display: grid; place-content: center;
+  gap: .5rem; text-align: center; padding: 1.5rem;
+  background: rgba(4, 8, 22, .82); backdrop-filter: blur(3px); color: #e2e8f0;
+}
+.flug__titel { margin: 0; font-size: 1.5rem; }
+.flug__text { margin: 0 auto; max-width: 460px; color: #cbd5e1; font-size: .95rem; }
+.flug__text strong { color: #7dd3fc; }
+.flug__steuerung { margin: .2rem 0 .4rem; font-size: .85rem; color: #94a3b8; }
+.flug__knoepfe { display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap; }
+
+.flug-cta { border-style: solid; }
+
+@media (max-width: 700px) {
+  .flug__buehne { height: clamp(300px, 52vh, 420px); }
+  .flug__antworten { flex-direction: column; gap: .2rem; }
+}
+
 /* ---------- Ausgefuelltes Arbeitsblatt ----------
    Bewusst nuechtern und hell: Das Blatt soll auf Papier gut aussehen,
    nicht auf dem Bildschirm glaenzen. */

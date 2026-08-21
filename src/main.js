@@ -102,6 +102,12 @@ function startApp() {
   route("/chapter/:chapterId", ({ chapterId }) =>
     renderChapterDetail(app, curriculum, chapterId)
   );
+  // Der Flug zwischen zwei Welten (Wiederholungsspiel) - eigene Datei,
+  // damit die Spielschleife nicht im Startpaket steckt.
+  route("/flug/:chapterId", async ({ chapterId }) => {
+    const { renderFlug } = await import("./views/flug-view.js");
+    renderFlug(app, curriculum, chapterId);
+  });
   // Das ausgefuellte Arbeitsblatt - wird nur beim Abgeben gebraucht und
   // deshalb erst dann geladen.
   route("/arbeitsblatt/:chapterId", async ({ chapterId }) => {

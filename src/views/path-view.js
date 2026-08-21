@@ -375,6 +375,10 @@ export function renderChapterDetail(app, curriculum, chapterId) {
           </div>
         </div>
         <div class="${hatKarte ? "weltenbaum kapitelkarte" : "chapter__nodes"}">${nodes}</div>
+        ${kapitelFertig ? `
+          <a class="worksheet-cta flug-cta" href="#/flug/${chapter.id}">
+            🚀 Flug zur nächsten Welt (Wiederholungsspiel)
+          </a>` : ""}
         ${renderWorksheetSection(chapter, worksheetUnlocked)}
       </section>
     </main>

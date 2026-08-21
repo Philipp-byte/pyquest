@@ -6,7 +6,7 @@ import { renderMarkdown } from "../markdown.js";
 import { createEditor } from "../editor.js";
 import { runPython } from "../pyodide-runner.js";
 import { evaluateCode, evaluateFill, evaluateTips } from "../evaluator.js";
-import { completeLesson, isUnlocked, getXp, levelProgress } from "../store.js";
+import { completeLesson, isUnlocked, isDone, getXp, levelProgress } from "../store.js";
 import { burstSmall, burstBig } from "../celebrate.js";
 import { playCorrect, playWrong, playFinish, playLevelUp, playBadge } from "../sound.js";
 import { findLesson, flattenLessons } from "../content.js";
@@ -480,9 +480,20 @@ class LessonPlayer {
     this.footer.innerHTML = "";
     const back = html(`<a class="btn btn--ghost" href="#/chapter/${this.lesson.chapterId}">Zum Kapitel</a>`);
     this.footer.append(back);
-    if (nextHref) {
-      const nextBtn = html(`<a class="btn btn--primary" href="${nextHref}">Nächste Lektion →</a>`);
-      this.footer.append(nextBtn);
+
+    // War das die letzte offene Lektion des Kapitels, geht es mit dem Flug
+    // zur naechsten Welt weiter - dem Wiederholungsspiel.
+    const kapitel = this.curriculum.chapters.find((c) => c.id === this.lesson.chapterId);
+    const kapitelFertig = kapitel?.lessons.every((l) => isDone(l.id));
+    if (kapitelFertig) {
+      this.footer.append(
+        html(`<a class="btn btn--primary" href="#/flug/${this.lesson.chapterId}">🚀 Losfliegen zur nächsten Welt</a>`)
+      );
+      if (nextHref) {
+        this.footer.append(html(`<a class="btn btn--ghost" href="${nextHref}">Nächste Lektion →</a>`));
+      }
+    } else if (nextHref) {
+      this.footer.append(html(`<a class="btn btn--primary" href="${nextHref}">Nächste Lektion →</a>`));
     }
   }
 
