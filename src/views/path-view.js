@@ -156,13 +156,101 @@ function escapeHtml(s = "") {
   return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-// Animierter Weltraum-Hintergrund fuer die Kosmos-Ansichten: zwei driftende
-// Sternschichten (CSS-Pseudoelemente) plus zwei treibende Nebelwolken.
+// Animierter Weltraum-Hintergrund fuer die Kosmos-Ansichten.
+//
+// Alles ist SVG und CSS - keine zusaetzlichen Bilddateien, nichts wird
+// nachgeladen. Bewegt wird ausschliesslich ueber transform und opacity,
+// damit auch aeltere Schulrechner ruckelfrei bleiben.
+//
+// Die kleinen Szenen laufen ohne JavaScript ab: Sie teilen sich dieselbe
+// Zykluslaenge, und die Zeitpunkte in den Keyframes sind so gesetzt, dass
+// sie zusammenpassen - der Laserstrahl blitzt genau dann auf, wenn das
+// Ufo am Asteroiden vorbeikommt.
 function kosmosHintergrund() {
   return `<div class="kosmos-bg" aria-hidden="true">
     <div class="kosmos-nebel kosmos-nebel--a"></div>
     <div class="kosmos-nebel kosmos-nebel--b"></div>
+
+    <div class="kosmos-sonne"></div>
+
+    ${planet("kosmos-planet--ringe", "#8b5cf6", "#5b21b6", true)}
+    ${planet("kosmos-planet--gruen", "#34d399", "#065f46", false)}
+    ${planet("kosmos-planet--rot", "#fb7185", "#9f1239", false)}
+
+    <div class="kosmos-asteroiden">
+      ${asteroid("kosmos-fels--1", 26)}
+      ${asteroid("kosmos-fels--2", 16)}
+      ${asteroid("kosmos-fels--3", 20)}
+      ${asteroid("kosmos-fels--4", 12)}
+    </div>
+
+    <!-- Szene 1: Das Ufo fliegt vorbei und schiesst auf den Asteroiden -->
+    <div class="kosmos-ufo kosmos-ufo--jaeger">
+      ${ufo()}
+      <div class="kosmos-laser"></div>
+    </div>
+
+    <!-- Szene 2: Ein zweites Ufo landet auf dem gruenen Planeten -->
+    <div class="kosmos-ufo kosmos-ufo--lander">
+      ${ufo()}
+      <div class="kosmos-strahl"></div>
+    </div>
+
+    <div class="kosmos-rakete">${rakete()}</div>
+
+    <div class="kosmos-meteor kosmos-meteor--1"></div>
+    <div class="kosmos-meteor kosmos-meteor--2"></div>
+    <div class="kosmos-meteor kosmos-meteor--3"></div>
   </div>`;
+}
+
+function planet(klasse, hell, dunkel, mitRing) {
+  return `<svg class="kosmos-planet ${klasse}" viewBox="0 0 100 100">
+    ${mitRing ? `<ellipse class="kosmos-ring" cx="50" cy="50" rx="46" ry="14"
+        fill="none" stroke="#c4b5fd" stroke-width="3" opacity=".75"/>` : ""}
+    <circle cx="50" cy="50" r="28" fill="${hell}"/>
+    <path d="M50 22a28 28 0 0 1 0 56 28 28 0 0 0 0-56z" fill="${dunkel}" opacity=".55"/>
+    <circle cx="40" cy="40" r="6" fill="${dunkel}" opacity=".45"/>
+    <circle cx="58" cy="58" r="4" fill="${dunkel}" opacity=".35"/>
+  </svg>`;
+}
+
+function asteroid(klasse, groesse) {
+  return `<svg class="kosmos-fels ${klasse}" width="${groesse}" height="${groesse}" viewBox="0 0 40 40">
+    <path d="M8 16 14 6l12-2 10 8-2 14-10 10-12-2-4-10z" fill="#6b7280"/>
+    <path d="M14 6l12-2 10 8-6 4-10-4z" fill="#9ca3af" opacity=".7"/>
+    <circle cx="18" cy="22" r="3" fill="#4b5563"/>
+    <circle cx="28" cy="26" r="2" fill="#4b5563"/>
+  </svg>`;
+}
+
+// Freundliches Ufo mit kleinem Alien darin - das Gesicht macht den
+// Unterschied zwischen "bedrohlich" und "lustig".
+function ufo() {
+  return `<svg class="kosmos-ufo__bild" viewBox="0 0 120 70">
+    <ellipse cx="60" cy="46" rx="46" ry="13" fill="#22d3ee" opacity=".25"/>
+    <path d="M22 44a38 12 0 0 1 76 0z" fill="#94a3b8"/>
+    <ellipse cx="60" cy="44" rx="38" ry="9" fill="#cbd5e1"/>
+    <path d="M38 36a22 20 0 0 1 44 0z" fill="#a5f3fc" opacity=".9"/>
+    <circle cx="52" cy="30" r="3.4" fill="#0f172a"/>
+    <circle cx="68" cy="30" r="3.4" fill="#0f172a"/>
+    <path d="M53 36q7 5 14 0" stroke="#0f172a" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <circle class="kosmos-ufo__licht kosmos-ufo__licht--a" cx="34" cy="48" r="3" fill="#fde047"/>
+    <circle class="kosmos-ufo__licht kosmos-ufo__licht--b" cx="60" cy="50" r="3" fill="#fde047"/>
+    <circle class="kosmos-ufo__licht kosmos-ufo__licht--c" cx="86" cy="48" r="3" fill="#fde047"/>
+  </svg>`;
+}
+
+function rakete() {
+  return `<svg viewBox="0 0 40 90">
+    <path class="kosmos-flamme" d="M20 66q6 12 0 22-6-10 0-22z" fill="#fbbf24"/>
+    <path class="kosmos-flamme kosmos-flamme--innen" d="M20 68q3 8 0 14-3-6 0-14z" fill="#fef08a"/>
+    <path d="M20 4q14 16 14 40v22H6V44Q6 20 20 4z" fill="#e2e8f0"/>
+    <path d="M20 4q14 16 14 40v22h-14z" fill="#94a3b8" opacity=".5"/>
+    <circle cx="20" cy="34" r="7" fill="#38bdf8"/>
+    <circle cx="20" cy="34" r="4" fill="#0ea5e9"/>
+    <path d="M6 52 0 68l6-4zM34 52l6 16-6-4z" fill="#f43f5e"/>
+  </svg>`;
 }
 
 // Lektionen-Pfad eines einzelnen Kapitels (Knoten, wie zuvor auf der
