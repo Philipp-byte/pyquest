@@ -14,7 +14,7 @@ const SCHIFFE = [
     name: "Frachter",
     breite: 190,
     laser: true, // hat einen Bergbaulaser
-    svg: `<svg viewBox="0 0 240 62">
+    svg: `<svg class="kosmos-schiff__bild" viewBox="0 0 240 62">
       <defs><linearGradient id="ks-glut1" x1="1" x2="0">
         <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0"/>
         <stop offset="100%" stop-color="#e0f2fe" stop-opacity=".9"/></linearGradient></defs>
@@ -30,7 +30,7 @@ const SCHIFFE = [
     name: "Kurier",
     breite: 120,
     laser: false,
-    svg: `<svg viewBox="0 0 200 44">
+    svg: `<svg class="kosmos-schiff__bild" viewBox="0 0 200 44">
       <defs><linearGradient id="ks-glut2" x1="1" x2="0">
         <stop offset="0%" stop-color="#a78bfa" stop-opacity="0"/>
         <stop offset="100%" stop-color="#ede9fe" stop-opacity=".9"/></linearGradient></defs>
@@ -46,7 +46,7 @@ const SCHIFFE = [
     name: "Schwerer Kreuzer",
     breite: 260,
     laser: true,
-    svg: `<svg viewBox="0 0 300 80">
+    svg: `<svg class="kosmos-schiff__bild" viewBox="0 0 300 80">
       <defs><linearGradient id="ks-glut3" x1="1" x2="0">
         <stop offset="0%" stop-color="#38bdf8" stop-opacity="0"/>
         <stop offset="100%" stop-color="#bae6fd" stop-opacity=".85"/></linearGradient></defs>
@@ -63,7 +63,7 @@ const SCHIFFE = [
     name: "Sonde",
     breite: 96,
     laser: false,
-    svg: `<svg viewBox="0 0 120 46">
+    svg: `<svg class="kosmos-schiff__bild" viewBox="0 0 120 46">
       <path d="M6 20h32v6H6zM82 20h32v6H82z" fill="#243044"/>
       <rect x="8" y="14" width="28" height="18" rx="1" fill="#1e3a8a" opacity=".85"/>
       <rect x="84" y="14" width="28" height="18" rx="1" fill="#1e3a8a" opacity=".85"/>
@@ -78,7 +78,7 @@ const SCHIFFE = [
     name: "Schlepper",
     breite: 150,
     laser: false,
-    svg: `<svg viewBox="0 0 210 70">
+    svg: `<svg class="kosmos-schiff__bild" viewBox="0 0 210 70">
       <defs><linearGradient id="ks-glut4" x1="1" x2="0">
         <stop offset="0%" stop-color="#fbbf24" stop-opacity="0"/>
         <stop offset="100%" stop-color="#fde68a" stop-opacity=".8"/></linearGradient></defs>
@@ -159,9 +159,21 @@ function waehleVerhalten(typ, hintergrund) {
   const moeglich = [vorbeiflug, vorbeiflug, schraegflug, sprung];
   // Nur Schiffe mit Laser koennen am Asteroidenfeld arbeiten - und nur,
   // wenn das Feld ueberhaupt sichtbar ist (auf dem Handy ist es aus).
+  // Bewusst hoch gewichtet: Kommt der Bergbau zu selten vor, sieht ihn
+  // in einer Unterrichtsstunde niemand.
   const feld = hintergrund.querySelector(".kosmos-asteroiden");
-  if (typ.laser && feld && feld.offsetParent !== null) moeglich.push(bergbau, bergbau);
+  if (typ.laser && feld && feld.offsetParent !== null) {
+    return Math.random() < 0.6 ? bergbau : waehle(moeglich);
+  }
   return waehle(moeglich);
+}
+
+// Spiegelt NUR die Silhouette, nicht das Schiff-Element. Sonst wuerde
+// ein nach links fliegendes Schiff auch seinen Laserstrahl spiegeln.
+function blickrichtung(el, nachRechts) {
+  if (nachRechts) return;
+  const bild = el.querySelector(".kosmos-schiff__bild");
+  if (bild) bild.style.transform = "scaleX(-1)";
 }
 
 // Laesst ein Schiff seine Bahn fliegen und raeumt es danach weg.
@@ -182,12 +194,11 @@ function vorbeiflug({ el, breite, hoehe, groesse, naehe, nachRechts }) {
   const ziel = nachRechts ? breite + 40 : -groesse - 40;
   el.style.top = `${y}px`;
   el.style.left = "0";
-  if (!nachRechts) el.style.transform = "scaleX(-1)";
-  const spiegel = nachRechts ? "" : " scaleX(-1)";
+  blickrichtung(el, nachRechts);
   fliege(el, [
-    { transform: `translate(${start}px, 0)${spiegel}` },
-    { transform: `translate(${(start + ziel) / 2}px, ${zufall(-24, 24)}px)${spiegel}` },
-    { transform: `translate(${ziel}px, 0)${spiegel}` },
+    { transform: `translate(${start}px, 0)` },
+    { transform: `translate(${(start + ziel) / 2}px, ${zufall(-24, 24)}px)` },
+    { transform: `translate(${ziel}px, 0)` },
   ], dauer);
 }
 
@@ -200,12 +211,12 @@ function schraegflug({ el, breite, hoehe, groesse, naehe, nachRechts }) {
   const startY = vonOben ? -60 : hoehe + 60;
   const zielY = vonOben ? hoehe * zufall(0.55, 0.95) : hoehe * zufall(0.05, 0.4);
   const neigung = (vonOben ? 1 : -1) * (nachRechts ? 8 : -8);
-  const spiegel = nachRechts ? "" : " scaleX(-1)";
   el.style.top = "0";
   el.style.left = "0";
+  blickrichtung(el, nachRechts);
   fliege(el, [
-    { transform: `translate(${startX}px, ${startY}px) rotate(${neigung}deg)${spiegel}` },
-    { transform: `translate(${zielX}px, ${zielY}px) rotate(${neigung}deg)${spiegel}` },
+    { transform: `translate(${startX}px, ${startY}px) rotate(${neigung}deg)` },
+    { transform: `translate(${zielX}px, ${zielY}px) rotate(${neigung}deg)` },
   ], dauer, "cubic-bezier(.35,0,.65,1)");
 }
 
@@ -215,15 +226,15 @@ function sprung({ el, breite, hoehe, groesse, naehe, nachRechts }) {
   const dauer = zufall(7000, 12000);
   const startX = nachRechts ? breite * zufall(0.1, 0.3) : breite * zufall(0.7, 0.9);
   const zielX = nachRechts ? breite + 200 : -groesse - 200;
-  const spiegel = nachRechts ? "" : " scaleX(-1)";
   el.style.top = `${y}px`;
   el.style.left = "0";
   el.classList.add("kosmos-schiff--sprung");
+  blickrichtung(el, nachRechts);
   fliege(el, [
-    { transform: `translate(${startX}px, 0) scale(.4)${spiegel}`, opacity: 0, offset: 0 },
-    { transform: `translate(${startX}px, 0) scale(1)${spiegel}`, opacity: 0.85, offset: 0.12 },
-    { transform: `translate(${startX + (zielX - startX) * 0.2}px, 0) scale(1)${spiegel}`, opacity: 0.85, offset: 0.55 },
-    { transform: `translate(${zielX}px, 0) scaleX(2.4) scaleY(.5)${spiegel}`, opacity: 0, offset: 1 },
+    { transform: `translate(${startX}px, 0) scale(.4)`, opacity: 0, offset: 0 },
+    { transform: `translate(${startX}px, 0) scale(1)`, opacity: 0.85, offset: 0.12 },
+    { transform: `translate(${startX + (zielX - startX) * 0.2}px, 0) scale(1)`, opacity: 0.85, offset: 0.55 },
+    { transform: `translate(${zielX}px, 0) scaleX(2.4) scaleY(.5)`, opacity: 0, offset: 1 },
   ], dauer, "cubic-bezier(.6,0,.9,.2)");
 }
 
@@ -237,40 +248,58 @@ function bergbau({ el, hintergrund, breite, hoehe, groesse, naehe, nachRechts })
   const zielX = feldRahmen.left - bgRahmen.left + feldRahmen.width * zufall(0.2, 0.6);
   const zielY = feldRahmen.top - bgRahmen.top + feldRahmen.height * zufall(0.25, 0.7);
 
-  const flughoehe = zielY - zufall(90, 150);
-  const dauer = zufall(50000, 80000) / naehe;
+  const flughoehe = zielY - zufall(100, 160);
+  const schiffHoehe = el.offsetHeight || groesse * 0.28;
   const startX = nachRechts ? -groesse - 40 : breite + 40;
   const endeX = nachRechts ? breite + 40 : -groesse - 40;
-  const spiegel = nachRechts ? "" : " scaleX(-1)";
-
-  // Position, an der geschossen wird: kurz vor dem Feld.
-  const abstand = zufall(70, 130) * (nachRechts ? -1 : 1);
-  const schussX = zielX + abstand - groesse / 2;
-  const anteil = (schussX - startX) / (endeX - startX);
-
   el.style.top = `${flughoehe}px`;
   el.style.left = "0";
-  fliege(el, [
-    { transform: `translate(${startX}px, 0)${spiegel}` },
-    { transform: `translate(${endeX}px, ${zufall(-16, 16)}px)${spiegel}` },
-  ], dauer);
+  blickrichtung(el, nachRechts);
 
-  if (anteil <= 0.05 || anteil >= 0.95) return; // Feld liegt nicht auf der Route
+  // Arbeitsposition: seitlich versetzt ueber dem Zielbrocken.
+  const versatz = zufall(60, 110) * (nachRechts ? -1 : 1);
+  const haltX = zielX + versatz - groesse / 2;
 
-  // Strahl aus der Geometrie: Winkel und Laenge so, dass er im Feld endet.
-  const ursprungX = schussX + groesse / 2;
+  // Der Strahl geht vom Rumpf aus - Mitte des Schiffs, Unterkante.
+  const ursprungX = haltX + groesse / 2;
+  const ursprungY = flughoehe + schiffHoehe * 0.6;
   const dx = zielX - ursprungX;
-  const dy = zielY - flughoehe;
+  const dy = zielY - ursprungY;
   const laenge = Math.hypot(dx, dy);
   const winkel = (Math.atan2(dx, dy) * 180) / Math.PI;
 
+  // Zeitplan: anfliegen, abbremsen, schneiden, wieder beschleunigen.
+  const anflug = zufall(16000, 26000) / naehe;
+  const arbeit = zufall(5000, 8000);
+  const abflug = zufall(16000, 26000) / naehe;
+  const dauer = anflug + arbeit + abflug;
+  const haltStart = anflug / dauer;
+  const haltEnde = (anflug + arbeit) / dauer;
+
+  const anim = el.animate(
+    [
+      { transform: `translate(${startX}px, 0)`, easing: "cubic-bezier(.2,0,.5,1)", offset: 0 },
+      { transform: `translate(${haltX}px, 0)`, easing: "linear", offset: haltStart },
+      // Waehrend der Arbeit driftet das Schiff nur minimal - der Strahl
+      // haengt daran, also bleibt er trotzdem am Brocken.
+      { transform: `translate(${haltX + (nachRechts ? 5 : -5)}px, 2px)`, easing: "cubic-bezier(.5,0,.8,1)", offset: haltEnde },
+      { transform: `translate(${endeX}px, ${zufall(-14, 14)}px)`, offset: 1 },
+    ],
+    { duration: dauer, fill: "forwards" }
+  );
+  anim.onfinish = () => el.remove();
+  anim.oncancel = () => el.remove();
+
+  // Strahl als KIND des Schiffs - so bleibt er beim Rumpf, egal wo das
+  // Schiff gerade ist. Frueher hing er fest im Raum und das Schiff zog
+  // waehrend des Schusses rund 80 px darunter weg.
   const strahl = document.createElement("div");
   strahl.className = "kosmos-laser";
-  strahl.style.left = `${ursprungX}px`;
-  strahl.style.top = `${flughoehe}px`;
+  strahl.style.left = `${groesse / 2}px`;
+  strahl.style.top = `${schiffHoehe * 0.6}px`;
   strahl.style.height = `${laenge}px`;
   strahl.style.transform = `rotate(${winkel}deg)`;
-  hintergrund.appendChild(strahl);
+  el.appendChild(strahl);
 
   const funken = document.createElement("div");
   funken.className = "kosmos-funken";
@@ -278,17 +307,17 @@ function bergbau({ el, hintergrund, breite, hoehe, groesse, naehe, nachRechts })
   funken.style.top = `${zielY}px`;
   hintergrund.appendChild(funken);
 
-  const dauerSchuss = zufall(2200, 4200);
-  const beginn = Math.max(0, dauer * anteil - dauerSchuss / 2);
-
+  // Der Schnitt laeuft nur waehrend der Arbeitsphase.
+  const vorlauf = arbeit * 0.12;
+  const schnittDauer = arbeit - vorlauf * 2;
   const strahlAnim = strahl.animate(
     [
-      { opacity: 0, transform: `rotate(${winkel}deg) scaleY(.1)` },
-      { opacity: 0.95, transform: `rotate(${winkel}deg) scaleY(1)`, offset: 0.15 },
-      { opacity: 0.95, transform: `rotate(${winkel}deg) scaleY(1)`, offset: 0.85 },
-      { opacity: 0, transform: `rotate(${winkel}deg) scaleY(.1)` },
+      { opacity: 0, transform: `rotate(${winkel}deg) scaleY(.05)` },
+      { opacity: 0.95, transform: `rotate(${winkel}deg) scaleY(1)`, offset: 0.08 },
+      { opacity: 0.8, transform: `rotate(${winkel}deg) scaleY(1)`, offset: 0.9 },
+      { opacity: 0, transform: `rotate(${winkel}deg) scaleY(.05)` },
     ],
-    { duration: dauerSchuss, delay: beginn, fill: "forwards" }
+    { duration: schnittDauer, delay: anflug + vorlauf, fill: "forwards" }
   );
   strahlAnim.onfinish = () => strahl.remove();
   strahlAnim.oncancel = () => strahl.remove();
@@ -296,11 +325,12 @@ function bergbau({ el, hintergrund, breite, hoehe, groesse, naehe, nachRechts })
   const funkenAnim = funken.animate(
     [
       { opacity: 0, transform: "scale(.3)" },
-      { opacity: 1, transform: "scale(1.8)", offset: 0.2 },
-      { opacity: 0.6, transform: "scale(1.1)", offset: 0.7 },
+      { opacity: 1, transform: "scale(1.6)", offset: 0.12 },
+      { opacity: 0.7, transform: "scale(1.1)", offset: 0.5 },
+      { opacity: 0.8, transform: "scale(1.4)", offset: 0.8 },
       { opacity: 0, transform: "scale(.4)" },
     ],
-    { duration: dauerSchuss, delay: beginn + 120, fill: "forwards" }
+    { duration: schnittDauer, delay: anflug + vorlauf + 150, fill: "forwards" }
   );
   funkenAnim.onfinish = () => funken.remove();
   funkenAnim.oncancel = () => funken.remove();
