@@ -1,13 +1,13 @@
 // Der Flug zwischen zwei Welten - ein kleines Wiederholungsspiel.
 //
 // Ablauf: Py springt ins Raumschiff und startet. Danach steuern die
-// Lernenden das Schiff durch ein Meteoritenfeld. Immer wieder taucht eine
-// Frage aus dem gerade abgeschlossenen Kapitel auf; das Schiff muss durch
-// das richtige Antwort-Tor fliegen.
+// Lernenden das Schiff durch ein Meteoritenfeld. Immer wieder haelt der Flug
+// an und eine Frage aus dem gerade abgeschlossenen Kapitel erscheint in einem
+// eigenen Fenster - fliegen und lesen gleichzeitig war zu viel auf einmal.
 //
 //   Treffer durch Meteorit  -> ein Leben weniger
-//   falsches Tor            -> ein Leben weniger
-//   richtiges Tor           -> ein Leben mehr (hoechstens 10)
+//   falsche Antwort         -> ein Leben weniger, das Schiff explodiert
+//   richtige Antwort        -> ein Leben mehr (hoechstens 10)
 //
 // Die Leben zaehlen ueber den ganzen Kurs (siehe leben.js). Bei 0 Leben
 // endet der Flug, die Leben stehen wieder auf 3 - niemand soll dauerhaft
@@ -52,15 +52,19 @@ export function renderFlug(app, curriculum, chapterId) {
         </div>
 
         <div class="flug__frage" hidden>
+          <p class="flug__frage-marke">Frage aus dem Kapitel</p>
           <p class="flug__frage-text"></p>
-          <ul class="flug__antworten"></ul>
+          <div class="flug__antworten"></div>
+          <p class="flug__rueckmeldung" hidden></p>
+          <button class="btn btn--primary flug__weiter" hidden>Weiterfliegen 🚀</button>
         </div>
 
         <div class="flug__tafel">
           <h2 class="flug__titel">Bereit zum Abflug?</h2>
           <p class="flug__text">
             Py fliegt weiter zur nächsten Welt – und du steuerst.
-            Weiche den Meteoriten aus und fliege durch das <strong>richtige Antwort-Tor</strong>.
+            Weiche den Meteoriten aus. Zwischendurch hält der Flug an und du
+            beantwortest eine <strong>Frage aus dem Kapitel</strong>.
           </p>
           <p class="flug__steuerung">⬆️⬇️ Pfeiltasten – oder mit dem Finger ziehen</p>
           <div class="flug__knoepfe">
@@ -138,8 +142,11 @@ class Flugspiel {
     this.frageFeld = app.querySelector(".flug__frage");
 
     // Schwierigkeit steigt mit dem Kapitel.
-    this.tempo = 130 + stufe * 12;
-    this.meteorPause = Math.max(1500 - stufe * 85, 480);
+    // Deutlich dichteres Feld als anfangs - der erste Entwurf war zu leer.
+    this.tempo = 170 + stufe * 14;
+    this.meteorPause = Math.max(820 - stufe * 42, 240);
+    // Ab der Mitte kommen die Brocken auch paarweise.
+    this.doppelAb = 5;
     this.laeuft = false;
     this.pyBild = null;
 
@@ -227,13 +234,13 @@ class Flugspiel {
       r: Math.random() * 1.4 + 0.3,
       v: Math.random() * 40 + 12,
     }));
-    this.schiff = { x: this.breite * 0.22, y: this.hoehe / 2, vy: 0, r: 20 };
+    this.schiff = { x: this.breite * 0.22, y: this.hoehe / 2, vy: 0, r: 28 };
     this.hoch = false;
     this.runter = false;
     this.zielY = null;         // fuer Steuerung per Finger/Maus
     this.unverwundbarBis = 0;
     this.frageIndex = 0;
-    this.tor = null;
+    this.explosion = [];
     this.naechsteFrageAb = 4.5; // Sekunden bis zur ersten Frage
     this.phase = "start";       // start -> flug -> ende
     this.startZeit = 0;
@@ -307,6 +314,14 @@ class Flugspiel {
     }
     if (this.phase === "ende") return;
 
+    // Waehrend einer Frage steht der Flug still - nur die Explosion laeuft
+    // weiter, damit man den Treffer sieht.
+    if (this.phase === "frage") {
+      this.explosionBewegen(dt);
+      return;
+    }
+    this.explosionBewegen(dt);
+
     // Schiff steuern
     const schub = 420;
     if (this.zielY !== null) {
@@ -322,15 +337,15 @@ class Flugspiel {
     if (this.schiff.y < rand) { this.schiff.y = rand; this.schiff.vy = 0; }
     if (this.schiff.y > this.hoehe - rand) { this.schiff.y = this.hoehe - rand; this.schiff.vy = 0; }
 
-    if (this.tor) this.torBewegen(dt);
-    else this.meteoreBewegen(dt);
+    this.meteoreBewegen(dt);
 
-    // Zeit fuer die naechste Frage?
-    if (!this.tor && this.zeit > this.naechsteFrageAb && this.frageIndex < this.fragen.length) {
+    // Zeit fuer die naechste Frage? Dann haelt der Flug an.
+    if (this.zeit > this.naechsteFrageAb && this.frageIndex < this.fragen.length) {
       this.frageStarten();
+      return;
     }
-    // Alle Fragen durch und keine mehr unterwegs -> Ziel erreicht
-    if (!this.tor && this.frageIndex >= this.fragen.length && this.zeit > this.naechsteFrageAb + 2) {
+    // Alle Fragen beantwortet -> Ziel erreicht
+    if (this.frageIndex >= this.fragen.length && this.zeit > this.naechsteFrageAb + 2) {
       this.zielErreicht();
     }
   }
@@ -338,16 +353,8 @@ class Flugspiel {
   meteoreBewegen(dt) {
     if (this.zeit - this.letzterMeteor > this.meteorPause / 1000) {
       this.letzterMeteor = this.zeit;
-      const r = 12 + Math.random() * (16 + this.stufe);
-      this.meteore.push({
-        x: this.breite + r,
-        y: r + Math.random() * (this.hoehe - 2 * r),
-        r,
-        vx: this.tempo * (0.8 + Math.random() * 0.6),
-        vy: (Math.random() - 0.5) * 40,
-        dreh: Math.random() * Math.PI,
-        drehV: (Math.random() - 0.5) * 1.6,
-      });
+      const anzahl = this.stufe >= this.doppelAb && Math.random() < 0.45 ? 2 : 1;
+      for (let i = 0; i < anzahl; i++) this.neuerMeteor();
     }
     for (const m of this.meteore) {
       m.x -= m.vx * dt;
@@ -359,6 +366,47 @@ class Flugspiel {
     this.meteore = this.meteore.filter((m) => m.x > -m.r - 10);
   }
 
+  neuerMeteor() {
+    const r = 12 + Math.random() * (16 + this.stufe);
+    this.meteore.push({
+      x: this.breite + r + Math.random() * 60,
+      y: r + Math.random() * (this.hoehe - 2 * r),
+      r,
+      vx: this.tempo * (0.8 + Math.random() * 0.6),
+      vy: (Math.random() - 0.5) * 50,
+      dreh: Math.random() * Math.PI,
+      drehV: (Math.random() - 0.5) * 1.6,
+    });
+  }
+
+  // Explosion am Schiff - bei Meteoritentreffer und bei falscher Antwort.
+  explosionAusloesen() {
+    this.explosion = [];
+    for (let i = 0; i < 26; i++) {
+      const w = Math.random() * Math.PI * 2;
+      const v = 60 + Math.random() * 220;
+      this.explosion.push({
+        x: this.schiff.x, y: this.schiff.y,
+        vx: Math.cos(w) * v, vy: Math.sin(w) * v,
+        leben: 0.5 + Math.random() * 0.6,
+        alter: 0,
+        r: 2 + Math.random() * 4,
+      });
+    }
+  }
+
+  explosionBewegen(dt) {
+    if (!this.explosion?.length) return;
+    for (const f of this.explosion) {
+      f.alter += dt;
+      f.x += f.vx * dt;
+      f.y += f.vy * dt;
+      f.vx *= 0.96;
+      f.vy *= 0.96;
+    }
+    this.explosion = this.explosion.filter((f) => f.alter < f.leben);
+  }
+
   trifft(m) {
     const dx = m.x - this.schiff.x;
     const dy = m.y - this.schiff.y;
@@ -367,6 +415,7 @@ class Flugspiel {
 
   treffer() {
     this.unverwundbarBis = this.zeit + 1.6;
+    this.explosionAusloesen();
     playWrong();
     const uebrig = lebenAbziehen(1);
     this.zeigeLeben();
@@ -376,59 +425,85 @@ class Flugspiel {
 
   // ---- Fragen ----------------------------------------------------------
 
+  // Der Flug haelt an und die Frage erscheint in einem eigenen Fenster -
+  // fliegen und lesen gleichzeitig war zu viel auf einmal.
   frageStarten() {
     const frage = this.fragen[this.frageIndex];
-    // Meteoriten aus dem Weg raeumen, damit das Tor fair bleibt.
-    this.meteore = this.meteore.filter((m) => m.x < this.breite * 0.5);
+    this.phase = "frage";
+    this.zielY = null;
+    this.hoch = this.runter = false;
 
-    const anzahl = frage.antworten.length;
-    const hoeheProTor = this.hoehe / anzahl;
-    this.tor = {
-      x: this.breite + 60,
-      breite: 26,
-      gewertet: false,
-      oeffnungen: frage.antworten.map((text, i) => ({
-        y0: i * hoeheProTor + 6,
-        y1: (i + 1) * hoeheProTor - 6,
-        buchstabe: BUCHSTABEN[i],
-        richtig: i === frage.richtig,
-        text,
-      })),
+    const feld = this.frageFeld;
+    feld.hidden = false;
+    feld.querySelector(".flug__frage-text").textContent = frage.frage;
+    feld.querySelector(".flug__rueckmeldung").hidden = true;
+    const weiter = feld.querySelector(".flug__weiter");
+    weiter.hidden = true;
+
+    const box = feld.querySelector(".flug__antworten");
+    box.innerHTML = "";
+    frage.antworten.forEach((text, i) => {
+      const knopf = html(`<button class="flug__antwort"><b>${BUCHSTABEN[i]}</b> ${escape(text)}</button>`);
+      knopf.onclick = () => this.antwortGewaehlt(i, frage, box, weiter);
+      box.append(knopf);
+    });
+    // Tastatur: A/B/C oder 1/2/3
+    this.aufAntwortTaste = (e) => {
+      const idx = "abcd".indexOf(e.key.toLowerCase()) >= 0
+        ? "abcd".indexOf(e.key.toLowerCase())
+        : "1234".indexOf(e.key);
+      const knopf = box.children[idx];
+      if (idx >= 0 && knopf && !knopf.disabled) knopf.click();
     };
-
-    this.frageFeld.hidden = false;
-    this.frageFeld.querySelector(".flug__frage-text").textContent = frage.frage;
-    this.frageFeld.querySelector(".flug__antworten").innerHTML = frage.antworten
-      .map((a, i) => `<li><b>${BUCHSTABEN[i]}</b> ${escape(a)}</li>`)
-      .join("");
+    window.addEventListener("keydown", this.aufAntwortTaste);
   }
 
-  torBewegen(dt) {
-    this.tor.x -= this.tempo * 0.75 * dt;
-    // Auswertung, sobald das Tor das Schiff erreicht
-    if (!this.tor.gewertet && this.tor.x <= this.schiff.x) {
-      this.tor.gewertet = true;
-      const treffer = this.tor.oeffnungen.find(
-        (o) => this.schiff.y >= o.y0 && this.schiff.y <= o.y1
-      );
-      if (treffer && treffer.richtig) {
-        playCorrect();
-        lebenDazu(1);
-        this.melde("Richtig! +1 Leben", "#86efac");
-      } else {
-        playWrong();
-        const uebrig = lebenAbziehen(1);
-        this.melde(treffer ? "Leider falsch" : "Tor verpasst", "#fca5a5");
-        if (uebrig <= 0) { this.zeigeLeben(); this.abgestuerzt(); return; }
+  antwortGewaehlt(gewaehlt, frage, box, weiter) {
+    window.removeEventListener("keydown", this.aufAntwortTaste);
+    [...box.children].forEach((k, i) => {
+      k.disabled = true;
+      if (i === frage.richtig) k.classList.add("flug__antwort--richtig");
+      if (i === gewaehlt && i !== frage.richtig) k.classList.add("flug__antwort--falsch");
+    });
+
+    const rueck = this.frageFeld.querySelector(".flug__rueckmeldung");
+    rueck.hidden = false;
+    if (gewaehlt === frage.richtig) {
+      playCorrect();
+      const neu = lebenDazu(1);
+      rueck.className = "flug__rueckmeldung flug__rueckmeldung--ok";
+      rueck.textContent = neu >= MAX_LEBEN
+        ? "Richtig! Du hast schon alle 10 Leben."
+        : "Richtig! Ein Leben dazu.";
+    } else {
+      playWrong();
+      // Der Treffer soll sichtbar sein: Das Schiff explodiert im Hintergrund.
+      this.explosionAusloesen();
+      this.unverwundbarBis = this.zeit + 2;
+      const uebrig = lebenAbziehen(1);
+      rueck.className = "flug__rueckmeldung flug__rueckmeldung--no";
+      rueck.textContent = `Leider falsch. Richtig ist ${BUCHSTABEN[frage.richtig]}: ${frage.antworten[frage.richtig]}`;
+      if (uebrig <= 0) {
+        this.zeigeLeben();
+        this.frageFeld.hidden = true;
+        this.abgestuerzt();
+        return;
       }
-      this.zeigeLeben();
     }
-    if (this.tor.x < -80) {
-      this.tor = null;
-      this.frageFeld.hidden = true;
-      this.frageIndex++;
-      this.naechsteFrageAb = this.zeit + 6;
-    }
+    this.zeigeLeben();
+
+    weiter.hidden = false;
+    weiter.onclick = () => this.frageBeenden();
+    weiter.focus();
+  }
+
+  frageBeenden() {
+    this.frageFeld.hidden = true;
+    this.frageIndex++;
+    this.naechsteFrageAb = this.zeit + 8;
+    this.phase = "flug";
+    // Freie Bahn nach der Frage - sonst startet man direkt in einem Brocken.
+    this.meteore = this.meteore.filter((m) => m.x > this.schiff.x + 160);
   }
 
   melde(text, farbe) {
@@ -505,8 +580,9 @@ class Flugspiel {
     if (this.phase === "start") { this.zeichneStart(); return; }
 
     for (const m of this.meteore) this.zeichneMeteor(m);
-    if (this.tor) this.zeichneTor();
     this.zeichneSchiff(this.schiff.x, this.schiff.y, this.schiff.vy);
+
+    this.zeichneExplosion();
 
     if (this.meldung && this.zeit < this.meldung.bis) {
       c.save();
@@ -548,12 +624,20 @@ class Flugspiel {
     }
   }
 
+  // Py wird gespiegelt gezeichnet: Die Vorlage schaut nach links, das
+  // Schiff fliegt aber nach rechts - ungespiegelt sitzt Py verkehrt herum
+  // im Cockpit und huepft rueckwaerts zum Schiff.
   zeichnePy(x, y, groesse) {
     if (!this.pyBild) return;
     const b = this.pyBild;
     const h = groesse;
     const w = (b.naturalWidth / b.naturalHeight) * h;
-    this.ctx.drawImage(b, x - w / 2, y - h, w, h);
+    const c = this.ctx;
+    c.save();
+    c.translate(x, y - h);
+    c.scale(-1, 1);
+    c.drawImage(b, -w / 2, 0, w, h);
+    c.restore();
   }
 
   zeichneSchiff(x, y, vy, leer = false) {
@@ -572,7 +656,8 @@ class Flugspiel {
     c.beginPath();
     c.moveTo(-46, 0); c.lineTo(-18, -7); c.lineTo(-18, 7); c.closePath(); c.fill();
 
-    // Rumpf
+    // Rumpf - rund 40 % groesser als im ersten Entwurf
+    c.scale(1.4, 1.4);
     c.fillStyle = "#cbd5e1";
     c.beginPath();
     c.moveTo(34, 0); c.lineTo(6, -15); c.lineTo(-20, -11);
@@ -581,18 +666,34 @@ class Flugspiel {
     c.beginPath();
     c.moveTo(34, 0); c.lineTo(6, 15); c.lineTo(-20, 11); c.closePath(); c.fill();
 
-    // Kanzel mit Py
+    // Kanzel mit Py (gespiegelt, damit Py nach vorne schaut)
     c.fillStyle = "#7dd3fc";
     c.beginPath(); c.ellipse(6, -2, 13, 10, 0, 0, Math.PI * 2); c.fill();
     if (!leer && this.pyBild) {
       c.save();
       c.beginPath(); c.ellipse(6, -2, 12, 9, 0, 0, Math.PI * 2); c.clip();
-      const h = 22;
+      const h = 24;
       const w = (this.pyBild.naturalWidth / this.pyBild.naturalHeight) * h;
-      c.drawImage(this.pyBild, 6 - w / 2, -2 - h * 0.55, w, h);
+      c.translate(6, -2 - h * 0.55);
+      c.scale(-1, 1);
+      c.drawImage(this.pyBild, -w / 2, 0, w, h);
       c.restore();
     }
     c.restore();
+  }
+
+  zeichneExplosion() {
+    if (!this.explosion?.length) return;
+    const c = this.ctx;
+    for (const f of this.explosion) {
+      const p = 1 - f.alter / f.leben;
+      c.globalAlpha = Math.max(0, p);
+      c.fillStyle = p > 0.6 ? "#fef3c7" : p > 0.3 ? "#fb923c" : "#7f1d1d";
+      c.beginPath();
+      c.arc(f.x, f.y, f.r * (0.6 + p), 0, Math.PI * 2);
+      c.fill();
+    }
+    c.globalAlpha = 1;
   }
 
   zeichneMeteor(m) {
@@ -613,26 +714,5 @@ class Flugspiel {
     c.restore();
   }
 
-  zeichneTor() {
-    const c = this.ctx;
-    const t = this.tor;
-    for (const o of t.oeffnungen) {
-      const hoehe = o.y1 - o.y0;
-      c.fillStyle = "rgba(56,189,248,.14)";
-      c.fillRect(t.x, o.y0, t.breite, hoehe);
-      c.strokeStyle = "rgba(125,211,252,.85)";
-      c.lineWidth = 3;
-      c.strokeRect(t.x, o.y0, t.breite, hoehe);
-      c.fillStyle = "#e0f2fe";
-      c.font = "bold 30px system-ui, sans-serif";
-      c.textAlign = "center";
-      c.textBaseline = "middle";
-      c.fillText(o.buchstabe, t.x + t.breite / 2, o.y0 + hoehe / 2);
-    }
-    // Trennbalken zwischen den Toren
-    c.fillStyle = "#1e293b";
-    for (let i = 1; i < t.oeffnungen.length; i++) {
-      c.fillRect(t.x - 3, t.oeffnungen[i].y0 - 8, t.breite + 6, 12);
-    }
-  }
+
 }
