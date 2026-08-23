@@ -1,7 +1,7 @@
 // Der Flug zwischen zwei Welten - ein kleines Wiederholungsspiel.
 //
 // Ablauf: Py springt ins Raumschiff und startet. Danach steuern die
-// Lernenden das Schiff rund drei Minuten lang durch ein Meteoritenfeld und
+// Lernenden das Schiff rund zwei Minuten lang durch ein Meteoritenfeld und
 // sammeln dabei Sterne ein. Nach jeweils fuenf Sternen haelt der Flug an und
 // eine Frage aus dem gerade abgeschlossenen Kapitel erscheint in einem
 // eigenen Fenster - fliegen und lesen gleichzeitig war zu viel auf einmal.
@@ -25,7 +25,7 @@ import { playCorrect, playWrong, playFinish } from "../sound.js";
 
 const BASE = import.meta.env.BASE_URL;
 const BUCHSTABEN = ["A", "B", "C", "D"];
-const FLUGDAUER = 180;   // Sekunden bis zur naechsten Welt
+const FLUGDAUER = 120;   // Sekunden bis zur naechsten Welt
 const STERNE_PRO_FRAGE = 5;
 
 // Ab Kapitel 2 schickt Professor Null seine Spaeherdrohne Nullbit mit.
@@ -107,7 +107,7 @@ export function renderFlug(app, curriculum, chapterId) {
             Drohne nah heran, blinkt sie rot und explodiert – dann nichts wie weg!
             Ihre Druckwelle zerlegt allerdings auch jeden Meteoriten in der Nähe.
           </p>` : ""}
-          <p class="flug__steuerung">⬆️⬇️ Pfeiltasten – oder mit dem Finger ziehen · rund 3 Minuten bis zur nächsten Welt</p>
+          <p class="flug__steuerung">⬆️⬇️ Pfeiltasten – oder mit dem Finger ziehen · rund 2 Minuten bis zur nächsten Welt</p>
           <div class="flug__knoepfe">
             <button class="btn btn--primary flug__start">🚀 Losfliegen</button>
             <button class="btn btn--ghost flug__skip">Überspringen</button>
@@ -139,10 +139,10 @@ export function renderFlug(app, curriculum, chapterId) {
   };
 }
 
-// Alle Quizfragen des Kapitels einsammeln und mischen. In drei Minuten
-// kommen je nach Sammelglueck sieben bis zehn Fragen dran - mehr, als die
-// meisten Kapitel hergeben. Reicht der Vorrat nicht, wird von vorne
-// begonnen (siehe naechsteFrage).
+// Alle Quizfragen des Kapitels einsammeln und mischen. In zwei Minuten
+// kommen je nach Sammelglueck vier bis sechs Fragen dran. Reicht der
+// Vorrat eines Kapitels nicht, wird von vorne begonnen (siehe
+// naechsteFrage).
 function sammleFragen(chapter, extraFragen = []) {
   const alle = [];
   for (const lesson of chapter.lessons) {
@@ -751,7 +751,7 @@ class Flugspiel {
 
   // Der Flug haelt an und die Frage erscheint in einem eigenen Fenster -
   // fliegen und lesen gleichzeitig war zu viel auf einmal.
-  // Reicht der Vorrat des Kapitels nicht fuer drei Minuten, wird neu
+  // Reicht der Vorrat des Kapitels nicht fuer zwei Minuten, wird neu
   // gemischt und von vorne begonnen.
   naechsteFrage() {
     if (this.frageIndex >= this.fragen.length) {
@@ -886,7 +886,7 @@ class Flugspiel {
     this.zeigeStrecke();
     this.zeigeTafel(
       "🌍 Angekommen!",
-      `Py hat die nächste Welt erreicht – drei Minuten durchs Meteoritenfeld.
+      `Py hat die nächste Welt erreicht – zwei Minuten durchs Meteoritenfeld.
        Du hast <strong>${getLeben()} von ${MAX_LEBEN}</strong> Leben.`,
       true
     );
