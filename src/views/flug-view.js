@@ -33,8 +33,12 @@ const STERNE_PRO_FRAGE = 5;
 // die Meteoriten im Umkreis mit. Wer nach dem Aufleuchten schnell genug
 // wegfliegt, entkommt der Druckwelle und hat trotzdem freie Bahn.
 const DROHNE_AB_STUFE = 1;
-const ZUENDABSTAND = 105;   // so nah heran, dann beginnt der Countdown
-const ZUENDZEIT = 0.55;     // Vorwarnung in Sekunden
+const ZUENDABSTAND = 120;   // so nah heran, dann beginnt der Countdown
+const ZUENDZEIT = 1.1;      // Vorwarnung in Sekunden - Zeit zum Wegfliegen
+// Scharf geworden bremst sie ab und laedt auf. Ohne das Bremsen wuerde sie
+// in der laengeren Vorwarnzeit ueber das Schiff hinausschiessen und selbst
+// bei voller Untaetigkeit niemanden mehr treffen.
+const ZUENDTEMPO = 0.45;
 const DRUCKWELLE = 175;     // in diesem Umkreis gehen Meteoriten kaputt
 const SCHADENSRADIUS = 95;  // so nah kostet die Explosion ein Leben
 // Nullbits Bild zeigt unten einen Scan-Strahl. Im Flug soll nur der Koerper
@@ -513,10 +517,10 @@ class Flugspiel {
       // Pys Raumschiff nehmen. Sie ist langsamer als das Schiff - deshalb
       // kommt man ihr davon, wenn man auf das Warnsignal reagiert.
       if (d.zuendet !== null) {
-        // Scharf: Der Kurs ist festgelegt, sie zielt nicht mehr nach.
+        // Scharf: Kurs festgelegt und abgebremst, sie zielt nicht mehr nach.
         // Sonst koennte man ihr nach dem Warnsignal nicht mehr entkommen.
-        d.x += d.kursX * dt;
-        d.y += d.kursY * dt;
+        d.x += d.kursX * ZUENDTEMPO * dt;
+        d.y += d.kursY * ZUENDTEMPO * dt;
       } else if (d.x > this.breite - ANFLUGTIEFE) {
         d.x -= d.vx * dt;
         d.kursX = -d.vx;
