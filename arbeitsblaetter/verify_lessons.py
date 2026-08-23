@@ -10,8 +10,10 @@ Aufruf:  python verify_lessons.py
 
 import io
 import json
+import os
 import re
 import sys
+import tempfile
 from contextlib import redirect_stdout
 from pathlib import Path
 
@@ -73,8 +75,17 @@ def run(code, inputs):
         return value
 
     env = {"input": fake_input}
-    with redirect_stdout(buf):
-        exec(code, env)
+    # Kapitel 15 schreibt echte Dateien (projekt.txt, text.txt). Die sollen
+    # nicht im Arbeitsverzeichnis liegen bleiben - in der App laeuft alles in
+    # Pyodides eigenem Dateisystem, hier tut es ein Wegwerf-Ordner.
+    vorher = os.getcwd()
+    with tempfile.TemporaryDirectory() as ordner:
+        os.chdir(ordner)
+        try:
+            with redirect_stdout(buf):
+                exec(code, env)
+        finally:
+            os.chdir(vorher)
     return buf.getvalue(), env
 
 

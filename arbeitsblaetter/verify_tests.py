@@ -12,8 +12,10 @@ Aufruf:  python verify_tests.py
 
 import io
 import json
+import os
 import re
 import sys
+import tempfile
 from contextlib import redirect_stdout
 from pathlib import Path
 
@@ -92,8 +94,16 @@ def run(code, inputs):
         return value
 
     env = {"input": fake_input}
-    with redirect_stdout(buf):
-        exec(code, env)
+    # Wie in verify_lessons.py: Datei-Aufgaben in einen Wegwerf-Ordner
+    # umlenken, damit nichts im Arbeitsverzeichnis liegen bleibt.
+    vorher = os.getcwd()
+    with tempfile.TemporaryDirectory() as ordner:
+        os.chdir(ordner)
+        try:
+            with redirect_stdout(buf):
+                exec(code, env)
+        finally:
+            os.chdir(vorher)
     return buf.getvalue(), env
 
 
