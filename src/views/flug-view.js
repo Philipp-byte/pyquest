@@ -28,6 +28,16 @@ const BUCHSTABEN = ["A", "B", "C", "D"];
 const FLUGDAUER = 180;   // Sekunden bis zur naechsten Welt
 const STERNE_PRO_FRAGE = 5;
 
+// Ab Kapitel 2 schickt Professor Null seine Spaeherdrohne Nullbit mit.
+// Sie treibt heran, zuendet in der Naehe des Schiffs - und reisst dabei
+// die Meteoriten im Umkreis mit. Wer nach dem Aufleuchten schnell genug
+// wegfliegt, entkommt der Druckwelle und hat trotzdem freie Bahn.
+const DROHNE_AB_STUFE = 1;
+const ZUENDABSTAND = 105;   // so nah heran, dann beginnt der Countdown
+const ZUENDZEIT = 0.55;     // Vorwarnung in Sekunden
+const DRUCKWELLE = 175;     // in diesem Umkreis gehen Meteoriten kaputt
+const SCHADENSRADIUS = 95;  // so nah kostet die Explosion ein Leben
+
 // Es darf immer nur EIN Flug laufen. Ohne das lief beim Verlassen der
 // Ansicht die alte Spielschleife weiter, griff auf die neue Seite zu und
 // veraenderte dort sogar die Leben.
@@ -80,6 +90,12 @@ export function renderFlug(app, curriculum, chapterId) {
             bekommst eine Frage aus dem Kapitel. Richtig beantwortet gibt es
             ein <strong>Herz</strong> dazu.
           </p>
+          ${stufe >= DROHNE_AB_STUFE ? `
+          <p class="flug__warnung">
+            ⚠️ Professor Null schickt <strong>Nullbit</strong> mit. Kommt die
+            Drohne nah heran, blinkt sie rot und explodiert – dann nichts wie weg!
+            Ihre Druckwelle zerlegt allerdings auch jeden Meteoriten in der Nähe.
+          </p>` : ""}
           <p class="flug__steuerung">⬆️⬇️ Pfeiltasten – oder mit dem Finger ziehen · rund 3 Minuten bis zur nächsten Welt</p>
           <div class="flug__knoepfe">
             <button class="btn btn--primary flug__start">🚀 Losfliegen</button>
@@ -227,6 +243,14 @@ class Flugspiel {
     const bild = new Image();
     bild.onload = () => { this.pyBild = bild; if (!this.laeuft) this.zeichneStandbild(); };
     bild.src = `${BASE}figuren/py/clever.webp`;
+
+    // Nullbit, die Spaeherdrohne von Professor Null. Fehlt das Bild, wird
+    // die Drohne gezeichnet - das Spiel laeuft in jedem Fall.
+    if (stufe >= DROHNE_AB_STUFE) {
+      const drohne = new Image();
+      drohne.onload = () => { this.drohneBild = drohne; };
+      drohne.src = `${BASE}figuren/null-nullbit/action.webp`;
+    }
   }
 
   // Das Spiel fuellt waehrend des Flugs den Bildschirm. Der echte
@@ -328,6 +352,8 @@ class Flugspiel {
     this.funkeln = [];         // kleine Funken beim Einsammeln
     this.sternObjekte = [];    // die einsammelbaren Sterne
     this.letzterStern = 0;
+    this.drohnen = [];         // Nullbits Spaeherdrohnen ab Kapitel 2
+    this.letzteDrohne = 0;
     this.eingesammelt = 0;     // Sterne seit der letzten Frage
     this.phase = "start";      // start -> flug -> frage -> ende
     this.startZeit = 0;
@@ -431,6 +457,7 @@ class Flugspiel {
 
     this.meteoreBewegen(dt);
     this.sterneBewegen(dt);
+    this.drohnenBewegen(dt);
     this.zeigeStrecke();
 
     // Fuenf Sterne beisammen -> der Flug haelt an und es gibt eine Frage.
@@ -461,6 +488,68 @@ class Flugspiel {
     const vorher = this.sternObjekte.length;
     this.sternObjekte = this.sternObjekte.filter((s) => !s.weg && s.x > -s.r - 10);
     if (vorher !== this.sternObjekte.length) this.zeigeSterne();
+  }
+
+  // ---- Nullbits Drohnen -------------------------------------------------
+
+  drohnenBewegen(dt) {
+    if (this.stufe < DROHNE_AB_STUFE) return;
+    // In spaeteren Kapiteln kommen sie oefter.
+    const pause = Math.max(11 - this.stufe * 0.5, 5.5);
+    if (this.zeit - this.letzteDrohne > pause) {
+      this.letzteDrohne = this.zeit;
+      this.neueDrohne();
+    }
+
+    for (const d of this.drohnen) {
+      d.x -= d.vx * dt;
+      // Sie zielt langsam auf die Hoehe des Schiffs - aber traege genug,
+      // dass man ihr ausweichen kann.
+      const dy = this.schiff.y - d.y;
+      d.y += Math.max(-70, Math.min(70, dy * 1.4)) * dt;
+      d.puls += dt * 6;
+
+      const abstand = Math.hypot(d.x - this.schiff.x, d.y - this.schiff.y);
+      if (d.zuendet === null && abstand < ZUENDABSTAND) {
+        d.zuendet = ZUENDZEIT;          // Countdown startet, Drohne blinkt
+        playWrong();
+      }
+      if (d.zuendet !== null) {
+        d.zuendet -= dt;
+        if (d.zuendet <= 0) { this.drohneZuendet(d); d.weg = true; }
+      }
+    }
+    this.drohnen = this.drohnen.filter((d) => !d.weg && d.x > -d.r - 20);
+  }
+
+  neueDrohne() {
+    const r = 24;
+    this.drohnen.push({
+      x: this.breite + r + 20,
+      y: r + 30 + Math.random() * (this.hoehe - 2 * r - 60),
+      r,
+      vx: blende(120, 190, this.fortschritt),
+      puls: 0,
+      zuendet: null,
+      weg: false,
+    });
+  }
+
+  // Die Druckwelle raeumt auf: Meteoriten im Umkreis gehen kaputt. Steht
+  // das Schiff noch zu nah, kostet es ein Leben.
+  drohneZuendet(d) {
+    this.explosionAusloesen(d.x, d.y, 34);
+    this.melde("BUMM!", "#fbbf24");
+
+    const uebrig = this.meteore.filter((m) => {
+      const nah = Math.hypot(m.x - d.x, m.y - d.y) < DRUCKWELLE + m.r;
+      if (nah) this.funkenAusloesen(m.x, m.y, "#94a3b8");   // Gesteinssplitter
+      return !nah;
+    });
+    this.meteore = uebrig;
+
+    const abstand = Math.hypot(d.x - this.schiff.x, d.y - this.schiff.y);
+    if (abstand < SCHADENSRADIUS && this.zeit > this.unverwundbarBis) this.treffer();
   }
 
   neuerStern() {
@@ -497,12 +586,12 @@ class Flugspiel {
     return true;
   }
 
-  funkenAusloesen(x, y) {
+  funkenAusloesen(x, y, farbe = "#fde047") {
     for (let i = 0; i < 12; i++) {
       const w = Math.random() * Math.PI * 2;
       const v = 40 + Math.random() * 110;
       this.funkeln.push({
-        x, y, vx: Math.cos(w) * v, vy: Math.sin(w) * v,
+        x, y, vx: Math.cos(w) * v, vy: Math.sin(w) * v, farbe,
         leben: 0.3 + Math.random() * 0.35, alter: 0, r: 1.5 + Math.random() * 2.5,
       });
     }
@@ -581,14 +670,14 @@ class Flugspiel {
     });
   }
 
-  // Explosion am Schiff - bei Meteoritentreffer und bei falscher Antwort.
-  explosionAusloesen() {
-    this.explosion = [];
-    for (let i = 0; i < 26; i++) {
+  // Explosion - am Schiff bei Treffer und falscher Antwort, an der Drohne
+  // bei ihrer Zuendung (dann groesser und an anderer Stelle).
+  explosionAusloesen(x = this.schiff.x, y = this.schiff.y, teile = 26) {
+    for (let i = 0; i < teile; i++) {
       const w = Math.random() * Math.PI * 2;
-      const v = 60 + Math.random() * 220;
+      const v = 60 + Math.random() * 240;
       this.explosion.push({
-        x: this.schiff.x, y: this.schiff.y,
+        x, y,
         vx: Math.cos(w) * v, vy: Math.sin(w) * v,
         leben: 0.5 + Math.random() * 0.6,
         alter: 0,
@@ -748,8 +837,10 @@ class Flugspiel {
     this.frageIndex++;
     this.phase = "flug";
     this.unverwundbarBis = this.zeit + 1.2;
-    // Freie Bahn nach der Frage - sonst startet man direkt in einem Brocken.
+    // Freie Bahn nach der Frage - sonst startet man direkt in einem Brocken
+    // oder neben einer scharfen Drohne.
     this.meteore = this.meteore.filter((m) => m.x > this.schiff.x + 160);
+    this.drohnen = this.drohnen.filter((d) => d.x > this.schiff.x + 220);
     // Drei Minuten schon voll? Dann war das die letzte Frage.
     if (this.zeit >= FLUGDAUER) this.zielErreicht();
   }
@@ -791,13 +882,14 @@ class Flugspiel {
     this.tafel.hidden = false;
     this.tafel.querySelector(".flug__titel").innerHTML = titel;
     this.tafel.querySelector(".flug__text").innerHTML = text;
-    this.tafel.querySelector(".flug__steuerung").hidden = true;
+    const nebentexte = this.tafel.querySelectorAll(".flug__steuerung, .flug__warnung");
+    nebentexte.forEach((p) => (p.hidden = true));
     const knoepfe = this.tafel.querySelector(".flug__knoepfe");
     knoepfe.innerHTML = "";
     if (mitNeustart) {
       const nochmal = html(`<button class="btn btn--ghost">Nochmal fliegen</button>`);
       nochmal.onclick = () => {
-        this.tafel.querySelector(".flug__steuerung").hidden = false;
+        nebentexte.forEach((p) => (p.hidden = false));
         this.starten();
       };
       knoepfe.append(nochmal);
@@ -831,6 +923,7 @@ class Flugspiel {
 
     for (const s of this.sternObjekte) this.zeichneSammelstern(s);
     for (const m of this.meteore) this.zeichneMeteor(m);
+    for (const d of this.drohnen) this.zeichneDrohne(d);
     this.zeichneSchiff(this.schiff.x, this.schiff.y, this.schiff.vy);
 
     this.zeichneFunkeln();
@@ -970,13 +1063,54 @@ class Flugspiel {
     c.restore();
   }
 
+  // Nullbits Drohne. Sobald der Countdown laeuft, blinkt sie rot und ein
+  // Ring zeigt, wie weit die Druckwelle reichen wird - so sieht man, ob
+  // man noch wegkommt.
+  zeichneDrohne(d) {
+    const c = this.ctx;
+    const scharf = d.zuendet !== null;
+    const blink = scharf && Math.floor(d.zuendet * 14) % 2 === 0;
+    c.save();
+
+    if (scharf) {
+      const p = 1 - Math.max(d.zuendet, 0) / ZUENDZEIT;
+      c.strokeStyle = `rgba(248, 113, 113, ${0.35 + p * 0.5})`;
+      c.lineWidth = 3;
+      c.setLineDash([9, 7]);
+      c.beginPath(); c.arc(d.x, d.y, DRUCKWELLE * (0.45 + p * 0.55), 0, Math.PI * 2); c.stroke();
+      c.setLineDash([]);
+    }
+
+    // Warnleuchte
+    const schein = c.createRadialGradient(d.x, d.y, 0, d.x, d.y, d.r * 2.2);
+    schein.addColorStop(0, blink ? "rgba(248,113,113,.75)" : "rgba(217,70,239,.45)");
+    schein.addColorStop(1, "rgba(217,70,239,0)");
+    c.fillStyle = schein;
+    c.beginPath(); c.arc(d.x, d.y, d.r * 2.2, 0, Math.PI * 2); c.fill();
+
+    const wippen = Math.sin(d.puls) * 3;
+    if (this.drohneBild) {
+      const h = d.r * 2.6;
+      const w = (this.drohneBild.naturalWidth / this.drohneBild.naturalHeight) * h;
+      c.globalAlpha = blink ? 0.65 : 1;
+      c.drawImage(this.drohneBild, d.x - w / 2, d.y - h / 2 + wippen, w, h);
+      c.globalAlpha = 1;
+    } else {
+      c.fillStyle = blink ? "#f87171" : "#4c1d95";
+      c.beginPath(); c.arc(d.x, d.y + wippen, d.r, 0, Math.PI * 2); c.fill();
+      c.fillStyle = "#f0abfc";
+      c.beginPath(); c.arc(d.x - d.r * 0.25, d.y + wippen, d.r * 0.35, 0, Math.PI * 2); c.fill();
+    }
+    c.restore();
+  }
+
   zeichneFunkeln() {
     if (!this.funkeln?.length) return;
     const c = this.ctx;
     for (const f of this.funkeln) {
       const p = 1 - f.alter / f.leben;
       c.globalAlpha = Math.max(0, p);
-      c.fillStyle = "#fde047";
+      c.fillStyle = f.farbe ?? "#fde047";
       c.beginPath(); c.arc(f.x, f.y, f.r * p, 0, Math.PI * 2); c.fill();
     }
     c.globalAlpha = 1;

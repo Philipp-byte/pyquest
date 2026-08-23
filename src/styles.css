@@ -522,6 +522,13 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
 .flug__text { margin: 0 auto; max-width: 460px; color: #cbd5e1; font-size: .95rem; }
 .flug__text strong { color: #7dd3fc; }
 .flug__steuerung { margin: .2rem 0 .4rem; font-size: .85rem; color: #94a3b8; }
+/* Warnung vor Nullbit - ab Kapitel 2 */
+.flug__warnung {
+  margin: .1rem auto .2rem; max-width: 460px; font-size: .88rem;
+  padding: .55rem .8rem; border-radius: 12px; color: #fbcfe8;
+  background: rgba(217, 70, 239, .14); border: 1px solid rgba(217, 70, 239, .45);
+}
+.flug__warnung strong { color: #f0abfc; }
 .flug__knoepfe { display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap; }
 /* Die Tafel ist immer dunkel - der helle Standardknopf waere darauf
    dunkel auf dunkel und praktisch unlesbar. */
