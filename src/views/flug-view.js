@@ -64,6 +64,7 @@ export function renderFlug(app, curriculum, chapterId) {
           <div class="flug__frage-fenster">
             <p class="flug__frage-marke">Frage aus dem Kapitel</p>
             <p class="flug__frage-text"></p>
+            <pre class="flug__frage-code" hidden><code></code></pre>
             <div class="flug__antworten"></div>
             <p class="flug__rueckmeldung" hidden></p>
             <button class="btn btn--primary flug__weiter" hidden>Weiterfliegen 🚀</button>
@@ -95,6 +96,15 @@ export function renderFlug(app, curriculum, chapterId) {
   spiel.zeigeLeben();
   spiel.zeigeSterne();
 
+  // Der zusaetzliche Fragenvorrat wird nebenher geladen. Die erste Frage
+  // kommt fruehestens nach fuenf Sternen, bis dahin ist er laengst da -
+  // und falls die Datei fehlt, laeuft der Flug mit den Kapitelfragen weiter.
+  ladeFlugfragen(chapterId).then((extra) => {
+    if (laufendesSpiel !== spiel || !extra.length) return;
+    spiel.fragen = mische(sammleFragen(chapter, extra));
+    spiel.frageIndex = 0;
+  });
+
   app.querySelector(".flug__start").onclick = () => spiel.starten();
   app.querySelector(".flug__skip").onclick = () => {
     spiel.beenden();
@@ -106,20 +116,48 @@ export function renderFlug(app, curriculum, chapterId) {
 // kommen je nach Sammelglueck sieben bis zehn Fragen dran - mehr, als die
 // meisten Kapitel hergeben. Reicht der Vorrat nicht, wird von vorne
 // begonnen (siehe naechsteFrage).
-function sammleFragen(chapter) {
+function sammleFragen(chapter, extraFragen = []) {
   const alle = [];
   for (const lesson of chapter.lessons) {
     for (const step of lesson.steps) {
       if (step.type === "quiz" && step.choices?.length) {
         alle.push({
           frage: nurText(step.question),
+          // Ohne den Codeblock waere "Wie viele Zeilen gibt dieses Programm
+          // aus?" nicht zu beantworten - das Programm gehoert mit ins Fenster.
+          code: codeAus(step.question),
           antworten: step.choices.map(nurText),
           richtig: step.answer,
         });
       }
     }
   }
+  for (const f of extraFragen) {
+    if (!f?.frage || !f.antworten?.length) continue;
+    alle.push({ frage: f.frage, code: f.code ?? "", antworten: f.antworten, richtig: f.richtig ?? 0 });
+  }
   return mische(alle);
+}
+
+// Zusaetzliche Fragen zum Kapitelthema (public/content/flugfragen.json).
+// Sie werden einmal geladen und dann fuer alle Fluege behalten.
+let flugfragenCache = null;
+async function ladeFlugfragen(chapterId) {
+  try {
+    if (!flugfragenCache) {
+      const antwort = await fetch(`${BASE}content/flugfragen.json`);
+      if (!antwort.ok) throw new Error(String(antwort.status));
+      flugfragenCache = await antwort.json();
+    }
+    return flugfragenCache[chapterId] ?? [];
+  } catch {
+    return []; // ohne Zusatzfragen laeuft der Flug trotzdem
+  }
+}
+
+function codeAus(md = "") {
+  const treffer = String(md).match(/```[a-z]*\n([\s\S]*?)```/);
+  return treffer ? treffer[1].replace(/\s+$/, "") : "";
 }
 
 function mische(liste) {
@@ -616,6 +654,9 @@ class Flugspiel {
     const feld = this.frageFeld;
     feld.hidden = false;
     feld.querySelector(".flug__frage-text").textContent = frage.frage;
+    const codeFeld = feld.querySelector(".flug__frage-code");
+    codeFeld.hidden = !frage.code;
+    codeFeld.querySelector("code").textContent = frage.code || "";
     feld.querySelector(".flug__rueckmeldung").hidden = true;
     const weiter = feld.querySelector(".flug__weiter");
     weiter.hidden = true;
@@ -655,11 +696,13 @@ class Flugspiel {
     rueck.hidden = false;
     if (gewaehlt === frage.richtig) {
       playCorrect();
+      const vorher = getLeben();
       const neu = lebenDazu(1);
       rueck.className = "flug__rueckmeldung flug__rueckmeldung--ok";
-      rueck.textContent = neu >= MAX_LEBEN
+      rueck.textContent = neu >= MAX_LEBEN && neu === vorher
         ? "Richtig! Du hast schon alle 10 Leben."
         : "Richtig! Ein Leben dazu.";
+      if (neu > vorher) this.herzGewonnen();
     } else {
       playWrong();
       // Der Treffer soll sichtbar sein: Das Schiff explodiert im Hintergrund.
@@ -680,6 +723,24 @@ class Flugspiel {
     weiter.hidden = false;
     weiter.onclick = () => this.frageBeenden();
     weiter.focus();
+  }
+
+  // Kleine Belohnung fuers Auge: Das Herz steigt aus der Mitte auf und die
+  // Lebensanzeige pocht, wenn es ankommt.
+  herzGewonnen() {
+    const buehne = this.app.querySelector(".flug__buehne");
+    if (!buehne) return;
+    const herz = html(`<div class="flug__herzflug">❤️</div>`);
+    buehne.append(herz);
+    herz.addEventListener("animationend", () => herz.remove());
+    setTimeout(() => { if (herz.isConnected) herz.remove(); }, 2000);
+
+    const anzeige = this.app.querySelector(".flug__leben");
+    if (anzeige) {
+      anzeige.classList.remove("flug__leben--dazu");
+      void anzeige.offsetWidth;              // Neustart der Animation erzwingen
+      anzeige.classList.add("flug__leben--dazu");
+    }
   }
 
   frageBeenden() {

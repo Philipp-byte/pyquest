@@ -452,6 +452,40 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
   letter-spacing: .07em; text-transform: uppercase; color: #7dd3fc;
 }
 .flug__frage-text { margin: 0 0 .9rem; font-weight: 800; font-size: 1.12rem; line-height: 1.4; }
+/* Fragen wie "Wie viele Zeilen gibt dieses Programm aus?" brauchen das
+   Programm dazu - ohne den Codeblock sind sie nicht zu beantworten. */
+.flug__frage-code[hidden] { display: none; }
+.flug__frage-code {
+  margin: 0 0 .9rem; padding: .7rem .9rem; overflow-x: auto;
+  background: rgba(2, 6, 23, .85); border: 1px solid rgba(125, 211, 252, .3);
+  border-radius: 12px; color: #bae6fd;
+  font-family: var(--font-mono, ui-monospace, "Cascadia Code", Consolas, monospace);
+  font-size: .95rem; line-height: 1.45; white-space: pre;
+}
+
+/* Gewonnenes Herz: fliegt aus der Bildmitte hoch zur Lebensanzeige. */
+.flug__herzflug {
+  position: absolute; left: 50%; top: 50%; z-index: 5;
+  pointer-events: none; font-size: 2.6rem; line-height: 1;
+  animation: herz-flug 1.1s cubic-bezier(.3, -.4, .5, 1) forwards;
+  filter: drop-shadow(0 0 12px rgba(248, 113, 113, .9));
+}
+@keyframes herz-flug {
+  0%   { transform: translate(-50%, -50%) scale(.2); opacity: 0; }
+  25%  { transform: translate(-50%, -50%) scale(1.35); opacity: 1; }
+  45%  { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) translate(0, -42vh) scale(.35); opacity: 0; }
+}
+/* Die Lebensanzeige pocht kurz, wenn das Herz ankommt. */
+.flug__leben--dazu { animation: leben-pochen .5s ease .75s; }
+@keyframes leben-pochen {
+  0%, 100% { transform: scale(1); }
+  40%      { transform: scale(1.3); filter: drop-shadow(0 0 8px rgba(248,113,113,.8)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flug__herzflug { animation-duration: .01ms; }
+  .flug__leben--dazu { animation: none; }
+}
 .flug__antworten { display: flex; flex-direction: column; gap: .5rem; margin: 0; padding: 0; }
 .flug__antwort {
   display: block; width: 100%; text-align: left; cursor: pointer;
@@ -1241,6 +1275,10 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
 }
 
 /* Buttons */
+/* WICHTIG: display:inline-flex weiter unten wuerde das hidden-Attribut
+   ueberstimmen. Ohne diese Zeile stand z. B. "Weiterfliegen" schon da,
+   bevor die Frage beantwortet war. */
+.btn[hidden] { display: none; }
 .btn {
   font-family: var(--font); font-weight: 800; font-size: 1rem;
   border: none; border-radius: 14px; padding: .8rem 1.4rem;

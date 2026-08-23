@@ -1,0 +1,921 @@
+{
+  "01-erste-schritte": [
+    {
+      "frage": "Womit gibt Python etwas auf dem Bildschirm aus?",
+      "antworten": [
+        "print()",
+        "show()",
+        "write()"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was gehört bei print immer dazu?",
+      "antworten": [
+        "eckige Klammern",
+        "runde Klammern",
+        "geschweifte Klammern"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Was gibt dieses Programm aus?",
+      "antworten": [
+        "\"Hallo\" mit Anführungszeichen",
+        "gar nichts",
+        "Hallo"
+      ],
+      "richtig": 2,
+      "code": "print(\"Hallo\")"
+    },
+    {
+      "frage": "Warum stehen Texte in print in Anführungszeichen?",
+      "antworten": [
+        "Damit Python weiß, dass es Text ist",
+        "Damit es schöner aussieht",
+        "Damit der Text größer wird"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was passiert, wenn du dich vertippst und prnt statt print schreibst?",
+      "antworten": [
+        "Python verbessert es selbst",
+        "Python meldet einen Fehler",
+        "Das Programm läuft trotzdem"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Was bewirkt ein leeres print()?",
+      "antworten": [
+        "Es gibt nichts aus",
+        "Es beendet das Programm",
+        "Es gibt eine leere Zeile aus"
+      ],
+      "richtig": 2
+    }
+  ],
+  "02-variablen": [
+    {
+      "frage": "Was macht das Gleichheitszeichen in alter = 12?",
+      "antworten": [
+        "Es speichert 12 in alter",
+        "Es prüft, ob alter 12 ist",
+        "Es rechnet 12 aus"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was gibt dieses Programm aus?",
+      "antworten": [
+        "5",
+        "8",
+        "13"
+      ],
+      "richtig": 1,
+      "code": "x = 5\nx = 8\nprint(x)"
+    },
+    {
+      "frage": "Welcher Variablenname ist erlaubt?",
+      "antworten": [
+        "2punkte",
+        "punkte gesamt",
+        "punkte_gesamt"
+      ],
+      "richtig": 2
+    },
+    {
+      "frage": "Was gilt für Punkte und punkte?",
+      "antworten": [
+        "Das sind zwei verschiedene Variablen",
+        "Das ist dieselbe Variable",
+        "Große Buchstaben sind verboten"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was gibt dieses Programm aus?",
+      "antworten": [
+        "7",
+        "12",
+        "34"
+      ],
+      "richtig": 1,
+      "code": "a = 3\nb = 4\nprint(a * b)"
+    },
+    {
+      "frage": "Warum gibt man Variablen sprechende Namen?",
+      "antworten": [
+        "Weil Python es verlangt",
+        "Damit es schneller läuft",
+        "Damit man das Programm später noch versteht"
+      ],
+      "richtig": 2
+    }
+  ],
+  "03-datentypen": [
+    {
+      "frage": "Welchen Datentyp hat der Wert 7?",
+      "antworten": [
+        "int",
+        "float",
+        "str"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Welchen Datentyp hat der Wert 7.0?",
+      "antworten": [
+        "int",
+        "float",
+        "bool"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Welchen Datentyp hat der Wert \"7\"?",
+      "antworten": [
+        "int",
+        "float",
+        "str"
+      ],
+      "richtig": 2
+    },
+    {
+      "frage": "Was ergibt int(\"5\") + 2?",
+      "antworten": [
+        "7",
+        "\"52\"",
+        "eine Fehlermeldung"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was ergibt \"5\" + \"2\"?",
+      "antworten": [
+        "7",
+        "\"52\"",
+        "eine Fehlermeldung"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Welche Werte kann ein bool haben?",
+      "antworten": [
+        "0 bis 9",
+        "Ja und Nein",
+        "True und False"
+      ],
+      "richtig": 2
+    },
+    {
+      "frage": "Was macht float(3)?",
+      "antworten": [
+        "Es macht 3.0 daraus",
+        "Es rundet auf 3",
+        "Es meldet einen Fehler"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Womit findest du heraus, welchen Datentyp ein Wert hat?",
+      "antworten": [
+        "datentyp()",
+        "type()",
+        "kind()"
+      ],
+      "richtig": 1
+    }
+  ],
+  "04-string-funktionen": [
+    {
+      "frage": "Was gibt len(\"Hallo\") zurück?",
+      "antworten": [
+        "5",
+        "4",
+        "6"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was macht .upper()?",
+      "antworten": [
+        "Es schreibt alles klein",
+        "Es schreibt alles groß",
+        "Es dreht den Text um"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Was liefert \"Python\"[0]?",
+      "antworten": [
+        "\"y\"",
+        "\"n\"",
+        "\"P\""
+      ],
+      "richtig": 2
+    },
+    {
+      "frage": "Was liefert \"Python\"[1:4]?",
+      "antworten": [
+        "\"yth\"",
+        "\"ytho\"",
+        "\"Pyt\""
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was macht .replace(\"a\", \"b\")?",
+      "antworten": [
+        "Es löscht alle a",
+        "Es ersetzt jedes a durch ein b",
+        "Es hängt b hinten an"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Womit teilst du einen Text in eine Liste auf?",
+      "antworten": [
+        ".join()",
+        ".cut()",
+        ".split()"
+      ],
+      "richtig": 2
+    },
+    {
+      "frage": "Was macht .join()?",
+      "antworten": [
+        "Es verbindet Listenteile zu einem Text",
+        "Es teilt einen Text auf",
+        "Es zählt die Zeichen"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was macht .lower()?",
+      "antworten": [
+        "Es schreibt alles groß",
+        "Es schreibt alles klein",
+        "Es entfernt Leerzeichen"
+      ],
+      "richtig": 1
+    }
+  ],
+  "05-operatoren": [
+    {
+      "frage": "Was ergibt 7 // 2?",
+      "antworten": [
+        "3",
+        "3.5",
+        "1"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was ergibt 7 % 2?",
+      "antworten": [
+        "3",
+        "1",
+        "3.5"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Was ergibt 2 ** 3?",
+      "antworten": [
+        "6",
+        "9",
+        "8"
+      ],
+      "richtig": 2
+    },
+    {
+      "frage": "Was macht punkte += 5?",
+      "antworten": [
+        "Es zählt 5 dazu",
+        "Es setzt punkte auf 5",
+        "Es zieht 5 ab"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was prüft ==?",
+      "antworten": [
+        "Es weist einen Wert zu",
+        "Ob zwei Werte gleich sind",
+        "Ob zwei Werte ungleich sind"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Wann ist a and b wahr?",
+      "antworten": [
+        "Wenn mindestens eins wahr ist",
+        "Immer",
+        "Nur wenn beide wahr sind"
+      ],
+      "richtig": 2
+    },
+    {
+      "frage": "Wann ist a or b wahr?",
+      "antworten": [
+        "Wenn mindestens eins wahr ist",
+        "Nur wenn beide wahr sind",
+        "Nie"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was bedeutet !=?",
+      "antworten": [
+        "gleich",
+        "ungleich",
+        "nicht kleiner"
+      ],
+      "richtig": 1
+    }
+  ],
+  "06-eingaben": [
+    {
+      "frage": "Welchen Datentyp liefert input() immer?",
+      "antworten": [
+        "str",
+        "int",
+        "float"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Wie liest du eine ganze Zahl ein?",
+      "antworten": [
+        "input(int())",
+        "int(input())",
+        "number(input())"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Wofür steht EVA?",
+      "antworten": [
+        "Erst Variable, dann Ausgabe",
+        "Eingabe, Variable, Anzeige",
+        "Eingabe, Verarbeitung, Ausgabe"
+      ],
+      "richtig": 2
+    },
+    {
+      "frage": "Was macht f\"Hallo {name}\"?",
+      "antworten": [
+        "Es setzt den Wert von name ein",
+        "Es gibt {name} wörtlich aus",
+        "Es meldet einen Fehler"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was bewirkt \\n in einem Text?",
+      "antworten": [
+        "einen Tabulator",
+        "einen Zeilenumbruch",
+        "ein Anführungszeichen"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Warum muss man eine Eingabe oft umwandeln?",
+      "antworten": [
+        "Weil Python sonst langsamer wird",
+        "Weil Zahlen sonst zu groß werden",
+        "Weil input() immer Text liefert, mit dem man nicht rechnen kann"
+      ],
+      "richtig": 2
+    }
+  ],
+  "07-bedingungen": [
+    {
+      "frage": "Was gehört ans Ende einer if-Zeile?",
+      "antworten": [
+        "ein Doppelpunkt",
+        "ein Semikolon",
+        "gar nichts"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Woran erkennt Python, was zum if gehört?",
+      "antworten": [
+        "an geschweiften Klammern",
+        "an der Einrückung",
+        "am Semikolon"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Wann läuft der else-Zweig?",
+      "antworten": [
+        "Immer",
+        "Wenn die Bedingung wahr ist",
+        "Wenn die Bedingung falsch ist"
+      ],
+      "richtig": 2
+    },
+    {
+      "frage": "Wofür ist elif da?",
+      "antworten": [
+        "Für eine weitere Bedingung, falls die erste nicht zutraf",
+        "Zum Beenden des Programms",
+        "Für Schleifen"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was gibt dieses Programm aus?",
+      "antworten": [
+        "klein",
+        "groß",
+        "gar nichts"
+      ],
+      "richtig": 1,
+      "code": "x = 5\nif x > 3:\n    print(\"groß\")\nelse:\n    print(\"klein\")"
+    },
+    {
+      "frage": "Wie viele elif darf ein if haben?",
+      "antworten": [
+        "höchstens eins",
+        "gar keins",
+        "beliebig viele"
+      ],
+      "richtig": 2
+    }
+  ],
+  "08-while-schleifen": [
+    {
+      "frage": "Wie lange läuft eine while-Schleife?",
+      "antworten": [
+        "Solange die Bedingung wahr ist",
+        "Genau einmal",
+        "Immer zehnmal"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was ist eine Endlosschleife?",
+      "antworten": [
+        "Eine besonders lange Schleife",
+        "Eine Schleife, deren Bedingung nie falsch wird",
+        "Eine Schleife mit break"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Was muss man in einer while-Schleife meistens verändern?",
+      "antworten": [
+        "die Ausgabe",
+        "den Namen der Schleife",
+        "den Zähler in der Bedingung"
+      ],
+      "richtig": 2
+    },
+    {
+      "frage": "Was bedeutet inkrementieren?",
+      "antworten": [
+        "um eins erhöhen",
+        "halbieren",
+        "auf null zurücksetzen"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was gibt dieses Programm aus?",
+      "antworten": [
+        "1, 2, 3 und 4",
+        "1, 2 und 3 untereinander",
+        "nur die 1"
+      ],
+      "richtig": 1,
+      "code": "i = 1\nwhile i <= 3:\n    print(i)\n    i += 1"
+    }
+  ],
+  "09-listen": [
+    {
+      "frage": "Mit welchen Klammern schreibt man eine Liste?",
+      "antworten": [
+        "eckige Klammern [ ]",
+        "runde Klammern ( )",
+        "geschweifte Klammern { }"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Welchen Index hat das erste Element einer Liste?",
+      "antworten": [
+        "1",
+        "0",
+        "-1"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Was macht .append(5)?",
+      "antworten": [
+        "Es fügt die 5 vorne ein",
+        "Es löscht die 5",
+        "Es hängt die 5 hinten an"
+      ],
+      "richtig": 2
+    },
+    {
+      "frage": "Was gibt len([3, 7, 9]) zurück?",
+      "antworten": [
+        "3",
+        "9",
+        "19"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was macht .remove(\"Apfel\")?",
+      "antworten": [
+        "Es löscht die ganze Liste",
+        "Es entfernt Apfel aus der Liste",
+        "Es sucht nach Apfel"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Was liefert [10, 20, 30][-1]?",
+      "antworten": [
+        "10",
+        "eine Fehlermeldung",
+        "30"
+      ],
+      "richtig": 2
+    },
+    {
+      "frage": "Was liefert [10, 20, 30][1]?",
+      "antworten": [
+        "20",
+        "10",
+        "30"
+      ],
+      "richtig": 0
+    }
+  ],
+  "10-for-schleifen": [
+    {
+      "frage": "Wie oft läuft for i in range(5)?",
+      "antworten": [
+        "5-mal",
+        "4-mal",
+        "6-mal"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Mit welcher Zahl beginnt range(5)?",
+      "antworten": [
+        "1",
+        "0",
+        "5"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Was macht break?",
+      "antworten": [
+        "Es überspringt einen Durchlauf",
+        "Es startet die Schleife neu",
+        "Es bricht die Schleife sofort ab"
+      ],
+      "richtig": 2
+    },
+    {
+      "frage": "Was macht continue?",
+      "antworten": [
+        "Es springt zum nächsten Durchlauf",
+        "Es bricht die Schleife ab",
+        "Es wiederholt den Durchlauf"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was durchläuft for wort in liste?",
+      "antworten": [
+        "nur die Indizes",
+        "jedes Element der Liste",
+        "nur das erste Element"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Was liefert range(2, 5)?",
+      "antworten": [
+        "2, 3, 4 und 5",
+        "3 und 4",
+        "2, 3 und 4"
+      ],
+      "richtig": 2
+    }
+  ],
+  "11-funktionen": [
+    {
+      "frage": "Mit welchem Wort definiert man eine Funktion?",
+      "antworten": [
+        "def",
+        "func",
+        "function"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was passiert, wenn man eine Funktion nur definiert, aber nie aufruft?",
+      "antworten": [
+        "Sie läuft einmal automatisch",
+        "Sie tut gar nichts",
+        "Es gibt eine Fehlermeldung"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Was macht return?",
+      "antworten": [
+        "Es gibt etwas auf dem Bildschirm aus",
+        "Es beendet das ganze Programm",
+        "Es gibt einen Wert an die Aufrufstelle zurück"
+      ],
+      "richtig": 2
+    },
+    {
+      "frage": "Was ist ein Parameter?",
+      "antworten": [
+        "Ein Wert, den die Funktion beim Aufruf bekommt",
+        "Der Name der Funktion",
+        "Das Ergebnis der Funktion"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was ist ein Standardwert?",
+      "antworten": [
+        "Immer die Zahl 0",
+        "Ein Wert, der gilt, wenn beim Aufruf nichts übergeben wird",
+        "Der Rückgabewert"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Warum schreibt man überhaupt Funktionen?",
+      "antworten": [
+        "Weil Python sonst Fehler meldet",
+        "Damit das Programm länger wird",
+        "Damit man denselben Code nicht mehrfach schreiben muss"
+      ],
+      "richtig": 2
+    }
+  ],
+  "12-verschachtelte-listen": [
+    {
+      "frage": "Was ist eine verschachtelte Liste?",
+      "antworten": [
+        "Eine Liste, die selbst wieder Listen enthält",
+        "Eine besonders lange Liste",
+        "Eine sortierte Liste"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Wie kommst du an die zweite Zeile, dritte Spalte?",
+      "antworten": [
+        "matrix[2][3]",
+        "matrix[1][2]",
+        "matrix[3][2]"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Wie viele Zeilen hat [[1, 2], [3, 4], [5, 6]]?",
+      "antworten": [
+        "2",
+        "6",
+        "3"
+      ],
+      "richtig": 2
+    },
+    {
+      "frage": "Wie durchläuft man alle Felder einer Matrix?",
+      "antworten": [
+        "mit zwei ineinander liegenden Schleifen",
+        "mit einer einzigen Schleife",
+        "mit einer Bedingung"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was liefert [[1, 2], [3, 4]][0][1]?",
+      "antworten": [
+        "1",
+        "2",
+        "3"
+      ],
+      "richtig": 1
+    }
+  ],
+  "13-dictionaries": [
+    {
+      "frage": "Mit welchen Klammern schreibt man ein Dictionary?",
+      "antworten": [
+        "geschweifte Klammern { }",
+        "eckige Klammern [ ]",
+        "runde Klammern ( )"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Woraus besteht ein Eintrag in einem Dictionary?",
+      "antworten": [
+        "nur aus einem Wert",
+        "aus Schlüssel und Wert",
+        "aus Index und Wert"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Wie liest du den Wert zum Schlüssel \"name\"?",
+      "antworten": [
+        "d(0)",
+        "d.name()",
+        "d[\"name\"]"
+      ],
+      "richtig": 2
+    },
+    {
+      "frage": "Was passiert bei d[\"neu\"] = 5, wenn \"neu\" noch nicht existiert?",
+      "antworten": [
+        "Der Eintrag wird neu angelegt",
+        "Es gibt eine Fehlermeldung",
+        "Es passiert nichts"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Wodurch unterscheidet sich ein Dictionary von einer Liste?",
+      "antworten": [
+        "Es kann nur Zahlen speichern",
+        "Man greift über Schlüssel zu statt über Zahlen-Indizes",
+        "Es ist immer sortiert"
+      ],
+      "richtig": 1
+    }
+  ],
+  "14-klassen": [
+    {
+      "frage": "Mit welchem Wort definiert man eine Klasse?",
+      "antworten": [
+        "class",
+        "def",
+        "new"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was ist ein Objekt?",
+      "antworten": [
+        "Eine Funktion",
+        "Ein konkretes Exemplar einer Klasse",
+        "Eine Liste"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Wann läuft __init__?",
+      "antworten": [
+        "Bei jedem Methodenaufruf",
+        "Gar nicht",
+        "Beim Erzeugen eines neuen Objekts"
+      ],
+      "richtig": 2
+    },
+    {
+      "frage": "Wofür steht self?",
+      "antworten": [
+        "Für das Objekt selbst",
+        "Für die Klasse",
+        "Für den Rückgabewert"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was ist ein Attribut?",
+      "antworten": [
+        "Eine Funktion außerhalb der Klasse",
+        "Ein Wert, der zu einem Objekt gehört",
+        "Ein anderes Wort für Modul"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Was ist eine Methode?",
+      "antworten": [
+        "Eine Variable in der Klasse",
+        "Ein Name für ein Objekt",
+        "Eine Funktion, die zu einer Klasse gehört"
+      ],
+      "richtig": 2
+    }
+  ],
+  "15-dateien": [
+    {
+      "frage": "Wofür steht das \"w\" bei open(\"t.txt\", \"w\")?",
+      "antworten": [
+        "write – die Datei wird zum Schreiben geöffnet",
+        "wait – das Programm wartet",
+        "word – es wird Wort für Wort gelesen"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Wofür steht das \"r\" bei open(\"t.txt\", \"r\")?",
+      "antworten": [
+        "run – die Datei wird ausgeführt",
+        "read – die Datei wird zum Lesen geöffnet",
+        "rückwärts – von hinten gelesen"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Warum benutzt man with open(...)?",
+      "antworten": [
+        "Weil es weniger Speicher braucht",
+        "Weil die Datei sonst leer bleibt",
+        "Weil die Datei danach automatisch geschlossen wird"
+      ],
+      "richtig": 2
+    },
+    {
+      "frage": "Was macht .read()?",
+      "antworten": [
+        "Es liest den ganzen Inhalt der Datei",
+        "Es schreibt in die Datei",
+        "Es löscht die Datei"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was passiert mit einer vorhandenen Datei bei open(..., \"w\")?",
+      "antworten": [
+        "Der neue Text wird angehängt",
+        "Ihr alter Inhalt wird überschrieben",
+        "Es gibt eine Fehlermeldung"
+      ],
+      "richtig": 1
+    }
+  ],
+  "16-projekte": [
+    {
+      "frage": "Wozu dienen Kommentare mit #?",
+      "antworten": [
+        "Sie erklären den Code für Menschen und werden nicht ausgeführt",
+        "Sie werden wie normaler Code ausgeführt",
+        "Sie machen das Programm schneller"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Warum testet man ein Programm mit verschiedenen Eingaben?",
+      "antworten": [
+        "Weil Python das verlangt",
+        "Um Fehler zu finden, die bei einer Eingabe nicht auffallen",
+        "Damit das Programm länger wird"
+      ],
+      "richtig": 1
+    },
+    {
+      "frage": "Was zeichnet gute Variablennamen aus?",
+      "antworten": [
+        "Sie sind möglichst kurz",
+        "Sie sind durchnummeriert",
+        "Sie sagen, was drinsteht"
+      ],
+      "richtig": 2
+    },
+    {
+      "frage": "Womit vergleicht man beim Zahlenraten die geratene Zahl?",
+      "antworten": [
+        "mit if und elif",
+        "mit print",
+        "mit def"
+      ],
+      "richtig": 0
+    },
+    {
+      "frage": "Was hilft, wenn ein Programm nicht das Erwartete tut?",
+      "antworten": [
+        "Das Programm neu schreiben",
+        "Zwischenergebnisse mit print ausgeben",
+        "Alle Kommentare entfernen"
+      ],
+      "richtig": 1
+    }
+  ]
+}
