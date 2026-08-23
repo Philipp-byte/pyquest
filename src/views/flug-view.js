@@ -37,6 +37,13 @@ const ZUENDABSTAND = 105;   // so nah heran, dann beginnt der Countdown
 const ZUENDZEIT = 0.55;     // Vorwarnung in Sekunden
 const DRUCKWELLE = 175;     // in diesem Umkreis gehen Meteoriten kaputt
 const SCHADENSRADIUS = 95;  // so nah kostet die Explosion ein Leben
+// Nullbits Bild zeigt unten einen Scan-Strahl. Im Flug soll nur der Koerper
+// zu sehen sein, also wird beim Zeichnen abgeschnitten. Bei 196 von 360 px
+// wechselt die Farbe von Dunkelblau (Koerper) zu Hellblau (Strahl); die
+// Originaldatei bleibt unangetastet, die Lektionen brauchen den Strahl.
+const DROHNE_BILDANTEIL = 196 / 360;
+// So weit fliegt sie von rechts herein, bevor sie Kurs auf Py nimmt.
+const ANFLUGTIEFE = 140;
 
 // Es darf immer nur EIN Flug laufen. Ohne das lief beim Verlassen der
 // Ansicht die alte Spielschleife weiter, griff auf die neue Seite zu und
@@ -502,11 +509,27 @@ class Flugspiel {
     }
 
     for (const d of this.drohnen) {
-      d.x -= d.vx * dt;
-      // Sie zielt langsam auf die Hoehe des Schiffs - aber traege genug,
-      // dass man ihr ausweichen kann.
-      const dy = this.schiff.y - d.y;
-      d.y += Math.max(-70, Math.min(70, dy * 1.4)) * dt;
+      // Erst ein Stueck von rechts hereinfliegen, danach direkt Kurs auf
+      // Pys Raumschiff nehmen. Sie ist langsamer als das Schiff - deshalb
+      // kommt man ihr davon, wenn man auf das Warnsignal reagiert.
+      if (d.zuendet !== null) {
+        // Scharf: Der Kurs ist festgelegt, sie zielt nicht mehr nach.
+        // Sonst koennte man ihr nach dem Warnsignal nicht mehr entkommen.
+        d.x += d.kursX * dt;
+        d.y += d.kursY * dt;
+      } else if (d.x > this.breite - ANFLUGTIEFE) {
+        d.x -= d.vx * dt;
+        d.kursX = -d.vx;
+        d.kursY = 0;
+      } else {
+        const zx = this.schiff.x - d.x;
+        const zy = this.schiff.y - d.y;
+        const laenge = Math.hypot(zx, zy) || 1;
+        d.kursX = (zx / laenge) * d.vx;
+        d.kursY = (zy / laenge) * d.vx;
+        d.x += d.kursX * dt;
+        d.y += d.kursY * dt;
+      }
       d.puls += dt * 6;
 
       const abstand = Math.hypot(d.x - this.schiff.x, d.y - this.schiff.y);
@@ -529,6 +552,8 @@ class Flugspiel {
       y: r + 30 + Math.random() * (this.hoehe - 2 * r - 60),
       r,
       vx: blende(120, 190, this.fortschritt),
+      kursX: -blende(120, 190, this.fortschritt),
+      kursY: 0,
       puls: 0,
       zuendet: null,
       weg: false,
@@ -1090,10 +1115,14 @@ class Flugspiel {
 
     const wippen = Math.sin(d.puls) * 3;
     if (this.drohneBild) {
-      const h = d.r * 2.6;
-      const w = (this.drohneBild.naturalWidth / this.drohneBild.naturalHeight) * h;
+      // Nur der obere Teil der Vorlage - der Scan-Strahl bleibt weg.
+      const qw = this.drohneBild.naturalWidth;
+      const qh = Math.round(this.drohneBild.naturalHeight * DROHNE_BILDANTEIL);
+      const h = d.r * 2.2;
+      const w = (qw / qh) * h;
       c.globalAlpha = blink ? 0.65 : 1;
-      c.drawImage(this.drohneBild, d.x - w / 2, d.y - h / 2 + wippen, w, h);
+      c.drawImage(this.drohneBild, 0, 0, qw, qh,
+                  d.x - w / 2, d.y - h / 2 + wippen, w, h);
       c.globalAlpha = 1;
     } else {
       c.fillStyle = blink ? "#f87171" : "#4c1d95";
