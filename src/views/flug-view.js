@@ -1,8 +1,9 @@
 // Der Flug zwischen zwei Welten - ein kleines Wiederholungsspiel.
 //
 // Ablauf: Py springt ins Raumschiff und startet. Danach steuern die
-// Lernenden das Schiff durch ein Meteoritenfeld. Immer wieder haelt der Flug
-// an und eine Frage aus dem gerade abgeschlossenen Kapitel erscheint in einem
+// Lernenden das Schiff rund drei Minuten lang durch ein Meteoritenfeld und
+// sammeln dabei Sterne ein. Nach jeweils fuenf Sternen haelt der Flug an und
+// eine Frage aus dem gerade abgeschlossenen Kapitel erscheint in einem
 // eigenen Fenster - fliegen und lesen gleichzeitig war zu viel auf einmal.
 //
 //   Treffer durch Meteorit  -> ein Leben weniger
@@ -13,6 +14,10 @@
 // endet der Flug, die Leben stehen wieder auf 3 - niemand soll dauerhaft
 // festhaengen. Das Spiel geht NICHT in die Bewertung ein und laesst sich
 // jederzeit ueberspringen.
+//
+// Die Schwierigkeit steigt doppelt: mit dem Kapitel (spaetere Welten sind
+// von vornherein haerter) und waehrend des Flugs (gegen Ende kommen die
+// Brocken schneller, dichter und in Gruppen).
 
 import { renderHeader, wireHeader, html } from "../ui.js";
 import { getLeben, lebenDazu, lebenAbziehen, lebenZuruecksetzen, MAX_LEBEN } from "../leben.js";
@@ -20,6 +25,8 @@ import { playCorrect, playWrong, playFinish } from "../sound.js";
 
 const BASE = import.meta.env.BASE_URL;
 const BUCHSTABEN = ["A", "B", "C", "D"];
+const FLUGDAUER = 180;   // Sekunden bis zur naechsten Welt
+const STERNE_PRO_FRAGE = 5;
 
 // Es darf immer nur EIN Flug laufen. Ohne das lief beim Verlassen der
 // Ansicht die alte Spielschleife weiter, griff auf die neue Seite zu und
@@ -48,25 +55,31 @@ export function renderFlug(app, curriculum, chapterId) {
 
         <div class="flug__kopf">
           <span class="flug__leben" title="Leben"></span>
+          <span class="flug__sterne" title="Sterne bis zur nächsten Frage"></span>
           <span class="flug__ziel">Nächste Welt: <strong>${escape(naechsteWelt(curriculum, stufe))}</strong></span>
         </div>
+        <div class="flug__strecke"><div class="flug__strecke-fuell"></div></div>
 
         <div class="flug__frage" hidden>
-          <p class="flug__frage-marke">Frage aus dem Kapitel</p>
-          <p class="flug__frage-text"></p>
-          <div class="flug__antworten"></div>
-          <p class="flug__rueckmeldung" hidden></p>
-          <button class="btn btn--primary flug__weiter" hidden>Weiterfliegen 🚀</button>
+          <div class="flug__frage-fenster">
+            <p class="flug__frage-marke">Frage aus dem Kapitel</p>
+            <p class="flug__frage-text"></p>
+            <div class="flug__antworten"></div>
+            <p class="flug__rueckmeldung" hidden></p>
+            <button class="btn btn--primary flug__weiter" hidden>Weiterfliegen 🚀</button>
+          </div>
         </div>
 
         <div class="flug__tafel">
           <h2 class="flug__titel">Bereit zum Abflug?</h2>
           <p class="flug__text">
             Py fliegt weiter zur nächsten Welt – und du steuerst.
-            Weiche den Meteoriten aus. Zwischendurch hält der Flug an und du
-            beantwortest eine <strong>Frage aus dem Kapitel</strong>.
+            Weiche den Meteoriten aus und sammle <strong>Sterne</strong> ein.
+            Nach jeweils <strong>fünf Sternen</strong> hält der Flug an und du
+            bekommst eine Frage aus dem Kapitel. Richtig beantwortet gibt es
+            ein <strong>Herz</strong> dazu.
           </p>
-          <p class="flug__steuerung">⬆️⬇️ Pfeiltasten – oder mit dem Finger ziehen</p>
+          <p class="flug__steuerung">⬆️⬇️ Pfeiltasten – oder mit dem Finger ziehen · rund 3 Minuten bis zur nächsten Welt</p>
           <div class="flug__knoepfe">
             <button class="btn btn--primary flug__start">🚀 Losfliegen</button>
             <button class="btn btn--ghost flug__skip">Überspringen</button>
@@ -80,6 +93,7 @@ export function renderFlug(app, curriculum, chapterId) {
   const spiel = new Flugspiel(app, { chapter, stufe, fragen, chapterId });
   laufendesSpiel = spiel;
   spiel.zeigeLeben();
+  spiel.zeigeSterne();
 
   app.querySelector(".flug__start").onclick = () => spiel.starten();
   app.querySelector(".flug__skip").onclick = () => {
@@ -88,8 +102,10 @@ export function renderFlug(app, curriculum, chapterId) {
   };
 }
 
-// Alle Quizfragen des Kapitels einsammeln und mischen - hoechstens vier,
-// sonst wird der Flug zur Prueferei.
+// Alle Quizfragen des Kapitels einsammeln und mischen. In drei Minuten
+// kommen je nach Sammelglueck sieben bis zehn Fragen dran - mehr, als die
+// meisten Kapitel hergeben. Reicht der Vorrat nicht, wird von vorne
+// begonnen (siehe naechsteFrage).
 function sammleFragen(chapter) {
   const alle = [];
   for (const lesson of chapter.lessons) {
@@ -103,11 +119,21 @@ function sammleFragen(chapter) {
       }
     }
   }
-  for (let i = alle.length - 1; i > 0; i--) {
+  return mische(alle);
+}
+
+function mische(liste) {
+  for (let i = liste.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [alle[i], alle[j]] = [alle[j], alle[i]];
+    [liste[i], liste[j]] = [liste[j], liste[i]];
   }
-  return alle.slice(0, 4);
+  return liste;
+}
+
+// Zwischen zwei Werten ueberblenden - dafuer, dass es waehrend des Flugs
+// gleichmaessig schwerer wird.
+function blende(von, bis, p) {
+  return von + (bis - von) * Math.max(0, Math.min(1, p));
 }
 
 function naechsteWelt(curriculum, stufe) {
@@ -141,12 +167,13 @@ class Flugspiel {
     this.tafel = app.querySelector(".flug__tafel");
     this.frageFeld = app.querySelector(".flug__frage");
 
-    // Schwierigkeit steigt mit dem Kapitel.
-    // Deutlich dichteres Feld als anfangs - der erste Entwurf war zu leer.
-    this.tempo = 170 + stufe * 14;
-    this.meteorPause = Math.max(820 - stufe * 42, 240);
-    // Ab der Mitte kommen die Brocken auch paarweise.
-    this.doppelAb = 5;
+    // Schwierigkeit: Startwert haengt am Kapitel, waehrend des Flugs wird
+    // dann bis zum Endwert hochgefahren. Bei 1280 px Breite entspricht das
+    // rund 7 Brocken gleichzeitig am Anfang und rund 16 am Schluss.
+    this.tempoStart = 190 + stufe * 11;
+    this.tempoEnde = 380 + stufe * 18;
+    this.pauseStart = Math.max(900 - stufe * 30, 480);
+    this.pauseEnde = Math.max(210 - stufe * 6, 120);
     this.laeuft = false;
     this.pyBild = null;
 
@@ -219,6 +246,25 @@ class Flugspiel {
     feld.innerHTML = `${"❤️".repeat(n)}<span class="flug__leben-zahl">${n}/${MAX_LEBEN}</span>`;
   }
 
+  zeigeSterne() {
+    const feld = this.app.querySelector(".flug__sterne");
+    if (!feld) return;
+    const n = this.eingesammelt ?? 0;
+    feld.innerHTML = `${"⭐".repeat(n)}${"·".repeat(STERNE_PRO_FRAGE - n)}`
+      + `<span class="flug__sterne-zahl">${n}/${STERNE_PRO_FRAGE}</span>`;
+  }
+
+  zeigeStrecke() {
+    const fuell = this.app.querySelector(".flug__strecke-fuell");
+    if (!fuell) return;
+    fuell.style.width = `${Math.min(100, ((this.zeit ?? 0) / FLUGDAUER) * 100)}%`;
+  }
+
+  // 0 am Start, 1 am Ziel - daran haengt die ganze Schwierigkeitskurve.
+  get fortschritt() {
+    return Math.min((this.zeit ?? 0) / FLUGDAUER, 1);
+  }
+
   // ---- Ablauf ----------------------------------------------------------
 
   starten() {
@@ -241,10 +287,16 @@ class Flugspiel {
     this.unverwundbarBis = 0;
     this.frageIndex = 0;
     this.explosion = [];
-    this.naechsteFrageAb = 4.5; // Sekunden bis zur ersten Frage
-    this.phase = "start";       // start -> flug -> ende
+    this.funkeln = [];         // kleine Funken beim Einsammeln
+    this.sternObjekte = [];    // die einsammelbaren Sterne
+    this.letzterStern = 0;
+    this.eingesammelt = 0;     // Sterne seit der letzten Frage
+    this.phase = "start";      // start -> flug -> frage -> ende
     this.startZeit = 0;
     this.meldung = null;
+    this.zeigeSterne();
+    this.zeigeStrecke();
+    this.feldVorfuellen();
 
     window.addEventListener("keydown", this.aufTaste);
     window.addEventListener("keyup", this.aufTasteAuf);
@@ -318,9 +370,11 @@ class Flugspiel {
     // weiter, damit man den Treffer sieht.
     if (this.phase === "frage") {
       this.explosionBewegen(dt);
+      this.funkelnBewegen(dt);
       return;
     }
     this.explosionBewegen(dt);
+    this.funkelnBewegen(dt);
 
     // Schiff steuern
     const schub = 420;
@@ -338,22 +392,104 @@ class Flugspiel {
     if (this.schiff.y > this.hoehe - rand) { this.schiff.y = this.hoehe - rand; this.schiff.vy = 0; }
 
     this.meteoreBewegen(dt);
+    this.sterneBewegen(dt);
+    this.zeigeStrecke();
 
-    // Zeit fuer die naechste Frage? Dann haelt der Flug an.
-    if (this.zeit > this.naechsteFrageAb && this.frageIndex < this.fragen.length) {
+    // Fuenf Sterne beisammen -> der Flug haelt an und es gibt eine Frage.
+    if (this.eingesammelt >= STERNE_PRO_FRAGE && this.fragen.length) {
       this.frageStarten();
       return;
     }
-    // Alle Fragen beantwortet -> Ziel erreicht
-    if (this.frageIndex >= this.fragen.length && this.zeit > this.naechsteFrageAb + 2) {
-      this.zielErreicht();
+    // Drei Minuten geschafft -> naechste Welt
+    if (this.zeit >= FLUGDAUER) this.zielErreicht();
+  }
+
+  // ---- Sterne einsammeln -----------------------------------------------
+
+  sterneBewegen(dt) {
+    // Etwas schneller als am Anfang, damit die Frage nicht ewig auf sich
+    // warten laesst - aber langsamer als die Meteoriten.
+    const pause = blende(2.4, 1.5, this.fortschritt);
+    if (this.zeit - this.letzterStern > pause) {
+      this.letzterStern = this.zeit;
+      this.neuerStern();
+    }
+    for (const s of this.sternObjekte) {
+      s.x -= s.vx * dt;
+      s.y += Math.sin((this.zeit + s.versatz) * 1.8) * 22 * dt;
+      s.dreh += dt * 1.1;
+      if (this.faengt(s)) s.weg = true;
+    }
+    const vorher = this.sternObjekte.length;
+    this.sternObjekte = this.sternObjekte.filter((s) => !s.weg && s.x > -s.r - 10);
+    if (vorher !== this.sternObjekte.length) this.zeigeSterne();
+  }
+
+  neuerStern() {
+    const r = 13;
+    // Auch der Stern sucht sich eine freie Bahn - er soll einsammelbar
+    // sein, ohne dass man zwangslaeufig in einen Brocken fliegt.
+    const belegt = this.meteore
+      .filter((m) => m.x > this.breite - 200)
+      .map((m) => ({ y: m.y, r: m.r + 60 }));
+    let y = 0;
+    for (let versuch = 0; versuch < 12; versuch++) {
+      y = r + 20 + Math.random() * (this.hoehe - 2 * r - 40);
+      if (!belegt.some((o) => Math.abs(o.y - y) < o.r + r)) break;
+      if (versuch === 11) return;
+    }
+    this.sternObjekte.push({
+      x: this.breite + r + Math.random() * 40,
+      y,
+      r,
+      vx: blende(150, 250, this.fortschritt),
+      dreh: Math.random() * Math.PI,
+      versatz: Math.random() * 6,
+      weg: false,
+    });
+  }
+
+  faengt(s) {
+    const dx = s.x - this.schiff.x;
+    const dy = s.y - this.schiff.y;
+    if (Math.hypot(dx, dy) > s.r + this.schiff.r * 0.9) return false;
+    this.eingesammelt++;
+    playCorrect();
+    this.funkenAusloesen(s.x, s.y);
+    return true;
+  }
+
+  funkenAusloesen(x, y) {
+    for (let i = 0; i < 12; i++) {
+      const w = Math.random() * Math.PI * 2;
+      const v = 40 + Math.random() * 110;
+      this.funkeln.push({
+        x, y, vx: Math.cos(w) * v, vy: Math.sin(w) * v,
+        leben: 0.3 + Math.random() * 0.35, alter: 0, r: 1.5 + Math.random() * 2.5,
+      });
     }
   }
 
+  funkelnBewegen(dt) {
+    if (!this.funkeln?.length) return;
+    for (const f of this.funkeln) {
+      f.alter += dt;
+      f.x += f.vx * dt;
+      f.y += f.vy * dt;
+      f.vx *= 0.93;
+      f.vy *= 0.93;
+    }
+    this.funkeln = this.funkeln.filter((f) => f.alter < f.leben);
+  }
+
   meteoreBewegen(dt) {
-    if (this.zeit - this.letzterMeteor > this.meteorPause / 1000) {
+    const p = this.fortschritt;
+    if (this.zeit - this.letzterMeteor > blende(this.pauseStart, this.pauseEnde, p) / 1000) {
       this.letzterMeteor = this.zeit;
-      const anzahl = this.stufe >= this.doppelAb && Math.random() < 0.45 ? 2 : 1;
+      // Gegen Ende kommen die Brocken in Gruppen statt einzeln.
+      let anzahl = 1;
+      if (p > 0.75) anzahl = Math.random() < 0.45 ? 3 : 2;
+      else if (p > 0.45) anzahl = Math.random() < 0.5 ? 2 : 1;
       for (let i = 0; i < anzahl; i++) this.neuerMeteor();
     }
     for (const m of this.meteore) {
@@ -366,13 +502,41 @@ class Flugspiel {
     this.meteore = this.meteore.filter((m) => m.x > -m.r - 10);
   }
 
+  // Ohne das startet der Flug in einem leeren Weltraum und fuellt sich erst
+  // nach rund sechs Sekunden - genau die Zeit, in der man den Eindruck
+  // gewinnt, es kaeme ja gar nichts. Also gleich verteilt anfangen. Die
+  // rechte Haelfte bleibt frei, damit niemand sofort in einen Brocken faellt.
+  feldVorfuellen() {
+    const anzahl = Math.round(this.breite / 190);
+    for (let i = 0; i < anzahl; i++) {
+      this.neuerMeteor();
+      const m = this.meteore[this.meteore.length - 1];
+      if (m) m.x = this.schiff.x + 220 + Math.random() * (this.breite - this.schiff.x - 240);
+    }
+  }
+
+  // Dicht ja, unfair nein: Ein neuer Brocken darf weder einen anderen am
+  // rechten Rand ueberlappen (sonst entsteht eine luekenlose Wand) noch
+  // einen Stern zudecken (sonst ist die Belohnung nicht erreichbar).
   neuerMeteor() {
     const r = 12 + Math.random() * (16 + this.stufe);
+    const tempo = blende(this.tempoStart, this.tempoEnde, this.fortschritt);
+    const frisch = (o) => o.x > this.breite - 200;
+    const belegt = [
+      ...this.meteore.filter(frisch).map((m) => ({ y: m.y, r: m.r + 55 })),
+      ...this.sternObjekte.filter(frisch).map((s) => ({ y: s.y, r: s.r + 60 })),
+    ];
+    let y = 0;
+    for (let versuch = 0; versuch < 12; versuch++) {
+      y = r + Math.random() * (this.hoehe - 2 * r);
+      if (!belegt.some((o) => Math.abs(o.y - y) < o.r + r)) break;
+      if (versuch === 11) return; // kein Platz frei - diesmal lieber keiner
+    }
     this.meteore.push({
       x: this.breite + r + Math.random() * 60,
-      y: r + Math.random() * (this.hoehe - 2 * r),
+      y,
       r,
-      vx: this.tempo * (0.8 + Math.random() * 0.6),
+      vx: tempo * (0.8 + Math.random() * 0.6),
       vy: (Math.random() - 0.5) * 50,
       dreh: Math.random() * Math.PI,
       drehV: (Math.random() - 0.5) * 1.6,
@@ -407,14 +571,18 @@ class Flugspiel {
     this.explosion = this.explosion.filter((f) => f.alter < f.leben);
   }
 
+  // Das Schiff ist ein flacher Keil, kein Kreis - ein grosszuegiger
+  // Trefferkreis fuehlt sich deshalb ungerecht an ("das war doch vorbei!").
   trifft(m) {
     const dx = m.x - this.schiff.x;
     const dy = m.y - this.schiff.y;
-    return Math.hypot(dx, dy) < m.r + this.schiff.r * 0.75;
+    return Math.hypot(dx, dy) < m.r + this.schiff.r * 0.55;
   }
 
   treffer() {
-    this.unverwundbarBis = this.zeit + 1.6;
+    // Grosszuegige Schutzzeit: Wer einmal in einen Pulk geraet, soll nicht
+    // gleich drei Leben auf einmal verlieren.
+    this.unverwundbarBis = this.zeit + 2.2;
     this.explosionAusloesen();
     playWrong();
     const uebrig = lebenAbziehen(1);
@@ -427,11 +595,23 @@ class Flugspiel {
 
   // Der Flug haelt an und die Frage erscheint in einem eigenen Fenster -
   // fliegen und lesen gleichzeitig war zu viel auf einmal.
+  // Reicht der Vorrat des Kapitels nicht fuer drei Minuten, wird neu
+  // gemischt und von vorne begonnen.
+  naechsteFrage() {
+    if (this.frageIndex >= this.fragen.length) {
+      this.fragen = mische(this.fragen);
+      this.frageIndex = 0;
+    }
+    return this.fragen[this.frageIndex];
+  }
+
   frageStarten() {
-    const frage = this.fragen[this.frageIndex];
+    const frage = this.naechsteFrage();
     this.phase = "frage";
     this.zielY = null;
     this.hoch = this.runter = false;
+    this.eingesammelt = 0;
+    this.zeigeSterne();
 
     const feld = this.frageFeld;
     feld.hidden = false;
@@ -447,13 +627,18 @@ class Flugspiel {
       knopf.onclick = () => this.antwortGewaehlt(i, frage, box, weiter);
       box.append(knopf);
     });
-    // Tastatur: A/B/C oder 1/2/3
+    // Tastatur: A/B/C oder 1/2/3. Pfeiltasten und Leertaste duerfen hier
+    // NICHTS ausloesen - sonst antwortet man beim Steuern versehentlich.
     this.aufAntwortTaste = (e) => {
-      const idx = "abcd".indexOf(e.key.toLowerCase()) >= 0
-        ? "abcd".indexOf(e.key.toLowerCase())
-        : "1234".indexOf(e.key);
+      if (e.repeat || e.ctrlKey || e.altKey || e.metaKey) return;
+      const buchstabe = "abcd".indexOf(e.key.toLowerCase());
+      const ziffer = "1234".indexOf(e.key);
+      const idx = buchstabe >= 0 ? buchstabe : ziffer;
+      if (idx < 0) return;
       const knopf = box.children[idx];
-      if (idx >= 0 && knopf && !knopf.disabled) knopf.click();
+      if (!knopf || knopf.disabled) return;
+      e.preventDefault();
+      knopf.click();
     };
     window.addEventListener("keydown", this.aufAntwortTaste);
   }
@@ -500,10 +685,12 @@ class Flugspiel {
   frageBeenden() {
     this.frageFeld.hidden = true;
     this.frageIndex++;
-    this.naechsteFrageAb = this.zeit + 8;
     this.phase = "flug";
+    this.unverwundbarBis = this.zeit + 1.2;
     // Freie Bahn nach der Frage - sonst startet man direkt in einem Brocken.
     this.meteore = this.meteore.filter((m) => m.x > this.schiff.x + 160);
+    // Drei Minuten schon voll? Dann war das die letzte Frage.
+    if (this.zeit >= FLUGDAUER) this.zielErreicht();
   }
 
   melde(text, farbe) {
@@ -515,9 +702,11 @@ class Flugspiel {
   zielErreicht() {
     this.phase = "ende";
     playFinish();
+    this.zeigeStrecke();
     this.zeigeTafel(
       "🌍 Angekommen!",
-      `Py hat die nächste Welt erreicht. Du hast <strong>${getLeben()} von ${MAX_LEBEN}</strong> Leben.`,
+      `Py hat die nächste Welt erreicht – drei Minuten durchs Meteoritenfeld.
+       Du hast <strong>${getLeben()} von ${MAX_LEBEN}</strong> Leben.`,
       true
     );
   }
@@ -579,9 +768,11 @@ class Flugspiel {
 
     if (this.phase === "start") { this.zeichneStart(); return; }
 
+    for (const s of this.sternObjekte) this.zeichneSammelstern(s);
     for (const m of this.meteore) this.zeichneMeteor(m);
     this.zeichneSchiff(this.schiff.x, this.schiff.y, this.schiff.vy);
 
+    this.zeichneFunkeln();
     this.zeichneExplosion();
 
     if (this.meldung && this.zeit < this.meldung.bis) {
@@ -692,6 +883,40 @@ class Flugspiel {
       c.beginPath();
       c.arc(f.x, f.y, f.r * (0.6 + p), 0, Math.PI * 2);
       c.fill();
+    }
+    c.globalAlpha = 1;
+  }
+
+  // Fuenfzackiger Stern mit Schein - die eingesammelt werden wollen.
+  zeichneSammelstern(s) {
+    const c = this.ctx;
+    c.save();
+    c.translate(s.x, s.y);
+    c.rotate(s.dreh);
+    const schein = c.createRadialGradient(0, 0, 0, 0, 0, s.r * 2.4);
+    schein.addColorStop(0, "rgba(253, 224, 71, .55)");
+    schein.addColorStop(1, "rgba(253, 224, 71, 0)");
+    c.fillStyle = schein;
+    c.beginPath(); c.arc(0, 0, s.r * 2.4, 0, Math.PI * 2); c.fill();
+    c.fillStyle = "#fde047";
+    c.beginPath();
+    for (let i = 0; i < 10; i++) {
+      const w = (i / 10) * Math.PI * 2 - Math.PI / 2;
+      const r = i % 2 === 0 ? s.r : s.r * 0.44;
+      c.lineTo(Math.cos(w) * r, Math.sin(w) * r);
+    }
+    c.closePath(); c.fill();
+    c.restore();
+  }
+
+  zeichneFunkeln() {
+    if (!this.funkeln?.length) return;
+    const c = this.ctx;
+    for (const f of this.funkeln) {
+      const p = 1 - f.alter / f.leben;
+      c.globalAlpha = Math.max(0, p);
+      c.fillStyle = "#fde047";
+      c.beginPath(); c.arc(f.x, f.y, f.r * p, 0, Math.PI * 2); c.fill();
     }
     c.globalAlpha = 1;
   }

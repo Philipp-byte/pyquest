@@ -383,8 +383,10 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
   position: fixed; inset: 0; width: 100vw; height: 100vh;
   max-height: none; border-radius: 0; border: none; z-index: 90;
 }
+/* z-index 4: Der Abbruch-Knopf muss auch waehrend einer Frage (z-index 3)
+   erreichbar bleiben. */
 .flug__beenden {
-  position: absolute; top: .6rem; right: .7rem; z-index: 2;
+  position: absolute; top: .6rem; right: .7rem; z-index: 4;
   width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
   border: 1px solid rgba(226,232,240,.4); background: rgba(8,14,33,.75);
   color: #e2e8f0; font-size: 1.1rem; line-height: 1;
@@ -392,7 +394,6 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
 .flug__beenden:hover { background: rgba(56,189,248,.25); border-color: #7dd3fc; }
 
 .flug__buehne--voll .flug__kopf { padding-top: 1rem; }
-.flug__buehne--voll .flug__frage { top: 62px; }
 .flug__kopf {
   position: absolute; top: 0; left: 0; right: 0;
   display: flex; justify-content: space-between; align-items: center;
@@ -403,16 +404,48 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
 .flug__leben-zahl { margin-left: .5rem; font-size: .8rem; letter-spacing: normal; color: #94a3b8; }
 .flug__ziel { font-size: .82rem; font-weight: 700; color: #94a3b8; }
 .flug__ziel strong { color: #7dd3fc; }
+/* Sterne-Zaehler: Bei fuenf Stueck kommt die naechste Frage. */
+.flug__sterne { font-size: .95rem; font-weight: 900; color: #fde68a; }
+.flug__sterne-zahl { margin-left: .35rem; font-size: .8rem; color: #cbd5e1; }
+/* Restliche Flugstrecke */
+.flug__strecke {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 5px;
+  background: rgba(148, 163, 184, .18);
+}
+.flug__strecke-fuell {
+  height: 100%; width: 0;
+  background: linear-gradient(90deg, #38bdf8, #a78bfa);
+}
 
 /* Frage-Fenster: Der Flug haelt an, die Frage steht mittig und gross -
    fliegen und lesen gleichzeitig war zu viel auf einmal. */
+/* Das Fenster wird ueber Flexbox zentriert, NICHT ueber top/left/transform.
+   Vorher zog translate(-50%,-50%) ein hohes Fenster oben aus dem Bild
+   heraus - die Frage selbst war dann nicht mehr zu sehen. */
 .flug__frage {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  width: min(94%, 620px); z-index: 3;
-  background: rgba(8, 14, 33, .96); border: 2px solid rgba(125, 211, 252, .65);
-  border-radius: var(--radius-lg); padding: 1.2rem 1.3rem 1.1rem;
+  position: absolute; inset: 0; z-index: 3;
+  display: flex; padding: .8rem; overflow-y: auto;
+  background: rgba(4, 8, 22, .8); backdrop-filter: blur(3px);
+}
+/* margin:auto zentriert das Fenster - und weicht bei einer sehr langen
+   Frage nach oben aus, statt sie aus dem Bild zu schieben. Mit
+   justify-content:center waere der obere Teil unerreichbar. */
+.flug__frage-fenster {
+  width: min(100%, 620px); margin: auto; flex: none;
+  background: rgba(8, 14, 33, .97); border: 2px solid rgba(125, 211, 252, .65);
+  border-radius: var(--radius-lg); padding: 1rem 1.1rem .9rem;
   color: #e2e8f0; box-shadow: 0 20px 60px rgba(2, 6, 23, .6);
   animation: figur-auftritt .25s ease;
+}
+/* Auf einer niedrigen Buehne alles eine Spur kompakter, damit auch die
+   laengste Frage mit vier Antworten noch ohne Scrollen hineinpasst. */
+@media (max-height: 620px) {
+  .flug__frage-fenster { padding: .8rem .9rem .7rem; }
+  .flug__frage-text { font-size: 1rem; margin-bottom: .6rem; }
+  .flug__antwort { padding: .55rem .8rem; font-size: .92rem; }
+  .flug__antworten { gap: .35rem; }
+  .flug__rueckmeldung { margin-top: .55rem; font-size: .88rem; }
+  .flug__weiter { margin-top: .6rem; }
 }
 .flug__frage-marke {
   margin: 0 0 .3rem; font-size: .72rem; font-weight: 900;
