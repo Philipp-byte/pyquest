@@ -407,6 +407,13 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
 /* Sterne-Zaehler: Bei fuenf Stueck kommt die naechste Frage. */
 .flug__sterne { font-size: .95rem; font-weight: 900; color: #fde68a; }
 .flug__sterne-zahl { margin-left: .35rem; font-size: .8rem; color: #cbd5e1; }
+/* Verbleibende Schildladungen. Eigenes display wuerde hidden ueberstimmen. */
+.flug__schild[hidden] { display: none; }
+.flug__schild {
+  display: inline-block; font-size: .9rem; font-weight: 900; color: #67e8f9;
+  padding: .1rem .5rem; border-radius: 999px;
+  background: rgba(34, 211, 238, .16); border: 1px solid rgba(103, 232, 249, .5);
+}
 /* Restliche Flugstrecke */
 .flug__strecke {
   position: absolute; left: 0; right: 0; bottom: 0; height: 5px;
@@ -529,6 +536,13 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
   background: rgba(217, 70, 239, .14); border: 1px solid rgba(217, 70, 239, .45);
 }
 .flug__warnung strong { color: #f0abfc; }
+/* Hinweis auf das Schutzschild - ab Kapitel 3 */
+.flug__schutz {
+  margin: .1rem auto .2rem; max-width: 460px; font-size: .88rem;
+  padding: .55rem .8rem; border-radius: 12px; color: #cffafe;
+  background: rgba(34, 211, 238, .12); border: 1px solid rgba(34, 211, 238, .45);
+}
+.flug__schutz strong { color: #67e8f9; }
 .flug__knoepfe { display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap; }
 /* Die Tafel ist immer dunkel - der helle Standardknopf waere darauf
    dunkel auf dunkel und praktisch unlesbar. */

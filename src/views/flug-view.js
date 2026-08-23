@@ -49,6 +49,16 @@ const DROHNE_BILDANTEIL = 196 / 360;
 // So weit fliegt sie von rechts herein, bevor sie Kurs auf Py nimmt.
 const ANFLUGTIEFE = 140;
 
+// Ab Kapitel 3 treibt gelegentlich ein Schutzschild durchs Bild. Wer es
+// einsammelt, haelt die naechsten drei Treffer aus, ohne ein Leben zu
+// verlieren. Es schuetzt vor Meteoriten und Drohnen - eine falsche
+// Antwort kostet weiterhin ein Leben, sonst waeren die Fragen egal.
+const SCHILD_AB_STUFE = 2;
+const SCHILD_LADUNGEN = 3;
+const SCHILD_PAUSE = 26;    // Abstand zwischen zwei Schilden in Sekunden
+const SCHILD_ERSTES = 14;   // das erste kommt frueher - sonst sieht es nie,
+                            // wer die ersten Sekunden nicht uebersteht
+
 // Es darf immer nur EIN Flug laufen. Ohne das lief beim Verlassen der
 // Ansicht die alte Spielschleife weiter, griff auf die neue Seite zu und
 // veraenderte dort sogar die Leben.
@@ -77,6 +87,7 @@ export function renderFlug(app, curriculum, chapterId) {
         <div class="flug__kopf">
           <span class="flug__leben" title="Leben"></span>
           <span class="flug__sterne" title="Sterne bis zur nächsten Frage"></span>
+          <span class="flug__schild" title="Schutzschild: hält so viele Treffer aus" hidden></span>
           <span class="flug__ziel">Nächste Welt: <strong>${escape(naechsteWelt(curriculum, stufe))}</strong></span>
         </div>
         <div class="flug__strecke"><div class="flug__strecke-fuell"></div></div>
@@ -106,6 +117,12 @@ export function renderFlug(app, curriculum, chapterId) {
             ⚠️ Professor Null schickt <strong>Nullbit</strong> mit. Kommt die
             Drohne nah heran, blinkt sie rot und explodiert – dann nichts wie weg!
             Ihre Druckwelle zerlegt allerdings auch jeden Meteoriten in der Nähe.
+          </p>` : ""}
+          ${stufe >= SCHILD_AB_STUFE ? `
+          <p class="flug__schutz">
+            🛡️ Manchmal treibt ein <strong>Schutzschild</strong> vorbei. Sammle es
+            ein, dann hält es die nächsten <strong>drei Treffer</strong> aus,
+            ohne dass du ein Leben verlierst.
           </p>` : ""}
           <p class="flug__steuerung">⬆️⬇️ Pfeiltasten – oder mit dem Finger ziehen · rund 2 Minuten bis zur nächsten Welt</p>
           <div class="flug__knoepfe">
@@ -365,11 +382,15 @@ class Flugspiel {
     this.letzterStern = 0;
     this.drohnen = [];         // Nullbits Spaeherdrohnen ab Kapitel 2
     this.letzteDrohne = 0;
+    this.schilde = [];         // einsammelbare Schutzschilde ab Kapitel 3
+    this.letztesSchild = SCHILD_ERSTES - SCHILD_PAUSE;   // erstes bei 14 s
+    this.schild = 0;           // verbleibende Ladungen
     this.eingesammelt = 0;     // Sterne seit der letzten Frage
     this.phase = "start";      // start -> flug -> frage -> ende
     this.startZeit = 0;
     this.meldung = null;
     this.zeigeSterne();
+    this.zeigeSchild();
     this.zeigeStrecke();
     this.feldVorfuellen();
 
@@ -469,6 +490,7 @@ class Flugspiel {
     this.meteoreBewegen(dt);
     this.sterneBewegen(dt);
     this.drohnenBewegen(dt);
+    this.schildeBewegen(dt);
     this.zeigeStrecke();
 
     // Fuenf Sterne beisammen -> der Flug haelt an und es gibt eine Frage.
@@ -499,6 +521,61 @@ class Flugspiel {
     const vorher = this.sternObjekte.length;
     this.sternObjekte = this.sternObjekte.filter((s) => !s.weg && s.x > -s.r - 10);
     if (vorher !== this.sternObjekte.length) this.zeigeSterne();
+  }
+
+  // ---- Schutzschild -----------------------------------------------------
+
+  schildeBewegen(dt) {
+    if (this.stufe < SCHILD_AB_STUFE) return;
+    // Selten genug, dass es sich wie ein Fund anfuehlt.
+    if (this.zeit - this.letztesSchild > SCHILD_PAUSE) {
+      this.letztesSchild = this.zeit;
+      this.neuesSchild();
+    }
+    for (const s of this.schilde) {
+      s.x -= s.vx * dt;
+      s.y += Math.sin((this.zeit + s.versatz) * 1.5) * 26 * dt;
+      s.puls += dt * 3;
+      if (Math.hypot(s.x - this.schiff.x, s.y - this.schiff.y) < s.r + this.schiff.r * 0.9) {
+        s.weg = true;
+        this.schildAufnehmen();
+      }
+    }
+    this.schilde = this.schilde.filter((s) => !s.weg && s.x > -s.r - 10);
+  }
+
+  neuesSchild() {
+    const r = 18;
+    // Nicht in einen Brocken hineinlegen - man soll es holen koennen.
+    const belegt = this.meteore
+      .filter((m) => m.x > this.breite - 200)
+      .map((m) => ({ y: m.y, r: m.r + 70 }));
+    let y = 0;
+    for (let versuch = 0; versuch < 12; versuch++) {
+      y = r + 30 + Math.random() * (this.hoehe - 2 * r - 60);
+      if (!belegt.some((o) => Math.abs(o.y - y) < o.r + r)) break;
+      if (versuch === 11) return;
+    }
+    this.schilde.push({
+      x: this.breite + r + 20, y, r,
+      vx: blende(150, 250, this.fortschritt),
+      puls: 0, versatz: Math.random() * 6, weg: false,
+    });
+  }
+
+  schildAufnehmen() {
+    this.schild = SCHILD_LADUNGEN;   // ein neues Schild laedt voll auf
+    playCorrect();
+    this.funkenAusloesen(this.schiff.x, this.schiff.y, "#67e8f9");
+    this.melde("Schutzschild!", "#67e8f9");
+    this.zeigeSchild();
+  }
+
+  zeigeSchild() {
+    const feld = this.app.querySelector(".flug__schild");
+    if (!feld) return;
+    feld.hidden = this.schild <= 0;
+    feld.textContent = `🛡️ ${this.schild}`;
   }
 
   // ---- Nullbits Drohnen -------------------------------------------------
@@ -739,12 +816,39 @@ class Flugspiel {
     // Grosszuegige Schutzzeit: Wer einmal in einen Pulk geraet, soll nicht
     // gleich drei Leben auf einmal verlieren.
     this.unverwundbarBis = this.zeit + 2.2;
+
+    // Das Schutzschild faengt den Treffer ab - ein Leben kostet er dann
+    // nicht. Es zerspringt sichtbar, damit man den Verbrauch merkt.
+    if (this.schild > 0) {
+      this.schild--;
+      this.zeigeSchild();
+      playWrong();
+      this.schildFunken();
+      this.melde(this.schild > 0 ? `Schild hält! Noch ${this.schild}` : "Schild zerbrochen!",
+                 "#67e8f9");
+      return;
+    }
+
     this.explosionAusloesen();
     playWrong();
     const uebrig = lebenAbziehen(1);
     this.zeigeLeben();
     this.melde("Treffer!", "#fca5a5");
     if (uebrig <= 0) this.abgestuerzt();
+  }
+
+  // Splitter ringsum das Schiff statt einer Explosion im Schiff.
+  schildFunken() {
+    for (let i = 0; i < 22; i++) {
+      const w = Math.random() * Math.PI * 2;
+      const v = 90 + Math.random() * 160;
+      this.funkeln.push({
+        x: this.schiff.x + Math.cos(w) * this.schiff.r,
+        y: this.schiff.y + Math.sin(w) * this.schiff.r,
+        vx: Math.cos(w) * v, vy: Math.sin(w) * v, farbe: "#67e8f9",
+        leben: 0.35 + Math.random() * 0.35, alter: 0, r: 1.5 + Math.random() * 3,
+      });
+    }
   }
 
   // ---- Fragen ----------------------------------------------------------
@@ -911,7 +1015,8 @@ class Flugspiel {
     this.tafel.hidden = false;
     this.tafel.querySelector(".flug__titel").innerHTML = titel;
     this.tafel.querySelector(".flug__text").innerHTML = text;
-    const nebentexte = this.tafel.querySelectorAll(".flug__steuerung, .flug__warnung");
+    const nebentexte = this.tafel.querySelectorAll(
+      ".flug__steuerung, .flug__warnung, .flug__schutz");
     nebentexte.forEach((p) => (p.hidden = true));
     const knoepfe = this.tafel.querySelector(".flug__knoepfe");
     knoepfe.innerHTML = "";
@@ -951,9 +1056,11 @@ class Flugspiel {
     if (this.phase === "start") { this.zeichneStart(); return; }
 
     for (const s of this.sternObjekte) this.zeichneSammelstern(s);
+    for (const s of this.schilde) this.zeichneSchildItem(s);
     for (const m of this.meteore) this.zeichneMeteor(m);
     for (const d of this.drohnen) this.zeichneDrohne(d);
     this.zeichneSchiff(this.schiff.x, this.schiff.y, this.schiff.vy);
+    if (this.schild > 0) this.zeichneSchildkuppel();
 
     this.zeichneFunkeln();
     this.zeichneExplosion();
@@ -1089,6 +1196,59 @@ class Flugspiel {
       c.lineTo(Math.cos(w) * r, Math.sin(w) * r);
     }
     c.closePath(); c.fill();
+    c.restore();
+  }
+
+  // Das einsammelbare Schutzschild: Wappenform in Tuerkis, klar von den
+  // gelben Sternen zu unterscheiden.
+  zeichneSchildItem(s) {
+    const c = this.ctx;
+    const gross = 1 + Math.sin(s.puls) * 0.06;
+    c.save();
+    c.translate(s.x, s.y);
+    c.scale(gross, gross);
+
+    const schein = c.createRadialGradient(0, 0, 0, 0, 0, s.r * 2.1);
+    schein.addColorStop(0, "rgba(103, 232, 249, .5)");
+    schein.addColorStop(1, "rgba(103, 232, 249, 0)");
+    c.fillStyle = schein;
+    c.beginPath(); c.arc(0, 0, s.r * 2.1, 0, Math.PI * 2); c.fill();
+
+    const b = s.r * 0.92, h = s.r;
+    c.beginPath();
+    c.moveTo(0, -h);
+    c.lineTo(b, -h * 0.55);
+    c.lineTo(b, h * 0.18);
+    c.quadraticCurveTo(b, h * 0.85, 0, h * 1.15);
+    c.quadraticCurveTo(-b, h * 0.85, -b, h * 0.18);
+    c.lineTo(-b, -h * 0.55);
+    c.closePath();
+    c.fillStyle = "#0e7490";
+    c.fill();
+    c.lineWidth = 3; c.strokeStyle = "#a5f3fc"; c.stroke();
+    c.fillStyle = "#a5f3fc";
+    c.font = `bold ${Math.round(s.r * 0.95)}px system-ui, sans-serif`;
+    c.textAlign = "center"; c.textBaseline = "middle";
+    c.fillText("+", 0, h * 0.1);
+    c.restore();
+  }
+
+  // Kuppel ums Schiff, solange Ladungen uebrig sind. Je weniger, desto
+  // duenner - man sieht auf einen Blick, wie viel noch haelt.
+  zeichneSchildkuppel() {
+    const c = this.ctx;
+    const anteil = this.schild / SCHILD_LADUNGEN;
+    const r = this.schiff.r * 1.75 + Math.sin(this.zeit * 5) * 2;
+    c.save();
+    const g = c.createRadialGradient(this.schiff.x, this.schiff.y, r * 0.6,
+                                     this.schiff.x, this.schiff.y, r);
+    g.addColorStop(0, "rgba(103, 232, 249, 0)");
+    g.addColorStop(1, `rgba(103, 232, 249, ${0.16 + anteil * 0.2})`);
+    c.fillStyle = g;
+    c.beginPath(); c.arc(this.schiff.x, this.schiff.y, r, 0, Math.PI * 2); c.fill();
+    c.strokeStyle = `rgba(165, 243, 252, ${0.35 + anteil * 0.45})`;
+    c.lineWidth = 1 + anteil * 2.5;
+    c.beginPath(); c.arc(this.schiff.x, this.schiff.y, r, 0, Math.PI * 2); c.stroke();
     c.restore();
   }
 
