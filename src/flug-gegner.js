@@ -11,10 +11,9 @@
 //
 // Aufbau eines Eintrags:
 //
-//   abStufe    frueheste Kapitelnummer (0-basiert); der erste Flug bleibt frei
-//   pause      Sekunden zwischen zwei Auftritten, abhaengig von der Stufe
-//   erstesAb   Sekunde des ersten Auftritts
-//   warnung    Hinweistext auf der Starttafel
+//   abStufe      frueheste Kapitelnummer (0-basiert); der erste Flug bleibt frei
+//   schautRechts wohin die Bildvorlage blickt (fuer die Spiegelung)
+//   warnung      Hinweistext auf der Starttafel
 //   erzeuge    legt ein Objekt an (bekommt das Spiel)
 //   bewege     pro Bild; false = Objekt entfernen
 //   zeichne    pro Bild
@@ -24,6 +23,13 @@
 // Aktionen nutzen (treffer, funkenAusloesen, explosionAusloesen, melde).
 
 const BASE = import.meta.env.BASE_URL;
+
+// Alle 25 Sekunden tritt EIN Gegner auf - der naechste in der Reihe.
+// Vorher zog jede Art auf eigenem Takt endlos durchs Bild; jetzt hat jeder
+// einen kurzen Auftritt, und in Kapiteln mit zwei Handlangern wechseln
+// sie sich ab.
+export const GEGNER_PAUSE = 25;
+export const GEGNER_ERSTER = 9;
 
 // ---- gemeinsame Helfer -------------------------------------------------
 
@@ -51,20 +57,23 @@ function freieHoehe(spiel, r, abstand = 60) {
 // Triebwerk hinten. Die Figur wird in die Kanzel geclippt.
 //
 // Nullbit braucht das nicht - sie IST eine Drohne.
-function zeichneFeindGleiter(c, x, y, h, { bild, rumpf, glut, kanzel, wippen = 0 }) {
+function zeichneFeindGleiter(c, x, y, h, opt) {
+  const { bild, rumpf, glut, kanzel, wippen = 0, blick = -1, schautRechts = true } = opt;
   const b = h * 1.55;                 // Rumpflaenge
-  const my = y + wippen;
   c.save();
-  c.translate(x, my);
+  c.translate(x, y + wippen);
+  // Die Nase zeigt IMMER in die Flugrichtung. Gezeichnet wird nach links;
+  // beim Rueckzug nach rechts wird alles gespiegelt.
+  if (blick > 0) c.scale(-1, 1);
 
-  // Triebwerksglut hinten rechts
+  // Triebwerksglut hinten
   const flamme = c.createRadialGradient(b * 0.5, 0, 0, b * 0.5, 0, h * 0.55);
   flamme.addColorStop(0, glut);
   flamme.addColorStop(1, "rgba(0,0,0,0)");
   c.fillStyle = flamme;
   c.beginPath(); c.arc(b * 0.5, 0, h * 0.55, 0, Math.PI * 2); c.fill();
 
-  // Rumpf: Keil, Spitze nach links
+  // Rumpf: Keil, Spitze nach vorne
   c.beginPath();
   c.moveTo(-b * 0.5, 0);
   c.lineTo(-b * 0.12, -h * 0.42);
@@ -76,7 +85,7 @@ function zeichneFeindGleiter(c, x, y, h, { bild, rumpf, glut, kanzel, wippen = 0
   c.fill();
   c.strokeStyle = kanzel; c.lineWidth = 2; c.stroke();
 
-  // Fluegel
+  // Fluegel, nach hinten gepfeilt
   c.fillStyle = rumpf;
   c.beginPath();
   c.moveTo(b * 0.05, -h * 0.3); c.lineTo(b * 0.3, -h * 0.72);
@@ -94,10 +103,12 @@ function zeichneFeindGleiter(c, x, y, h, { bild, rumpf, glut, kanzel, wippen = 0
   if (bild) {
     const bh = kr * 2.1;
     const bw = (bild.naturalWidth / bild.naturalHeight) * bh;
-    // Die Vorlagen schauen nach rechts, geflogen wird nach links.
     c.save();
     c.translate(kx, 0);
-    c.scale(-1, 1);
+    // Die Vorlagen schauen nicht alle in dieselbe Richtung (Bug nach
+    // rechts, Typo nach links). Nur wer nach rechts schaut, wird
+    // gespiegelt - sonst sitzt einer von beiden verkehrt herum drin.
+    if (schautRechts) c.scale(-1, 1);
     c.drawImage(bild, -bw / 2, -bh * 0.52, bw, bh);
     c.restore();
   }
@@ -113,6 +124,32 @@ function zeichneFeindGleiter(c, x, y, h, { bild, rumpf, glut, kanzel, wippen = 0
   c.beginPath(); c.arc(kx, 0, kr, 0, Math.PI * 2); c.fill();
 
   c.restore();
+}
+
+// Gemeinsames Auftrittsmuster fuer die Gleiter-Gegner:
+// hereinfliegen -> einmal abwerfen -> abdrehen und wegfliegen.
+// Sie ziehen also nicht mehr endlos durchs Bild, sondern haben einen
+// kurzen Auftritt und kommen spaeter wieder (siehe GEGNER_PAUSE).
+function auftritt(o, dt, spiel, abwerfen) {
+  o.puls += dt * 5;
+  if (o.phase === "anflug") {
+    o.blick = -1;
+    o.x -= o.vx * dt;
+    o.y = o.grundY + Math.sin(o.puls * 0.35) * 40;
+    if (o.x <= o.zielX) { o.phase = "abwurf"; o.rest = 0.8; }
+  } else if (o.phase === "abwurf") {
+    o.blick = -1;
+    o.x -= o.vx * 0.2 * dt;          // bremst fast auf der Stelle ab
+    o.rest -= dt;
+    if (!o.abgeworfen) { abwerfen(o, spiel); o.abgeworfen = true; }
+    if (o.rest <= 0) { o.phase = "rueckzug"; o.tempo = 0; }
+  } else {
+    o.blick = 1;                      // abgedreht, Nase nach rechts
+    o.tempo = Math.min(o.tempo + 320 * dt, o.vx * 2.6);
+    o.x += o.tempo * dt;
+    o.y += Math.sin(o.puls * 0.5) * 18 * dt;
+  }
+  return o.x < spiel.breite + 160;
 }
 
 // ---- Nullbit: Spaeherdrohne, zuendet in Schiffsnaehe --------------------
@@ -134,8 +171,6 @@ const NULLBIT = {
   name: "Nullbit",
   pose: "action",
   abStufe: 1,
-  erstesAb: 6,
-  pause: (stufe) => Math.max(11 - stufe * 0.5, 5.5),
   warnung: `⚠️ <strong>Nullbit</strong> blinkt rot, kurz bevor sie explodiert –
     dann weg! Die Druckwelle zerlegt auch alle Meteoriten in der Nähe.`,
 
@@ -234,57 +269,48 @@ function zuenden(d, spiel) {
 
 // ---- Bug: streut Fehler ins Programm ------------------------------------
 // In den Lektionen baut Bug ein falsches Zeichen hier, eine vertauschte
-// Bedingung da. Im Flug laesst er genau das fallen: kleine Fehlerbrocken,
-// die wie Meteoriten treffen. Er selbst tut nichts - man muss seiner Spur
-// ausweichen, nicht ihm.
+// Bedingung da. Im Flug fliegt er herein, kippt eine Ladung Fehlerbrocken
+// aus und dreht wieder ab. Er selbst tut nichts - man weicht seiner
+// Ladung aus, nicht ihm.
 
 const BUG = {
   ordner: "null-bug",
   name: "Bug",
   pose: "action",
+  schautRechts: true,     // Vorlage schaut nach rechts, wird gespiegelt
   abStufe: 4,             // ab Kapitel 5
-  erstesAb: 9,
-  pause: (stufe) => Math.max(13 - stufe * 0.4, 7),
-  warnung: `🐛 <strong>Bug</strong> lässt <strong>Fehler</strong> fallen –
-    die treffen wie Meteoriten.`,
+  warnung: `🐛 <strong>Bug</strong> kippt eine Ladung <strong>Fehler</strong>
+    aus – die treffen wie Meteoriten.`,
 
   erzeuge(spiel) {
     const r = 22;
     const y = freieHoehe(spiel, r);
     if (y === null) return null;
     return {
-      x: spiel.breite + r + 20, y, r,
-      vx: mischwert(105, 165, spiel.fortschritt),
-      grundY: y, schwung: Math.random() * 6,
-      letzterFehler: 0, puls: 0,
+      x: spiel.breite + r + 20, y, grundY: y, r,
+      vx: mischwert(150, 220, spiel.fortschritt),
+      zielX: spiel.breite * (0.5 + Math.random() * 0.18),
+      phase: "anflug", puls: 0, abgeworfen: false, blick: -1, tempo: 0,
     };
   },
 
   bewege(b, dt, spiel) {
-    b.x -= b.vx * dt;
-    // Schlingerkurs - er "sucht" sich seine Stellen.
-    b.schwung += dt * 1.6;
-    b.y = b.grundY + Math.sin(b.schwung) * 70;
-    b.puls += dt * 5;
-
-    // Alle 0,6 s einen Fehler fallen lassen.
-    b.letzterFehler += dt;
-    if (b.letzterFehler > 0.6) {
-      b.letzterFehler = 0;
-      spiel.meteore.push({
-        x: b.x, y: b.y,
-        // Etwas groesser als der erste Entwurf (9-13 px), damit die Fehler
-        // im dichten Feld ueberhaupt auffallen. Dass sie frueher nicht
-        // trafen, lag aber am Trefferbereich des Schiffs - siehe trifft().
-        r: 12 + Math.random() * 5,
-        vx: b.vx * 0.55,
-        vy: (Math.random() - 0.5) * 30,
-        dreh: Math.random() * Math.PI,
-        drehV: (Math.random() - 0.5) * 4,
-        fehler: true,               // wird andersfarbig gezeichnet
-      });
-    }
-    return b.x > -b.r - 20;
+    return auftritt(b, dt, spiel, (o, sp) => {
+      // Eine Ladung auf einmal, leicht gestreut.
+      for (let i = 0; i < 4; i++) {
+        sp.meteore.push({
+          x: o.x - 10 + Math.random() * 20,
+          y: o.y - 45 + Math.random() * 90,
+          r: 12 + Math.random() * 5,
+          vx: o.vx * 0.5,
+          vy: (Math.random() - 0.5) * 40,
+          dreh: Math.random() * Math.PI,
+          drehV: (Math.random() - 0.5) * 4,
+          fehler: true,
+        });
+      }
+      sp.melde("Fehler!", "#a3e635");
+    });
   },
 
   zeichne(b, spiel) {
@@ -295,11 +321,10 @@ const BUG = {
     schein.addColorStop(1, "rgba(163, 230, 53, 0)");
     c.fillStyle = schein;
     c.beginPath(); c.arc(b.x, b.y, b.r * 2, 0, Math.PI * 2); c.fill();
-
     zeichneFeindGleiter(c, b.x, b.y, b.r * 2.3, {
       bild: spiel.bild(BUG.ordner, BUG.pose),
       rumpf: "#1a2e05", kanzel: "#a3e635", glut: "rgba(163, 230, 53, .55)",
-      wippen: Math.sin(b.puls) * 3,
+      wippen: Math.sin(b.puls) * 3, blick: b.blick, schautRechts: BUG.schautRechts,
     });
     c.restore();
   },
@@ -307,18 +332,16 @@ const BUG = {
 
 // ---- Typo: faelscht Sterne ----------------------------------------------
 // Typo dreht Buchstaben um und tauscht Zeichen aus - "meistens merkt es
-// keiner". Im Flug legt er falsche Sterne aus, die den echten sehr aehneln.
-// Wer nicht genau hinschaut, sammelt einen ein und verliert ein Leben.
-// Erkennbar sind sie an der Farbe (blass-violett statt goldgelb) und daran,
-// dass sie sich falsch herum drehen.
+// keiner". Im Flug legt er beim Vorbeiflug zwei falsche Sterne aus, die
+// den echten sehr aehneln: blass-violett statt goldgelb, und sie drehen
+// sich verkehrt herum. Wer nicht hinschaut, verliert ein Leben.
 
 const TYPO = {
   ordner: "null-typo",
   name: "Typo",
   pose: "action",
+  schautRechts: false,    // Vorlage schaut schon nach links
   abStufe: 4,             // ab Kapitel 5
-  erstesAb: 12,
-  pause: (stufe) => Math.max(15 - stufe * 0.4, 8),
   warnung: `✳️ <strong>Typo</strong> legt <strong>falsche Sterne</strong> aus:
     blass-violett statt goldgelb. Einsammeln kostet ein Leben.`,
 
@@ -326,28 +349,26 @@ const TYPO = {
     const r = 20;
     const y = freieHoehe(spiel, r);
     if (y === null) return null;
-    return { x: spiel.breite + r + 20, y, r, puls: 0, gelegt: 0,
-             vx: mischwert(115, 175, spiel.fortschritt) };
+    return {
+      x: spiel.breite + r + 20, y, grundY: y, r,
+      vx: mischwert(150, 220, spiel.fortschritt),
+      zielX: spiel.breite * (0.5 + Math.random() * 0.18),
+      phase: "anflug", puls: 0, abgeworfen: false, blick: -1, tempo: 0,
+    };
   },
 
   bewege(t, dt, spiel) {
-    t.x -= t.vx * dt;
-    t.puls += dt * 4;
-    t.y += Math.sin(t.puls * 0.7) * 30 * dt;
-
-    // Zwei falsche Sterne pro Auftritt, sonst wird es zur Minenwueste.
-    t.gelegt += dt;
-    if (t.gelegt > 1.6 && (t.falsche ?? 0) < 2) {
-      t.gelegt = 0;
-      t.falsche = (t.falsche ?? 0) + 1;
-      spiel.sternObjekte.push({
-        x: t.x, y: t.y + (Math.random() - 0.5) * 90,
-        r: 13, vx: mischwert(150, 250, spiel.fortschritt),
-        dreh: Math.random() * Math.PI, versatz: Math.random() * 6,
-        falsch: true,               // kostet ein Leben statt zu zaehlen
-      });
-    }
-    return t.x > -t.r - 20;
+    return auftritt(t, dt, spiel, (o, sp) => {
+      for (let i = 0; i < 2; i++) {
+        sp.sternObjekte.push({
+          x: o.x, y: o.y + (i === 0 ? -50 : 50) + (Math.random() - 0.5) * 30,
+          r: 13, vx: mischwert(150, 250, sp.fortschritt),
+          dreh: Math.random() * Math.PI, versatz: Math.random() * 6,
+          falsch: true,
+        });
+      }
+      sp.melde("Falsche Sterne!", "#c084fc");
+    });
   },
 
   zeichne(t, spiel) {
@@ -358,11 +379,10 @@ const TYPO = {
     schein.addColorStop(1, "rgba(192, 132, 252, 0)");
     c.fillStyle = schein;
     c.beginPath(); c.arc(t.x, t.y, t.r * 2, 0, Math.PI * 2); c.fill();
-
     zeichneFeindGleiter(c, t.x, t.y, t.r * 2.3, {
       bild: spiel.bild(TYPO.ordner, TYPO.pose),
       rumpf: "#2e1065", kanzel: "#c084fc", glut: "rgba(192, 132, 252, .55)",
-      wippen: Math.sin(t.puls) * 4,
+      wippen: Math.sin(t.puls) * 4, blick: t.blick, schautRechts: TYPO.schautRechts,
     });
     c.restore();
   },

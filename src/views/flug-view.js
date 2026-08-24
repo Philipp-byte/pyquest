@@ -22,7 +22,7 @@
 import { renderHeader, wireHeader, html } from "../ui.js";
 import { getLeben, lebenDazu, lebenAbziehen, lebenZuruecksetzen, MAX_LEBEN } from "../leben.js";
 import { playCorrect, playWrong, playFinish } from "../sound.js";
-import { ladeHandlanger, gegnerAuswahl } from "../flug-gegner.js";
+import { ladeHandlanger, gegnerAuswahl, GEGNER_PAUSE, GEGNER_ERSTER } from "../flug-gegner.js";
 import { istNeu, merkeGezeigt } from "../flug-hinweise.js";
 import { istLehrerModus } from "../lehrer.js";
 
@@ -305,10 +305,9 @@ class Flugspiel {
   // Wird nachgereicht, sobald figuren.json geladen ist - auch mitten im
   // Flug, dann treten die Gegner eben ab da auf.
   setzeGegner(typen) {
-    this.gegnerTypen = typen.map((typ) => ({
-      typ,
-      letzter: (this.zeit ?? 0) + typ.erstesAb - typ.pause(this.stufe),
-    }));
+    this.gegnerTypen = typen;
+    this.gegnerIndex = 0;
+    this.letzterGegner = (this.zeit ?? 0) + GEGNER_ERSTER - GEGNER_PAUSE;
   }
 
   // Das Spiel fuellt waehrend des Flugs den Bildschirm. Der echte
@@ -411,8 +410,8 @@ class Flugspiel {
     this.sternObjekte = [];    // die einsammelbaren Sterne
     this.letzterStern = 0;
     this.gegner = [];          // aktive Handlanger im Bild
-    // Startzeitpunkt je Gegnerart, damit nicht alle gleichzeitig kommen
-    for (const e of this.gegnerTypen) e.letzter = e.typ.erstesAb - e.typ.pause(this.stufe);
+    this.gegnerIndex = 0;      // wer als naechstes dran ist
+    this.letzterGegner = GEGNER_ERSTER - GEGNER_PAUSE;   // erster Auftritt bei 9 s
     this.schilde = [];         // einsammelbare Schutzschilde ab Kapitel 3
     this.letztesSchild = SCHILD_ERSTES - SCHILD_PAUSE;   // erstes bei 14 s
     this.schild = 0;           // verbleibende Ladungen
@@ -615,13 +614,14 @@ class Flugspiel {
   // zeichnen lassen.
 
   gegnerBewegen(dt) {
-    for (const eintrag of this.gegnerTypen) {
-      const faellig = this.zeit - eintrag.letzter > eintrag.typ.pause(this.stufe);
-      if (faellig) {
-        eintrag.letzter = this.zeit;
-        const obj = eintrag.typ.erzeuge(this);
-        if (obj) this.gegner.push({ typ: eintrag.typ, obj });
-      }
+    // Ein Gegner nach dem anderen, reihum - nicht mehr alle gleichzeitig
+    // auf eigenem Takt.
+    if (this.gegnerTypen.length && this.zeit - this.letzterGegner > GEGNER_PAUSE) {
+      this.letzterGegner = this.zeit;
+      const typ = this.gegnerTypen[this.gegnerIndex % this.gegnerTypen.length];
+      this.gegnerIndex++;
+      const obj = typ.erzeuge(this);
+      if (obj) this.gegner.push({ typ, obj });
     }
     this.gegner = this.gegner.filter((g) => g.typ.bewege(g.obj, dt, this) !== false);
   }
