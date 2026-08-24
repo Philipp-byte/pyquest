@@ -573,6 +573,14 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
 .welt-flug:hover {
   border-color: #7dd3fc; background: rgba(56, 189, 248, .18); transform: translateY(-50%) scale(1.03);
 }
+/* Lehrer-Vorschau: klar als solche erkennbar, damit sie im Unterricht
+   nicht mit dem verdienten Flug verwechselt wird. */
+.welt-flug--vorschau {
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--blue) 60%, transparent);
+  opacity: .85;
+}
+.welt-flug--vorschau .welt-flug__text small { color: #7dd3fc; }
 .welt-flug__rakete { font-size: 1.6rem; flex: none; }
 .welt-flug__text { display: flex; flex-direction: column; line-height: 1.25; }
 .welt-flug__text strong { font-size: .95rem; }

@@ -109,15 +109,22 @@ function renderWelt(chapter, welt, index, { fertig, frei, aktiv }) {
   // auf der freien Seite, auf Hoehe der Weltkarte. Der Flug gehoert
   // zwischen zwei Welten, deshalb liegt er auch dort und nicht in der
   // Kapitelansicht.
-  if (!fertig) return karte;
+  //
+  // Im Lehrer-Modus erscheint er auch bei noch nicht abgeschlossenen
+  // Welten. Sonst haette die Lehrkraft trotz Freischaltung keinen Zugang
+  // zum Flug, weil der am ABSCHLUSS haengt und nicht an der Freigabe -
+  // vorfuehren liesse sich das Spiel dann gar nicht.
+  const lehrer = istLehrerModus();
+  if (!fertig && !lehrer) return karte;
+  const vorschau = !fertig && lehrer;
   return `
     <div class="welt-reihe welt-reihe--${seite}">
       ${karte}
-      <a class="welt-flug" href="#/flug/${chapter.id}">
+      <a class="welt-flug${vorschau ? " welt-flug--vorschau" : ""}" href="#/flug/${chapter.id}">
         <span class="welt-flug__rakete">🚀</span>
         <span class="welt-flug__text">
           <strong>Flug zur nächsten Welt</strong>
-          <small>Wiederholungsspiel</small>
+          <small>${vorschau ? "Lehrer-Vorschau" : "Wiederholungsspiel"}</small>
         </span>
       </a>
     </div>`;
