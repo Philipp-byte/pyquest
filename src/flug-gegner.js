@@ -130,18 +130,19 @@ function zeichneFeindGleiter(c, x, y, h, opt) {
 // hereinfliegen -> einmal abwerfen -> abdrehen und wegfliegen.
 // Sie ziehen also nicht mehr endlos durchs Bild, sondern haben einen
 // kurzen Auftritt und kommen spaeter wieder (siehe GEGNER_PAUSE).
-function auftritt(o, dt, spiel, abwerfen) {
+function auftritt(o, dt, spiel, abwerfen, opt = {}) {
   o.puls += dt * 5;
   if (o.phase === "anflug") {
     o.blick = -1;
     o.x -= o.vx * dt;
     o.y = o.grundY + Math.sin(o.puls * 0.35) * 40;
-    if (o.x <= o.zielX) { o.phase = "abwurf"; o.rest = 0.8; }
+    if (o.x <= o.zielX) { o.phase = "abwurf"; o.rest = opt.haltezeit ?? 0.8; }
   } else if (o.phase === "abwurf") {
     o.blick = -1;
     o.x -= o.vx * 0.2 * dt;          // bremst fast auf der Stelle ab
     o.rest -= dt;
     if (!o.abgeworfen) { abwerfen(o, spiel); o.abgeworfen = true; }
+    if (opt.waehrendHalten) opt.waehrendHalten(o, spiel, dt);
     if (o.rest <= 0) { o.phase = "rueckzug"; o.tempo = 0; }
   } else {
     o.blick = 1;                      // abgedreht, Nase nach rechts
@@ -150,6 +151,35 @@ function auftritt(o, dt, spiel, abwerfen) {
     o.y += Math.sin(o.puls * 0.5) * 18 * dt;
   }
   return o.x < spiel.breite + 160;
+}
+
+// Legt ein Gleiter-Objekt an: von rechts herein, Ziel etwa Bildmitte.
+function gleiterObjekt(spiel, r) {
+  const y = freieHoehe(spiel, r);
+  if (y === null) return null;
+  return {
+    x: spiel.breite + r + 20, y, grundY: y, r,
+    vx: mischwert(150, 220, spiel.fortschritt),
+    zielX: spiel.breite * (0.5 + Math.random() * 0.18),
+    phase: "anflug", puls: 0, abgeworfen: false, blick: -1, tempo: 0,
+  };
+}
+
+// Zeichnet Schein + Gleiter in den Farben des jeweiligen Gegners.
+function gleiterZeichnen(o, spiel, typ, farben) {
+  const c = spiel.ctx;
+  c.save();
+  const schein = c.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r * 2);
+  schein.addColorStop(0, farben.schein);
+  schein.addColorStop(1, farben.scheinAus);
+  c.fillStyle = schein;
+  c.beginPath(); c.arc(o.x, o.y, o.r * 2, 0, Math.PI * 2); c.fill();
+  zeichneFeindGleiter(c, o.x, o.y, o.r * 2.3, {
+    bild: spiel.bild(typ.ordner, typ.pose),
+    rumpf: farben.rumpf, kanzel: farben.kanzel, glut: farben.glut,
+    wippen: Math.sin(o.puls) * 3, blick: o.blick, schautRechts: typ.schautRechts,
+  });
+  c.restore();
 }
 
 // ---- Nullbit: Spaeherdrohne, zuendet in Schiffsnaehe --------------------
@@ -388,12 +418,241 @@ const TYPO = {
   },
 };
 
+// ---- Loop: die Endlosschleife -------------------------------------------
+// "Ich wiederhole jeden Befehl. Immer wieder. Bis jemand mir sagt, wann ich
+// aufhoeren soll." Im Flug kreist Loop drei Runden um einen Punkt und
+// versperrt dabei den Weg. Erst danach bricht er aus - eine Schleife, die
+// eben doch ein Ende hat.
+
+const LOOP = {
+  ordner: "null-loop",
+  name: "Loop",
+  pose: "action",
+  schautRechts: false,     // frontale Vorlage, Spiegeln braucht sie nicht
+  abStufe: 7,              // ab Kapitel 8
+  warnung: `🔁 <strong>Loop</strong> dreht drei Runden im Kreis und versperrt
+    den Weg. Berühren kostet ein Leben – warte, bis die Schleife endet.`,
+
+  erzeuge(spiel) {
+    const r = 24;
+    const y = freieHoehe(spiel, r, 80);
+    if (y === null) return null;
+    return {
+      x: spiel.breite + r + 20, y, mittelY: y, mittelX: 0, r,
+      vx: mischwert(150, 210, spiel.fortschritt),
+      zielX: spiel.breite * (0.45 + Math.random() * 0.2),
+      radius: 70 + Math.random() * 30,
+      phase: "anflug", winkel: 0, runden: 0, puls: 0, blick: -1, tempo: 0,
+    };
+  },
+
+  bewege(o, dt, spiel) {
+    o.puls += dt * 5;
+    if (o.phase === "anflug") {
+      o.x -= o.vx * dt;
+      if (o.x <= o.zielX) {
+        o.phase = "kreist";
+        o.mittelX = o.x - o.radius;      // Kreismittelpunkt links von ihm
+      }
+    } else if (o.phase === "kreist") {
+      const vorher = o.winkel;
+      o.winkel += dt * 1.9;
+      if (Math.floor(o.winkel / (Math.PI * 2)) > Math.floor(vorher / (Math.PI * 2))) {
+        o.runden++;
+        if (o.runden >= 3) { o.phase = "rueckzug"; o.tempo = 0; }
+      }
+      o.x = o.mittelX + Math.cos(o.winkel) * o.radius;
+      o.y = o.mittelY + Math.sin(o.winkel) * o.radius;
+      o.blick = Math.sin(o.winkel) > 0 ? -1 : 1;   // Nase in Kreisrichtung
+      // Loop wirft nichts ab - er IST das Hindernis.
+      if (spiel.zeit > spiel.unverwundbarBis
+          && Math.hypot(o.x - spiel.schiff.x, o.y - spiel.schiff.y) < o.r + 18) {
+        spiel.treffer();
+      }
+    } else {
+      o.blick = 1;
+      o.tempo = Math.min(o.tempo + 320 * dt, o.vx * 2.6);
+      o.x += o.tempo * dt;
+    }
+    return o.x < spiel.breite + 160;
+  },
+
+  zeichne(o, spiel) {
+    const c = spiel.ctx;
+    // Kreisbahn sichtbar machen - so sieht man, wo er gleich sein wird.
+    if (o.phase === "kreist") {
+      c.save();
+      c.strokeStyle = "rgba(56, 189, 248, .35)";
+      c.lineWidth = 2; c.setLineDash([8, 8]);
+      c.beginPath(); c.arc(o.mittelX, o.mittelY, o.radius, 0, Math.PI * 2); c.stroke();
+      c.setLineDash([]);
+      c.restore();
+    }
+    gleiterZeichnen(o, spiel, LOOP, {
+      schein: "rgba(56, 189, 248, .45)", scheinAus: "rgba(56, 189, 248, 0)",
+      rumpf: "#0c2d48", kanzel: "#38bdf8", glut: "rgba(56, 189, 248, .55)",
+    });
+  },
+};
+
+// ---- Indexa: verschiebt Positionen --------------------------------------
+// "Einen Platz nach rechts, einen nach links - und schon greifst du das
+// falsche Element." Im Flug ruckt sie alle Sterne im Bild eine Bahn nach
+// oben oder unten. Man greift daneben, verliert aber kein Leben.
+
+const INDEXA = {
+  ordner: "null-indexa",
+  name: "Indexa",
+  pose: "action",
+  schautRechts: true,
+  abStufe: 8,              // ab Kapitel 9
+  warnung: `↕️ <strong>Indexa</strong> verschiebt alle <strong>Sterne</strong>
+    um eine Bahn – auf einmal greifst du daneben.`,
+
+  erzeuge(spiel) { return gleiterObjekt(spiel, 21); },
+
+  bewege(o, dt, spiel) {
+    return auftritt(o, dt, spiel, (g, sp) => {
+      const richtung = Math.random() < 0.5 ? -1 : 1;
+      let verschoben = 0;
+      for (const st of sp.sternObjekte) {
+        const neuY = st.y + richtung * 75;
+        if (neuY > st.r + 15 && neuY < sp.hoehe - st.r - 15) {
+          sp.funkenAusloesen(st.x, st.y, "#c4b5fd");
+          st.y = neuY;
+          verschoben++;
+        }
+      }
+      sp.melde(verschoben ? "Verschoben!" : "Danebengegriffen!", "#c4b5fd");
+    });
+  },
+
+  zeichne(o, spiel) {
+    gleiterZeichnen(o, spiel, INDEXA, {
+      schein: "rgba(196, 181, 253, .45)", scheinAus: "rgba(196, 181, 253, 0)",
+      rumpf: "#2e1065", kanzel: "#c4b5fd", glut: "rgba(196, 181, 253, .55)",
+    });
+  },
+};
+
+// ---- Rangor: der Grenzwaechter ------------------------------------------
+// "Ich verschiebe Anfang und Ende. Bis wohin laeuft range(1, 5) eigentlich
+// wirklich?" Im Flug stellt er eine Wand quer durchs Bild - mit genau EINER
+// Luecke. Man muss den Durchlass finden.
+
+const RANGOR = {
+  ordner: "null-rangor",
+  name: "Rangor",
+  pose: "action",
+  schautRechts: false,     // frontale Vorlage
+  abStufe: 9,              // ab Kapitel 10
+  warnung: `🚧 <strong>Rangor</strong> stellt eine Wand quer durchs Bild –
+    mit genau <strong>einer Lücke</strong>. Finde den Durchlass.`,
+
+  erzeuge(spiel) { return gleiterObjekt(spiel, 23); },
+
+  bewege(o, dt, spiel) {
+    return auftritt(o, dt, spiel, (g, sp) => {
+      const felder = 7;
+      const feldhoehe = sp.hoehe / felder;
+      const luecke = Math.floor(Math.random() * felder);
+      for (let i = 0; i < felder; i++) {
+        if (i === luecke) continue;
+        sp.meteore.push({
+          x: g.x + 60, y: (i + 0.5) * feldhoehe,
+          r: Math.min(feldhoehe * 0.46, 30),
+          vx: mischwert(150, 240, sp.fortschritt),
+          vy: 0, dreh: Math.random() * Math.PI, drehV: (Math.random() - 0.5) * 1.2,
+        });
+      }
+      sp.melde("Sperre!", "#f0abfc");
+    });
+  },
+
+  zeichne(o, spiel) {
+    gleiterZeichnen(o, spiel, RANGOR, {
+      schein: "rgba(240, 171, 252, .45)", scheinAus: "rgba(240, 171, 252, 0)",
+      rumpf: "#3b0764", kanzel: "#f0abfc", glut: "rgba(240, 171, 252, .55)",
+    });
+  },
+};
+
+// ---- Void: die Leere ----------------------------------------------------
+// "Ich nehme das, was deine Funktion zurueckgeben soll. Und dann gibt sie
+// nichts zurueck." Im Flug reisst Void ein Loch auf: Es zieht das Schiff an
+// und verschluckt alle Sterne in der Naehe. Wer gegensteuert, kommt heraus.
+
+const VOID_HALT = 3.2;
+const VOID_SOG = 190;
+
+const VOID = {
+  ordner: "null-void",
+  name: "Void",
+  pose: "action",
+  schautRechts: false,     // Vorlage schaut schon nach links
+  abStufe: 10,             // ab Kapitel 11
+  warnung: `🕳️ <strong>Void</strong> reißt ein Loch auf: Es <strong>zieht dich
+    an</strong> und verschluckt Sterne. Steuere dagegen.`,
+
+  erzeuge(spiel) { return gleiterObjekt(spiel, 22); },
+
+  bewege(o, dt, spiel) {
+    return auftritt(o, dt, spiel,
+      (g, sp) => { g.loch = 0; sp.melde("Die Leere!", "#a78bfa"); },
+      {
+        haltezeit: VOID_HALT,
+        waehrendHalten: (g, sp, schritt) => {
+          g.loch = Math.min((g.loch ?? 0) + schritt * 2.2, 1);
+          // Sog auf das Schiff - kostet kein Leben, aber man muss dagegenhalten.
+          const dy = g.y - sp.schiff.y;
+          const abstand = Math.abs(dy) || 1;
+          sp.schiff.y += Math.sign(dy) * VOID_SOG * g.loch
+                         * Math.min(1, 260 / abstand) * schritt;
+          // Sterne in Reichweite verschwinden.
+          sp.sternObjekte = sp.sternObjekte.filter((st) => {
+            if (Math.hypot(st.x - g.x, st.y - g.y) > 130) return true;
+            sp.funkenAusloesen(st.x, st.y, "#a78bfa");
+            return false;
+          });
+        },
+      });
+  },
+
+  zeichne(o, spiel) {
+    const c = spiel.ctx;
+    if (o.loch > 0) {
+      c.save();
+      const r = 130 * o.loch;
+      const g = c.createRadialGradient(o.x, o.y, r * 0.15, o.x, o.y, r);
+      g.addColorStop(0, "rgba(2, 2, 10, .95)");
+      g.addColorStop(.7, "rgba(76, 29, 149, .45)");
+      g.addColorStop(1, "rgba(167, 139, 250, 0)");
+      c.fillStyle = g;
+      c.beginPath(); c.arc(o.x, o.y, r, 0, Math.PI * 2); c.fill();
+      c.strokeStyle = `rgba(167, 139, 250, ${.3 + .4 * o.loch})`;
+      c.lineWidth = 2;
+      c.beginPath();
+      c.arc(o.x, o.y, r * (.55 + .12 * Math.sin(o.puls * 2)), 0, Math.PI * 2);
+      c.stroke();
+      c.restore();
+    }
+    gleiterZeichnen(o, spiel, VOID, {
+      schein: "rgba(167, 139, 250, .45)", scheinAus: "rgba(167, 139, 250, 0)",
+      rumpf: "#1e1b4b", kanzel: "#a78bfa", glut: "rgba(167, 139, 250, .55)",
+    });
+  },
+};
+
 // ---- Verzeichnis --------------------------------------------------------
 
 export const GEGNER = {
   "null-nullbit": NULLBIT,
   "null-bug": BUG,
   "null-typo": TYPO,
+  "null-loop": LOOP,
+  "null-indexa": INDEXA,
+  "null-rangor": RANGOR,
+  "null-void": VOID,
 };
 
 // figuren.json einmal laden und behalten - dieselbe Datei, aus der auch die
