@@ -10,6 +10,7 @@ import { exportIntroState, importIntroState } from "./intro-state.js";
 import { exportFiguren, importFiguren, resetFiguren } from "./figuren.js";
 import { exportLoesungen, importLoesungen, resetLoesungen } from "./loesungen.js";
 import { exportLeben, importLeben, lebenZuruecksetzen } from "./leben.js";
+import { exportHinweise, importHinweise, resetHinweise } from "./flug-hinweise.js";
 
 const KEY = "pyquest.progress.v1";
 
@@ -139,6 +140,8 @@ export function resetProgress() {
   // Antworten zu Aufgaben, die wieder als offen gelten.
   resetLoesungen();
   lebenZuruecksetzen();
+  // Wer von vorne anfaengt, bekommt die Erklaerungen im Flug wieder.
+  resetHinweise();
 }
 
 // ---------------------------------------------------------------- Export/Import
@@ -166,6 +169,8 @@ export function exportState() {
       loesungen: exportLoesungen(),
       // Leben aus den Flug-Zwischenspielen.
       leben: exportLeben(),
+      // Welche Erklaerungen im Flug schon gezeigt wurden.
+      flughinweise: exportHinweise(),
     },
     null,
     2
@@ -200,5 +205,6 @@ export function importState(text) {
   if (parsed && parsed.figuren) importFiguren(parsed.figuren);
   if (parsed && parsed.loesungen) importLoesungen(parsed.loesungen);
   if (parsed && typeof parsed.leben === "number") importLeben(parsed.leben);
+  if (parsed && parsed.flughinweise) importHinweise(parsed.flughinweise);
   return true;
 }

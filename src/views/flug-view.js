@@ -23,6 +23,8 @@ import { renderHeader, wireHeader, html } from "../ui.js";
 import { getLeben, lebenDazu, lebenAbziehen, lebenZuruecksetzen, MAX_LEBEN } from "../leben.js";
 import { playCorrect, playWrong, playFinish } from "../sound.js";
 import { ladeHandlanger, gegnerAuswahl } from "../flug-gegner.js";
+import { istNeu, merkeGezeigt } from "../flug-hinweise.js";
+import { istLehrerModus } from "../lehrer.js";
 
 const BASE = import.meta.env.BASE_URL;
 const BUCHSTABEN = ["A", "B", "C", "D"];
@@ -56,6 +58,17 @@ export function renderFlug(app, curriculum, chapterId) {
   const stufe = curriculum.chapters.findIndex((c) => c.id === chapterId); // 0-basiert
   const fragen = sammleFragen(chapter);
 
+  // Jede Regel wird nur einmal erklaert - in dem Kapitel, in dem sie neu
+  // dazu kommt. Im Lehrer-Modus immer, damit sich alles vorfuehren laesst.
+  const alleZeigen = istLehrerModus();
+  const offeneHinweise = [];
+  const zeigeHinweis = (id) => {
+    if (alleZeigen) return true;
+    if (!istNeu(id)) return false;
+    offeneHinweise.push(id);
+    return true;
+  };
+
   app.innerHTML = `
     ${renderHeader("path")}
     <main class="path flug">
@@ -85,19 +98,20 @@ export function renderFlug(app, curriculum, chapterId) {
 
         <div class="flug__tafel">
           <h2 class="flug__titel">Bereit zum Abflug?</h2>
-          <p class="flug__text">
+          <p class="flug__text">${zeigeHinweis("grundregeln") ? `
             Py fliegt weiter zur nächsten Welt – und du steuerst.
             Weiche den Meteoriten aus und sammle <strong>Sterne</strong> ein.
             Nach jeweils <strong>fünf Sternen</strong> hält der Flug an und du
             bekommst eine Frage aus dem Kapitel. Richtig beantwortet gibt es
-            ein <strong>Herz</strong> dazu.
+            ein <strong>Herz</strong> dazu.` : `
+            Sterne sammeln, Fragen beantworten, Meteoriten ausweichen.`}
           </p>
           <div class="flug__gegnerwarnungen"></div>
-          ${stufe >= SCHILD_AB_STUFE ? `
+          ${stufe >= SCHILD_AB_STUFE && zeigeHinweis("schild") ? `
           <p class="flug__schutz">
-            🛡️ Manchmal treibt ein <strong>Schutzschild</strong> vorbei. Sammle es
-            ein, dann hält es die nächsten <strong>drei Treffer</strong> aus,
-            ohne dass du ein Leben verlierst.
+            🛡️ <strong>Neu:</strong> Manchmal treibt ein <strong>Schutzschild</strong>
+            vorbei. Sammle es ein, dann hält es die nächsten
+            <strong>drei Treffer</strong> aus, ohne dass du ein Leben verlierst.
           </p>` : ""}
           <p class="flug__steuerung">⬆️⬇️ Pfeiltasten – oder mit dem Finger ziehen · rund 2 Minuten bis zur nächsten Welt</p>
           <div class="flug__knoepfe">
@@ -133,14 +147,21 @@ export function renderFlug(app, curriculum, chapterId) {
     spiel.setzeGegner(typen);
     const kasten = app.querySelector(".flug__gegnerwarnungen");
     if (kasten) {
+      // Auch die Gegner stellen sich nur einmal vor - beim ersten Kapitel,
+      // in dem sie mitfliegen.
       kasten.innerHTML = typen
-        .filter((t) => t.warnung)
+        .filter((t) => t.warnung && zeigeHinweis(`gegner:${t.ordner}`))
         .map((t) => `<p class="flug__warnung">${t.warnung}</p>`)
         .join("");
     }
   });
 
-  app.querySelector(".flug__start").onclick = () => spiel.starten();
+  app.querySelector(".flug__start").onclick = () => {
+    // Erst beim Losfliegen merken: Wer die Tafel nur kurz oeffnet und
+    // wieder geht, soll die Erklaerung beim naechsten Mal noch bekommen.
+    if (!alleZeigen && offeneHinweise.length) merkeGezeigt(offeneHinweise);
+    spiel.starten();
+  };
   app.querySelector(".flug__skip").onclick = () => {
     spiel.beenden();
     location.hash = `#/chapter/${chapterId}`;
