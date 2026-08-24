@@ -43,6 +43,78 @@ function freieHoehe(spiel, r, abstand = 60) {
   return null;
 }
 
+// Ein Gleiter fuer die Handlanger, die keine Maschinen sind.
+//
+// Bug und Typo sind Geschoepfe mit Beinen - frei im Weltraum schwebend
+// sahen sie schlicht falsch aus. Sie sitzen deshalb in einem kleinen
+// Feindgleiter: dunkler Rumpf, Kanzel nach vorne (links, in Flugrichtung),
+// Triebwerk hinten. Die Figur wird in die Kanzel geclippt.
+//
+// Nullbit braucht das nicht - sie IST eine Drohne.
+function zeichneFeindGleiter(c, x, y, h, { bild, rumpf, glut, kanzel, wippen = 0 }) {
+  const b = h * 1.55;                 // Rumpflaenge
+  const my = y + wippen;
+  c.save();
+  c.translate(x, my);
+
+  // Triebwerksglut hinten rechts
+  const flamme = c.createRadialGradient(b * 0.5, 0, 0, b * 0.5, 0, h * 0.55);
+  flamme.addColorStop(0, glut);
+  flamme.addColorStop(1, "rgba(0,0,0,0)");
+  c.fillStyle = flamme;
+  c.beginPath(); c.arc(b * 0.5, 0, h * 0.55, 0, Math.PI * 2); c.fill();
+
+  // Rumpf: Keil, Spitze nach links
+  c.beginPath();
+  c.moveTo(-b * 0.5, 0);
+  c.lineTo(-b * 0.12, -h * 0.42);
+  c.lineTo(b * 0.42, -h * 0.34);
+  c.lineTo(b * 0.46, h * 0.34);
+  c.lineTo(-b * 0.12, h * 0.42);
+  c.closePath();
+  c.fillStyle = rumpf;
+  c.fill();
+  c.strokeStyle = kanzel; c.lineWidth = 2; c.stroke();
+
+  // Fluegel
+  c.fillStyle = rumpf;
+  c.beginPath();
+  c.moveTo(b * 0.05, -h * 0.3); c.lineTo(b * 0.3, -h * 0.72);
+  c.lineTo(b * 0.42, -h * 0.3); c.closePath(); c.fill();
+  c.beginPath();
+  c.moveTo(b * 0.05, h * 0.3); c.lineTo(b * 0.3, h * 0.72);
+  c.lineTo(b * 0.42, h * 0.3); c.closePath(); c.fill();
+
+  // Kanzel mit der Figur darin
+  const kx = -b * 0.08, kr = h * 0.4;
+  c.save();
+  c.beginPath(); c.arc(kx, 0, kr, 0, Math.PI * 2); c.clip();
+  c.fillStyle = "rgba(15, 23, 42, .95)";
+  c.fill();
+  if (bild) {
+    const bh = kr * 2.1;
+    const bw = (bild.naturalWidth / bild.naturalHeight) * bh;
+    // Die Vorlagen schauen nach rechts, geflogen wird nach links.
+    c.save();
+    c.translate(kx, 0);
+    c.scale(-1, 1);
+    c.drawImage(bild, -bw / 2, -bh * 0.52, bw, bh);
+    c.restore();
+  }
+  c.restore();
+  // Glas ueber der Kanzel
+  c.beginPath(); c.arc(kx, 0, kr, 0, Math.PI * 2);
+  c.strokeStyle = kanzel; c.lineWidth = 2.5; c.stroke();
+  const glas = c.createLinearGradient(kx - kr, -kr, kx + kr, kr);
+  glas.addColorStop(0, "rgba(255,255,255,.22)");
+  glas.addColorStop(.5, "rgba(255,255,255,.04)");
+  glas.addColorStop(1, "rgba(255,255,255,.16)");
+  c.fillStyle = glas;
+  c.beginPath(); c.arc(kx, 0, kr, 0, Math.PI * 2); c.fill();
+
+  c.restore();
+}
+
 // ---- Nullbit: Spaeherdrohne, zuendet in Schiffsnaehe --------------------
 
 const ZUENDABSTAND = 120;
@@ -197,13 +269,16 @@ const BUG = {
     b.y = b.grundY + Math.sin(b.schwung) * 70;
     b.puls += dt * 5;
 
-    // alle 0,45 s einen Fehler fallen lassen
+    // Alle 0,6 s einen Fehler fallen lassen.
     b.letzterFehler += dt;
-    if (b.letzterFehler > 0.45) {
+    if (b.letzterFehler > 0.6) {
       b.letzterFehler = 0;
       spiel.meteore.push({
         x: b.x, y: b.y,
-        r: 9 + Math.random() * 4,
+        // Etwas groesser als der erste Entwurf (9-13 px), damit die Fehler
+        // im dichten Feld ueberhaupt auffallen. Dass sie frueher nicht
+        // trafen, lag aber am Trefferbereich des Schiffs - siehe trifft().
+        r: 12 + Math.random() * 5,
         vx: b.vx * 0.55,
         vy: (Math.random() - 0.5) * 30,
         dreh: Math.random() * Math.PI,
@@ -223,15 +298,11 @@ const BUG = {
     c.fillStyle = schein;
     c.beginPath(); c.arc(b.x, b.y, b.r * 2, 0, Math.PI * 2); c.fill();
 
-    const bild = spiel.bild(BUG.ordner, BUG.pose);
-    const wippen = Math.sin(b.puls) * 3;
-    if (bild) {
-      const h = b.r * 2.4, w = (bild.naturalWidth / bild.naturalHeight) * h;
-      c.drawImage(bild, b.x - w / 2, b.y - h / 2 + wippen, w, h);
-    } else {
-      c.fillStyle = "#4d7c0f";
-      c.beginPath(); c.arc(b.x, b.y + wippen, b.r, 0, Math.PI * 2); c.fill();
-    }
+    zeichneFeindGleiter(c, b.x, b.y, b.r * 2.3, {
+      bild: spiel.bild(BUG.ordner, BUG.pose),
+      rumpf: "#1a2e05", kanzel: "#a3e635", glut: "rgba(163, 230, 53, .55)",
+      wippen: Math.sin(b.puls) * 3,
+    });
     c.restore();
   },
 };
@@ -291,15 +362,11 @@ const TYPO = {
     c.fillStyle = schein;
     c.beginPath(); c.arc(t.x, t.y, t.r * 2, 0, Math.PI * 2); c.fill();
 
-    const bild = spiel.bild(TYPO.ordner, TYPO.pose);
-    const wippen = Math.sin(t.puls) * 4;
-    if (bild) {
-      const h = t.r * 2.4, w = (bild.naturalWidth / bild.naturalHeight) * h;
-      c.drawImage(bild, t.x - w / 2, t.y - h / 2 + wippen, w, h);
-    } else {
-      c.fillStyle = "#7e22ce";
-      c.beginPath(); c.arc(t.x, t.y + wippen, t.r, 0, Math.PI * 2); c.fill();
-    }
+    zeichneFeindGleiter(c, t.x, t.y, t.r * 2.3, {
+      bild: spiel.bild(TYPO.ordner, TYPO.pose),
+      rumpf: "#2e1065", kanzel: "#c084fc", glut: "rgba(192, 132, 252, .55)",
+      wippen: Math.sin(t.puls) * 4,
+    });
     c.restore();
   },
 };

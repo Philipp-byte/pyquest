@@ -783,12 +783,21 @@ class Flugspiel {
     this.explosion = this.explosion.filter((f) => f.alter < f.leben);
   }
 
-  // Das Schiff ist ein flacher Keil, kein Kreis - ein grosszuegiger
-  // Trefferkreis fuehlt sich deshalb ungerecht an ("das war doch vorbei!").
+  // Das Schiff ist ein flacher Keil, kein Kreis. Ein Kreis von 15 px passte
+  // zwar zur Hoehe, aber nicht zur Laenge: Gezeichnet reicht der Rumpf
+  // (mit Faktor 1,4) rund 47 px nach vorne. Kleine Brocken sassen deshalb
+  // sichtbar auf der Schiffsnase, ohne einen Treffer auszuloesen.
+  //
+  // Jetzt eine Ellipse laengs des Rumpfs, um den Brockenradius aufgeblaeht.
+  // Quer bleibt sie fast so eng wie vorher (44 statt 43 px bei einem
+  // grossen Meteoriten) - ausgewichen wird nach oben und unten, dort darf
+  // sich am Schwierigkeitsgrad nichts aendern.
   trifft(m) {
     const dx = m.x - this.schiff.x;
     const dy = m.y - this.schiff.y;
-    return Math.hypot(dx, dy) < m.r + this.schiff.r * 0.55;
+    const a = 32 + m.r;   // laengs (Nase bis Heck)
+    const b = 16 + m.r;   // quer
+    return (dx * dx) / (a * a) + (dy * dy) / (b * b) < 1;
   }
 
   treffer() {
