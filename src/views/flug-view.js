@@ -654,6 +654,9 @@ class Flugspiel {
     const dx = s.x - this.schiff.x;
     const dy = s.y - this.schiff.y;
     if (Math.hypot(dx, dy) > s.r + this.schiff.r * 0.9) return false;
+    // Von Ciphera verschlossen: Der Stern bleibt liegen, bis das Schloss
+    // wieder aufgeht.
+    if (s.gesperrtBis > this.zeit) return false;
     // Typos Faelschungen zaehlen nicht - sie kosten. Sonst waere das
     // "genau hinschauen" folgenlos.
     if (s.falsch) {
@@ -1170,13 +1173,15 @@ class Flugspiel {
     // Typos Faelschung dreht sich verkehrt herum - ein zweiter Hinweis
     // neben der Farbe.
     c.rotate(s.falsch ? -s.dreh : s.dreh);
-    const kern = s.falsch ? "192, 132, 252" : "253, 224, 71";
+    const verschlossen = s.gesperrtBis > this.zeit;
+    const kern = verschlossen ? "148, 163, 184"
+               : s.falsch ? "192, 132, 252" : "253, 224, 71";
     const schein = c.createRadialGradient(0, 0, 0, 0, 0, s.r * 2.4);
     schein.addColorStop(0, `rgba(${kern}, .5)`);
     schein.addColorStop(1, `rgba(${kern}, 0)`);
     c.fillStyle = schein;
     c.beginPath(); c.arc(0, 0, s.r * 2.4, 0, Math.PI * 2); c.fill();
-    c.fillStyle = s.falsch ? "#c084fc" : "#fde047";
+    c.fillStyle = verschlossen ? "#64748b" : s.falsch ? "#c084fc" : "#fde047";
     c.beginPath();
     for (let i = 0; i < 10; i++) {
       const w = (i / 10) * Math.PI * 2 - Math.PI / 2;
@@ -1184,6 +1189,13 @@ class Flugspiel {
       c.lineTo(Math.cos(w) * r, Math.sin(w) * r);
     }
     c.closePath(); c.fill();
+    if (verschlossen) {
+      c.rotate(s.falsch ? s.dreh : -s.dreh);   // Schloss steht still
+      c.fillStyle = "#e2e8f0";
+      c.fillRect(-s.r * 0.32, -s.r * 0.1, s.r * 0.64, s.r * 0.55);
+      c.strokeStyle = "#e2e8f0"; c.lineWidth = 2.2;
+      c.beginPath(); c.arc(0, -s.r * 0.12, s.r * 0.24, Math.PI, 0); c.stroke();
+    }
     c.restore();
   }
 

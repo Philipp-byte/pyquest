@@ -419,10 +419,14 @@ const TYPO = {
 };
 
 // ---- Loop: die Endlosschleife -------------------------------------------
-// "Ich wiederhole jeden Befehl. Immer wieder. Bis jemand mir sagt, wann ich
-// aufhoeren soll." Im Flug kreist Loop drei Runden um einen Punkt und
-// versperrt dabei den Weg. Erst danach bricht er aus - eine Schleife, die
-// eben doch ein Ende hat.
+// "Ich wiederhole jeden Befehl. Immer wieder." Im Flug dreht Loop seine
+// Kreise - aber der Kreismittelpunkt wandert dabei nach links. Er rollt
+// also quer durchs Bild und kommt zwangslaeufig an Pys Bahn vorbei.
+//
+// Der erste Entwurf kreiste an einer festen Stelle. Weil das Feld an Py
+// vorbeizieht, sah es aus, als flaege Loop einfach mit - und seine Bahn
+// lag rechts neben Pys Spur, war also nie zu erreichen. Er war damit
+// folgenlos.
 
 const LOOP = {
   ordner: "null-loop",
@@ -440,9 +444,12 @@ const LOOP = {
     return {
       x: spiel.breite + r + 20, y, mittelY: y, mittelX: 0, r,
       vx: mischwert(150, 210, spiel.fortschritt),
-      zielX: spiel.breite * (0.45 + Math.random() * 0.2),
-      radius: 70 + Math.random() * 30,
-      phase: "anflug", winkel: 0, runden: 0, puls: 0, blick: -1, tempo: 0,
+      // Der Mittelpunkt wandert langsamer als das Meteoritenfeld - so
+      // bleibt genug Zeit, die Luecke in seiner Kreisbahn zu finden.
+      drift: mischwert(95, 140, spiel.fortschritt),
+      zielX: spiel.breite * 0.8,
+      radius: 75 + Math.random() * 25,
+      phase: "anflug", winkel: 0, puls: 0, blick: -1,
     };
   },
 
@@ -452,35 +459,29 @@ const LOOP = {
       o.x -= o.vx * dt;
       if (o.x <= o.zielX) {
         o.phase = "kreist";
-        o.mittelX = o.x - o.radius;      // Kreismittelpunkt links von ihm
+        o.mittelX = o.x;                 // ab hier rollt der Kreis
       }
-    } else if (o.phase === "kreist") {
-      const vorher = o.winkel;
-      o.winkel += dt * 1.9;
-      if (Math.floor(o.winkel / (Math.PI * 2)) > Math.floor(vorher / (Math.PI * 2))) {
-        o.runden++;
-        if (o.runden >= 3) { o.phase = "rueckzug"; o.tempo = 0; }
-      }
+      o.blick = -1;
+    } else {
+      o.mittelX -= o.drift * dt;         // Mittelpunkt wandert nach links
+      o.winkel += dt * 2.1;
       o.x = o.mittelX + Math.cos(o.winkel) * o.radius;
       o.y = o.mittelY + Math.sin(o.winkel) * o.radius;
-      o.blick = Math.sin(o.winkel) > 0 ? -1 : 1;   // Nase in Kreisrichtung
+      // Nase in Bewegungsrichtung: Ableitung der Kreisbahn plus Drift.
+      o.blick = (-Math.sin(o.winkel) * o.radius * 2.1 - o.drift) < 0 ? -1 : 1;
       // Loop wirft nichts ab - er IST das Hindernis.
       if (spiel.zeit > spiel.unverwundbarBis
           && Math.hypot(o.x - spiel.schiff.x, o.y - spiel.schiff.y) < o.r + 18) {
         spiel.treffer();
       }
-    } else {
-      o.blick = 1;
-      o.tempo = Math.min(o.tempo + 320 * dt, o.vx * 2.6);
-      o.x += o.tempo * dt;
     }
-    return o.x < spiel.breite + 160;
+    return o.x > -o.r - 60 && o.mittelX > -o.radius - 60;
   },
 
   zeichne(o, spiel) {
     const c = spiel.ctx;
     // Kreisbahn sichtbar machen - so sieht man, wo er gleich sein wird.
-    if (o.phase === "kreist") {
+    if (o.phase !== "anflug") {
       c.save();
       c.strokeStyle = "rgba(56, 189, 248, .35)";
       c.lineWidth = 2; c.setLineDash([8, 8]);
@@ -491,46 +492,6 @@ const LOOP = {
     gleiterZeichnen(o, spiel, LOOP, {
       schein: "rgba(56, 189, 248, .45)", scheinAus: "rgba(56, 189, 248, 0)",
       rumpf: "#0c2d48", kanzel: "#38bdf8", glut: "rgba(56, 189, 248, .55)",
-    });
-  },
-};
-
-// ---- Indexa: verschiebt Positionen --------------------------------------
-// "Einen Platz nach rechts, einen nach links - und schon greifst du das
-// falsche Element." Im Flug ruckt sie alle Sterne im Bild eine Bahn nach
-// oben oder unten. Man greift daneben, verliert aber kein Leben.
-
-const INDEXA = {
-  ordner: "null-indexa",
-  name: "Indexa",
-  pose: "action",
-  schautRechts: true,
-  abStufe: 8,              // ab Kapitel 9
-  warnung: `↕️ <strong>Indexa</strong> verschiebt alle <strong>Sterne</strong>
-    um eine Bahn – auf einmal greifst du daneben.`,
-
-  erzeuge(spiel) { return gleiterObjekt(spiel, 21); },
-
-  bewege(o, dt, spiel) {
-    return auftritt(o, dt, spiel, (g, sp) => {
-      const richtung = Math.random() < 0.5 ? -1 : 1;
-      let verschoben = 0;
-      for (const st of sp.sternObjekte) {
-        const neuY = st.y + richtung * 75;
-        if (neuY > st.r + 15 && neuY < sp.hoehe - st.r - 15) {
-          sp.funkenAusloesen(st.x, st.y, "#c4b5fd");
-          st.y = neuY;
-          verschoben++;
-        }
-      }
-      sp.melde(verschoben ? "Verschoben!" : "Danebengegriffen!", "#c4b5fd");
-    });
-  },
-
-  zeichne(o, spiel) {
-    gleiterZeichnen(o, spiel, INDEXA, {
-      schein: "rgba(196, 181, 253, .45)", scheinAus: "rgba(196, 181, 253, 0)",
-      rumpf: "#2e1065", kanzel: "#c4b5fd", glut: "rgba(196, 181, 253, .55)",
     });
   },
 };
@@ -643,16 +604,283 @@ const VOID = {
   },
 };
 
+// ---- Nibble: der Sternendieb --------------------------------------------
+// "Ein Nibble ist ein halbes Byte - aber ich klaue doppelt so gern." Im
+// Flug jagt er den naechsten Stern und frisst ihn. Ein Wettrennen: Wer
+// zuerst da ist, bekommt ihn. Kosten tut er nichts.
+
+const NIBBLE = {
+  ordner: "null-nibble",
+  name: "Nibble",
+  pose: "action",
+  schautRechts: false,     // die Vorlage laeuft schon nach links
+  abStufe: 1,              // ab Kapitel 2
+  warnung: `🐾 <strong>Nibble</strong> klaut <strong>Sterne</strong> – wer
+    zuerst da ist, bekommt ihn.`,
+
+  erzeuge(spiel) {
+    const r = 20;
+    const y = freieHoehe(spiel, r);
+    if (y === null) return null;
+    return {
+      x: spiel.breite + r + 20, y, grundY: y, r,
+      vx: mischwert(170, 240, spiel.fortschritt),
+      phase: "jagd", puls: 0, blick: -1, tempo: 0, beute: 0,
+    };
+  },
+
+  bewege(o, dt, spiel) {
+    o.puls += dt * 6;
+    if (o.phase === "jagd") {
+      // Den naechstgelegenen Stern ansteuern, sonst einfach weiterziehen.
+      let ziel = null, kuerzeste = Infinity;
+      for (const st of spiel.sternObjekte) {
+        if (st.falsch) continue;               // Faelschungen mag er nicht
+        const d = Math.hypot(st.x - o.x, st.y - o.y);
+        if (d < kuerzeste) { kuerzeste = d; ziel = st; }
+      }
+      if (ziel) {
+        const zx = ziel.x - o.x, zy = ziel.y - o.y;
+        const laenge = Math.hypot(zx, zy) || 1;
+        o.x += (zx / laenge) * o.vx * dt;
+        o.y += (zy / laenge) * o.vx * dt;
+        o.blick = zx < 0 ? -1 : 1;
+        if (kuerzeste < o.r + ziel.r) {
+          spiel.sternObjekte = spiel.sternObjekte.filter((s) => s !== ziel);
+          spiel.funkenAusloesen(ziel.x, ziel.y, "#38bdf8");
+          spiel.melde("Geklaut!", "#38bdf8");
+          o.beute++;
+          if (o.beute >= 2) { o.phase = "rueckzug"; o.tempo = 0; }
+        }
+      } else {
+        o.blick = -1;
+        o.x -= o.vx * 0.7 * dt;
+        o.y = o.grundY + Math.sin(o.puls * 0.4) * 45;
+        if (o.x < spiel.breite * 0.2) { o.phase = "rueckzug"; o.tempo = 0; }
+      }
+    } else {
+      o.blick = 1;
+      o.tempo = Math.min(o.tempo + 320 * dt, o.vx * 2.4);
+      o.x += o.tempo * dt;
+    }
+    return o.x < spiel.breite + 160 && o.x > -160;
+  },
+
+  zeichne(o, spiel) {
+    gleiterZeichnen(o, spiel, NIBBLE, {
+      schein: "rgba(56, 189, 248, .4)", scheinAus: "rgba(56, 189, 248, 0)",
+      rumpf: "#0c2d48", kanzel: "#7dd3fc", glut: "rgba(125, 211, 252, .55)",
+    });
+  },
+};
+
+// ---- Wirr: verheddert Zeilen und Spalten --------------------------------
+// "Du greifst nach Zeile 2 und bekommst Zeile 0." Im Flug wirft er einen
+// Knoten ab: zwei sich kreuzende Reihen Brocken, ein Gewirr, durch das man
+// sich einen Weg suchen muss.
+
+const WIRR = {
+  ordner: "null-wirr",
+  name: "Wirr",
+  pose: "action",
+  schautRechts: false,     // frontale Vorlage
+  abStufe: 11,             // ab Kapitel 12
+  warnung: `🕸️ <strong>Wirr</strong> wirft einen <strong>Knoten</strong> ab –
+    zwei gekreuzte Reihen Brocken. Such dir einen Weg hindurch.`,
+
+  erzeuge(spiel) { return gleiterObjekt(spiel, 22); },
+
+  bewege(o, dt, spiel) {
+    return auftritt(o, dt, spiel, (g, sp) => {
+      const spanne = Math.min(sp.hoehe * 0.6, 320);
+      const mitte = Math.max(spanne / 2 + 20,
+                    Math.min(sp.hoehe - spanne / 2 - 20, g.y));
+      for (let i = 0; i < 5; i++) {
+        const anteil = (i / 4 - 0.5) * spanne;
+        for (const richtung of [1, -1]) {
+          sp.meteore.push({
+            x: g.x + 60 + richtung * anteil * 0.55,
+            y: mitte + anteil,
+            r: 15 + Math.random() * 5,
+            vx: mischwert(150, 230, sp.fortschritt),
+            vy: 0, dreh: Math.random() * Math.PI, drehV: (Math.random() - 0.5) * 2,
+          });
+        }
+      }
+      sp.melde("Verheddert!", "#c084fc");
+    });
+  },
+
+  zeichne(o, spiel) {
+    gleiterZeichnen(o, spiel, WIRR, {
+      schein: "rgba(192, 132, 252, .45)", scheinAus: "rgba(192, 132, 252, 0)",
+      rumpf: "#3b0764", kanzel: "#c084fc", glut: "rgba(192, 132, 252, .55)",
+    });
+  },
+};
+
+// ---- Ciphera: versteckt hinter Schluesseln ------------------------------
+// "Wer den richtigen Schluessel nicht kennt, kommt nicht hinein." Im Flug
+// verschluesselt sie die Sterne im Bild: Sie werden grau und sind sechs
+// Sekunden lang nicht einsammelbar. Man muss warten, bis sich das Schloss
+// wieder oeffnet.
+
+const CIPHERA_SPERRE = 6;
+
+const CIPHERA = {
+  ordner: "null-ciphera",
+  name: "Ciphera",
+  pose: "action",
+  schautRechts: false,     // frontale Vorlage
+  abStufe: 12,             // ab Kapitel 13
+  warnung: `🔒 <strong>Ciphera</strong> verschließt die <strong>Sterne</strong>
+    für ein paar Sekunden – so lange lassen sie sich nicht einsammeln.`,
+
+  erzeuge(spiel) { return gleiterObjekt(spiel, 21); },
+
+  bewege(o, dt, spiel) {
+    return auftritt(o, dt, spiel, (g, sp) => {
+      let gesperrt = 0;
+      for (const st of sp.sternObjekte) {
+        if (st.falsch) continue;
+        st.gesperrtBis = sp.zeit + CIPHERA_SPERRE;
+        gesperrt++;
+      }
+      sp.melde(gesperrt ? "Verschlossen!" : "Kein Schloss noetig", "#93c5fd");
+    });
+  },
+
+  zeichne(o, spiel) {
+    gleiterZeichnen(o, spiel, CIPHERA, {
+      schein: "rgba(147, 197, 253, .45)", scheinAus: "rgba(147, 197, 253, 0)",
+      rumpf: "#172554", kanzel: "#93c5fd", glut: "rgba(147, 197, 253, .55)",
+    });
+  },
+};
+
+// ---- Klon: fehlerhafte Kopien -------------------------------------------
+// "Aus einem Bauplan mache ich viele Objekte - aber meine Kopien sind
+// falsch." Im Flug verdoppelt er jeden Brocken im Bild. Aus einem Feld,
+// durch das man gerade noch durchkam, wird eines, das man neu lesen muss.
+
+const KLON = {
+  ordner: "null-klon",
+  name: "Klon",
+  pose: "action",
+  schautRechts: false,     // frontale Vorlage
+  abStufe: 13,             // ab Kapitel 14
+  warnung: `👥 <strong>Klon</strong> <strong>verdoppelt</strong> jeden Brocken
+    im Bild – auf einmal ist der Weg ein anderer.`,
+
+  erzeuge(spiel) { return gleiterObjekt(spiel, 22); },
+
+  bewege(o, dt, spiel) {
+    return auftritt(o, dt, spiel, (g, sp) => {
+      // Nur die rechte Bildhaelfte kopieren - sonst entstehen Zwillinge
+      // direkt auf dem Schiff, denen niemand mehr ausweichen kann.
+      const vorlagen = sp.meteore.filter((m) => m.x > sp.schiff.x + 220);
+      for (const m of vorlagen) {
+        sp.meteore.push({
+          ...m,
+          x: m.x + 30 + Math.random() * 40,
+          y: Math.max(m.r, Math.min(sp.hoehe - m.r, m.y + (Math.random() < 0.5 ? -70 : 70))),
+          dreh: Math.random() * Math.PI,
+        });
+      }
+      sp.melde(vorlagen.length ? "Kopiert!" : "Nichts zu kopieren", "#e9d5ff");
+    });
+  },
+
+  zeichne(o, spiel) {
+    gleiterZeichnen(o, spiel, KLON, {
+      schein: "rgba(233, 213, 255, .45)", scheinAus: "rgba(233, 213, 255, 0)",
+      rumpf: "#2e1065", kanzel: "#e9d5ff", glut: "rgba(233, 213, 255, .55)",
+    });
+  },
+};
+
+// ---- Krasch: bringt zum Absturz -----------------------------------------
+// "Ein kaputter Wert hier, eine fehlende Datei da - und alles faellt
+// zusammen." Im Flug nimmt er Anlauf, kuendigt seine Bahn mit einer
+// Warnlinie an und rammt dann quer durchs Bild. Wer die Linie raeumt, ist
+// sicher; wer stehen bleibt, stuerzt ab.
+
+const KRASCH_ANKUENDIGUNG = 1.3;
+
+const KRASCH = {
+  ordner: "null-krasch",
+  name: "Krasch",
+  pose: "action",
+  schautRechts: false,     // frontale Vorlage
+  abStufe: 14,             // ab Kapitel 15
+  warnung: `💥 <strong>Krasch</strong> rammt auf der <strong>rot markierten
+    Linie</strong> quer durchs Bild. Verlasse die Linie, solange sie blinkt.`,
+
+  erzeuge(spiel) {
+    const r = 24;
+    const y = freieHoehe(spiel, r, 70);
+    if (y === null) return null;
+    return {
+      x: spiel.breite + r + 20, y, r,
+      vx: mischwert(150, 210, spiel.fortschritt),
+      zielX: spiel.breite * 0.82,
+      phase: "anflug", rest: KRASCH_ANKUENDIGUNG, puls: 0, blick: -1, tempo: 0,
+    };
+  },
+
+  bewege(o, dt, spiel) {
+    o.puls += dt * 6;
+    if (o.phase === "anflug") {
+      o.x -= o.vx * dt;
+      if (o.x <= o.zielX) o.phase = "zielt";
+    } else if (o.phase === "zielt") {
+      o.rest -= dt;
+      if (o.rest <= 0) { o.phase = "rammt"; o.tempo = o.vx * 1.2; }
+    } else {
+      o.tempo = Math.min(o.tempo + 900 * dt, o.vx * 4.5);
+      o.x -= o.tempo * dt;
+      if (spiel.zeit > spiel.unverwundbarBis
+          && Math.hypot(o.x - spiel.schiff.x, o.y - spiel.schiff.y) < o.r + 20) {
+        spiel.treffer();
+      }
+    }
+    return o.x > -o.r - 40;
+  },
+
+  zeichne(o, spiel) {
+    const c = spiel.ctx;
+    if (o.phase === "zielt") {
+      const p = 1 - Math.max(o.rest, 0) / KRASCH_ANKUENDIGUNG;
+      const blink = Math.floor(o.rest * 12) % 2 === 0;
+      c.save();
+      c.strokeStyle = `rgba(248, 113, 113, ${blink ? .8 : .3})`;
+      c.lineWidth = 3 + p * 4;
+      c.setLineDash([16, 12]);
+      c.beginPath(); c.moveTo(0, o.y); c.lineTo(o.x, o.y); c.stroke();
+      c.setLineDash([]);
+      c.restore();
+    }
+    gleiterZeichnen(o, spiel, KRASCH, {
+      schein: "rgba(248, 113, 113, .45)", scheinAus: "rgba(248, 113, 113, 0)",
+      rumpf: "#450a0a", kanzel: "#f87171", glut: "rgba(248, 113, 113, .6)",
+    });
+  },
+};
+
 // ---- Verzeichnis --------------------------------------------------------
 
 export const GEGNER = {
   "null-nullbit": NULLBIT,
+  "null-nibble": NIBBLE,
   "null-bug": BUG,
   "null-typo": TYPO,
   "null-loop": LOOP,
-  "null-indexa": INDEXA,
   "null-rangor": RANGOR,
   "null-void": VOID,
+  "null-wirr": WIRR,
+  "null-ciphera": CIPHERA,
+  "null-klon": KLON,
+  "null-krasch": KRASCH,
 };
 
 // figuren.json einmal laden und behalten - dieselbe Datei, aus der auch die
