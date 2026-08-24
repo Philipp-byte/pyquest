@@ -522,24 +522,24 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
 .flug__tafel[hidden], .flug__frage[hidden] { display: none; }
 .flug__tafel {
   position: absolute; inset: 0; display: grid; place-content: center;
-  gap: .5rem; text-align: center; padding: 1.5rem;
+  gap: .45rem; text-align: center; padding: 1.5rem;
   background: rgba(4, 8, 22, .82); backdrop-filter: blur(3px); color: #e2e8f0;
 }
 .flug__titel { margin: 0; font-size: 1.5rem; }
-.flug__text { margin: 0 auto; max-width: 460px; color: #cbd5e1; font-size: .95rem; }
+.flug__text { margin: 0 auto .1rem; max-width: 440px; color: #cbd5e1; font-size: .92rem; line-height: 1.45; }
 .flug__text strong { color: #7dd3fc; }
 .flug__steuerung { margin: .2rem 0 .4rem; font-size: .85rem; color: #94a3b8; }
 /* Warnung vor Nullbit - ab Kapitel 2 */
 .flug__warnung {
-  margin: .1rem auto .2rem; max-width: 460px; font-size: .88rem;
-  padding: .55rem .8rem; border-radius: 12px; color: #fbcfe8;
+  margin: 0 auto; max-width: 440px; font-size: .82rem; line-height: 1.4;
+  padding: .4rem .7rem; border-radius: 10px; color: #fbcfe8;
   background: rgba(217, 70, 239, .14); border: 1px solid rgba(217, 70, 239, .45);
 }
 .flug__warnung strong { color: #f0abfc; }
 /* Hinweis auf das Schutzschild - ab Kapitel 3 */
 .flug__schutz {
-  margin: .1rem auto .2rem; max-width: 460px; font-size: .88rem;
-  padding: .55rem .8rem; border-radius: 12px; color: #cffafe;
+  margin: 0 auto; max-width: 440px; font-size: .82rem; line-height: 1.4;
+  padding: .4rem .7rem; border-radius: 10px; color: #cffafe;
   background: rgba(34, 211, 238, .12); border: 1px solid rgba(34, 211, 238, .45);
 }
 .flug__schutz strong { color: #67e8f9; }

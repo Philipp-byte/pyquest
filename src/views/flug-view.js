@@ -99,19 +99,16 @@ export function renderFlug(app, curriculum, chapterId) {
         <div class="flug__tafel">
           <h2 class="flug__titel">Bereit zum Abflug?</h2>
           <p class="flug__text">${zeigeHinweis("grundregeln") ? `
-            Py fliegt weiter zur nächsten Welt – und du steuerst.
-            Weiche den Meteoriten aus und sammle <strong>Sterne</strong> ein.
-            Nach jeweils <strong>fünf Sternen</strong> hält der Flug an und du
-            bekommst eine Frage aus dem Kapitel. Richtig beantwortet gibt es
-            ein <strong>Herz</strong> dazu.` : `
+            Weiche den Meteoriten aus und sammle <strong>Sterne</strong>.
+            Nach <strong>fünf Sternen</strong> kommt eine Frage – richtig
+            beantwortet gibt es ein <strong>Herz</strong>.` : `
             Sterne sammeln, Fragen beantworten, Meteoriten ausweichen.`}
           </p>
           <div class="flug__gegnerwarnungen"></div>
           ${stufe >= SCHILD_AB_STUFE && zeigeHinweis("schild") ? `
           <p class="flug__schutz">
-            🛡️ <strong>Neu:</strong> Manchmal treibt ein <strong>Schutzschild</strong>
-            vorbei. Sammle es ein, dann hält es die nächsten
-            <strong>drei Treffer</strong> aus, ohne dass du ein Leben verlierst.
+            🛡️ Ein eingesammeltes <strong>Schutzschild</strong> hält
+            <strong>drei Treffer</strong> aus.
           </p>` : ""}
           <p class="flug__steuerung">⬆️⬇️ Pfeiltasten – oder mit dem Finger ziehen · rund 2 Minuten bis zur nächsten Welt</p>
           <div class="flug__knoepfe">

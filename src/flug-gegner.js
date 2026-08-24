@@ -136,9 +136,8 @@ const NULLBIT = {
   abStufe: 1,
   erstesAb: 6,
   pause: (stufe) => Math.max(11 - stufe * 0.5, 5.5),
-  warnung: `⚠️ Professor Null schickt <strong>Nullbit</strong> mit. Kommt die
-    Drohne nah heran, blinkt sie rot und explodiert – dann nichts wie weg!
-    Ihre Druckwelle zerlegt allerdings auch jeden Meteoriten in der Nähe.`,
+  warnung: `⚠️ <strong>Nullbit</strong> blinkt rot, kurz bevor sie explodiert –
+    dann weg! Die Druckwelle zerlegt auch alle Meteoriten in der Nähe.`,
 
   erzeuge(spiel) {
     const r = 24;
@@ -246,9 +245,8 @@ const BUG = {
   abStufe: 4,             // ab Kapitel 5
   erstesAb: 9,
   pause: (stufe) => Math.max(13 - stufe * 0.4, 7),
-  warnung: `🐛 <strong>Bug</strong> schleicht durchs Bild und lässt überall
-    kleine <strong>Fehler</strong> fallen. Die treffen genau wie Meteoriten –
-    also nicht in seine Spur fliegen.`,
+  warnung: `🐛 <strong>Bug</strong> lässt <strong>Fehler</strong> fallen –
+    die treffen wie Meteoriten.`,
 
   erzeuge(spiel) {
     const r = 22;
@@ -321,9 +319,8 @@ const TYPO = {
   abStufe: 4,             // ab Kapitel 5
   erstesAb: 12,
   pause: (stufe) => Math.max(15 - stufe * 0.4, 8),
-  warnung: `✳️ <strong>Typo</strong> legt <strong>falsche Sterne</strong> aus.
-    Sie sehen den echten ähnlich, sind aber blass-violett statt goldgelb.
-    Wer einen einsammelt, verliert ein Leben – also genau hinschauen.`,
+  warnung: `✳️ <strong>Typo</strong> legt <strong>falsche Sterne</strong> aus:
+    blass-violett statt goldgelb. Einsammeln kostet ein Leben.`,
 
   erzeuge(spiel) {
     const r = 20;
