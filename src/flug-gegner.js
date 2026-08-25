@@ -24,6 +24,10 @@
 
 const BASE = import.meta.env.BASE_URL;
 
+// Von mehreren Gegnern genutzt (Ciphera/Void und das Finale).
+const CIPHERA_SPERRE = 6;    // Sekunden, die Sterne verschlossen bleiben
+const VOID_SOG = 190;        // Anziehungskraft der Leere
+
 // Alle 25 Sekunden tritt EIN Gegner auf - der naechste in der Reihe.
 // Vorher zog jede Art auf eigenem Takt endlos durchs Bild; jetzt hat jeder
 // einen kurzen Auftritt, und in Kapiteln mit zwei Handlangern wechseln
@@ -180,6 +184,84 @@ function gleiterZeichnen(o, spiel, typ, farben) {
     wippen: Math.sin(o.puls) * 3, blick: o.blick, schautRechts: typ.schautRechts,
   });
   c.restore();
+}
+
+// ---- Die Angriffe --------------------------------------------------------
+// Als eigene Funktionen, weil Professor Null im Finale dieselben Tricks
+// einsetzt wie sein Gefolge. So steht jeder Angriff genau einmal im Code.
+
+// Rangor: eine Wand quer durchs Bild mit genau einer Luecke.
+function wirfSperre(g, sp) {
+  const felder = 7;
+  const feldhoehe = sp.hoehe / felder;
+  const luecke = Math.floor(Math.random() * felder);
+  for (let i = 0; i < felder; i++) {
+    if (i === luecke) continue;
+    sp.meteore.push({
+      x: g.x + 60, y: (i + 0.5) * feldhoehe,
+      r: Math.min(feldhoehe * 0.46, 30),
+      vx: mischwert(150, 240, sp.fortschritt),
+      vy: 0, dreh: Math.random() * Math.PI, drehV: (Math.random() - 0.5) * 1.2,
+    });
+  }
+  sp.melde("Sperre!", "#f0abfc");
+}
+
+// Wirr: zwei gekreuzte Reihen Brocken.
+function wirfKnoten(g, sp) {
+  const spanne = Math.min(sp.hoehe * 0.6, 320);
+  const mitte = Math.max(spanne / 2 + 20, Math.min(sp.hoehe - spanne / 2 - 20, g.y));
+  for (let i = 0; i < 5; i++) {
+    const anteil = (i / 4 - 0.5) * spanne;
+    for (const richtung of [1, -1]) {
+      sp.meteore.push({
+        x: g.x + 60 + richtung * anteil * 0.55,
+        y: mitte + anteil,
+        r: 15 + Math.random() * 5,
+        vx: mischwert(150, 230, sp.fortschritt),
+        vy: 0, dreh: Math.random() * Math.PI, drehV: (Math.random() - 0.5) * 2,
+      });
+    }
+  }
+  sp.melde("Verheddert!", "#c084fc");
+}
+
+// Ciphera: die Sterne im Bild fuer ein paar Sekunden verschliessen.
+function verschliesseSterne(g, sp) {
+  let gesperrt = 0;
+  for (const st of sp.sternObjekte) {
+    if (st.falsch) continue;
+    st.gesperrtBis = sp.zeit + CIPHERA_SPERRE;
+    gesperrt++;
+  }
+  sp.melde(gesperrt ? "Verschlossen!" : "Kein Schloss nötig", "#93c5fd");
+}
+
+// Klon: jeden Brocken rechts vom Schiff verdoppeln.
+function kopiereBrocken(g, sp) {
+  const vorlagen = sp.meteore.filter((m) => m.x > sp.schiff.x + 220);
+  for (const m of vorlagen) {
+    sp.meteore.push({
+      ...m,
+      x: m.x + 30 + Math.random() * 40,
+      y: Math.max(m.r, Math.min(sp.hoehe - m.r, m.y + (Math.random() < 0.5 ? -70 : 70))),
+      dreh: Math.random() * Math.PI,
+    });
+  }
+  sp.melde(vorlagen.length ? "Kopiert!" : "Nichts zu kopieren", "#e9d5ff");
+}
+
+// Void: Sog auf das Schiff, Sterne im Umkreis verschwinden.
+function saugeAn(g, sp, schritt) {
+  g.loch = Math.min((g.loch ?? 0) + schritt * 2.2, 1);
+  const dy = g.y - sp.schiff.y;
+  const abstand = Math.abs(dy) || 1;
+  sp.schiff.y += Math.sign(dy) * VOID_SOG * g.loch * Math.min(1, 260 / abstand) * schritt;
+  sp.sternObjekte = sp.sternObjekte.filter((st) => {
+    if (Math.hypot(st.x - g.x, st.y - g.y) > 130) return true;
+    sp.funkenAusloesen(st.x, st.y, "#a78bfa");
+    return false;
+  });
 }
 
 // ---- Nullbit: Spaeherdrohne, zuendet in Schiffsnaehe --------------------
@@ -513,21 +595,7 @@ const RANGOR = {
   erzeuge(spiel) { return gleiterObjekt(spiel, 23); },
 
   bewege(o, dt, spiel) {
-    return auftritt(o, dt, spiel, (g, sp) => {
-      const felder = 7;
-      const feldhoehe = sp.hoehe / felder;
-      const luecke = Math.floor(Math.random() * felder);
-      for (let i = 0; i < felder; i++) {
-        if (i === luecke) continue;
-        sp.meteore.push({
-          x: g.x + 60, y: (i + 0.5) * feldhoehe,
-          r: Math.min(feldhoehe * 0.46, 30),
-          vx: mischwert(150, 240, sp.fortschritt),
-          vy: 0, dreh: Math.random() * Math.PI, drehV: (Math.random() - 0.5) * 1.2,
-        });
-      }
-      sp.melde("Sperre!", "#f0abfc");
-    });
+    return auftritt(o, dt, spiel, wirfSperre);
   },
 
   zeichne(o, spiel) {
@@ -544,7 +612,6 @@ const RANGOR = {
 // und verschluckt alle Sterne in der Naehe. Wer gegensteuert, kommt heraus.
 
 const VOID_HALT = 3.2;
-const VOID_SOG = 190;
 
 const VOID = {
   ordner: "null-void",
@@ -560,23 +627,7 @@ const VOID = {
   bewege(o, dt, spiel) {
     return auftritt(o, dt, spiel,
       (g, sp) => { g.loch = 0; sp.melde("Die Leere!", "#a78bfa"); },
-      {
-        haltezeit: VOID_HALT,
-        waehrendHalten: (g, sp, schritt) => {
-          g.loch = Math.min((g.loch ?? 0) + schritt * 2.2, 1);
-          // Sog auf das Schiff - kostet kein Leben, aber man muss dagegenhalten.
-          const dy = g.y - sp.schiff.y;
-          const abstand = Math.abs(dy) || 1;
-          sp.schiff.y += Math.sign(dy) * VOID_SOG * g.loch
-                         * Math.min(1, 260 / abstand) * schritt;
-          // Sterne in Reichweite verschwinden.
-          sp.sternObjekte = sp.sternObjekte.filter((st) => {
-            if (Math.hypot(st.x - g.x, st.y - g.y) > 130) return true;
-            sp.funkenAusloesen(st.x, st.y, "#a78bfa");
-            return false;
-          });
-        },
-      });
+      { haltezeit: VOID_HALT, waehrendHalten: saugeAn });
   },
 
   zeichne(o, spiel) {
@@ -691,24 +742,7 @@ const WIRR = {
   erzeuge(spiel) { return gleiterObjekt(spiel, 22); },
 
   bewege(o, dt, spiel) {
-    return auftritt(o, dt, spiel, (g, sp) => {
-      const spanne = Math.min(sp.hoehe * 0.6, 320);
-      const mitte = Math.max(spanne / 2 + 20,
-                    Math.min(sp.hoehe - spanne / 2 - 20, g.y));
-      for (let i = 0; i < 5; i++) {
-        const anteil = (i / 4 - 0.5) * spanne;
-        for (const richtung of [1, -1]) {
-          sp.meteore.push({
-            x: g.x + 60 + richtung * anteil * 0.55,
-            y: mitte + anteil,
-            r: 15 + Math.random() * 5,
-            vx: mischwert(150, 230, sp.fortschritt),
-            vy: 0, dreh: Math.random() * Math.PI, drehV: (Math.random() - 0.5) * 2,
-          });
-        }
-      }
-      sp.melde("Verheddert!", "#c084fc");
-    });
+    return auftritt(o, dt, spiel, wirfKnoten);
   },
 
   zeichne(o, spiel) {
@@ -725,8 +759,6 @@ const WIRR = {
 // Sekunden lang nicht einsammelbar. Man muss warten, bis sich das Schloss
 // wieder oeffnet.
 
-const CIPHERA_SPERRE = 6;
-
 const CIPHERA = {
   ordner: "null-ciphera",
   name: "Ciphera",
@@ -739,15 +771,7 @@ const CIPHERA = {
   erzeuge(spiel) { return gleiterObjekt(spiel, 21); },
 
   bewege(o, dt, spiel) {
-    return auftritt(o, dt, spiel, (g, sp) => {
-      let gesperrt = 0;
-      for (const st of sp.sternObjekte) {
-        if (st.falsch) continue;
-        st.gesperrtBis = sp.zeit + CIPHERA_SPERRE;
-        gesperrt++;
-      }
-      sp.melde(gesperrt ? "Verschlossen!" : "Kein Schloss noetig", "#93c5fd");
-    });
+    return auftritt(o, dt, spiel, verschliesseSterne);
   },
 
   zeichne(o, spiel) {
@@ -775,20 +799,7 @@ const KLON = {
   erzeuge(spiel) { return gleiterObjekt(spiel, 22); },
 
   bewege(o, dt, spiel) {
-    return auftritt(o, dt, spiel, (g, sp) => {
-      // Nur die rechte Bildhaelfte kopieren - sonst entstehen Zwillinge
-      // direkt auf dem Schiff, denen niemand mehr ausweichen kann.
-      const vorlagen = sp.meteore.filter((m) => m.x > sp.schiff.x + 220);
-      for (const m of vorlagen) {
-        sp.meteore.push({
-          ...m,
-          x: m.x + 30 + Math.random() * 40,
-          y: Math.max(m.r, Math.min(sp.hoehe - m.r, m.y + (Math.random() < 0.5 ? -70 : 70))),
-          dreh: Math.random() * Math.PI,
-        });
-      }
-      sp.melde(vorlagen.length ? "Kopiert!" : "Nichts zu kopieren", "#e9d5ff");
-    });
+    return auftritt(o, dt, spiel, kopiereBrocken);
   },
 
   zeichne(o, spiel) {
@@ -867,6 +878,86 @@ const KRASCH = {
   },
 };
 
+// ---- Professor Null: das Finale -----------------------------------------
+// In Kapitel 16 steht er allein - kein Gefolge mehr. Dafuer beherrscht er
+// alle ihre Tricks und setzt bei jedem Auftritt einen anderen ein, der
+// Reihe nach. Sein Gleiter ist deutlich groesser und traegt eine
+// Aureole; man erkennt sofort, dass hier nicht irgendein Handlanger kommt.
+
+const PROF_ANGRIFFE = [
+  { name: "Sperre",       tun: wirfSperre,        ruf: "Kein Durchkommen!" },
+  { name: "Knoten",       tun: wirfKnoten,        ruf: "Verheddert euch!" },
+  { name: "Kopien",       tun: kopiereBrocken,    ruf: "Doppelt hält besser!" },
+  { name: "Verschluss",   tun: verschliesseSterne, ruf: "Verschlossen!" },
+  { name: "Leere",        tun: null,              ruf: "Die Leere verschlingt euch!" },
+];
+
+let profZaehler = 0;
+
+const PROFESSOR = {
+  ordner: "professor-null",
+  name: "Professor Null",
+  pose: "angry",
+  schautRechts: false,     // frontale Vorlage
+  abStufe: 15,             // Kapitel 16
+  warnung: `☠️ <strong>Professor Null</strong> persönlich. Er beherrscht
+    <strong>alle Tricks</strong> seines Gefolges und wechselt sie durch.`,
+
+  erzeuge(spiel) {
+    const o = gleiterObjekt(spiel, 34);
+    if (!o) return null;
+    o.angriff = PROF_ANGRIFFE[profZaehler++ % PROF_ANGRIFFE.length];
+    o.leere = o.angriff.tun === null;
+    o.aura = 0;
+    return o;
+  },
+
+  bewege(o, dt, spiel) {
+    o.aura += dt * 2.4;
+    return auftritt(o, dt, spiel,
+      (g, sp) => {
+        if (g.angriff.tun) g.angriff.tun(g, sp);
+        else g.loch = 0;
+        // NACH dem Angriff, sonst uebertoent dessen eigene Meldung seinen
+        // Kampfruf - im Finale soll aber er zu Wort kommen.
+        sp.melde(g.angriff.ruf, "#fca5a5");
+      },
+      o.leere ? { haltezeit: VOID_HALT, waehrendHalten: saugeAn } : { haltezeit: 1.1 });
+  },
+
+  zeichne(o, spiel) {
+    const c = spiel.ctx;
+    if (o.loch > 0) {
+      c.save();
+      const r = 130 * o.loch;
+      const g = c.createRadialGradient(o.x, o.y, r * 0.15, o.x, o.y, r);
+      g.addColorStop(0, "rgba(2, 2, 10, .95)");
+      g.addColorStop(.7, "rgba(127, 29, 29, .45)");
+      g.addColorStop(1, "rgba(248, 113, 113, 0)");
+      c.fillStyle = g;
+      c.beginPath(); c.arc(o.x, o.y, r, 0, Math.PI * 2); c.fill();
+      c.restore();
+    }
+    // Aureole: zwei gegenlaeufige Ringe, damit er bedrohlich wirkt.
+    c.save();
+    for (const [i, richtung] of [[0, 1], [1, -1]]) {
+      c.strokeStyle = `rgba(248, 113, 113, ${0.3 - i * 0.12})`;
+      c.lineWidth = 2 + i;
+      c.setLineDash([14, 10]);
+      c.lineDashOffset = o.aura * 30 * richtung;
+      c.beginPath();
+      c.arc(o.x, o.y, o.r * (1.7 + i * 0.5), 0, Math.PI * 2);
+      c.stroke();
+    }
+    c.setLineDash([]);
+    c.restore();
+    gleiterZeichnen(o, spiel, PROFESSOR, {
+      schein: "rgba(248, 113, 113, .5)", scheinAus: "rgba(248, 113, 113, 0)",
+      rumpf: "#0f0a1e", kanzel: "#fca5a5", glut: "rgba(248, 113, 113, .65)",
+    });
+  },
+};
+
 // ---- Verzeichnis --------------------------------------------------------
 
 export const GEGNER = {
@@ -881,6 +972,7 @@ export const GEGNER = {
   "null-ciphera": CIPHERA,
   "null-klon": KLON,
   "null-krasch": KRASCH,
+  "professor-null": PROFESSOR,
 };
 
 // figuren.json einmal laden und behalten - dieselbe Datei, aus der auch die
