@@ -68,6 +68,16 @@
           "pattern": "print\\s*\\(\\s*1024\\s*\\)",
           "label": "Die Zeile „1024“ wird berechnet, nicht hingeschrieben"
         }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
       ]
     },
     {
@@ -104,6 +114,14 @@
             "pattern": "print\\s*\\(\\s*[\"']"
           },
           "text": "**Tipp für die Ausgabe:** Eine nackte Zahl sagt wenig. Schreibe dazu, was sie bedeutet – zum Beispiel `print(\"Das Volumen ist:\", volumen)`."
+        },
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
         }
       ]
     }

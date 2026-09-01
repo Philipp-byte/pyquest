@@ -35,9 +35,37 @@
         "alter = int(input(\"Wie alt bist du? \"))\nif alter >= 18:\n    print(\"Du bist volljährig.\")\nelse:\n    print(\"Du bist minderjährig.\")"
       ],
       "tests": [
-        { "type": "input_output", "inputs": ["20"], "expected": "Wie alt bist du? 20\nDu bist volljährig." },
-        { "type": "input_output", "inputs": ["16"], "expected": "Wie alt bist du? 16\nDu bist minderjährig." },
-        { "type": "input_output", "inputs": ["18"], "expected": "Wie alt bist du? 18\nDu bist volljährig." }
+        {
+          "type": "input_output",
+          "inputs": [
+            "20"
+          ],
+          "expected": "Wie alt bist du? 20\nDu bist volljährig."
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "16"
+          ],
+          "expected": "Wie alt bist du? 16\nDu bist minderjährig."
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "18"
+          ],
+          "expected": "Wie alt bist du? 18\nDu bist volljährig."
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
       ]
     },
     {
@@ -55,8 +83,30 @@
         "zahl = int(input(\"Gib eine Zahl ein: \"))\nif zahl % 2 == 0:\n    print(\"gerade\")\nelse:\n    print(\"ungerade\")"
       ],
       "tests": [
-        { "type": "input_output", "inputs": ["4"], "expected": "Gib eine Zahl ein: 4\ngerade" },
-        { "type": "input_output", "inputs": ["7"], "expected": "Gib eine Zahl ein: 7\nungerade" }
+        {
+          "type": "input_output",
+          "inputs": [
+            "4"
+          ],
+          "expected": "Gib eine Zahl ein: 4\ngerade"
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "7"
+          ],
+          "expected": "Gib eine Zahl ein: 7\nungerade"
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
       ]
     }
   ]

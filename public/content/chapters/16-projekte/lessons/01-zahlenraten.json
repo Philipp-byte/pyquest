@@ -56,6 +56,16 @@
           "pattern": "\\binput\\s*\\(",
           "label": "Es wird input() verwendet"
         }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
       ]
     }
   ]

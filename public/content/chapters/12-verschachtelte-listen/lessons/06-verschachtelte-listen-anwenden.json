@@ -54,6 +54,16 @@
           "pattern": "print\\s*\\(\\s*[\\\"']1\\ 0[\\\"']\\s*\\)",
           "label": "Die Zeile „1 0“ wird berechnet, nicht hingeschrieben"
         }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
       ]
     },
     {
@@ -98,6 +108,16 @@
           "type": "source_not_matches",
           "pattern": "print\\s*\\(\\s*1\\.33\\s*\\)",
           "label": "Die Zeile „1.33“ wird berechnet, nicht hingeschrieben"
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
         }
       ]
     }

@@ -65,6 +65,16 @@
           "pattern": "print\\s*\\(\\s*300\\s*\\)",
           "label": "Die Zeile „300“ wird berechnet, nicht hingeschrieben"
         }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
       ]
     },
     {
@@ -112,6 +122,16 @@
           "pattern": "print\\s*\\(\\s*70\\s*\\)",
           "label": "Die Zeile „70“ wird berechnet, nicht hingeschrieben"
         }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
       ]
     },
     {
@@ -143,6 +163,16 @@
           "type": "source_matches",
           "pattern": "/",
           "label": "Der Preis pro Gramm wird mit einer Division berechnet"
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
         }
       ]
     }

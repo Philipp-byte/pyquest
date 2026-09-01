@@ -36,7 +36,7 @@
       "hints": [
         "class Person:\n    def __init__(self, name, alter):\n        self.name = name\n        self.alter = alter",
         "Denk an str(), um alter mit + zu verketten",
-        "class Person:\n    def __init__(self, name, alter):\n        self.name = name\n        self.alter = alter\n\n    def vorstellen(self):\n        print(\"Ich heiße \" + self.name + \" und bin \" + str(self.alter) + \" Jahre alt.\")\n\np = Person(\"Mia\", 17)\np.vorstellen()"
+        "class Person:\n    def __init__(self, name, alter):\n        self.name = name\n        self.alter = alter\n\n    def vorstellen(self):\n        print(\"Ich heiße \" + self.name + \" und bin \" + str(self.alter) + \" Jahre alt.\")\n\nmia = Person(\"Mia\", 17)\nmia.vorstellen()"
       ],
       "tests": [
         {
@@ -67,6 +67,16 @@
           "type": "source_not_matches",
           "pattern": "print\\s*\\(\\s*[\\\"']Ich\\ heiße\\ Mia\\ und\\ bin\\ 17\\ Jahre\\ alt\\.[\\\"']\\s*\\)",
           "label": "Die Zeile „Ich heiße Mia und bin 17 Jahre alt.“ wird berechnet, nicht hingeschrieben"
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
         }
       ]
     }

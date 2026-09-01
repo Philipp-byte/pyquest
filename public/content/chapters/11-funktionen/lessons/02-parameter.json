@@ -68,6 +68,16 @@
           "pattern": "print\\s*\\(\\s*15\\s*\\)",
           "label": "Die Zeile „15“ wird berechnet, nicht hingeschrieben"
         }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[cdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
       ]
     },
     {
@@ -107,6 +117,16 @@
           "type": "source_not_matches",
           "pattern": "print\\s*\\(\\s*[\\\"']Titel:\\ Moby\\ Dick,\\ Autor:\\ Herman\\ Melville,\\ Preis:\\ 14\\.99\\ Euro[\\\"']\\s*\\)",
           "label": "Die Zeile „Titel: Moby Dick, Autor: Herman Melville, Preis: 14.99 Euro“ wird berechnet, nicht hingeschrieben"
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
         }
       ]
     }

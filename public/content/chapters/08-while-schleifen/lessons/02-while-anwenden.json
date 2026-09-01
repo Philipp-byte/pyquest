@@ -24,8 +24,30 @@
         "zahl = int(input(\"Zahl: \"))\nwhile zahl >= 1:\n    print(zahl)\n    zahl -= 1"
       ],
       "tests": [
-        { "type": "input_output", "inputs": ["5"], "expected": "Zahl: 5\n5\n4\n3\n2\n1" },
-        { "type": "input_output", "inputs": ["3"], "expected": "Zahl: 3\n3\n2\n1" }
+        {
+          "type": "input_output",
+          "inputs": [
+            "5"
+          ],
+          "expected": "Zahl: 5\n5\n4\n3\n2\n1"
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "3"
+          ],
+          "expected": "Zahl: 3\n3\n2\n1"
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
       ]
     },
     {
@@ -43,8 +65,30 @@
         "n = int(input(\"Zahl: \"))\nsumme = 0\ni = 0\nwhile i <= n:\n    summe += i\n    i += 1\nprint(summe)"
       ],
       "tests": [
-        { "type": "input_output", "inputs": ["4"], "expected": "Zahl: 4\n10" },
-        { "type": "input_output", "inputs": ["10"], "expected": "Zahl: 10\n55" }
+        {
+          "type": "input_output",
+          "inputs": [
+            "4"
+          ],
+          "expected": "Zahl: 4\n10"
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "10"
+          ],
+          "expected": "Zahl: 10\n55"
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
       ]
     },
     {
@@ -62,9 +106,37 @@
         "zahl = int(input(\"Zahl: \"))\nfakultaet = 1\ni = 1\nwhile i <= zahl:\n    fakultaet *= i\n    i += 1\nprint(fakultaet)"
       ],
       "tests": [
-        { "type": "input_output", "inputs": ["4"], "expected": "Zahl: 4\n24" },
-        { "type": "input_output", "inputs": ["5"], "expected": "Zahl: 5\n120" },
-        { "type": "input_output", "inputs": ["0"], "expected": "Zahl: 0\n1" }
+        {
+          "type": "input_output",
+          "inputs": [
+            "4"
+          ],
+          "expected": "Zahl: 4\n24"
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "5"
+          ],
+          "expected": "Zahl: 5\n120"
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "0"
+          ],
+          "expected": "Zahl: 0\n1"
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
       ]
     }
   ]

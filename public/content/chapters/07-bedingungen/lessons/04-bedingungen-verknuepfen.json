@@ -36,9 +36,40 @@
         "name = input(\"Name: \")\npin = input(\"PIN: \")\nif name == \"Peter\" and pin == \"1234\":\n    print(\"Zugang gewährt\")\nelse:\n    print(\"Zugang verweigert\")"
       ],
       "tests": [
-        { "type": "input_output", "inputs": ["Peter", "1234"], "expected": "Name: Peter\nPIN: 1234\nZugang gewährt" },
-        { "type": "input_output", "inputs": ["Peter", "0000"], "expected": "Name: Peter\nPIN: 0000\nZugang verweigert" },
-        { "type": "input_output", "inputs": ["Anna", "1234"], "expected": "Name: Anna\nPIN: 1234\nZugang verweigert" }
+        {
+          "type": "input_output",
+          "inputs": [
+            "Peter",
+            "1234"
+          ],
+          "expected": "Name: Peter\nPIN: 1234\nZugang gewährt"
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "Peter",
+            "0000"
+          ],
+          "expected": "Name: Peter\nPIN: 0000\nZugang verweigert"
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "Anna",
+            "1234"
+          ],
+          "expected": "Name: Anna\nPIN: 1234\nZugang verweigert"
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
       ]
     },
     {
@@ -56,9 +87,37 @@
         "tag = input(\"Tag: \")\nif tag == \"Samstag\" or tag == \"Sonntag\":\n    print(\"Wochenende!\")\nelse:\n    print(\"Arbeitstag\")"
       ],
       "tests": [
-        { "type": "input_output", "inputs": ["Samstag"], "expected": "Tag: Samstag\nWochenende!" },
-        { "type": "input_output", "inputs": ["Sonntag"], "expected": "Tag: Sonntag\nWochenende!" },
-        { "type": "input_output", "inputs": ["Montag"], "expected": "Tag: Montag\nArbeitstag" }
+        {
+          "type": "input_output",
+          "inputs": [
+            "Samstag"
+          ],
+          "expected": "Tag: Samstag\nWochenende!"
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "Sonntag"
+          ],
+          "expected": "Tag: Sonntag\nWochenende!"
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "Montag"
+          ],
+          "expected": "Tag: Montag\nArbeitstag"
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
       ]
     }
   ]

@@ -46,6 +46,14 @@
             "pattern": "print\\s*\\(.*[\\w)]\\s*[*/%+-]\\s*[\\w(].*\\)"
           },
           "text": "**Noch besser:** Rechne nicht mitten in `print()`. Lege das Ergebnis zuerst in einer Variable mit sprechendem Namen ab und gib danach diese Variable aus – das macht deinen Code lesbarer, und du kannst später damit weiterrechnen."
+        },
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
         }
       ]
     },
@@ -93,6 +101,16 @@
           "type": "source_not_matches",
           "pattern": "print\\s*\\(\\s*130\\.0\\s*\\)",
           "label": "Die Zeile „130.0“ wird berechnet, nicht hingeschrieben"
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
         }
       ]
     }

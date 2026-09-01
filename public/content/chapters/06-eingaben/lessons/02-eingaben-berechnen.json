@@ -36,8 +36,30 @@
         "zahl = int(input(\"Gib eine Zahl ein: \"))\nprint(\"Das Doppelte ist\", zahl * 2)"
       ],
       "tests": [
-        { "type": "input_output", "inputs": ["5"], "expected": "Gib eine Zahl ein: 5\nDas Doppelte ist 10" },
-        { "type": "input_output", "inputs": ["9"], "expected": "Gib eine Zahl ein: 9\nDas Doppelte ist 18" }
+        {
+          "type": "input_output",
+          "inputs": [
+            "5"
+          ],
+          "expected": "Gib eine Zahl ein: 5\nDas Doppelte ist 10"
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "9"
+          ],
+          "expected": "Gib eine Zahl ein: 9\nDas Doppelte ist 18"
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
       ]
     },
     {
@@ -55,8 +77,30 @@
         "alter = int(input(\"Alter: \"))\nmax_hf = 220 - alter\nprint(\"Maximale Herzfrequenz:\", max_hf)"
       ],
       "tests": [
-        { "type": "input_output", "inputs": ["40"], "expected": "Alter: 40\nMaximale Herzfrequenz: 180" },
-        { "type": "input_output", "inputs": ["25"], "expected": "Alter: 25\nMaximale Herzfrequenz: 195" }
+        {
+          "type": "input_output",
+          "inputs": [
+            "40"
+          ],
+          "expected": "Alter: 40\nMaximale Herzfrequenz: 180"
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "25"
+          ],
+          "expected": "Alter: 25\nMaximale Herzfrequenz: 195"
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
       ]
     }
   ]

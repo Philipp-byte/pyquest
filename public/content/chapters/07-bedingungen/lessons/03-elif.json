@@ -27,7 +27,11 @@
     {
       "type": "quiz",
       "question": "Was gibt dieses Programm aus?\n\n```\nx = 5\nif x > 10:\n    print(\"A\")\nelif x > 3:\n    print(\"B\")\nelse:\n    print(\"C\")\n```",
-      "choices": ["A", "B", "C"],
+      "choices": [
+        "A",
+        "B",
+        "C"
+      ],
       "answer": 1,
       "explainCorrect": "Genau! x > 10 ist False, x > 3 ist True → erster Treffer ist B. Fertig.",
       "explainWrong": "x ist 5: `x > 10` ist False, `x > 3` ist True. Python nimmt den ersten Treffer – das ist B."
@@ -43,10 +47,44 @@
         "betrag = float(input(\"Anlagebetrag: \"))\nif betrag <= 5000:\n    print(2.0)\nelif betrag <= 10000:\n    print(2.25)\nelif betrag <= 50000:\n    print(2.5)\nelse:\n    print(2.75)"
       ],
       "tests": [
-        { "type": "input_output", "inputs": ["3000"], "expected": "Anlagebetrag: 3000\n2.0" },
-        { "type": "input_output", "inputs": ["8000"], "expected": "Anlagebetrag: 8000\n2.25" },
-        { "type": "input_output", "inputs": ["40000"], "expected": "Anlagebetrag: 40000\n2.5" },
-        { "type": "input_output", "inputs": ["90000"], "expected": "Anlagebetrag: 90000\n2.75" }
+        {
+          "type": "input_output",
+          "inputs": [
+            "3000"
+          ],
+          "expected": "Anlagebetrag: 3000\n2.0"
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "8000"
+          ],
+          "expected": "Anlagebetrag: 8000\n2.25"
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "40000"
+          ],
+          "expected": "Anlagebetrag: 40000\n2.5"
+        },
+        {
+          "type": "input_output",
+          "inputs": [
+            "90000"
+          ],
+          "expected": "Anlagebetrag: 90000\n2.75"
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
       ]
     }
   ]
