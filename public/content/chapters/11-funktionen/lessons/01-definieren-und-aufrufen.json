@@ -9,9 +9,66 @@
       "text": "Bisher hast du Code immer **von oben nach unten** ausgeführt. Aber was, wenn du dieselben Anweisungen an **mehreren Stellen** im Programm brauchst? Dafür gibt es **Funktionen**.\n\nEine Funktion ist ein **Unterprogramm**: ein benannter Codeblock, der eine bestimmte Aufgabe erledigt. Du schreibst ihn **einmal** und kannst ihn danach beliebig oft **aufrufen** – das spart Tipparbeit und macht dein Programm übersichtlicher."
     },
     {
+      "type": "explain",
+      "text": "Stell dir ein **Rezept** vor. Du schreibst es **einmal** auf einen Zettel und gibst ihm einen Namen: *Pfannkuchen*. Danach musst du nie wieder alle Schritte aufschreiben – du sagst nur noch „Pfannkuchen!“ und weißt, was zu tun ist.\n\nGenau das ist eine **Funktion**: ein Stück Programm, das du **einmal aufschreibst** und dem du einen **Namen** gibst. Danach rufst du es über diesen Namen auf – so oft du willst.\n\nDabei passieren zwei ganz verschiedene Dinge, und die darfst du nicht verwechseln:\n\n**Definieren** heißt: Du schreibst das Rezept auf. Es passiert noch **nichts**.\n**Aufrufen** heißt: Du sagst den Namen. **Jetzt** wird gekocht."
+    },
+    {
+      "type": "bauplan",
+      "titel": "So ist ein Funktionskopf aufgebaut",
+      "text": "Die erste Zeile einer Funktion heißt **Funktionskopf**. Sie besteht immer aus denselben vier Teilen – in genau dieser Reihenfolge:",
+      "teile": [
+        {
+          "text": "def",
+          "name": "Das Schlüsselwort def",
+          "erklaerung": "Kurz für *define* – definieren. Damit weiß Python: Jetzt kommt eine Funktion. Ohne `def` geht es nicht."
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "begruessung",
+          "name": "Der Funktionsname",
+          "erklaerung": "Den suchst **du** aus. Er sagt, was die Funktion tut. Alles klein, Wörter mit Unterstrich: `zeige_stern`."
+        },
+        {
+          "text": "()",
+          "name": "Die runden Klammern",
+          "erklaerung": "Sie gehören immer dazu – auch wenn nichts drinsteht. Später kommt hier hinein, was die Funktion braucht."
+        },
+        {
+          "text": ":",
+          "name": "Der Doppelpunkt",
+          "erklaerung": "Er schließt den Kopf ab und kündigt an: Ab der nächsten Zeile kommt, was die Funktion tun soll."
+        }
+      ],
+      "folgezeile": "print(\"Hallo!\")",
+      "folgeName": "Der Rumpf – eingerückt"
+    },
+    {
       "type": "example",
       "text": "Definieren mit def, aufrufen mit Klammern:",
       "code": "def begruessung():\n    print(\"Hallo!\")\n\nbegruessung()"
+    },
+    {
+      "type": "explain",
+      "text": "Alles, was **eingerückt** unter dem Kopf steht, gehört zur Funktion – das ist ihr **Rumpf**. Die Einrückung ist keine Schönheitssache: Nur an ihr erkennt Python, wo die Funktion anfängt und wo sie aufhört.\n\nSobald eine Zeile wieder **ganz links** beginnt, ist die Funktion zu Ende."
+    },
+    {
+      "type": "bauplan",
+      "titel": "Und so rufst du sie auf",
+      "text": "Der Aufruf ist viel kürzer – kein `def`, kein Doppelpunkt, keine Einrückung. Nur der Name und die Klammern:",
+      "teile": [
+        {
+          "text": "begruessung",
+          "name": "Derselbe Name",
+          "erklaerung": "Genau so geschrieben wie oben bei `def`. Ein Tippfehler, und Python findet die Funktion nicht."
+        },
+        {
+          "text": "()",
+          "name": "Die Klammern",
+          "erklaerung": "Sie sind das eigentliche Startsignal. **Ohne Klammern passiert nichts** – dann meinst du nur den Namen, rufst die Funktion aber nicht auf."
+        }
+      ]
     },
     {
       "type": "explain",

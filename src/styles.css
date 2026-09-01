@@ -1762,3 +1762,60 @@ a.welt:hover { transform: translateY(-3px); box-shadow: 0 6px 0 rgba(0,0,0,.06),
      ihre Beschriftung - zwei Reihen zu zweit passen. */
   .report__stats { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ---------- Bauplan: beschriftete Zerlegung einer Codezeile ---------- */
+/* Fuer alles mit fester Form, dessen Teile Namen tragen - Funktionskopf,
+   Schleifenkopf, Klassendefinition. Die Farbe verbindet Codeteil und
+   Erklaerung; die Ziffer traegt die Zuordnung auch ohne Farbsehen. */
+.card--bauplan { display: grid; gap: .9rem; }
+.bauplan__titel { margin: 0; font-size: 1.15rem; }
+.bauplan__zeile {
+  display: flex; flex-wrap: wrap; align-items: flex-end; gap: .15rem;
+  padding: 1.5rem 1rem .9rem; overflow-x: auto;
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-mono, ui-monospace, "Cascadia Code", Consolas, monospace);
+  font-size: 1.25rem;
+}
+.bauplan__rest { padding: .2rem 0; color: var(--muted); }
+.bauplan__teil {
+  position: relative; padding: .25rem .45rem; border-radius: 8px;
+  border: 2px solid var(--bp-farbe); background: var(--bp-hell);
+  color: var(--bp-text);
+}
+.bauplan__teil code { font: inherit; color: inherit; background: none; padding: 0; }
+.bauplan__nr {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 1.35rem; height: 1.35rem; border-radius: 50%; flex: none;
+  background: var(--bp-farbe); color: #fff;
+  font-family: var(--font); font-size: .8rem; font-weight: 900; line-height: 1;
+}
+.bauplan__teil .bauplan__nr {
+  position: absolute; top: -.85rem; left: 50%; transform: translateX(-50%);
+}
+/* Die Folgezeile zeigt, dass der Rumpf eingerueckt steht. */
+.bauplan__folge {
+  display: flex; align-items: center; gap: .5rem; margin-top: -.4rem;
+  padding: .6rem 1rem; border-radius: var(--radius-lg);
+  background: var(--surface-2); border: 1px dashed var(--border);
+  font-family: var(--font-mono, ui-monospace, Consolas, monospace); font-size: 1.05rem;
+}
+.bauplan__einzug { color: var(--blue); letter-spacing: .25em; }
+.bauplan__folge-name {
+  margin-left: auto; font-family: var(--font); font-size: .8rem;
+  font-weight: 800; color: var(--muted);
+}
+.bauplan__legende { list-style: none; margin: 0; padding: 0; display: grid; gap: .55rem; }
+.bauplan__eintrag {
+  display: flex; gap: .7rem; align-items: flex-start;
+  padding: .55rem .7rem; border-radius: 12px;
+  border-left: 4px solid var(--bp-farbe); background: var(--bp-hell);
+}
+.bauplan__eintrag strong { color: var(--bp-text); }
+.bauplan__erklaerung p { margin: .15rem 0 0; font-size: .92rem; }
+/* Fuenf Farben, danach wiederholen sie sich. */
+.bauplan__teil--0, .bauplan__eintrag--0 { --bp-farbe: #7c3aed; --bp-hell: rgba(124,58,237,.12); --bp-text: #6d28d9; }
+.bauplan__teil--1, .bauplan__eintrag--1 { --bp-farbe: #0891b2; --bp-hell: rgba(8,145,178,.12);  --bp-text: #0e7490; }
+.bauplan__teil--2, .bauplan__eintrag--2 { --bp-farbe: #ea580c; --bp-hell: rgba(234,88,12,.12);  --bp-text: #c2410c; }
+.bauplan__teil--3, .bauplan__eintrag--3 { --bp-farbe: #16a34a; --bp-hell: rgba(22,163,74,.12);  --bp-text: #15803d; }
+.bauplan__teil--4, .bauplan__eintrag--4 { --bp-farbe: #db2777; --bp-hell: rgba(219,39,119,.12); --bp-text: #be185d; }

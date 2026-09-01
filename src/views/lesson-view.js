@@ -118,6 +118,7 @@ class LessonPlayer {
 
     switch (step.type) {
       case "explain": return this.renderExplain(step);
+      case "bauplan": return this.renderBauplan(step);
       case "example": return this.renderExample(step);
       case "quiz": return this.renderQuiz(step);
       case "fill": return this.renderFill(step);
@@ -141,6 +142,53 @@ class LessonPlayer {
         <div class="prose">${renderMarkdown(step.text)}</div>
       </div>`)
     );
+    this.continueButton();
+  }
+
+  // ---- Schritt: Bauplan ----
+  // Zerlegt eine Codezeile in ihre Bestandteile und beschriftet jeden
+  // einzeln. Gedacht fuer alles, was eine feste Form hat und dessen Teile
+  // Namen tragen - Funktionskopf, Schleifenkopf, Klassendefinition.
+  //
+  // Warum eigener Schritt-Typ und kein Markdown: renderMarkdown escaped
+  // bewusst jedes HTML, es liesse sich also nichts einfaerben oder
+  // verbinden. Und als Bild waere es nicht vorlesbar und nicht uebersetzbar.
+  renderBauplan(step) {
+    // Nur beschriftete Teile bekommen eine Nummer. Trennzeichen wie das
+    // Leerzeichen zwischen def und Namen zaehlen nicht mit - sonst spraenge
+    // die Nummerierung (1, 3, 4, 5 statt 1, 2, 3, 4).
+    let nr = 0;
+    const benannt = [];
+    const zeile = (step.teile ?? []).map((t) => {
+      if (!t.name) return `<span class="bauplan__rest">${escape(t.text)}</span>`;
+      const i = nr++;
+      benannt.push({ t, i });
+      return `<span class="bauplan__teil bauplan__teil--${i % 5}">
+                <span class="bauplan__nr">${i + 1}</span>
+                <code>${escape(t.text)}</code>
+              </span>`;
+    }).join("");
+
+    const legende = benannt.map(({ t, i }) => `
+        <li class="bauplan__eintrag bauplan__eintrag--${i % 5}">
+          <span class="bauplan__nr">${i + 1}</span>
+          <div>
+            <strong>${escape(t.name)}</strong>
+            <span class="bauplan__erklaerung">${renderMarkdown(t.erklaerung ?? "")}</span>
+          </div>
+        </li>`).join("");
+
+    this.stage.append(html(`<div class="card card--bauplan">
+      ${step.titel ? `<h3 class="bauplan__titel">${escape(step.titel)}</h3>` : ""}
+      ${step.text ? `<div class="prose">${renderMarkdown(step.text)}</div>` : ""}
+      <div class="bauplan__zeile">${zeile}</div>
+      ${step.folgezeile ? `<div class="bauplan__folge">
+        <span class="bauplan__einzug" title="vier Leerzeichen">····</span>
+        <code>${escape(step.folgezeile)}</code>
+        ${step.folgeName ? `<span class="bauplan__folge-name">${escape(step.folgeName)}</span>` : ""}
+      </div>` : ""}
+      <ol class="bauplan__legende">${legende}</ol>
+    </div>`));
     this.continueButton();
   }
 
