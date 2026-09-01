@@ -64,6 +64,103 @@
           "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
         }
       ]
+    },
+    {
+      "type": "code",
+      "task": "**Wiederholung aus Kapitel 6 und 13:** Die Punktestände stehen als Dictionary bereit. Schreibe sie in die Datei **`punkte.txt`** – eine Zeile je Person im Format **`Mia: 12`**.\n\nBaue die Zeile mit einem **f-String**. Lies die Datei danach wieder ein und gib ihren Inhalt aus.",
+      "starterCode": "punkte = {\"Mia\": 12, \"Tom\": 9}\n\n# Schreibe die Punktestände in die Datei und lies sie wieder ein\n",
+      "hints": [
+        "Eine Zeile baust du mit f\"{name}: {punkte[name]}\"",
+        "Das \\n am Ende sorgt fuer den Zeilenumbruch in der Datei",
+        "punkte = {\"Mia\": 12, \"Tom\": 9}\n\nwith open(\"punkte.txt\", \"w\") as datei:\n    for name in punkte:\n        datei.write(f\"{name}: {punkte[name]}\\n\")\n\nwith open(\"punkte.txt\", \"r\") as datei:\n    inhalt = datei.read()\n\nprint(inhalt)"
+      ],
+      "tests": [
+        {
+          "type": "output",
+          "expected": "Mia: 12\nTom: 9"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "f[\\\"']",
+          "label": "Die Zeile wird mit einem f-String gebaut"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bopen\\s*\\(",
+          "label": "Es wird eine Datei benutzt"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "(?:^|\\n)\\s*for\\s",
+          "label": "Das Dictionary wird mit einer Schleife durchlaufen"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "[\\\"']Mia: 12[\\\"']",
+          "label": "Die Zeile wird aus dem Dictionary gebaut, nicht hingeschrieben"
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "task": "**Wiederholung aus Kapitel 14:** Schreibe eine Klasse **`Notizbuch`**, die sich um eine Datei kümmert.\n\n`__init__(self, dateiname)` merkt sich den Dateinamen in `self.dateiname`. Die Methode `schreibe(self, text)` schreibt den Text in diese Datei, die Methode `lies(self)` gibt ihren Inhalt zurück.\n\nErzeuge damit ein Notizbuch für `\"notiz.txt\"`, schreibe **`Nicht vergessen!`** hinein und gib den gelesenen Inhalt aus.",
+      "starterCode": "class Notizbuch:\n    def __init__(self, dateiname):\n        # Hier deine Lösung\n        pass\n\n    def schreibe(self, text):\n        # Hier deine Lösung\n        pass\n\n    def lies(self):\n        # Hier deine Lösung\n        pass\n\n# Erzeuge ein Notizbuch, schreibe hinein und gib den Inhalt aus\n",
+      "hints": [
+        "In __init__ nur merken: self.dateiname = dateiname",
+        "In schreibe: with open(self.dateiname, \"w\") as datei: datei.write(text)",
+        "class Notizbuch:\n    def __init__(self, dateiname):\n        self.dateiname = dateiname\n\n    def schreibe(self, text):\n        with open(self.dateiname, \"w\") as datei:\n            datei.write(text)\n\n    def lies(self):\n        with open(self.dateiname, \"r\") as datei:\n            return datei.read()\n\nbuch = Notizbuch(\"notiz.txt\")\nbuch.schreibe(\"Nicht vergessen!\")\nprint(buch.lies())"
+      ],
+      "tests": [
+        {
+          "type": "output",
+          "expected": "Nicht vergessen!"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "(?:^|\\n)\\s*class\\s+Notizbuch\\s*:",
+          "label": "Es gibt eine Klasse namens Notizbuch"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "self\\.dateiname",
+          "label": "Der Dateiname wird im Objekt gemerkt"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "def\\s+lies\\s*\\(",
+          "label": "Es gibt eine Methode lies"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bopen\\s*\\(",
+          "label": "Es wird eine Datei benutzt"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']Nicht vergessen!",
+          "label": "Der Text kommt aus der Datei, nicht direkt aus print"
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
+      ]
     }
   ]
 }

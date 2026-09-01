@@ -1,0 +1,222 @@
+{
+  "id": "03-vokabeltrainer",
+  "title": "Projekt: Vokabeltrainer",
+  "icon": "📓",
+  "xp": 45,
+  "steps": [
+    {
+      "type": "explain",
+      "text": "Zum Abschluss baust du einen **Vokabeltrainer** – und dafür brauchst du fast alles, was du im ganzen Kurs gelernt hast:\n\nein **Dictionary** für die Vokabeln, eine **for-Schleife** zum Durchgehen, eine **Funktion** zum Prüfen, eine **Bedingung** für richtig oder falsch, eine **Liste** für die Fehler und zum Schluss eine **Datei**, in der du sie speicherst.\n\nGenau darum geht es beim Programmieren: nicht ein Werkzeug, sondern das richtige Werkzeug zur richtigen Zeit."
+    },
+    {
+      "type": "code",
+      "task": "Die Vokabeln stehen schon als Dictionary bereit. Gib **jedes Paar** in einer eigenen Zeile aus, im Format **`Hund = dog`**.\n\nNutze dafür eine `for`-Schleife über das Dictionary.",
+      "starterCode": "vokabeln = {\"Hund\": \"dog\", \"Katze\": \"cat\", \"Maus\": \"mouse\"}\n\n# Gib jedes Paar aus\n",
+      "hints": [
+        "Mit for deutsch in vokabeln: gehst du die Schlüssel durch",
+        "Den Wert bekommst du mit vokabeln[deutsch]",
+        "vokabeln = {\"Hund\": \"dog\", \"Katze\": \"cat\", \"Maus\": \"mouse\"}\n\nfor deutsch in vokabeln:\n    print(deutsch + \" = \" + vokabeln[deutsch])"
+      ],
+      "tests": [
+        {
+          "type": "output",
+          "expected": "Hund = dog\nKatze = cat\nMaus = mouse"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "(?:^|\\n)\\s*for\\s",
+          "label": "Es wird eine for-Schleife benutzt"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "vokabeln\\s*\\[",
+          "label": "Der Wert wird aus dem Dictionary geholt"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*[\\\"']Hund = dog",
+          "label": "Die Zeilen werden aus dem Dictionary geholt, nicht hingeschrieben"
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Beim Abfragen tippt niemand exakt so, wie es im Dictionary steht: mal groß, mal klein, mal mit einem Leerzeichen am Ende. Ein stures `==` würde `\"Dog\"` als falsch werten.\n\nDeshalb kommt die Prüfung in eine eigene **Funktion** – und dort räumst du die Eingabe erst auf, bevor du vergleichst. Dafür brauchst du zwei String-Methoden aus Kapitel 4: `.lower()` macht alles klein, `.strip()` entfernt Leerzeichen am Rand."
+    },
+    {
+      "type": "code",
+      "task": "Schreibe eine Funktion **`ist_richtig(eingabe, loesung)`**. Sie soll `True` zurückgeben, wenn die Eingabe der Lösung entspricht – und dabei **Groß- und Kleinschreibung sowie Leerzeichen am Rand ignorieren**.\n\nRufe sie danach dreimal auf und gib das Ergebnis aus:\n`ist_richtig(\"DOG\", \"dog\")`, `ist_richtig(\" cat \", \"cat\")` und `ist_richtig(\"maus\", \"mouse\")`.",
+      "starterCode": "def ist_richtig(eingabe, loesung):\n    # Hier deine Lösung\n    pass\n\n# Rufe die Funktion dreimal auf und gib das Ergebnis aus\n",
+      "hints": [
+        "eingabe.strip() entfernt Leerzeichen, .lower() macht alles klein",
+        "return eingabe.strip().lower() == loesung.lower()",
+        "def ist_richtig(eingabe, loesung):\n    return eingabe.strip().lower() == loesung.lower()\n\nprint(ist_richtig(\"DOG\", \"dog\"))\nprint(ist_richtig(\" cat \", \"cat\"))\nprint(ist_richtig(\"maus\", \"mouse\"))"
+      ],
+      "tests": [
+        {
+          "type": "output",
+          "expected": "True\nTrue\nFalse"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bdef\\s+ist_richtig\\s*\\(",
+          "label": "Es gibt eine Funktion namens ist_richtig"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\.lower\\s*\\(",
+          "label": "Die Gross- und Kleinschreibung wird angeglichen"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\.strip\\s*\\(",
+          "label": "Leerzeichen am Rand werden entfernt"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*True\\s*\\)",
+          "label": "Das Ergebnis wird berechnet, nicht hingeschrieben"
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Jetzt das Beste am Üben: Was man **falsch** hatte, sollte man sich merken. Du sammelst die falschen Vokabeln in einer **Liste** und schreibst sie am Ende in eine **Datei** – dann sind sie auch nach dem Schließen des Programms noch da."
+    },
+    {
+      "type": "code",
+      "task": "Die Vokabeln und die (teils falschen) Antworten stehen bereit. Gehe alle Vokabeln durch und sammle die **deutschen Wörter**, bei denen die Antwort nicht stimmt, in der Liste `falsche`.\n\nSchreibe die Liste danach in die Datei **`falsche.txt`** – ein Wort pro Zeile – lies die Datei wieder ein und gib ihren Inhalt aus.",
+      "starterCode": "vokabeln = {\"Hund\": \"dog\", \"Katze\": \"cat\", \"Maus\": \"mouse\"}\nantworten = {\"Hund\": \"dog\", \"Katze\": \"dog\", \"Maus\": \"mice\"}\nfalsche = []\n\n# Sammle die falschen, speichere sie und gib die Datei aus\n",
+      "hints": [
+        "for deutsch in vokabeln: vergleiche antworten[deutsch] mit vokabeln[deutsch]",
+        "Zum Schreiben: with open(\"falsche.txt\", \"w\") as datei: datei.write(wort + \"\\n\")",
+        "vokabeln = {\"Hund\": \"dog\", \"Katze\": \"cat\", \"Maus\": \"mouse\"}\nantworten = {\"Hund\": \"dog\", \"Katze\": \"dog\", \"Maus\": \"mice\"}\nfalsche = []\n\nfor deutsch in vokabeln:\n    if antworten[deutsch] != vokabeln[deutsch]:\n        falsche.append(deutsch)\n\nwith open(\"falsche.txt\", \"w\") as datei:\n    for wort in falsche:\n        datei.write(wort + \"\\n\")\n\nwith open(\"falsche.txt\", \"r\") as datei:\n    inhalt = datei.read()\n\nprint(inhalt)"
+      ],
+      "tests": [
+        {
+          "type": "output",
+          "expected": "Katze\nMaus"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\.append\\s*\\(",
+          "label": "Die falschen Wörter werden in der Liste gesammelt"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bopen\\s*\\(",
+          "label": "Es wird eine Datei benutzt"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "(?:^|\\n)\\s*for\\s",
+          "label": "Es wird eine for-Schleife benutzt"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "(?:^|\\n)\\s*\\s*if\\s",
+          "label": "Es wird geprüft, ob die Antwort stimmt"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "falsche\\s*=\\s*\\[\\s*[\\\"']Katze",
+          "label": "Die Liste wird gefüllt, nicht hingeschrieben"
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Bisher liegen die Vokabeln, die Prüffunktion und der Fehlerzähler lose nebeneinander. Dabei gehören sie zusammen – und genau dafür gibt es **Klassen** aus Kapitel 14.\n\nIn einer Klasse steckt beides in einem: die **Daten** (die Vokabeln, die Zahl der Fehler) als Attribute und das **Können** (prüfen) als Methode. Der Trainer wird damit zu einem einzigen Ding, das man herumreichen kann."
+    },
+    {
+      "type": "code",
+      "task": "**Wiederholung aus Kapitel 14:** Schreibe eine Klasse **`Vokabeltrainer`**.\n\n`__init__(self, vokabeln)` speichert das Dictionary in `self.vokabeln` und setzt `self.fehler` auf `0`.\n\nDie Methode `pruefe(self, deutsch, antwort)` gibt `True` zurück, wenn die Antwort stimmt – wieder **ohne** auf Groß- und Kleinschreibung zu achten. Stimmt sie nicht, zählt sie `self.fehler` um eins hoch und gibt `False` zurück.\n\nErzeuge damit einen Trainer für `{\"Hund\": \"dog\", \"Katze\": \"cat\"}`, prüfe `\"Hund\"` mit `\"DOG\"` und `\"Katze\"` mit `\"dog\"`, gib beide Ergebnisse aus und danach die Zahl der Fehler.",
+      "starterCode": "class Vokabeltrainer:\n    def __init__(self, vokabeln):\n        # Hier deine Lösung\n        pass\n\n    def pruefe(self, deutsch, antwort):\n        # Hier deine Lösung\n        pass\n\n# Erzeuge einen Trainer und prüfe zwei Vokabeln\n",
+      "hints": [
+        "In __init__: self.vokabeln = vokabeln und self.fehler = 0",
+        "In pruefe: vergleiche antwort.lower() mit self.vokabeln[deutsch].lower()",
+        "class Vokabeltrainer:\n    def __init__(self, vokabeln):\n        self.vokabeln = vokabeln\n        self.fehler = 0\n\n    def pruefe(self, deutsch, antwort):\n        if antwort.lower() == self.vokabeln[deutsch].lower():\n            return True\n        self.fehler = self.fehler + 1\n        return False\n\ntrainer = Vokabeltrainer({\"Hund\": \"dog\", \"Katze\": \"cat\"})\nprint(trainer.pruefe(\"Hund\", \"DOG\"))\nprint(trainer.pruefe(\"Katze\", \"dog\"))\nprint(trainer.fehler)"
+      ],
+      "tests": [
+        {
+          "type": "output",
+          "expected": "True\nFalse\n1"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "(?:^|\\n)\\s*class\\s+Vokabeltrainer\\s*:",
+          "label": "Es gibt eine Klasse namens Vokabeltrainer"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "def\\s+__init__\\s*\\(",
+          "label": "Die Klasse hat einen Konstruktor"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "def\\s+pruefe\\s*\\(",
+          "label": "Die Klasse hat eine Methode pruefe"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "self\\.fehler",
+          "label": "Die Fehler werden im Objekt mitgezählt"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\.lower\\s*\\(",
+          "label": "Die Gross- und Kleinschreibung wird angeglichen"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*True\\s*\\)",
+          "label": "Das Ergebnis wird berechnet, nicht hingeschrieben"
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
+      ]
+    },
+    {
+      "type": "explain",
+      "text": "Geschafft. In diesem einen Programm steckt fast der ganze Kurs: Dictionary, Schleife, Funktion, Bedingung, Liste, String-Methoden, Datei und zuletzt eine eigene Klasse.\n\nGenau so sieht echte Programmierarbeit aus – man kombiniert, was man kann, statt ein einzelnes Werkzeug zu suchen."
+    }
+  ]
+}

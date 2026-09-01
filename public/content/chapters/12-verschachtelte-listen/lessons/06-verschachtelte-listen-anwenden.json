@@ -120,6 +120,52 @@
           "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
         }
       ]
+    },
+    {
+      "type": "code",
+      "task": "**Wiederholung aus Kapitel 11:** Schreibe eine Funktion **`zeilensumme(tabelle, nummer)`**, die die Summe **einer** Zeile zurückgibt.\n\nRufe sie danach für Zeile `0` und Zeile `1` auf und gib beide Summen aus.",
+      "starterCode": "zahlen = [[1, 2, 3], [4, 5, 6]]\n\ndef zeilensumme(tabelle, nummer):\n    # Hier deine Lösung\n    pass\n\n# Rufe die Funktion für Zeile 0 und Zeile 1 auf\n",
+      "hints": [
+        "tabelle[nummer] ist die gesuchte Zeile - eine ganz normale Liste",
+        "Gehe sie mit for durch und zaehle die Werte zusammen",
+        "zahlen = [[1, 2, 3], [4, 5, 6]]\n\ndef zeilensumme(tabelle, nummer):\n    summe = 0\n    for wert in tabelle[nummer]:\n        summe = summe + wert\n    return summe\n\nprint(zeilensumme(zahlen, 0))\nprint(zeilensumme(zahlen, 1))"
+      ],
+      "tests": [
+        {
+          "type": "output",
+          "expected": "6\n15"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bdef\\s+zeilensumme\\s*\\(",
+          "label": "Es gibt eine Funktion namens zeilensumme"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\breturn\\b",
+          "label": "Die Funktion gibt einen Wert zurück"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "(?:^|\\n)\\s*for\\s",
+          "label": "Die Zeile wird mit einer Schleife durchlaufen"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "print\\s*\\(\\s*(?:6|15)\\s*\\)",
+          "label": "Die Summen werden berechnet, nicht hingeschrieben"
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
+      ]
     }
   ]
 }

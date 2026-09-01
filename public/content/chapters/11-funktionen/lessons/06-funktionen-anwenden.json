@@ -118,6 +118,52 @@
           "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
         }
       ]
+    },
+    {
+      "type": "code",
+      "task": "**Wiederholung aus Kapitel 4:** Schreibe eine Funktion **`initialen(vorname, nachname)`**, die die Initialen zurückgibt – jeweils der **erste Buchstabe groß**, mit Punkt dahinter.\n\nBeispiel: `initialen(\"mia\", \"berger\")` ergibt **`M.B.`**\n\nRufe die Funktion danach zweimal auf: mit `\"mia\"` / `\"berger\"` und mit `\"Tom\"` / `\"klein\"`, und gib beide Ergebnisse aus.",
+      "starterCode": "def initialen(vorname, nachname):\n    # Hier deine Lösung\n    pass\n\n# Rufe die Funktion zweimal auf\n",
+      "hints": [
+        "Den ersten Buchstaben bekommst du mit vorname[0]",
+        "Gross machen mit .upper(), zusammensetzen mit +",
+        "def initialen(vorname, nachname):\n    return vorname[0].upper() + \".\" + nachname[0].upper() + \".\"\n\nprint(initialen(\"mia\", \"berger\"))\nprint(initialen(\"Tom\", \"klein\"))"
+      ],
+      "tests": [
+        {
+          "type": "output",
+          "expected": "M.B.\nT.K."
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\bdef\\s+initialen\\s*\\(",
+          "label": "Es gibt eine Funktion namens initialen"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\.upper\\s*\\(",
+          "label": "Die Buchstaben werden gross gemacht"
+        },
+        {
+          "type": "source_matches",
+          "pattern": "\\[\\s*0\\s*\\]",
+          "label": "Der erste Buchstabe wird aus dem Namen geholt"
+        },
+        {
+          "type": "source_not_matches",
+          "pattern": "[\\\"']M\\.B\\.[\\\"']",
+          "label": "Das Ergebnis wird berechnet, nicht hingeschrieben"
+        }
+      ],
+      "tips": [
+        {
+          "marke": "sprechender-name",
+          "check": {
+            "type": "source_not_matches",
+            "pattern": "(?:^|\\n)[ \\t]*[abcdefghlmopqrstuvwxyz][ \\t]*=(?!=)"
+          },
+          "text": "**Noch besser:** Ein einzelner Buchstabe sagt nicht, was in der Variablen steht. Gib ihr einen sprechenden Namen – etwa `zahl`, `ergebnis` oder `punkte`. (Zählvariablen wie `i` in einer Schleife dürfen kurz bleiben.)"
+        }
+      ]
     }
   ]
 }

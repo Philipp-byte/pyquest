@@ -6,6 +6,7 @@
   "description": "Bring alles zusammen, was du gelernt hast, in zwei kleinen Projekten.",
   "lessons": [
     "01-zahlenraten",
-    "02-quiz-programm"
+    "02-quiz-programm",
+    "03-vokabeltrainer"
   ]
 }
