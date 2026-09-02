@@ -35,6 +35,23 @@ export function renderWorksheet(app, curriculum, chapterId) {
     lesson.steps.forEach((step, si) => {
       if (step.type === "explain" && step.text) {
         teile.push(`<div class="ab__info">${renderMarkdown(step.text)}</div>`);
+      } else if (step.type === "bauplan") {
+        // Beschriftete Zerlegung einer Codezeile - Codezeile als Block,
+        // darunter die nummerierte Legende, wie in der App.
+        let nr = 0;
+        const legende = (step.teile || []).filter((p) => p.name).map((p) => {
+          nr++;
+          return `<li><strong>${escape(p.name)}</strong> – ${renderMarkdown(p.erklaerung || "")}</li>`;
+        }).join("");
+        const zeile = (step.teile || []).map((p) => escape(p.text)).join("")
+          + (step.folgezeile ? "\n    " + escape(step.folgezeile) : "");
+        teile.push(`
+          <div class="ab__info">
+            ${step.titel ? `<p><strong>${escape(step.titel)}</strong></p>` : ""}
+            ${step.text ? renderMarkdown(step.text) : ""}
+          </div>
+          <pre class="ab__beispiel"><code>${zeile}</code></pre>
+          <ol class="ab__bauplan">${legende}${step.folgeName ? `<li><strong>${escape(step.folgeName)}</strong></li>` : ""}</ol>`);
       } else if (step.type === "example" && step.code) {
         teile.push(`
           ${step.text ? `<div class="ab__info">${renderMarkdown(step.text)}</div>` : ""}

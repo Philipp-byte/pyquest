@@ -355,6 +355,26 @@ def build_docx(chapter_id):
             t = step["type"]
             if t == "explain":
                 render_markdown_block(doc, step["text"])
+            elif t == "bauplan":
+                # Beschriftete Zerlegung einer Codezeile (siehe lesson-view.js).
+                # Auf Papier: Codezeile als Block, darunter die nummerierte
+                # Legende - dieselbe Reihenfolge wie in der App.
+                if step.get("titel"):
+                    render_markdown_block(doc, f"**{step['titel']}**")
+                if step.get("text"):
+                    render_markdown_block(doc, step["text"])
+                zeile = "".join(p["text"] for p in step.get("teile", []))
+                if step.get("folgezeile"):
+                    zeile += "\n    " + step["folgezeile"]
+                add_code_block(doc, zeile, label="Bauplan")
+                nr = 0
+                for p in step.get("teile", []):
+                    if not p.get("name"):
+                        continue
+                    nr += 1
+                    render_markdown_block(doc, f"{nr}. **{p['name']}** – {p.get('erklaerung', '')}")
+                if step.get("folgeName"):
+                    render_markdown_block(doc, f"{nr + 1}. **{step['folgeName']}**")
             elif t == "example":
                 if step.get("text"):
                     render_markdown_block(doc, step["text"])

@@ -288,6 +288,22 @@ export async function erzeugeArbeitsblattPdf(curriculum, chapterId, { name = "" 
     lesson.steps.forEach((step, si) => {
       if (step.type === "explain" && step.text) {
         infoKasten(nurText(step.text));
+      } else if (step.type === "bauplan") {
+        // Beschriftete Zerlegung einer Codezeile: Codezeile als Block,
+        // darunter die nummerierte Legende - wie in der App.
+        if (step.titel) text(pdfSicher(step.titel), { size: 9.5, style: "bold", farbe: NAVY });
+        if (step.text) text(nurText(step.text), { size: 9, farbe: GRAU });
+        let zeile = (step.teile || []).map((p) => p.text).join("");
+        if (step.folgezeile) zeile += "\n    " + step.folgezeile;
+        codeKasten(zeile);
+        let nr = 0;
+        (step.teile || []).forEach((p) => {
+          if (!p.name) return;
+          nr++;
+          text(`${nr}. ${nurText(p.name)} – ${nurText(p.erklaerung || "")}`, { size: 9, x: RAND + 4 });
+        });
+        if (step.folgeName) text(`${nr + 1}. ${nurText(step.folgeName)}`, { size: 9, x: RAND + 4 });
+        y += 2.5;
       } else if (step.type === "example" && step.code) {
         if (step.text) text(nurText(step.text), { size: 9, farbe: GRAU });
         codeKasten(step.code);
